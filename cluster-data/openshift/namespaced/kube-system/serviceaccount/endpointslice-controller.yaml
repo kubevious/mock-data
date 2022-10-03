@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: endpointslice-controller-dockercfg-bngwz
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:04Z"
+  name: endpointslice-controller
+  namespace: kube-system
+  resourceVersion: "1227"
+  uid: b9b94fc0-d119-4dd8-8951-fa1ebaacfd65
+secrets:
+- name: endpointslice-controller-token-24rpb
+- name: endpointslice-controller-dockercfg-bngwz

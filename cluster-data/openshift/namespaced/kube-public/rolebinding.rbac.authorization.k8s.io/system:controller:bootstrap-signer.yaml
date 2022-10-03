@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: "2022-10-03T18:25:31Z"
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: system:controller:bootstrap-signer
+  namespace: kube-public
+  resourceVersion: "269"
+  uid: 58b44c34-0cf1-492c-bdbe-5c7b23252399
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: system:controller:bootstrap-signer
+subjects:
+- kind: ServiceAccount
+  name: bootstrap-signer
+  namespace: kube-system

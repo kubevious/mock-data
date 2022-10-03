@@ -1,0 +1,234 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Rook Authors
+    provider-url: ""
+  name: rook-ceph
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: rook-ceph.v1.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "ceph.rook.io/v1",
+              "kind": "CephCluster",
+              "metadata": {
+                "name": "my-rook-ceph",
+                "namespace": "my-rook-ceph"
+              },
+              "spec": {
+                "cephVersion": {
+                  "image": "ceph/ceph:v14.2.4-20190917"
+                },
+                "dataDirHostPath": "/var/lib/rook",
+                "mon": {
+                  "count": 3
+                },
+                "dashboard": {
+                  "enabled": true
+                },
+                "network": {
+                  "hostNetwork": false
+                },
+                "rbdMirroring": {
+                  "workers": 0
+                },
+                "storage": {
+                  "useAllNodes": true,
+                  "useAllDevices": true
+                }
+              }
+            },
+            {
+              "apiVersion": "ceph.rook.io/v1",
+              "kind": "CephBlockPool",
+              "metadata": {
+                "name": "replicapool",
+                "namespace": "my-rook-ceph"
+              },
+              "spec": {
+                "failureDomain": "host",
+                "replicated": {
+                  "size": 3
+                },
+                "annotations": null
+              }
+            },
+            {
+              "apiVersion": "ceph.rook.io/v1",
+              "kind": "CephObjectStore",
+              "metadata": {
+                "name": "my-store",
+                "namespace": "my-rook-ceph"
+              },
+              "spec": {
+                "metadataPool": {
+                  "failureDomain": "host",
+                  "replicated": {
+                    "size": 3
+                  }
+                },
+                "dataPool": {
+                  "failureDomain": "host",
+                  "replicated": {
+                    "size": 3
+                  }
+                },
+                "gateway": {
+                  "type": "s3",
+                  "sslCertificateRef": null,
+                  "port": 8080,
+                  "securePort": null,
+                  "instances": 1,
+                  "placement": null,
+                  "annotations": null,
+                  "resources": null
+                }
+              }
+            },
+            {
+              "apiVersion": "ceph.rook.io/v1",
+              "kind": "CephObjectStoreUser",
+              "metadata": {
+                "name": "my-user",
+                "namespace": "my-rook-ceph"
+              },
+              "spec": {
+                "store": "my-store",
+                "displayName": "my display name"
+              }
+            },
+            {
+              "apiVersion": "ceph.rook.io/v1",
+              "kind": "CephNFS",
+              "metadata": {
+                "name": "my-nfs",
+                "namespace": "rook-ceph"
+              },
+              "spec": {
+                "rados": {
+                  "pool": "myfs-data0",
+                  "namespace": "nfs-ns"
+                },
+                "server": {
+                  "active": 3,
+                  "placement": null,
+                  "annotations": null,
+                  "resources": null
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Storage
+        certified: "false"
+        containerImage: rook/ceph:v1.1.1
+        createdAt: 2019-09-23T11-51-58Z
+        description: Install and maintain Ceph Storage cluster
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/rook/rook
+        support: https://slack.rook.io/
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Ceph cluster.
+          displayName: Ceph Cluster
+          kind: CephCluster
+          name: cephclusters.ceph.rook.io
+          version: v1
+        - description: Represents a Ceph Block Pool.
+          displayName: Ceph Block Pool
+          kind: CephBlockPool
+          name: cephblockpools.ceph.rook.io
+          version: v1
+        - description: Represents a Ceph Object Store.
+          displayName: Ceph Object Store
+          kind: CephObjectStore
+          name: cephobjectstores.ceph.rook.io
+          version: v1
+        - description: Represents a Ceph Object Store User.
+          displayName: Ceph Object Store User
+          kind: CephObjectStoreUser
+          name: cephobjectstoreusers.ceph.rook.io
+          version: v1
+        - description: Represents a cluster of Ceph NFS ganesha gateways.
+          displayName: Ceph NFS
+          kind: CephNFS
+          name: cephnfses.ceph.rook.io
+          version: v1
+      description: |2
+
+        The Rook-Ceph storage operator packages, deploys, manages, upgrades and scales Ceph storage for providing persistent storage to infrastructure services (Logging, Metrics, Registry) as well as stateful applications in Kubernetes clusters.
+
+        ## Rook-Ceph Storage Operator
+
+        Rook runs as a cloud-native service in Kubernetes clusters for optimal integration with applications in need of storage, and handles the heavy-lifting behind the scenes such as provisioning and management.
+        Rook orchestrates battle-tested open-source storage technology Ceph, which has years of production deployments and runs some of the worlds largest clusters.
+
+        Ceph is a massively scalable, software-defined, cloud native storage platform that offers block, file and object storage services.
+        Ceph can be used to back a wide variety of applications including relational databases, NoSQL databases, CI/CD tool-sets, messaging, AI/ML and analytics applications.
+        Ceph is a proven storage platform that backs some of the world's largest storage deployments and has a large vibrant open source community backing the project.
+
+        ## Supported features
+        * **High Availability and resiliency** - Ceph has no single point of failures (SPOF) and all its components work natively in a highly available fashion
+        * **Data Protection** - Ceph periodically scrub for inconsistent objects and repair them if necessary, making sure your replicas are always coherent
+        * **Consistent storage platform across hybrid cloud** - Ceph can be deployed anywhere (on-premise or bare metal) and thus offers a similar experience regardless
+        * **Block, File & Object storage service** - Ceph can expose your data through several storage interfaces, solving all the application use cases
+        * **Scale up/down** - addition and removal of storage is fully covered by the operator.
+        * **Dashboard** - The Operator deploys a dashboard for monitoring and introspecting your cluster.
+
+        ## Before you start
+        https://rook.io/docs/rook/v1.0/k8s-pre-reqs.html
+      displayName: Rook-Ceph
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - rook
+      - ceph
+      - storage
+      - object storage
+      - open source
+      - block storage
+      - shared filesystem
+      links:
+      - name: Blog
+        url: https://blog.rook.io
+      - name: Documentation
+        url: https://rook.github.io/docs/rook/v1.0/
+      maintainers:
+      - email: info@rook.io
+        name: The Rook Authors
+      maturity: alpha
+      minKubeVersion: 1.10.0
+      provider:
+        name: The Rook Authors
+      relatedImages:
+      - rook/ceph:v1.1.1
+      version: 1.1.1
+    name: beta
+  defaultChannel: beta
+  packageName: rook-ceph
+  provider:
+    name: The Rook Authors

@@ -1,0 +1,144 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-rds-controller
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-rds-controller.v0.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "rds.services.k8s.aws/v1alpha1",
+              "kind": "DBParameterGroup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "rds.services.k8s.aws/v1alpha1",
+              "kind": "DBSubnetGroup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/rds-controller:v0.1.1
+        createdAt: "2022-09-14 17:33:56"
+        description: AWS RDS controller is a service controller for managing RDS resources
+          in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: DBClusterParameterGroup represents the state of an AWS rds
+            DBClusterParameterGroup resource.
+          displayName: DBClusterParameterGroup
+          kind: DBClusterParameterGroup
+          name: dbclusterparametergroups.rds.services.k8s.aws
+          version: v1alpha1
+        - description: DBCluster represents the state of an AWS rds DBCluster resource.
+          displayName: DBCluster
+          kind: DBCluster
+          name: dbclusters.rds.services.k8s.aws
+          version: v1alpha1
+        - description: DBInstance represents the state of an AWS rds DBInstance resource.
+          displayName: DBInstance
+          kind: DBInstance
+          name: dbinstances.rds.services.k8s.aws
+          version: v1alpha1
+        - description: DBParameterGroup represents the state of an AWS rds DBParameterGroup
+            resource.
+          displayName: DBParameterGroup
+          kind: DBParameterGroup
+          name: dbparametergroups.rds.services.k8s.aws
+          version: v1alpha1
+        - description: DBProxy represents the state of an AWS rds DBProxy resource.
+          displayName: DBProxy
+          kind: DBProxy
+          name: dbproxies.rds.services.k8s.aws
+          version: v1alpha1
+        - description: DBSubnetGroup represents the state of an AWS rds DBSubnetGroup
+            resource.
+          displayName: DBSubnetGroup
+          kind: DBSubnetGroup
+          name: dbsubnetgroups.rds.services.k8s.aws
+          version: v1alpha1
+        - description: GlobalCluster represents the state of an AWS rds GlobalCluster
+            resource.
+          displayName: GlobalCluster
+          kind: GlobalCluster
+          name: globalclusters.rds.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Amazon Relational Database Service ("RDS") resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon RDS**
+
+        Amazon Relational Database Service (Amazon RDS) makes it easy to set up, operate, and scale a relational database in the cloud. It provides cost-efficient and resizable capacity while automating time-consuming administration tasks such as hardware provisioning, database setup, patching and backups. It frees you to focus on your applications so you can give them the fast performance, high availability, security and compatibility they need.
+
+        Amazon RDS is available on several database instance types - optimized for memory, performance or I/O -and provides you with six familiar database engines to choose from, including Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database, and SQL Server. You can use the AWS Database Migration Service to easily migrate or replicate your existing databases to Amazon RDS.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon RDS
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - rds
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon RDS Developer Resources
+        url: https://aws.amazon.com/rds/developer-resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: rds maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/rds-controller:v0.1.1
+      version: 0.1.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-rds-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

@@ -1,0 +1,206 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: DataStax
+    provider-url: ""
+  name: cass-operator-community
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cass-operator.v1.13.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "cassandra.datastax.com/v1beta1",
+              "kind": "CassandraDatacenter",
+              "metadata": {
+                "name": "dc1"
+              },
+              "spec": {
+                "clusterName": "development",
+                "config": {
+                  "cassandra-yaml": {
+                    "authenticator": "PasswordAuthenticator",
+                    "authorizer": "CassandraAuthorizer",
+                    "num_tokens": 16,
+                    "role_manager": "CassandraRoleManager"
+                  },
+                  "jvm-server-options": {
+                    "initial_heap_size": "1G",
+                    "max_heap_size": "1G"
+                  }
+                },
+                "dockerImageRunsAsCassandra": false,
+                "managementApiAuth": {
+                  "insecure": {}
+                },
+                "racks": [
+                  {
+                    "name": "rack1"
+                  },
+                  {
+                    "name": "rack2"
+                  },
+                  {
+                    "name": "rack3"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "1000m",
+                    "memory": "2Gi"
+                  }
+                },
+                "serverType": "cassandra",
+                "serverVersion": "4.0.3",
+                "size": 3,
+                "storageConfig": {
+                  "cassandraDataVolumeClaimSpec": {
+                    "accessModes": [
+                      "ReadWriteOnce"
+                    ],
+                    "resources": {
+                      "requests": {
+                        "storage": "10Gi"
+                      }
+                    },
+                    "storageClassName": "server-storage"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "control.k8ssandra.io/v1alpha1",
+              "kind": "CassandraTask",
+              "metadata": {
+                "name": "example-cleanup"
+              },
+              "spec": {
+                "datacenter": {
+                  "name": "dc2",
+                  "namespace": "cass-operator"
+                },
+                "jobs": [
+                  {
+                    "command": "cleanup",
+                    "name": "cleanup-run"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database,Big Data,OpenShift Optional
+        certified: "true"
+        containerImage: docker.io/k8ssandra/cass-operator:v1.13.0
+        createdAt: "2022-09-30"
+        description: |
+          Simple provisioning, turn-key operations, and automated remediation of Apache Cassandra clusters
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/k8ssandra/cass-operator
+        support: DataStax
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: CassandraDatacenter is the Schema for the cassandradatacenters
+            API
+          displayName: Cassandra Datacenter
+          kind: CassandraDatacenter
+          name: cassandradatacenters.cassandra.datastax.com
+          version: v1beta1
+        - description: CassandraTask is the Schema for the cassandrajobs API
+          displayName: Cassandra Task
+          kind: CassandraTask
+          name: cassandratasks.control.k8ssandra.io
+          version: v1alpha1
+      description: "## Apache Cassandra\n\nThe Apache Cassandra database is the right
+        choice when you need scalability and\nhigh availability without compromising
+        performance. Linear scalability and\nproven fault-tolerance on commodity hardware
+        or cloud infrastructure make it the\nperfect platform for mission-critical
+        data. Cassandra's support for replicating\nacross multiple datacenters is
+        best-in-class, providing lower latency for your\nusers and the peace of mind
+        of knowing that you can survive regional outages.\n\n## DataStax Enterprise\n\nThe
+        most advanced distribution of Apache Cassandra™ on the market, with the\nenterprise
+        functionality needed for serious production systems and backed up and\nsupported
+        by the best distributed-experts in the world. It's one platform for\nall types
+        of applications anywhere, any cloud, any model: key-value, graph,\ntabular,
+        JSON.\n\nDataStax Enterprise is a fully integrated and optimized database,
+        with graph,\nanalytics, and search included, all with a unified security model.
+        Simply put,\nit's the only database capable of meeting today's demanding requirements\n\n##
+        Operator Details\n\n`cass-operator` is designed as a modular operator for
+        Apache Cassandra and\nderived  distributions. Apache Cassandra is a distributed
+        database consisting of\nmultiple nodes working in concert to store data and
+        process queries along a\nnumber of fault domains. `cass-operator` has the
+        deployment of a Cassandra\ncluster around the logical domain of a datacenter
+        with the `CassandraDatacenter`\ncustom resource.\n    \nUpon submission of
+        one of these resources it handles provisioning the underlying\nstateful sets
+        (analogous to C\\* logical racks), services, and configuration.\nAdditionally
+        through monitoring pod state via Kubernetes callbacks it handles day to day\noperations
+        such as restarting failed processes, scaling clusters up, and deploying\nconfiguration
+        changes in a rolling, non-disruptive, fashion.\n    \nThis operator is designed
+        to be `Namespace` scoped. A single Kubernetes cluster may\nbe running multiple
+        instances of this operator, in separate namespaces, to support\na number of
+        C\\* clusters and environments. Configuration is simple with the usage of\nYAML
+        based overrides in the Custom Resource paired with an `init` container.\n
+        \   \nIn C\\* clusters ordering and timing of certain operations are important
+        to keep the system\nevenly distributed. `cass-operator` takes advantage of
+        a sidecar process within the\nmain container to handle the orchestration of
+        starting our main C* process."
+      displayName: DataStax Kubernetes Operator for Apache Cassandra
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - k8ssandra
+      - cass-operator
+      - DataStax Enterprise
+      - Apache Cassandra
+      - DSE
+      - C*
+      - Cassandra
+      links:
+      - name: DataStax
+        url: https://datastax.com
+      - name: Operator GitHub Repo
+        url: https://github.com/k8ssandra/cass-operator
+      - name: Config Builder GitHub Repo
+        url: https://github.com/datastax/cass-config-builder
+      - name: Documentation [1]
+        url: https://github.com/k8ssandra/cass-operator/tree/master/docs/user
+      - name: Documentation [2]
+        url: https://docs.datastax.com/en/cass-operator/doc/cass-operator/cassOperatorTOC.html
+      maintainers:
+      - email: cass-operator@datastax.com
+        name: DataStax Operator Team
+      maturity: stable
+      minKubeVersion: 1.21.0
+      provider:
+        name: DataStax
+      relatedImages:
+      - docker.io/k8ssandra/cass-operator:v1.13.0
+      version: 1.13.0
+    name: stable
+  defaultChannel: stable
+  packageName: cass-operator-community
+  provider:
+    name: DataStax

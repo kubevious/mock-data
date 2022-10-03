@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: job-controller-dockercfg-bftvg
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:04Z"
+  name: job-controller
+  namespace: kube-system
+  resourceVersion: "1210"
+  uid: 0314c560-2c89-48cf-b145-6240d56d886f
+secrets:
+- name: job-controller-token-n77sj
+- name: job-controller-dockercfg-bftvg

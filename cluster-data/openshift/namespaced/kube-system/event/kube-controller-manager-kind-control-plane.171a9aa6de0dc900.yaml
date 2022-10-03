@@ -1,0 +1,28 @@
+apiVersion: v1
+count: 2
+eventTime: null
+firstTimestamp: "2022-10-03T16:04:13Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{kube-controller-manager}
+  kind: Pod
+  name: kube-controller-manager-kind-control-plane
+  namespace: kube-system
+  uid: d068cb2f2a50ec5a8c4ab3d6e2488f95
+kind: Event
+lastTimestamp: "2022-10-03T19:41:19Z"
+message: Container image "k8s.gcr.io/kube-controller-manager:v1.24.0" already present
+  on machine
+metadata:
+  creationTimestamp: "2022-10-03T19:41:19Z"
+  name: kube-controller-manager-kind-control-plane.171a9aa6de0dc900
+  namespace: kube-system
+  resourceVersion: "39810"
+  uid: 629d72ec-a729-4fed-8918-e82b83cf2b0c
+reason: Pulled
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Normal

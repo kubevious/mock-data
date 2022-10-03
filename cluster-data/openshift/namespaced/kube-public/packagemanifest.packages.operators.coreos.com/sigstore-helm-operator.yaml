@@ -1,0 +1,95 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Sigstore Authors
+    provider-url: https://sigstore.dev
+  name: sigstore-helm-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: sigstore-helm-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "helm.sigstore.dev/v1alpha1",
+              "kind": "Rekor",
+              "metadata": {
+                "name": "rekor"
+              },
+              "spec": {
+                "server": {
+                  "ingress": {
+                    "hostname": "rekor.example.com"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Security
+        containerImage: ghcr.io/sigstore/sigstore-helm-operator@sha256:d9c6eb162b97a1aa1ad3bf515db65d01a96e55b6f8bcd646864d3e64a3ee2b9e
+        createdAt: "2021-09-01T21:20:28Z"
+        description: Helm Charts for Sigstore Project.
+        operators.operatorframework.io/builder: operator-sdk-v1.8.0+git
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+        repository: https://github.com/sigstore/sigstore-helm-operator
+        support: The Sigstore Authors
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - kind: Rekor
+          name: rekors.helm.sigstore.dev
+          version: v1alpha1
+      description: |-
+        Helm Charts for the sigstore project
+
+        ## Charts
+
+        The following charts are available:
+
+        * [Rekor](https://github.com/sigstore/helm-charts/tree/main/charts/rekor)
+      displayName: sigstore
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - security
+      links:
+      - name: Sigstore Helm Operator
+        url: https://github.com/sabre1041/sigstore-helm-operator
+      maintainers:
+      - email: ablock@redhat.com
+        name: Andrew Block
+      maturity: alpha
+      provider:
+        name: The Sigstore Authors
+        url: https://sigstore.dev
+      relatedImages:
+      - quay.io/coreos/kube-rbac-proxy@sha256:e10d1d982dd653db74ca87a1d1ad017bc5ef1aeb651bdea089debf16485b080b
+      - ghcr.io/sigstore/sigstore-helm-operator@sha256:d9c6eb162b97a1aa1ad3bf515db65d01a96e55b6f8bcd646864d3e64a3ee2b9e
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: sigstore-helm-operator
+  provider:
+    name: The Sigstore Authors
+    url: https://sigstore.dev

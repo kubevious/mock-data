@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    armada-service: cruiser-kube-addons
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"annotations":{"armada-service":"cruiser-kube-addons","version":"4.9.48_1556_openshift"},"labels":{"addonmanager.kubernetes.io/mode":"Reconcile","kubernetes.io/cluster-service":"true"},"name":"ibm-keepalived-watcher","namespace":"kube-system"},"rules":[{"apiGroups":[""],"resources":["configmaps"],"verbs":["list","watch","get"]}]}
+    version: 4.9.48_1556_openshift
+  creationTimestamp: "2022-10-03T18:35:04Z"
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+    kubernetes.io/cluster-service: "true"
+  name: ibm-keepalived-watcher
+  namespace: kube-system
+  resourceVersion: "6815"
+  uid: 8e756fbf-3e1b-4ed2-a60c-5a0e6b85d52c
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - list
+  - watch
+  - get

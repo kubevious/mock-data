@@ -1,0 +1,128 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Knative Authors
+    provider-url: ""
+  name: knative-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: knative-operator.v1.7.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.knative.dev/v1beta1",
+              "kind": "KnativeEventing",
+              "metadata": {
+                "name": "knative",
+                "namespace": "knative-eventing"
+              }
+            },
+            {
+              "apiVersion": "operator.knative.dev/v1beta1",
+              "kind": "KnativeServing",
+              "metadata": {
+                "name": "knative-serving",
+                "namespace": "knative-serving"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Networking,Integration & Delivery,Cloud Provider,Developer Tools
+        certified: "false"
+        containerImage: gcr.io/knative-releases/knative.dev/operator/cmd/operator:v1.7.0
+        createdAt: "2022-08-25T00:00:00Z"
+        description: |-
+          Knative components build on top of Kubernetes, abstracting away the complex details and
+          enabling developers to focus on what matters. Built by codifying the best practices
+          shared by successful real-world implementations, Knative solves the "boring but difficult"
+          parts of deploying and managing cloud native services so you don't have to.
+        operators.operatorframework.io/builder: operator-sdk-v1.22.0+git
+        operators.operatorframework.io/project_layout: ""
+        repository: https://github.com/knative/operator
+        support: The Knative Authors
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - kind: KnativeEventing
+          name: knativeeventings.operator.knative.dev
+          version: v1beta1
+        - kind: KnativeServing
+          name: knativeservings.operator.knative.dev
+          version: v1beta1
+      description: |
+        ## Knative Serving
+           Knative Serving builds on Kubernetes to support deploying and serving of
+           applications and functions as serverless containers. Serving is easy to get
+           started with and scales to support advanced scenarios. Other features
+           includes:
+           - Rapid deployment of serverless containers
+           - Automatic scaling up and down to zero
+           - Routing and network programming
+           - Point-in-time snapshots of deployed code and configurations
+
+        ## Knative Eventing
+           Knative Eventing is a system that is designed to address a common need for cloud native
+           development and provides composable primitives to enable late-binding event sources and
+           event consumers.
+           Knative Eventing is designed to address a common need for cloud native development:
+           - Services are loosely coupled during development and deployed independently
+           - A producer can generate events before a consumer is listening, and a consumer
+              can express an interest in an event or class of events that is not yet being
+              produced.
+           - Services can be connected to create new applications
+              * without modifying producer or consumer, and
+              * with the ability to select a specific subset of events from a particular
+                producer.
+      displayName: Knative Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - serverless
+      - FaaS
+      - microservices
+      - scale to zero
+      - knative
+      - serving
+      - eventing
+      links:
+      - name: Documentation
+        url: https://knative.dev/docs/install/operator/knative-with-operators/
+      - name: Source Repository
+        url: https://github.com/knative
+      maintainers:
+      - email: knative-dev@googlegroups.com
+        name: The Knative Authors
+      maturity: stable
+      minKubeVersion: 1.22.0
+      provider:
+        name: The Knative Authors
+      relatedImages:
+      - gcr.io/knative-releases/knative.dev/operator/cmd/operator:v1.7.0
+      - gcr.io/knative-releases/knative.dev/operator/cmd/webhook:v1.7.0
+      version: 1.7.0
+    name: stable
+  defaultChannel: stable
+  packageName: knative-operator
+  provider:
+    name: The Knative Authors

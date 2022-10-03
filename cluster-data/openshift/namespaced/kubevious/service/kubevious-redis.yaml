@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  labels:
+    app.kubernetes.io/component: kubevious-redis
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-redis
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: installer.kubevious.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Kubevious
+    name: kubevious
+    uid: 925b27a2-92df-4bef-b14b-db572cd5c3e8
+  resourceVersion: "21238"
+  uid: c87e67a6-a86e-4afa-8fa6-244c91b33fee
+spec:
+  clusterIP: 172.21.6.31
+  clusterIPs:
+  - 172.21.6.31
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: redis
+    port: 6379
+    protocol: TCP
+    targetPort: redis
+  selector:
+    app.kubernetes.io/component: kubevious-redis
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

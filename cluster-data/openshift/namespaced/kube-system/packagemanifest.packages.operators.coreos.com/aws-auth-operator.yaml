@@ -1,0 +1,119 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Gennady Potapov
+    provider-url: https://ops42.org
+  name: aws-auth-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: aws-auth-operator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "auth.ops42.org/v1alpha1",
+              "kind": "AwsAuthSyncConfig",
+              "metadata": {
+                "name": "default",
+                "namespace": "kube-system"
+              },
+              "spec": {
+                "syncIamGroups": [
+                  {
+                    "dest": "dev-operator-k8s-admins",
+                    "source": "dev-operator-k8s-admins"
+                  },
+                  {
+                    "dest": "dev-operator-k8s-users",
+                    "source": "dev-operator-k8s-users"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        containerImage: docker.io/gp42/aws-auth-operator:0.1.0
+        createdAt: "2021-09-10T08:00:00Z"
+        description: Automates AWS auth-cm ConfigMap management
+        operators.operatorframework.io/builder: operator-sdk-v1.8.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/gp42/aws-auth-operator
+        support: Gennady Potapov
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: AwsAuthSyncConfig is the Schema for the awsauthsyncconfigs
+            API
+          displayName: Aws Auth Sync Config
+          kind: AwsAuthSyncConfig
+          name: awsauthsyncconfigs.auth.ops42.org
+          version: v1alpha1
+      description: "AWS Auth Operator helps to manage\n['aws-auth'](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html)
+        ConfigMap for AWS\nEKS.\n\nThe challenge with *aws-auth* ConfigMap this operator
+        is trying to solve is manual effort to\nmaintain the ConfigMap. The ConfigMap
+        allows to let specific AWS IAM Roles and Users to use the EKS\ncluster, but
+        both approaches are not ideal because: \n\n* Using MapRoles does not show
+        which user was executing cluster actions in Kubernetes Audit logs\n* Using
+        MapUsers resolves the Kubernetes Audit log issue, but there are no good tools
+        to manage the\nusers\n\nThis operator is supposed to solve these problems
+        by providing a tool for automated IAM Group\nsynchronization and *aws-auth*
+        ConfigMap management.\n\n## Instructions\n\nPlease check the [installation](https://ops42.org/aws-auth-operator/installation/)
+        documentation"
+      displayName: AWS Auth Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - aws
+      - eks
+      - aws-auth
+      - iam
+      - rbac
+      - access
+      - user
+      - management
+      links:
+      - name: GitHub
+        url: https://github.com/gp42/aws-auth-operator
+      - name: Documentation
+        url: https://ops42.org/aws-auth-operator
+      - name: Blog
+        url: https://ops42.org
+      maintainers:
+      - email: gennadiy.potapov@gmail.com
+        name: Gennady Potapov
+      maturity: alpha
+      minKubeVersion: 1.20.0
+      provider:
+        name: Gennady Potapov
+        url: https://ops42.org
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - docker.io/gp42/aws-auth-operator:0.1.0
+      version: 0.1.0
+    name: stable
+  defaultChannel: stable
+  packageName: aws-auth-operator
+  provider:
+    name: Gennady Potapov
+    url: https://ops42.org

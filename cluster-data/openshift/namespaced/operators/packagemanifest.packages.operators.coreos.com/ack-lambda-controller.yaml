@@ -1,0 +1,147 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-lambda-controller
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-lambda-controller.v0.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "lambda.services.k8s.aws/v1alpha1",
+              "kind": "Alias",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "lambda.services.k8s.aws/v1alpha1",
+              "kind": "CodeSigningConfig",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "lambda.services.k8s.aws/v1alpha1",
+              "kind": "EventSourceMapping",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "lambda.services.k8s.aws/v1alpha1",
+              "kind": "Function",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/lambda-controller:v0.1.1
+        createdAt: "2022-09-12 16:32:39"
+        description: AWS Lambda controller is a service controller for managing Lambda
+          resources in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Alias represents the state of an AWS lambda Alias resource.
+          displayName: Alias
+          kind: Alias
+          name: aliases.lambda.services.k8s.aws
+          version: v1alpha1
+        - description: CodeSigningConfig represents the state of an AWS lambda CodeSigningConfig
+            resource.
+          displayName: CodeSigningConfig
+          kind: CodeSigningConfig
+          name: codesigningconfigs.lambda.services.k8s.aws
+          version: v1alpha1
+        - description: EventSourceMapping represents the state of an AWS lambda EventSourceMapping
+            resource.
+          displayName: EventSourceMapping
+          kind: EventSourceMapping
+          name: eventsourcemappings.lambda.services.k8s.aws
+          version: v1alpha1
+        - description: Function represents the state of an AWS lambda Function resource.
+          displayName: Function
+          kind: Function
+          name: functions.lambda.services.k8s.aws
+          version: v1alpha1
+        - description: FunctionURLConfig represents the state of an AWS lambda FunctionURLConfig
+            resource.
+          displayName: FunctionURLConfig
+          kind: FunctionURLConfig
+          name: functionurlconfigs.lambda.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Amazon Lambda resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon Lambda**
+
+        Lambda is a compute service that lets you run code without provisioning or managing servers. Lambda runs your code on a high-availability compute infrastructure and performs all of the administration of the compute resources, including server and operating system maintenance, capacity provisioning and automatic scaling, code monitoring and logging. With Lambda, you can run code for virtually any type of application or backend service. All you need to do is supply your code in one of the [languages that Lambda supports](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html).
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon Lambda
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - lambda
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon Lambda Developer Resources
+        url: https://aws.amazon.com/lambda/resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: lambda maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/lambda-controller:v0.1.1
+      version: 0.1.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-lambda-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

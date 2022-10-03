@@ -1,0 +1,114 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM Quantum
+    provider-url: ""
+  name: ibm-quantum-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ibm-quantum-operator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "singhp11.io/v1",
+              "kind": "Ibmq",
+              "metadata": {
+                "name": "example-ibmq"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime
+        certified: "false"
+        containerImage: quay.io/application/husky_parul/ibm-quantum-operator
+        createdAt: 2020-008-28 22:25:53
+        description: Operator to run quantum circuits build using Qiskit on IBM quantum
+          systems
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/redhat-et/ibm-quantum-operator
+        support: https://github.com/redhat-et/ibm-quantum-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Operator to run quantum circuits build using Qiskit on IBM
+            quantum systems
+          kind: Ibmq
+          name: ibmqs.singhp11.io
+          version: v1
+      description: "\n#### Introduction\nIBM quantum operator creates a flexible serving
+        system for quantum circuits implemented in Qiskit. \n\nHere are some key features:\n####
+        Flexible REST endpoints for running quantum workloads in a Kubernetes cluster\n\nYou
+        can submit quantum workloads implemented in Qiskit which are executed on IBM
+        Quantum Experience. Workloads are executed as pods, orchestrated and managed
+        by Kube APIs  \n\n\n#### Environment Configuration & Scheduling \nThe operator
+        authenticated the caller and mount the equivalent secrets on the quantum workloads
+        pods. The default scheduler picks the least busy backend thats satisfies number
+        of qubits requested for the workload. \n\n#### High Availability via Horizontal
+        Pod Autoscaling\nRun multiple instances of the server system for high availability.
+        Either specify\na static number of replicas or easily configure horizontal
+        auto scaling to create (and delete)\ninstances based on resource consumption.\n\n####
+        IBM Quantum Experience\n\nIBM Quantum Experience is quantum on the cloud.
+        With IBM Quantum Experience you can\n\nPut quantum to work - Run experiments
+        on IBM Q systems and simulators available to the public and IBM Q Network.\nDevelop
+        and deploy - Explore quantum applications in areas such as chemistry, optimization,
+        finance, and AI.\nQuantum innovation - Stay informed and contribute to the
+        future of quantum. Be part of the largest quantum community.\n\nQiskit is
+        an open-source framework for working with quantum computers at the level of
+        circuits, pulses, and algorithms. A central goal of Qiskit is\nto build a
+        software stack that makes it easy for anyone to use quantum computers. \n\n\n\n###
+        Documentation\nFor detailed installation guide [follow](https://github.com/redhat-et/ibm-quantum-operator/blob/master/README.md)\n\n###Note\n\nThe
+        user needs to ensure that the secret exists in their Kuberenetes namespace/project
+        where the operator will be installed. \nAny api could be changed any time
+        without any notice. That said, your feedback is very important and appreciated
+        to make this project more stable and useful.\n\n### Contributing\nYou can
+        contribute by\n  * Raising any [issues](https://github.com/redhat-et/ibm-quantum-operator/issues)
+        you find using ibm-quantum-operator community operator\n  * Fixing issues
+        by opening [Pull Requests](https://github.com/redhat-et/ibm-quantum-operator/pulls)\n
+        \ * Talking about ibm-quantum-operator\n  \n### License\nibm-quantum-operator
+        is licensed under the [Apache 2.0 license](https://github.com/redhat-et/ibm-quantum-operator/blob/master/LICENSE)"
+      displayName: Ibm Quantum Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - open source
+      - qiskit
+      - quantum
+      - IBM Quantum Experience
+      links:
+      - name: GitHub
+        url: https://github.com/redhat-et/ibm-quantum-operator
+      maintainers:
+      - email: ismael.faro1@ibm.com
+        name: Ismael Faro
+      maturity: alpha
+      provider:
+        name: IBM Quantum
+      relatedImages:
+      - quay.io/husky_parul/ibm-q:v0.1.0
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: ibm-quantum-operator
+  provider:
+    name: IBM Quantum

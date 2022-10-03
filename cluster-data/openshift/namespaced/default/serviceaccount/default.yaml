@@ -1,0 +1,14 @@
+apiVersion: v1
+imagePullSecrets:
+- name: default-dockercfg-tdrvv
+- name: all-icr-io
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:18Z"
+  name: default
+  namespace: default
+  resourceVersion: "5627"
+  uid: d4293045-98ed-4eed-a691-9dee4233034b
+secrets:
+- name: default-token-ps6bl
+- name: default-dockercfg-tdrvv

@@ -1,0 +1,219 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: WildFly
+    provider-url: ""
+  name: wildfly
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: wildfly-operator.v0.5.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion": "wildfly.org/v1alpha1",
+              "kind": "WildFlyServer",
+              "metadata": {
+                "name": "quickstart"
+              },
+              "spec": {
+                "applicationImage": "quay.io/wildfly-quickstarts/wildfly-operator-quickstart:18.0",
+                "replicas": 1
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Application Runtime
+        certified: "false"
+        containerImage: quay.io/wildfly/wildfly-operator:0.5.6
+        createdAt: "2022-03-08T08:00:00Z"
+        description: Operator that deploys and manages Java applications running on
+          WildFly.
+        repository: https://github.com/wildfly/wildfly-operator
+        support: WildFlyServer
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: An application running on WildFly application runtime.
+          displayName: WildFlyServer
+          kind: WildFlyServer
+          name: wildflyservers.wildfly.org
+          version: v1alpha1
+      description: "WildFly is a flexible, lightweight, managed application runtime
+        that helps you build amazing applications. Fly Fast, and Free!\n## Save Time
+        With Faster Development\nWildFly supports the latest standards for REST based
+        data access, including JAX-RS 2, and JSON-P. Building on Jakarta EE provides
+        rich enterprise capabilities in easy to consume frameworks that eliminate
+        boilerplate and reduce technical burden.\nThe quick boot of WildFly combined
+        with the easy-to-use Arquillian framework allows for test driven development
+        using the real environment your code will be running in. Your test code is
+        separate and simply deployed along side your application where it has full
+        access to server resources.\n## Save Resources With Efficient Management\nWildFly
+        takes an aggressive approach to memory management and is based on pluggable
+        subsystems that can be added or removed as needed.\n\nThe quick boot of WildFly
+        combined with the easy-to-use Arquillian framework allows for test driven
+        development using the real environment your code will be running in. Your
+        test code is separate and simply deployed along side your application where
+        it has full access to server resources.\nConfiguration in WildFly is centralized,
+        simple and user-focused. The configuration file is organized by subsystems
+        that you can easily comprehend and no internal server wiring is exposed. Subsystems
+        use intelligent defaults, but can still be customized to best fit your needs.
+        If you are running in domain mode, the configuration for all servers participating
+        in the domain is specified in a well-organized manner within the same file.\n##
+        Save Money With Open Source\nWildFly is an open source community project sponsored
+        by Red Hat(TM) and is available for use and distribution under the LGPL v2.1
+        license meaning that it is available for you to download and use at no cost.
+        This allows organizations like yours to develop amazing new technologies and
+        federates the tech world to allow successful startups to come from anywhere.\n##
+        Basic Install (Phase I)\nThe features and capabilities of Basic Install (Phase
+        I) deals with the provisioning, installation and configuration of a Java application
+        managed by the WildFly Operator.\n### Specify the Docker Application Image\nThe
+        `applicationImage` specifies the Docker application image that contains the
+        Java application. The image must have been built [WildFly S2I](https://github.com/wildfly/wildfly-s2i).\n\n
+        \   spec:\n       applicationImage: \"quay.io/wildfly-quickstarts/wildfly-operator-quickstart:18.0\"\n\nThe
+        `applicationImage` accepts different references to Docker image:\n\n  * the
+        name of the image: `quay.io/wildfly-quickstarts/wildfly-operator-quickstart`\n
+        \ * a tag: `quay.io/wildfly-quickstarts/wildfly-operator-quickstart:18.0`\n
+        \ * a digest: `quay.io/wildfly-quickstarts/wildfly-operator-quickstart@sha256:0af38bc38be93116b6a1d86a9c78bd14cd527121970899d719baf78e5dc7bfd2`\n
+        \ * an image stream tag: `my-app:latest`\n\n### Specify that the application
+        image uses aBootable JAR\nThe bootableJar specifies whether the application
+        image is a Bootable JAR server. If this configuration is unspecified, the
+        WildFly Operator assumes that the application image is an S2I image.\nExample
+        of Bootable JAR configuration\n\n    spec:\n      bootableJar: true\n\n###
+        Specify the Size of the Application\nThe `replicas` specifies the size of
+        the application, i.e. the number of pods that runs the application image.\n\n
+        \   spec:\n      replicas:2\n\n### Specify the Storage Requirements for the
+        Server Data Directory\nThe `storage` defines the storage requirements for
+        the application data. The application may require persistent storage for some
+        data (e.g. transaction or messaging logs) that must persist across Pod restarts.\nIf
+        the `storage` spec is empty, an `EmptyDir` volume will be used by each pod
+        of the application (but this volume will not persist after its corresponding
+        pod is stopped).\n\n    spec:\n      storage:\n        volumeClaimTemplate:\n
+        \         spec:\n            resources:\n              requests:\n                storage:
+        3Gi\n\nThe persistent volume that meets this storage requirement is mounted
+        on the `/wildfly/standalone/data` directory (corresponding to WildFly's `jboss.server.data.dir`
+        path).\n### Configure the Application Environment\nEnvironment can be configured
+        using the `env` spec. Environment variables can come directly from values
+        (such as the `POSTGRESQL_SERVICE_HOST` example below) or from secrets (e.g.
+        the `POSTGRESQL_USER` example below).\n\n    spec:\n      env:\n      - name:
+        POSTGRESQL_SERVICE_HOST\n        value: postgresql\n      - name: POSTGRESQL_SERVICE_PORT\n
+        \       value: '5432'\n      - name: POSTGRESQL_DATABASE\n        valueFrom:\n
+        \         secretKeyRef:\n            key: database-name\n            name:
+        postgresql\n      - name: POSTGRESQL_USER\n        valueFrom:\n          secretKeyRef:\n
+        \           key: database-user\n            name: postgresql\n      - name:
+        POSTGRESQL_PASSWORD\n        valueFrom:\n          secretKeyRef:\n            key:
+        database-password\n            name: postgresql\n\n### Configure Secrets\nSecrets
+        can be mounted as volumes to be accessed from the application.\nThe secrets
+        must be created *before* the WildFly Operator deploys the application. For
+        example we can create a secret named `my-secret` with a command such as:\n\n
+        \   $ kubectl create secret generic my-secret --from-literal=my-key=devuser
+        --from-literal=my-password='my-very-secure-pasword'\n\nOnce the secret has
+        been created, we can specify its name in the WildFlyServer Spec to have it
+        mounted as a volume in the pods running the application:\nOnce the secret
+        has been created, we can specify its name in the WildFlyServer Spec to have
+        it mounted as a volume in the pods running the application:\n\n    spec:\n
+        \     secrets:\n        - my-secret\n\nThe secrets will then be mounted under
+        `/etc/secrets/<secret name>` and each key/value will be stored in a file (whose
+        name is the key and the content is the value).\n\n    $ ls /etc/secrets/my-secret/\n
+        \   my-key  my-password\n    $ cat /etc/secrets/my-secret/my-key\n    devuser\n
+        \   $ cat /etc/secrets/my-secret/my-password\n    my-very-secure-pasword\n\n###
+        Configure ConfigMaps\nConfigMaps can be mounted as volumes to be accessed
+        from the application.\nThe config maps must be created *before* the WildFly
+        Operator deploys the application. For example we can create a config map named
+        `my-config` with a command such as:\n\n    $ kubectl create configmap my-config
+        --from-literal=key1=value1 --from-literal=key2=value2\n    configmap/my-config
+        created\n\nOnce the config map has been created, we can specify its name in
+        the WildFlyServer Spec to have it mounted as a volume in the pods running
+        the application:\n\n    spec:\n      configMaps:\n      - my-config\n\nThe
+        config maps will then be mounted under `/etc/configmaps/<config map name>`
+        and each key/value will be stored in a file (whose name is the key and the
+        content is the value).\n\n    $ ls /etc/configmaps/my-config/\n    key1 key2\n
+        \   $ cat /etc/configmaps/my-config/key1\n    value1\n    $ cat /etc/configmaps/my-config/key2\n
+        \   value2\n\n### Bring Your Own Standalone XML Configuation\nIt is possible
+        to directly provide WildFly standalone configuration instead of the one in
+        the application image (that comes from WildFly S2I).\nThe standalone XML file
+        must be put in a ConfigMap that is accessible by the operator. The `standaloneConfigMap`
+        must provide the name of this ConfigMap as well as the key corresponding to
+        the name of standalone XML file.\n\n    spec:\n      standaloneConfigMap:\n
+        \       name: clusterbench-config-map\n        key: standalone-openshift.xml\n\nIn
+        this example, the `clusterbench-config-map` must be created before the WildFly
+        Operator deploys the application.\n\n    $ kubectl create configmap clusterbench-config-map
+        --from-file examples/clustering/config/standalone-openshift.xml\n    configmap/clusterbench-config-map
+        created\n\n## OpenShift Features\nSome Operator features are only available
+        when running on OpenShift if Kubernetes does not provide the required resources
+        to activate these features.\n### Seamless Upgrades (Phase II)\nWhen the `applicationImage`
+        corresponds to an ImageStream Tag of an ImageStream in the same namespace,
+        the WildFly operator will detect any changes to the application image and
+        triggers a new deployment of the application.\n### Creation of an HTTP Route\nBy
+        default, when the Operator runs on OpenShift, it creates an external route
+        to the HTTP port of the Java application.\nThis route creation can be disabled
+        by setting `disableHTTPRoute` to `true` if you do not wish to create an external
+        route to the Java application.\n\n    spec:\n      disableHTTPRoute: true\n\n##
+        Full Lifecycle (Phase III)\n### Transaction recovery during scaledown\nAs
+        the application deployed in the WildFly application server may use JTA transactions
+        there and the question emerges: what does happen when the cluster is scaled
+        down? When the number of active WildFly replicas is decreased, still there
+        may be some in-doubt transactions in the transaction log. When the pod is
+        removed then all the in-progress transactions are stopped and rolled back.
+        A more troublesome situation occurs when XA transactions are used. When the
+        XA transaction declares it's prepared it's a promise to finish the transaction
+        successfully. But the transaction manager which made this promise is running
+        inside the WildFly server. Then simply shutting down such pod may lead to
+        data inconsistencies or data locks.  \n\nIt must be ensured that all transactions
+        are finished before the number of replicas is really decreased. For that purpose,
+        the WildFly Operator provides scale down functionality which verifies if all
+        transactions were finished and only then marks the pod as clean for termination.
+        \ \n\nFull documentation of transaction recovery can be found at [WildFly
+        Operator User Guide](https://github.com/wildfly/wildfly-operator/blob/master/doc/user-guide.adoc#scaledown-transaction-recovery).\n"
+      displayName: WildFly
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - wildfly
+      - java
+      - open source
+      - application runtime
+      links:
+      - name: WildFly Homepage
+        url: https://wildfly.org/
+      - name: Blog
+        url: https://wildfly.org/news/
+      - name: Documentation
+        url: https://docs.wildfly.org
+      - name: Quickstart
+        url: https://github.com/wildfly/quickstart
+      maintainers:
+      - email: wildfly-dev@lists.jboss.org
+        name: WildFly Community
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: WildFly
+      relatedImages:
+      - quay.io/wildfly/wildfly-operator:0.5.6
+      version: 0.5.6
+    name: alpha
+  defaultChannel: alpha
+  packageName: wildfly
+  provider:
+    name: WildFly

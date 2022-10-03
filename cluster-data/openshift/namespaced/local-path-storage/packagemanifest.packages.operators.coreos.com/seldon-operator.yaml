@@ -1,0 +1,243 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Seldon Technologies
+    provider-url: ""
+  name: seldon-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: seldon-operator.v1.14.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "machinelearning.seldon.io/v1",
+              "kind": "SeldonDeployment",
+              "metadata": {
+                "labels": {
+                  "app": "seldon",
+                  "app.kubernetes.io/instance": "seldon1",
+                  "app.kubernetes.io/name": "seldon",
+                  "app.kubernetes.io/version": "v0.5"
+                },
+                "name": "seldon-model"
+              },
+              "spec": {
+                "name": "test-deployment",
+                "predictors": [
+                  {
+                    "componentSpecs": [
+                      {
+                        "spec": {
+                          "containers": [
+                            {
+                              "image": "seldonio/mock_classifier:1.6.0",
+                              "name": "classifier"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "graph": {
+                      "children": [],
+                      "name": "classifier",
+                      "type": "MODEL"
+                    },
+                    "name": "example",
+                    "replicas": 1
+                  }
+                ]
+              },
+              "status": {}
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: AI/Machine Learning
+        certified: "false"
+        containerImage: docker.io/seldonio/seldon-core-operator:1.14.1
+        createdAt: "2019-05-21 15:00:00"
+        description: The Seldon operator for management, monitoring and operations
+          of machine learning systems through the Seldon Engine. Once installed, the
+          Seldon Operator provides multiple functions which facilitate the productisation,
+          monitoring and maintenance of machine learning systems at scale.
+        olm.skipRange: <1.13.1
+        operators.operatorframework.io/builder: operator-sdk-v1.22.2
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/SeldonIO/seldon-core
+        support: Clive Cox
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A seldon engine deployment
+          displayName: Seldon Deployment
+          kind: SeldonDeployment
+          name: seldondeployments.machinelearning.seldon.io
+          version: v1
+      description: "The Seldon operator enables for native operation of production
+        machine learning workloads, including monitoring and operations of language-agnostic
+        models with the benefits of real-time metrics and log analysis.\n   \n## Overview\nSeldon
+        Core is an open source platform for deploying machine learning models on a
+        Kubernetes cluster.\n\n* Deploy machine learning models in the cloud or on-premise.\n*
+        Get metrics and ensure proper governance and compliance for your running machine
+        learning models.\n* Create powerful inference graphs made up of multiple components.\n*
+        Provide a consistent serving layer for models built using heterogeneous ML
+        toolkits.\n\nYou can get started by following the guides in our documentation
+        at https://docs.seldon.io/projects/seldon-core/en/latest/workflow/README.html\n"
+      displayName: Seldon Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - mlops
+      - aiops
+      - production
+      - monitoring
+      links:
+      - name: Website
+        url: https://www.seldon.io/
+      - name: Documentation
+        url: https://docs.seldon.io/projects/seldon-core/en/latest/
+      maintainers:
+      - email: hello@seldon.io
+        name: Seldon Technologies
+      maturity: stable
+      minKubeVersion: 1.16.0
+      provider:
+        name: Seldon Technologies
+      relatedImages:
+      - ""
+      - docker.io/seldonio/seldon-core-operator:1.14.1
+      version: 1.14.1
+    name: stable
+  - currentCSV: seldon-operator.v1.11.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "machinelearning.seldon.io/v1",
+              "kind": "SeldonDeployment",
+              "metadata": {
+                "labels": {
+                  "app": "seldon",
+                  "app.kubernetes.io/instance": "seldon1",
+                  "app.kubernetes.io/name": "seldon",
+                  "app.kubernetes.io/version": "v0.5"
+                },
+                "name": "seldon-model"
+              },
+              "spec": {
+                "name": "test-deployment",
+                "predictors": [
+                  {
+                    "componentSpecs": [
+                      {
+                        "spec": {
+                          "containers": [
+                            {
+                              "image": "seldonio/mock_classifier:1.11.0",
+                              "name": "classifier"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "graph": {
+                      "children": [],
+                      "name": "classifier",
+                      "type": "MODEL"
+                    },
+                    "name": "example",
+                    "replicas": 1
+                  }
+                ]
+              },
+              "status": {}
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: AI/Machine Learning
+        certified: "false"
+        containerImage: seldonio/seldon-core-operator:1.11.1
+        createdAt: "2019-05-21 15:00:00"
+        description: The Seldon operator for management, monitoring and operations
+          of machine learning systems through the Seldon Engine. Once installed, the
+          Seldon Operator provides multiple functions which facilitate the productisation,
+          monitoring and maintenance of machine learning systems at scale.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        operators.operatorframework.io/builder: operator-sdk-v1.12.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/SeldonIO/seldon-core
+        support: Clive Cox
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A seldon engine deployment
+          displayName: Seldon Delpoyment
+          kind: SeldonDeployment
+          name: seldondeployments.machinelearning.seldon.io
+          version: v1
+      description: "The Seldon operator enables for native operation of production
+        machine learning workloads, including monitoring and operations of language-agnostic
+        models with the benefits of real-time metrics and log analysis.\n   \n## Overview\nSeldon
+        Core is an open source platform for deploying machine learning models on a
+        Kubernetes cluster.\n\n* Deploy machine learning models in the cloud or on-premise.\n*
+        Get metrics and ensure proper governance and compliance for your running machine
+        learning models.\n* Create powerful inference graphs made up of multiple components.\n*
+        Provide a consistent serving layer for models built using heterogeneous ML
+        toolkits.\n\nYou can get started by following the guides in our documentation
+        at https://docs.seldon.io/projects/seldon-core/en/latest/workflow/README.html\n"
+      displayName: Seldon Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - mlops
+      - aiops
+      - production
+      - monitoring
+      links:
+      - name: Website
+        url: https://www.seldon.io/
+      - name: Documentation
+        url: https://docs.seldon.io/projects/seldon-core/en/latest/
+      maintainers:
+      - email: hello@seldon.io
+        name: Seldon Technologies
+      maturity: stable
+      minKubeVersion: 1.16.0
+      provider:
+        name: Seldon Technologies
+      relatedImages:
+      - seldonio/seldon-core-operator:1.11.1
+      version: 1.11.1
+    name: alpha
+  defaultChannel: stable
+  packageName: seldon-operator
+  provider:
+    name: Seldon Technologies

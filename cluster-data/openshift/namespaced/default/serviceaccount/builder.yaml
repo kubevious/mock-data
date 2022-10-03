@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: builder-dockercfg-59h9s
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:25:56Z"
+  name: builder
+  namespace: default
+  resourceVersion: "1134"
+  uid: 5b84b909-e6f7-443f-9c3a-251cfb7cc711
+secrets:
+- name: builder-token-s4fkg
+- name: builder-dockercfg-59h9s

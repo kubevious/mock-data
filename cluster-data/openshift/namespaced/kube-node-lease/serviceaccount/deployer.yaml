@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: deployer-dockercfg-27d29
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:25:56Z"
+  name: deployer
+  namespace: kube-node-lease
+  resourceVersion: "1003"
+  uid: 258c50f0-601d-43e3-afd8-97b8bfdcef19
+secrets:
+- name: deployer-dockercfg-27d29
+- name: deployer-token-gc2jr

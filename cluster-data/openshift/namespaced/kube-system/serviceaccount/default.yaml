@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: default-dockercfg-f25gl
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:17Z"
+  name: default
+  namespace: kube-system
+  resourceVersion: "1953"
+  uid: f683af4c-9831-4485-bfbe-60a9125c8be9
+secrets:
+- name: default-token-6g56v
+- name: default-dockercfg-f25gl

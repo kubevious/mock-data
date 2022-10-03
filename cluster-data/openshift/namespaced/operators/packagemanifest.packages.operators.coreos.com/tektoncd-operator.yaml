@@ -1,0 +1,306 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Tekton Authors
+    provider-url: ""
+  name: tektoncd-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: tektoncd-operator.v0.61.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonChain",
+              "metadata": {
+                "name": "chain"
+              },
+              "spec": {
+                "targetNamespace": "tekton-pipelines"
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonConfig",
+              "metadata": {
+                "name": "config"
+              },
+              "spec": {
+                "profile": "all",
+                "pruner": {
+                  "keep": 100,
+                  "resources": [
+                    "pipelinerun",
+                    "taskrun"
+                  ],
+                  "schedule": "0 8 * * *"
+                },
+                "targetNamespace": "tekton-pipelines"
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonDashboard",
+              "metadata": {
+                "name": "dashboard"
+              },
+              "spec": {
+                "targetNamespace": "tekton-pipelines"
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonHub",
+              "metadata": {
+                "name": "hub"
+              },
+              "spec": {
+                "api": {
+                  "hubConfigUrl": "https://raw.githubusercontent.com/tektoncd/hub/main/config.yaml"
+                }
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonInstallerSet",
+              "metadata": {
+                "name": "foo"
+              },
+              "spec": {
+                "manifests": []
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonPipeline",
+              "metadata": {
+                "name": "pipeline"
+              },
+              "spec": {
+                "targetNamespace": "tekton-pipelines"
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonResult",
+              "metadata": {
+                "name": "result"
+              },
+              "spec": {
+                "targetNamespace": "tekton-pipelines"
+              }
+            },
+            {
+              "apiVersion": "operator.tekton.dev/v1alpha1",
+              "kind": "TektonTrigger",
+              "metadata": {
+                "name": "trigger"
+              },
+              "spec": {
+                "targetNamespace": "tekton-pipelines"
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Developer Tools, Integration & Delivery
+        certified: "false"
+        containerImage: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator@sha256:c91ed327f06ad60b3a43a2838eee6b833b78b00ffb482a9de531f452fb90c6fa
+        description: The quickest and easiest way to install, upgrade and manage TektonCD
+          projects on any Kubernetes Cluster.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/tektoncd/operator
+        support: The Tekton Authors
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: |
+            TektonChain installs Tekton Chain on a cluster. The operator installs Tekton Chain on a cluster
+            if an instance of this CRD is created on your cluster with name `chain`. At present, the operator honors only
+            one CustomResource instance with the name `chain` to ensure only one set of Tekton Chain exists on a cluster.
+          displayName: TektonChain
+          kind: TektonChain
+          name: tektonchains.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonConfig installs Tekton Pipelines, Tekton Triggers and Tekton Dashboard on a cluster. The operator installs
+            the 3 components on a cluster if an instance of this CRD is created on your cluster with name `config`.
+            At present, the operator honors only one CustomResource instance with the name `config` to ensure only one set
+            of the three components (Pipelines, Triggers, Dashboard) exists on a cluster. An instance of this CRD will automatically
+            create instances of the other CRDs (TektonPipeline, TektonDashboard and TektonTriggers).
+          displayName: TektonConfig
+          kind: TektonConfig
+          name: tektonconfigs.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonDashboard installs Tekton Dashboard on a cluster. The operator installs Tekton Dashboard on a cluster
+            if an instance of this CRD is created on your cluster with name `dashboard`. At present, the operator honors only
+            one CustomResource instance with the name `dashboard` to ensure only one set of Tekton Dashboard exists on a cluster.
+          displayName: TektonDashboard
+          kind: TektonDashboard
+          name: tektondashboards.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonHub installs Tekton Hub on a cluster. The operator installs Tekton Hub on a cluster
+            if an instance of this CRD is created on your cluster with name `hub`. At present, the operator honors only
+            one CustomResource instance with the name `hub` to ensure only one set of Tekton Hub exists on a cluster.
+          displayName: TektonHubs
+          kind: TektonHub
+          name: tektonhubs.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonInstallerSet internal CRD used by other component reconcilers to create kubernetes resources from their
+            release manifests
+          displayName: TektonInstallerSets
+          kind: TektonInstallerSet
+          name: tektoninstallersets.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonPipeline installs Tekton Pipelines on a cluster. The operator installs Tekton Pipelines on a cluster
+            if an instance of this CRD is created on your cluster with name `pipeline`. At present, the operator honors only
+            one CustomResource instance with the name `pipeline` to ensure only one set of Tekton Pipeline exists on a cluster.
+          displayName: TektonPipeline
+          kind: TektonPipeline
+          name: tektonpipelines.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonResult installs Tekton Results on a cluster. The operator installs Tekton Results on a cluster
+            if an instance of this CRD is created on your cluster with name `result`. At present, the operator honors only
+            one CustomResource instance with the name `result` to ensure only one set of Tekton Results exists on a cluster.
+          displayName: TektonResults
+          kind: TektonResult
+          name: tektonresults.operator.tekton.dev
+          version: v1alpha1
+        - description: |
+            TektonTrigger installs Tekton Triggers on a cluster. The operator installs Tekton Triggers on a cluster
+            if an instance of this CRD is created on your cluster with name `trigger`. At present, the operator honors only
+            one CustomResource instance with the name `trigger` to ensure only one set of Tekton Triggers exists on a cluster.
+          displayName: TektonTriggers
+          kind: TektonTrigger
+          name: tektontriggers.operator.tekton.dev
+          version: v1alpha1
+      description: |
+        Tekton is a powerful and flexible open-source framework for creating CI/CD systems, allowing developers to build,
+        test, and deploy across cloud providers and on-premise systems.
+
+        Read more: https://tekton.dev
+
+        Tektoncd Operator makes is easy to install and maintain TektonCD projects on you cluster.
+
+        ## Tekton Pipeline
+
+        The Tekton Pipelines project provides k8s-style resources for declaring CI/CD-style pipelines.
+
+        Tekton Pipelines are Cloud Native:
+
+        * Run on Kubernetes
+        * Have Kubernetes clusters as a first class type
+        * Use containers as their building blocks
+
+        Tekton Pipelines are Decoupled:
+
+        * One Pipeline can be used to deploy to any k8s cluster
+        * The Tasks which make up a Pipeline can easily be run in isolation
+        * Resources such as git repos can easily be swapped between runs
+
+        Tekton Pipelines are Typed:
+
+        * The concept of typed resources means that for a resource such as an Image, implementations can easily be swapped out (e.g. building with kaniko v.s. buildkit)
+
+        ## Tekton Triggers
+
+        Tekton Triggers is a Kubernetes Custom Resource Definition (CRD) controller that allows you to create Kubernetes resources based on information it extracts from event payloads.
+
+        Tekton is a Kubernetes-native continuous integration and delivery (CI/CD) framework that allows you to create containerized, composable, and configurable workloads declaratively through Kubernetes CRDs.
+        When integrated with Tekton Triggers, Tekton allows you to easily create fully fledged CI/CD systems in which you define all mechanics exclusively using Kubernetes resources.
+
+        ## Tekton Dashboard
+
+        Tekton Dashboard is a general purpose, web-based UI for Tekton Pipelines and Tekton triggers resources.
+
+        It allows users to manage and view Tekton resource creation, execution, and completion.
+
+        Among other things, the Tekton Dashboard supports:
+
+        * Filtering resources by label
+        * Realtime view of PipelineRun and TaskRun logs
+        * View resource details and YAML
+        * Show resources for the whole cluster or limit visibility to a particular namespace
+        * Import resources directly from a git repository
+        * Adding functionality through extensions, like automatically triggering pipelines on git events (GitHub and GitLab supported)
+
+        ## Tekton Chains
+
+        Supply Chain Security in Tekton Pipelines
+
+        ## Tekton Results
+
+        Tekton Results aims to help users logically group CI/CD workload history and separate out long term result storage away from the Pipeline controller. This allows you to:
+
+        * Provide custom Result metadata about your CI/CD workflows not available in the Tekton TaskRun/PipelineRun CRDs (for example: post-run actions)
+        * Group related workloads together (e.g. bundle related TaskRuns and PipelineRuns into a single unit)
+        * Make long-term result history independent of the Pipeline CRD controller, letting you free up etcd resources for Run execution.
+
+        ## Tekton Hub
+
+        The Tekton hub is a web based platform for developers to discover, share and contribute tasks and pipelines for Tekton.
+      displayName: Tektoncd Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - tekton
+      - tektoncd
+      - build
+      - pipeline
+      - cicd
+      links:
+      - name: Tekton Documentation
+        url: https://tekton.dev/
+      - name: Tekton Pipeline
+        url: https://github.com/tektoncd/pipeline
+      - name: Tekton Triggers
+        url: https://github.com/tektoncd/triggers
+      - name: Tekton Dashboard
+        url: https://github.com/tektoncd/dashboard
+      - name: Tekton Chains
+        url: https://github.com/tektoncd/chains
+      - name: Tekton Results
+        url: https://github.com/tektoncd/results
+      - name: Tekton Hub
+        url: https://github.com/tektoncd/hub
+      maintainers:
+      - email: tekton-dev@googlegroups.com
+        name: The Tekton Authors
+      maturity: alpha
+      provider:
+        name: The Tekton Authors
+      relatedImages:
+      - gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator@sha256:c91ed327f06ad60b3a43a2838eee6b833b78b00ffb482a9de531f452fb90c6fa
+      - gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook@sha256:38698adafe8317c6846e967c92c20db205f9a5152b255a92b8190fe0f78a272f
+      version: 0.61.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: tektoncd-operator
+  provider:
+    name: The Tekton Authors

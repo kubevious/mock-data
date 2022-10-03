@@ -1,0 +1,304 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Percona
+    provider-url: ""
+  name: percona-postgresql-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: percona-postgresql-operator.v1.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pg.percona.com/v1",
+              "kind": "PerconaPGCluster",
+              "metadata": {
+                "labels": {
+                  "pgo-version": "1.3.0"
+                },
+                "name": "cluster1"
+              },
+              "spec": {
+                "upgradeOptions": {
+                  "versionServiceEndpoint": "https://check.percona.com",
+                  "apply": "disabled",
+                  "schedule": "0 4 * * *"
+                },
+                "database": "pgdb",
+                "port": "5432",
+                "user": "pguser",
+                "disableAutofail": false,
+                "tlsOnly": false,
+                "standby": false,
+                "pause": false,
+                "keepData": true,
+                "keepBackups": true,
+                "pgPrimary": {
+                  "image": "docker.io/percona/percona-postgresql-operator:1.3.0-ppg14-postgres-ha",
+                  "resources": {
+                    "requests": {
+                      "cpu": "500m",
+                      "memory": "256Mi"
+                    }
+                  },
+                  "tolerations": [],
+                  "volumeSpec": {
+                    "size": "1G",
+                    "accessmode": "ReadWriteOnce",
+                    "storagetype": "dynamic",
+                    "storageclass": ""
+                  },
+                  "expose": {
+                    "serviceType": "ClusterIP"
+                  }
+                },
+                "pmm": {
+                  "enabled": false,
+                  "image": "percona/pmm-client:2.29.1",
+                  "serverHost": "monitoring-service",
+                  "serverUser": "admin",
+                  "pmmSecret": "cluster1-pmm-secret",
+                  "resources": {
+                    "requests": {
+                      "memory": "200M",
+                      "cpu": "500m"
+                    }
+                  }
+                },
+                "backup": {
+                  "image": "docker.io/percona/percona-postgresql-operator:1.3.0-ppg14-pgbackrest",
+                  "backrestRepoImage": "docker.io/percona/percona-postgresql-operator:1.3.0-ppg14-pgbackrest-repo",
+                  "resources": {
+                    "requests": {
+                      "cpu": "200m",
+                      "memory": "48Mi"
+                    }
+                  },
+                  "volumeSpec": {
+                    "size": "1G",
+                    "accessmode": "ReadWriteOnce",
+                    "storagetype": "dynamic",
+                    "storageclass": ""
+                  },
+                  "schedule": [
+                    {
+                      "name": "sat-night-backup",
+                      "schedule": "0 0 * * 6",
+                      "keep": 3,
+                      "type": "full",
+                      "storage": "local"
+                    }
+                  ]
+                },
+                "pgBouncer": {
+                  "image": "docker.io/percona/percona-postgresql-operator:1.3.0-ppg14-pgbouncer",
+                  "size": 3,
+                  "resources": {
+                    "requests": {
+                      "cpu": "1",
+                      "memory": "128Mi"
+                    }
+                  },
+                  "expose": {
+                    "serviceType": "ClusterIP"
+                  }
+                },
+                "pgReplicas": {
+                  "hotStandby": {
+                    "size": 2,
+                    "resources": {
+                      "requests": {
+                        "cpu": "500m",
+                        "memory": "256Mi"
+                      }
+                    },
+                    "volumeSpec": {
+                      "accessmode": "ReadWriteOnce",
+                      "size": "1G",
+                      "storagetype": "dynamic",
+                      "storageclass": ""
+                    },
+                    "enableSyncStandby": false,
+                    "expose": {
+                      "serviceType": "ClusterIP"
+                    }
+                  }
+                },
+                "pgBadger": {
+                  "enabled": false,
+                  "image": "docker.io/percona/percona-postgresql-operator:1.3.0-ppg14-pgbadger",
+                  "port": 10000
+                }
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Database
+        certified: "true"
+        containerImage: docker.io/percona/percona-postgresql-operator:1.3.0-postgres-operator
+        createdAt: "2022-08-11T13:11:44.000Z"
+        description: Percona Operator for PostgreSQL manages the lifecycle of Percona
+          PostgreSQL cluster instances.
+        repository: https://github.com/percona/percona-postgresql-operator
+        support: Percona
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Percona Distribution for PostgreSQL Cluster
+          displayName: Percona Distribution for PostgreSQL Cluster
+          kind: PerconaPGCluster
+          name: perconapgclusters.pg.percona.com
+          version: v1
+        - description: Backup/restore task for Percona Operator for PostgreSQL
+          displayName: Task for Percona Operator for PostgreSQL
+          kind: Pgtask
+          name: pgtasks.pg.percona.com
+          version: v1
+        - description: Internal object for Percona Operator for PostgreSQL
+          displayName: Internal Pgcluster object for Distribution for PostgreSQL Operator
+          kind: Pgcluster
+          name: pgclusters.pg.percona.com
+          version: v1
+        - description: Internal object for Percona Operator for PostgreSQL
+          displayName: Internal Pgreplica object for Distribution for PostgreSQL Operator
+          kind: Pgreplica
+          name: pgreplicas.pg.percona.com
+          version: v1
+        - description: Internal object for Percona Operator for PostgreSQL
+          displayName: Internal Pgreplica object for Distribution for PostgreSQL Operator
+          kind: Pgpolicy
+          name: pgpolicies.pg.percona.com
+          version: v1
+      description: "\n## Percona is Cloud Native\n\nPercona Operator for PostgreSQL
+        automates and simplifies deploying and managing open source PostgreSQL clusters
+        on Kubernetes. Percona Operator for PostgreSQL is based on Postgres Operator
+        developed by Crunchy Data.\nWhether you need to get a simple PostgreSQL cluster
+        up and running, need to deploy a high availability, fault tolerant cluster
+        in production, or are running your own database-as-a-service, the Operator
+        provides the essential features you need to keep your clusters healthy.\n\nConsult
+        the [documentation](https://www.percona.com/doc/kubernetes-operator-for-postgresql/index.html)
+        on the Percona Operator for PostgreSQL for complete details on capabilities
+        and options.\n\n### Supported Features\n\n* **PostgreSQL Cluster Provisioning**\nCreate,
+        Scale, & Delete PostgreSQL clusters with ease, while fully customizing your
+        Pods and PostgreSQL configuration.\n* **High Availability**\n\n    Safe, automated
+        failover backed by a distributed consensus based high-availability solution.
+        Uses Pod Anti-Affinity to help resiliency; you can configure how much\n    enforced
+        this can be. Failed primaries automatically heal, allowing for faster recovery
+        time. Support for standby PostgreSQL clusters that work both within and\n
+        \   across multiple Kubernetes clusters.\n\n* **Disaster Recovery**\n\n    Backups
+        and restores leverage the open source pgBackRest utility and includes support
+        for full, incremental, and differential backups as well as efficient delta\n
+        \   restores. Set how long you want your backups retained for. Works great
+        with very large databases!\n\n* **Communication Security**\n\n    Secure communication
+        between your applications and data servers by enabling TLS for your PostgreSQL
+        servers, including the ability to enforce all of your connections\n    to
+        use TLS.\n\n* **Monitoring**\n\n    Track the health of your PostgreSQL clusters
+        with Percona Monitoring and Management (PMM).\n\n* **PostgreSQL User Management**\n\n
+        \   Quickly add and remove users from your PostgreSQL clusters with powerful
+        commands. Manage password expiration policies or use your preferred PostgreSQL
+        authentication\n    scheme.\n\n* **Updates Management**\n\n    Safely apply
+        PostgreSQL updates with minimal availability impact to your PostgreSQL clusters.\n\n*
+        **Advanced Replication Support**\n\n    Choose between asynchronous replication
+        and synchronous replication for workloads that are sensitive to losing transactions.\n\n*
+        **Clone**\n\n    Create new clusters from your existing clusters or backups.\n\n*
+        **Connection Pooling**\n\n    Use [pgBouncer](https://access.crunchydata.com/documentation/postgres-operator/latest/tutorial/pgbouncer/)
+        for connection pooling\n\n* **Affinity and Tolerations**\n\n    Have your
+        PostgreSQL clusters deployed to Kubernetes Nodes of your preference with node
+        affinity, or designate which nodes Kubernetes can schedule PostgreSQL instances\n
+        \   to with Kubernetes  tolerations.\n\n* **Scheduled Backups**\n\n    Choose
+        the type of backup (full, incremental, differential) and how frequently you
+        want it to occur on each PostgreSQL cluster.\n\n* **Backup to S3**\n\n    Store
+        your backups in Amazon S3 or any object storage system that supports the S3
+        protocol. The Operator can backup, restore, and create new clusters from these
+        backups.\n\n* **Multi-Namespace Support**\n\n    You can control how the Operator
+        leverages Kubernetes Namespaces with several different deployment models:\n\n
+        \   * Deploy the Operator and all PostgreSQL clusters to the same namespace\n
+        \   * Deploy the Operator to one Namespace, and all PostgreSQL clusters to
+        a different Namespace\n    * Deploy the Operator to one Namespace, and have
+        your PostgreSQL clusters managed across multiple Namespaces\n\n* **Full Customizability**\n\n
+        \   The Operator not only makes it easy to get PostgreSQL up and running on
+        Kubernetes-enabled platforms, but also allows you to further customize your
+        deployments:\n\n    * Selecting different storage classes for your primary,
+        replica, and backup storage\n    * Select your own container resources class
+        for each PostgreSQL cluster deployment; differentiate between resources applied
+        for primary and replica clusters\n    * Use your own container image repository,
+        including `imagePullSecrets` and private repositories  support\n    * Customize
+        your PostgreSQL configuration\n    * Bring your own trusted certificate authority
+        (CA) for use with the Operator API server\n    * Override your PostgreSQL
+        configuration for each cluster\n    * Use your own custom images, re-define
+        the image for each container separately\n\n### Release highlights\n* **What's
+        new**\n\n    * The automated upgrade is now disabled by default to prevent
+        an unplanned downtimes for user applications and to provide defaults more
+        focused on strict user’s control over the cluster\n    * Flexible anti-affinity
+        configuration is now available, which allows the Operator to isolate PostgreSQL
+        cluster instances on different Kubernetes nodes or to increase its availability
+        by placing PostgreSQL instances in different availability zones\n    * Add
+        possibility for postgres user to connect to PostgreSQL through PgBouncer with
+        a new pgBouncer.exposePostgresUser Custom Resource option\n    * A new build
+        and testing guide allows user to easily experiment with the source code of
+        the Operator\n    * Fix the bug in the instruction on passing custom configuration
+        options for PostgreSQL which made it usable for the new cluster only\n    *
+        Fix the bug which caused the Operator crash without pgReplicas section in
+        Custom Resource definition\n    * Fix the bug which caused the Operator to
+        make connection requests to Version Service even with disabled Smart Update\n
+        \   * Fix the bug due to which restoring S3 backup from storage with self-signed
+        certificates didn’t work, by introducing the special backup.storages.verifyTLS
+        option to address this issue\n    \n"
+      displayName: Percona Operator for PostgreSQL
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - postgres
+      - postgresql
+      - database
+      - sql
+      - operator
+      - percona
+      links:
+      - name: Percona
+        url: https://www.percona.com/
+      - name: Percona Kubernetes Operators Landing Page
+        url: https://www.percona.com/software/percona-kubernetes-operators
+      - name: Documentation
+        url: https://www.percona.com/doc/kubernetes-operator-for-postgresql/index.html
+      - name: Github
+        url: https://github.com/percona/percona-postgresql-operator
+      maintainers:
+      - email: info@percona.com
+        name: Percona
+      maturity: stable
+      minKubeVersion: 1.11.0
+      provider:
+        name: Percona
+      relatedImages:
+      - docker.io/percona/percona-postgresql-operator:1.3.0-pgo-apiserver
+      - docker.io/percona/percona-postgresql-operator:1.3.0-postgres-operator
+      - docker.io/percona/percona-postgresql-operator:1.3.0-pgo-scheduler
+      - docker.io/percona/percona-postgresql-operator:1.3.0-pgo-event
+      version: 1.3.0
+    name: stable
+  defaultChannel: stable
+  packageName: percona-postgresql-operator
+  provider:
+    name: Percona

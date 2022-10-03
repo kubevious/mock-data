@@ -1,0 +1,146 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: lib-bucket-provisioner
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: lib-bucket-provisioner.v1.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "objectbucket.io/v1alpha1",
+              "kind": "ObjectBucketClaim",
+              "metadata": {
+                "name": "my-obc",
+                "namespace": "my-app"
+              },
+              "spec": {
+                "storageClassName": "object-bucket-class",
+                "generateBucketName": "my-obc",
+                "SSL": false,
+                "versioned": false,
+                "additionalConfig": {}
+              }
+            },
+            {
+              "apiVersion": "objectbucket.io/v1alpha1",
+              "kind": "ObjectBucket",
+              "metadata": {
+                "name": "my-obc"
+              },
+              "spec": {
+                "storageClassName": "object-bucket-class",
+                "reclaimPolicy": "Delete",
+                "claimRef": {
+                  "name": "my-obc",
+                  "namespace": "my-app"
+                },
+                "endpoint": {
+                  "bucketHost": "xxx",
+                  "bucketPort": 80,
+                  "bucketName": "my-obc-1234-5678-1234-5678",
+                  "region": "xxx",
+                  "subRegion": "xxx",
+                  "ssl": false,
+                  "additionalConfig": {}
+                },
+                "additionalState": {}
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Storage,Big Data
+        certified: "false"
+        containerImage: kubernetes/pause
+        createdAt: "2014-07-19 07:02:32.267701"
+        description: Library for the dynamic provisioning of object store buckets
+          to be used by object store providers.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/kube-object-storage/lib-bucket-provisioner
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Claim a bucket just like claiming a PV. Automate you app bucket
+            provisioning by creating OBC with your app deployment. A secret and configmap
+            (name=claim) will be created with access details for the app pods.
+          displayName: ObjectBucketClaim
+          kind: ObjectBucketClaim
+          name: objectbucketclaims.objectbucket.io
+          version: v1alpha1
+        - description: Used under-the-hood. Created per ObjectBucketClaim and keeps
+            provisioning information
+          displayName: ObjectBucket
+          kind: ObjectBucket
+          name: objectbuckets.objectbucket.io
+          version: v1alpha1
+      description: "### CRD-only Operator\n\nThis operator package is **CRD-only**
+        and the operator is a no-op operator.\n\nInstead, bucket provisioners using
+        this library are using these CRD's and using CSV [required-crds](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/building-your-csv.md#required-crds)
+        them so that OLM can install it as a dependency.\n\n### Generic Bucket Provisioning\n\nKubernetes
+        natively supports dynamic provisioning for many types of file and block storage,
+        but lacks support for object bucket provisioning. \n\nThis repo is a placeholder
+        for an object store bucket provisioning library, very similar to the Kubernetes
+        [sig-storage-lib-external-provisioner](https://github.com/kubernetes-sigs/sig-storage-lib-external-provisioner/blob/master/controller/controller.go)
+        library.\n\n### Known Provisioners\n- https://github.com/noobaa/noobaa-operator
+        (NooBaa)\n- https://github.com/rook/rook (Rook-Ceph)\n- https://github.com/yard-turkey/aws-s3-provisioner
+        (AWS-S3)\n"
+      displayName: lib-bucket-provisioner
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - kubernetes
+      - openshift
+      - object
+      - bucket
+      - storage
+      - cloud
+      - s3
+      links:
+      - name: Github
+        url: https://github.com/kube-object-storage/lib-bucket-provisioner
+      maintainers:
+      - email: jcope@redhat.com
+        name: Jon Cope
+      - email: jvance@redhat.com
+        name: Jeff Vance
+      - email: gmargali@redhat.com
+        name: Guy Margalit
+      - email: dzaken@redhat.com
+        name: Danny Zaken
+      - email: nbecker@redhat.com
+        name: Nimrod Becker
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - kubernetes/pause
+      version: 1.0.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: lib-bucket-provisioner
+  provider:
+    name: Red Hat

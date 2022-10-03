@@ -1,0 +1,497 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Dell Technologies
+    provider-url: ""
+  name: dell-csi-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: dell-csi-operator.v1.9.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "storage.dell.com/v1",
+              "kind": "CSIIsilon",
+              "metadata": {
+                "name": "isilon",
+                "namespace": "test-isilon"
+              },
+              "spec": {
+                "driver": {
+                  "common": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_VERBOSE",
+                        "value": "1"
+                      },
+                      {
+                        "name": "X_CSI_ISI_PORT",
+                        "value": "8080"
+                      },
+                      {
+                        "name": "X_CSI_ISI_PATH",
+                        "value": "/ifs/data/csi"
+                      },
+                      {
+                        "name": "X_CSI_ISI_NO_PROBE_ON_START",
+                        "value": "false"
+                      },
+                      {
+                        "name": "X_CSI_ISI_AUTOPROBE",
+                        "value": "true"
+                      },
+                      {
+                        "name": "X_CSI_ISI_SKIP_CERTIFICATE_VALIDATION",
+                        "value": "true"
+                      },
+                      {
+                        "name": "X_CSI_ISI_AUTH_TYPE",
+                        "value": "0"
+                      },
+                      {
+                        "name": "X_CSI_CUSTOM_TOPOLOGY_ENABLED",
+                        "value": "false"
+                      },
+                      {
+                        "name": "X_CSI_MAX_PATH_LIMIT",
+                        "value": "192"
+                      }
+                    ],
+                    "image": "dellemc/csi-isilon:v2.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  "configVersion": "v2.4.0",
+                  "controller": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_ISI_QUOTA_ENABLED",
+                        "value": "true"
+                      },
+                      {
+                        "name": "X_CSI_ISI_ACCESS_ZONE",
+                        "value": "System"
+                      },
+                      {
+                        "name": "X_CSI_ISI_VOLUME_PATH_PERMISSIONS",
+                        "value": "0777"
+                      }
+                    ],
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "dnsPolicy": "ClusterFirstWithHostNet",
+                  "forceUpdate": false,
+                  "fsGroupPolicy": "ReadWriteOnceWithFSType",
+                  "node": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_MAX_VOLUMES_PER_NODE",
+                        "value": "0"
+                      },
+                      {
+                        "name": "X_CSI_ALLOWED_NETWORKS",
+                        "value": ""
+                      }
+                    ],
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "replicas": 2,
+                  "sideCars": [
+                    {
+                      "args": [
+                        "--leader-election-lease-duration=15s",
+                        "--leader-election-renew-deadline=10s",
+                        "--leader-election-retry-period=5s"
+                      ],
+                      "name": "common"
+                    },
+                    {
+                      "args": [
+                        "--volume-name-prefix=csipscale"
+                      ],
+                      "name": "provisioner"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "apiVersion": "storage.dell.com/v1",
+              "kind": "CSIPowerMax",
+              "metadata": {
+                "name": "test-powermax",
+                "namespace": "test-powermax"
+              },
+              "spec": {
+                "driver": {
+                  "common": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_MANAGED_ARRAYS",
+                        "value": "000000000000,000000000001"
+                      },
+                      {
+                        "name": "X_CSI_POWERMAX_ENDPOINT",
+                        "value": "https://0.0.0.0:8443/"
+                      },
+                      {
+                        "name": "X_CSI_K8S_CLUSTER_PREFIX",
+                        "value": "XYZ"
+                      },
+                      {
+                        "name": "X_CSI_POWERMAX_PORTGROUPS",
+                        "value": ""
+                      },
+                      {
+                        "name": "X_CSI_TRANSPORT_PROTOCOL",
+                        "value": ""
+                      },
+                      {
+                        "name": "X_CSI_POWERMAX_PROXY_SERVICE_NAME",
+                        "value": ""
+                      },
+                      {
+                        "name": "X_CSI_GRPC_MAX_THREADS",
+                        "value": "4"
+                      }
+                    ],
+                    "image": "dellemc/csi-powermax:v2.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  "configVersion": "v2.4.0",
+                  "controller": {
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "dnsPolicy": "ClusterFirstWithHostNet",
+                  "forceUpdate": false,
+                  "fsGroupPolicy": "ReadWriteOnceWithFSType",
+                  "node": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_POWERMAX_ISCSI_ENABLE_CHAP",
+                        "value": "false"
+                      },
+                      {
+                        "name": "X_CSI_TOPOLOGY_CONTROL_ENABLED",
+                        "value": "false"
+                      }
+                    ],
+                    "nodeSelector": null,
+                    "tolerations": [
+                      {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/memory-pressure",
+                        "operator": "Exists"
+                      },
+                      {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/disk-pressure",
+                        "operator": "Exists"
+                      },
+                      {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/network-unavailable",
+                        "operator": "Exists"
+                      }
+                    ]
+                  },
+                  "replicas": 2
+                }
+              }
+            },
+            {
+              "apiVersion": "storage.dell.com/v1",
+              "kind": "CSIPowerMaxRevProxy",
+              "metadata": {
+                "name": "powermax-reverseproxy",
+                "namespace": "test-powermax"
+              },
+              "spec": {
+                "config": {
+                  "linkConfig": {
+                    "backup": {
+                      "skipCertificateValidation": true,
+                      "url": "https://0.0.0.0:8443"
+                    },
+                    "primary": {
+                      "certSecret": "",
+                      "skipCertificateValidation": true,
+                      "url": "https://0.0.0.0:8443"
+                    }
+                  },
+                  "mode": "Linked"
+                },
+                "image": "dellemc/csipowermax-reverseproxy:v2.3.0",
+                "imagePullPolicy": "IfNotPresent",
+                "tlsSecret": "csirevproxy-tls-secret"
+              }
+            },
+            {
+              "apiVersion": "storage.dell.com/v1",
+              "kind": "CSIPowerStore",
+              "metadata": {
+                "name": "test-powerstore",
+                "namespace": "test-powerstore"
+              },
+              "spec": {
+                "driver": {
+                  "common": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_POWERSTORE_NODE_NAME_PREFIX",
+                        "value": "csi"
+                      },
+                      {
+                        "name": "X_CSI_FC_PORTS_FILTER_FILE_PATH",
+                        "value": "/etc/fc-ports-filter"
+                      }
+                    ],
+                    "image": "dellemc/csi-powerstore:v2.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  "configVersion": "v2.4.0",
+                  "controller": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_NFS_ACLS",
+                        "value": "0777"
+                      }
+                    ],
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "dnsPolicy": "ClusterFirstWithHostNet",
+                  "forceUpdate": false,
+                  "fsGroupPolicy": "ReadWriteOnceWithFSType",
+                  "node": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_POWERSTORE_ENABLE_CHAP",
+                        "value": "true"
+                      }
+                    ],
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "replicas": 2
+                }
+              }
+            },
+            {
+              "apiVersion": "storage.dell.com/v1",
+              "kind": "CSIUnity",
+              "metadata": {
+                "name": "test-unity",
+                "namespace": "test-unity"
+              },
+              "spec": {
+                "driver": {
+                  "common": {
+                    "image": "dellemc/csi-unity:v2.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  "configVersion": "v2.4.0",
+                  "controller": {
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "dnsPolicy": "ClusterFirstWithHostNet",
+                  "forceUpdate": false,
+                  "fsGroupPolicy": "ReadWriteOnceWithFSType",
+                  "node": {
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "replicas": 2,
+                  "sideCars": [
+                    {
+                      "args": [
+                        "--volume-name-prefix=csiunity",
+                        "--default-fstype=ext4"
+                      ],
+                      "name": "provisioner"
+                    },
+                    {
+                      "args": [
+                        "--snapshot-name-prefix=csiunitysnap"
+                      ],
+                      "name": "snapshotter"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "apiVersion": "storage.dell.com/v1",
+              "kind": "CSIVXFlexOS",
+              "metadata": {
+                "name": "test-vxflexos",
+                "namespace": "test-vxflexos"
+              },
+              "spec": {
+                "driver": {
+                  "common": {
+                    "envs": [
+                      {
+                        "name": "X_CSI_VXFLEXOS_ENABLELISTVOLUMESNAPSHOT",
+                        "value": "false"
+                      },
+                      {
+                        "name": "X_CSI_VXFLEXOS_ENABLESNAPSHOTCGDELETE",
+                        "value": "false"
+                      },
+                      {
+                        "name": "X_CSI_DEBUG",
+                        "value": "true"
+                      },
+                      {
+                        "name": "X_CSI_ALLOW_RWO_MULTI_POD_ACCESS",
+                        "value": "false"
+                      }
+                    ],
+                    "image": "dellemc/csi-vxflexos:v2.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  "configVersion": "v2.4.0",
+                  "controller": {
+                    "envs": null,
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "dnsPolicy": "ClusterFirstWithHostNet",
+                  "forceUpdate": false,
+                  "fsGroupPolicy": "File",
+                  "initContainers": [
+                    {
+                      "envs": [
+                        {
+                          "name": "MDM",
+                          "value": "10.x.x.x,10.x.x.x"
+                        }
+                      ],
+                      "image": "dellemc/sdc:3.6",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "sdc"
+                    }
+                  ],
+                  "node": {
+                    "envs": null,
+                    "nodeSelector": null,
+                    "tolerations": null
+                  },
+                  "replicas": 1,
+                  "sideCars": [
+                    {
+                      "envs": [
+                        {
+                          "name": "HOST_PID",
+                          "value": "1"
+                        },
+                        {
+                          "name": "MDM",
+                          "value": ""
+                        }
+                      ],
+                      "name": "sdc-monitor"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: docker.io/dellemc/dell-csi-operator:v1.9.0
+        olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.10"}]'
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/dell/dell-csi-operator
+        support: Dell Technologies
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: CSIIsilon is the Schema for the csiisilons API
+          displayName: CSI PowerScale
+          kind: CSIIsilon
+          name: csiisilons.storage.dell.com
+          version: v1
+        - description: CSIPowerMax is the Schema for the csipowermaxes API
+          displayName: CSI PowerMax
+          kind: CSIPowerMax
+          name: csipowermaxes.storage.dell.com
+          version: v1
+        - description: CSIPowerMaxRevProxy is the Schema for the csipowermaxrevproxies
+            API
+          displayName: CSI PowerMax ReverseProxy
+          kind: CSIPowerMaxRevProxy
+          name: csipowermaxrevproxies.storage.dell.com
+          version: v1
+        - description: CSIPowerStore is the Schema for the csipowerstores API
+          displayName: CSI PowerStore
+          kind: CSIPowerStore
+          name: csipowerstores.storage.dell.com
+          version: v1
+        - description: CSIUnity is the Schema for the csiunities API
+          displayName: CSI Unity XT
+          kind: CSIUnity
+          name: csiunities.storage.dell.com
+          version: v1
+        - description: CSIVXFlexOS is the Schema for the csivxflexos API
+          displayName: CSI PowerFlex
+          kind: CSIVXFlexOS
+          name: csivxflexoses.storage.dell.com
+          version: v1
+      description: Dell CSI Operator for Dell CSI Drivers
+      displayName: Dell CSI Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Dell CSI Operator
+      - Dell CSI Driver
+      - Unity XT
+      - PowerMax
+      - Isilon
+      - VxFlexOS
+      - PowerStore
+      links:
+      - name: Documentation
+        url: https://github.com/dell/dell-csi-operator
+      maintainers:
+      - email: dell.csi.operator@dell.com
+        name: Dell CSI Operator
+      maturity: stable
+      minKubeVersion: 1.21.0
+      provider:
+        name: Dell Technologies
+      relatedImages:
+      - docker.io/dellemc/dell-csi-operator:v1.9.0
+      - docker.io/busybox:1.32.0
+      version: 1.9.0
+    name: stable
+  defaultChannel: stable
+  packageName: dell-csi-operator
+  provider:
+    name: Dell Technologies

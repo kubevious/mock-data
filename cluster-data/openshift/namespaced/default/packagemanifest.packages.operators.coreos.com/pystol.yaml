@@ -1,0 +1,172 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Pystol
+    provider-url: ""
+  name: pystol
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: pystol.v0.8.17
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pystol.org/v1alpha1",
+              "kind": "PystolAction",
+              "metadata": {
+                "name": "pystol-action-pystol-actions-pingtest-8nviz"
+              },
+              "spec": {
+                "action_state": "PystolActionCreating",
+                "workflow_state": "PystolOperatorWaitingAction",
+                "source": "",
+                "namespace": "pystol",
+                "collection": "actions",
+                "role": "pingtest",
+                "extra_vars": "{}",
+                "action_stderr": "{}",
+                "action_stdout": "{}"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/pystol/pystol-operator-stable:latest
+        createdAt: "2020-06-11 10:00:00"
+        description: The fault injection platform
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/pystol/pystol
+        support: pystol.org
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Pystol Action
+          displayName: PystolAction
+          kind: PystolAction
+          name: pystolactions.pystol.org
+          version: v1alpha1
+      description: |
+        **The open source, self-hosted and cloud-native fault injection platform**
+
+        ## Introduction
+
+        Pystol is a fault injection platform represented as a Software Product Line to analyze the effects caused by a wide spectrum of adverse conditions.
+        In particular, this software platform is designed for running on top of cloud-native environments without the distinction of its usage in private or public clouds.
+        The tool is modular enough to be extended as an Ansible collection enabling users to create their own actions without any dependency with the framework.
+
+        Including fault injection actions in the production infrastructure allows companies to have consistent environments, improve applications dependability against
+        unexpected failures, provide better user experience, and an overall improvement of the system's quality.
+        Using pystol, we enable cloud-computing technologies together with development teams to rapidly create complex systems and deploy them continuously, at global scale.
+
+        ## Documentation
+
+        Please refer to the [official documentation](https://docs.pystol.org)
+        website for any information related to the project.
+
+        ## CI dashboard
+
+        Pystol uses **GitHub actions**
+        and **badges** to run all the CI
+        tasks, the result of running these
+        tasks is represented using badges.
+
+        In particular we embrace the use of
+        CI dashboard as information radiators.
+
+        We created the [badgeboad project](https://badgeboard.pystol.org)
+        to show the value of any set of badges as a dashboard.
+
+        For more information you can open the
+        [CI dashboard](https://badgeboard.pystol.org)
+        directly or go to the
+        [project page in GitHub](https://github.com/pystol/badgeboard).
+
+        ## Container images
+
+        All pystol official container images are hosted in Quay.io under
+        the [Pystol organization](https://quay.io/organization/pystol).
+
+        There you will find two repositories:
+
+        * The Pystol [staging repository](https://quay.io/repository/pystol/pystol-operator-staging).
+        Here you will find all the container images from the upstream end-to-end jobs from the GitHub
+        Actions jobs.
+
+        * The Pystol [stable repository](https://quay.io/repository/pystol/pystol-operator-stable).
+        Here you will find all the container images from the stable branches.
+
+        ## License
+
+        Pystol is open source software
+        licensed under the [Apache license](LICENSE).
+
+        ## Requirements
+
+        * When installing Pystol, create and use the **pystol** namespace.
+
+        ## Accessing the native web user interface.
+        * If the user wants to access the native Pystol's UI, create a route in the cluster pointing to the Pystol's service.
+      displayName: Pystol
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Pystol
+      - cloud native
+      - kubernetes
+      - open source
+      - chaos engineering
+      - fault injection
+      - software product line
+      links:
+      - name: Pystol website
+        url: https://www.pystol.org
+      - name: Pystol GitHub organization
+        url: https://github.com/pystol
+      - name: Pystol source-code operator
+        url: https://github.com/pystol/pystol
+      - name: Pystol source-code Ansible galaxy collection
+        url: https://github.com/pystol/pystol-galaxy
+      - name: Pystol documentation
+        url: https://docs.pystol.org
+      - name: Pystol source-code documentation
+        url: https://github.com/pystol/pystol-docs
+      - name: Pystol CI dashboard
+        url: https://badgeboard.pystol.org
+      - name: Pystol source-code CI dasboard
+        url: https://github.com/pystol/badgeboard
+      maintainers:
+      - email: carloscamachoucv@gmail.com
+        name: Carlos Camacho
+      maturity: alpha
+      minKubeVersion: 1.12.0
+      provider:
+        name: Pystol
+      relatedImages:
+      - quay.io/pystol/pystol-operator-stable:latest
+      version: 0.8.17
+    name: alpha
+  defaultChannel: alpha
+  packageName: pystol
+  provider:
+    name: Pystol

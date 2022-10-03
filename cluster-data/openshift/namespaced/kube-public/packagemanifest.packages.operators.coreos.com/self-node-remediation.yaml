@@ -1,0 +1,139 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: medik8s
+    provider-url: https://www.medik8s.io/
+  name: self-node-remediation
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: self-node-remediation.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "self-node-remediation.medik8s.io/v1alpha1",
+              "kind": "SelfNodeRemediation",
+              "metadata": {
+                "name": "selfnoderemediation-sample"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "self-node-remediation.medik8s.io/v1alpha1",
+              "kind": "SelfNodeRemediationConfig",
+              "metadata": {
+                "name": "self-node-remediation-config",
+                "namespace": "self-node-remediation"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "self-node-remediation.medik8s.io/v1alpha1",
+              "kind": "SelfNodeRemediationTemplate",
+              "metadata": {
+                "name": "selfnoderemediationtemplate-sample"
+              },
+              "spec": {
+                "template": {
+                  "spec": {}
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/medik8s/self-node-remediation-operator:0.4.0
+        createdAt: "2022-04-28 21:46:09"
+        description: Self Node Remediation Operator for remediate itself in case of
+          a failure.
+        olm.skipRange: '>=0.1.0 <0.4.0'
+        operators.operatorframework.io/builder: operator-sdk-v1.18.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/medik8s/self-node-remediation
+        support: Medik8s
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: SelfNodeRemediationConfig is the Schema for the selfnoderemediationconfigs
+            API in which a user can configure the self node remediation agents
+          displayName: Self Node Remediation Config
+          kind: SelfNodeRemediationConfig
+          name: selfnoderemediationconfigs.self-node-remediation.medik8s.io
+          version: v1alpha1
+        - description: SelfNodeRemediation is the Schema for the selfnoderemediations
+            API
+          displayName: Self Node Remediation
+          kind: SelfNodeRemediation
+          name: selfnoderemediations.self-node-remediation.medik8s.io
+          version: v1alpha1
+        - description: SelfNodeRemediationTemplate is the Schema for the selfnoderemediationtemplates
+            API
+          displayName: Self Node Remediation Template
+          kind: SelfNodeRemediationTemplate
+          name: selfnoderemediationtemplates.self-node-remediation.medik8s.io
+          version: v1alpha1
+      description: This self node remediation operator is using an alternate mechanism
+        for a node in a cluster to detect its health status and take actions to remediate
+        itself in case of a failure. While not all remediation events can result in
+        the node returning to a healthy state, the operator does allow surviving parts
+        of the cluster to assume the node has reached a safe state so that it’s workloads
+        can be automatically recovered. A prerequesuite for the self node remediation
+        operator is a functioning health detection system that implements the external
+        remediation API, such as Node Healthcheck Operator, Machine Healthcehck Controller
+        (in OCP or Cluster-API based clusters). Once a node/machine is unhealthy,
+        the detection system will create the SelfNodeRemediation CR, which triggers
+        the self node remediation operator. To get started, a user would need to create
+        a SelfNodeRemediationTemplate, and reference that CR with an NHC/MHC CR.
+      displayName: Self Node Remediation Operator - Community Edition
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - fencing
+      - remediation
+      - auto-healing
+      - recovery
+      - high-availability
+      - baremetal
+      - SNR
+      links:
+      - name: Self Node Remediation
+        url: https://medik8s.io
+      - name: Source Code
+        url: https://github.com/medik8s/self-node-remediation
+      maintainers:
+      - email: medik8s@googlegroups.com
+        name: medik8s team
+      maturity: alpha
+      minKubeVersion: 1.20.0
+      provider:
+        name: medik8s
+        url: https://www.medik8s.io/
+      relatedImages:
+      - quay.io/medik8s/self-node-remediation-operator:0.4.0
+      version: 0.4.0
+    name: stable
+  defaultChannel: stable
+  packageName: self-node-remediation
+  provider:
+    name: medik8s
+    url: https://www.medik8s.io/

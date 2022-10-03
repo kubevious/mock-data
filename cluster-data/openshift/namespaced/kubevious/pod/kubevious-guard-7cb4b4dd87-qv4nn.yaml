@@ -1,0 +1,201 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: cf7f4af14ed51d324e6d8a0413b349bba71543ce7d436c4c4ec713c4038e70c0
+    cni.projectcalico.org/podIP: 172.30.142.174/32
+    cni.projectcalico.org/podIPs: 172.30.142.174/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.174"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.174"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/scc: restricted
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  generateName: kubevious-guard-7cb4b4dd87-
+  labels:
+    app.kubernetes.io/component: kubevious-guard
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+    pod-template-hash: 7cb4b4dd87
+  name: kubevious-guard-7cb4b4dd87-qv4nn
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: kubevious-guard-7cb4b4dd87
+    uid: 6704960e-2bc2-4362-8e7b-5295a7698d13
+  resourceVersion: "21576"
+  uid: 32039ebf-1081-4942-9e46-d8af544b8367
+spec:
+  containers:
+  - env:
+    - name: NODE_ENV
+      value: production
+    - name: LOG_LEVEL
+      value: info
+    - name: SERVER_PORT
+      value: "4004"
+    - name: BACKEND_BASE_URL
+      value: http://kubevious-backend-clusterip:4000
+    envFrom:
+    - configMapRef:
+        name: kubevious-mysql-config
+    - secretRef:
+        name: kubevious-mysql-secret
+    - configMapRef:
+        name: kubevious-redis-config
+    - secretRef:
+        name: kubevious-worldvious
+    - configMapRef:
+        name: kubevious-worldvious
+    image: docker.io/kubevious/guard-ubi:1.0.7
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /
+        port: http
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: kubevious
+    ports:
+    - containerPort: 4004
+      name: http
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /
+        port: http
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    securityContext:
+      capabilities:
+        drop:
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7cc2p
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: default-dockercfg-6qjmn
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1000620000
+    seLinuxOptions:
+      level: s0:c25,c10
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - name: kube-api-access-7cc2p
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:02:46Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:05Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:05Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:02:46Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://3a3705ec4b90642e99e580d6c7cc79b42289535bff30436bf06dc0500b8a1079
+    image: docker.io/kubevious/guard-ubi:1.0.7
+    imageID: docker.io/kubevious/guard-ubi@sha256:f705b9e96668bfa8e7574eb04db61f713168d87f2ec2cf8bc72dc772fd505d79
+    lastState: {}
+    name: kubevious
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T19:03:02Z"
+  hostIP: 10.161.112.142
+  phase: Running
+  podIP: 172.30.142.174
+  podIPs:
+  - ip: 172.30.142.174
+  qosClass: Burstable
+  startTime: "2022-10-03T19:02:46Z"

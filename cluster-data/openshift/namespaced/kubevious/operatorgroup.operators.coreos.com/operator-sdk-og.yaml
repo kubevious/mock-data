@@ -1,0 +1,17 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: Kubevious.v1alpha1.installer.kubevious.io
+  creationTimestamp: "2022-10-03T18:35:09Z"
+  generation: 1
+  name: operator-sdk-og
+  namespace: kubevious
+  resourceVersion: "30517"
+  uid: bbefbe7d-586c-4228-8b15-4ceca98d6676
+spec:
+  upgradeStrategy: Default
+status:
+  lastUpdated: "2022-10-03T18:35:09Z"
+  namespaces:
+  - ""

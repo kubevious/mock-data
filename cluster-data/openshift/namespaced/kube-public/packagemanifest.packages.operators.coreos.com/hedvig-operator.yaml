@@ -1,0 +1,117 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Commvault
+    provider-url: ""
+  name: hedvig-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hedvig-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n  {\n    \"apiVersion\":\"hedvig.io/v1\",\n    \"kind\":\"HedvigDeploy\",\n
+          \   \"metadata\": {\n      \"name\": \"testdeploy\",\n      \"namespace\":
+          \"hedvig\"\n    },\n    \"spec\": {\n      \"cluster\": {\n        \"name\":
+          \"hedvigcl\",\n        \"seeds\": [\n          \"hedvigcl1.hedvig.io\",\n
+          \         \"hedvigcl2.hedvig.io\",\n          \"hedvigcl3.hedvig.io\"\n
+          \       ]\n      },\n      \"k8s\": {\n        \"name\": \"k8scl\"\n      },\n
+          \     \"proxy\": {\n        \"repository\": \"hedvig/hedvig-proxy\",\n        \"tag\":
+          \"v-4.3.1\",\n        \"imagePullPolicy\": \"IfNotPresent\"\n      },\n
+          \     \"controller\": {\n        \"repository\": \"hedvig/hedvig-csi-volume-driver\",\n
+          \       \"tag\": \"v-2.0\",\n        \"imagePullPolicy\": \"IfNotPresent\"\n
+          \     },\n      \"node\": {\n        \"repository\": \"hedvig/hedvig-csi-volume-driver\",\n
+          \       \"tag\": \"v-2.0\",\n        \"imagePullPolicy\": \"IfNotPresent\"\n
+          \     },\n      \"sidecars\": [\n        {\n          \"name\": \"csi-provisioner\",\n
+          \         \"repository\": \"quay.io/k8scsi/csi-provisioner\",\n          \"tag\":
+          \"v1.6.0\",\n          \"imagePullPolicy\": \"IfNotPresent\"\n        },\n
+          \       {\n          \"name\": \"csi-snapshotter\",\n          \"repository\":
+          \"quay.io/k8scsi/csi-snapshotter\",\n          \"tag\": \"v2.1.0\",\n          \"imagePullPolicy\":
+          \"IfNotPresent\"\n        },              \n        {\n          \"name\":
+          \"csi-resizer\",\n          \"repository\": \"quay.io/k8scsi/csi-resizer\",\n
+          \         \"tag\": \"v0.5.0\",\n          \"imagePullPolicy\": \"IfNotPresent\"\n
+          \       },              \n        {\n          \"name\": \"csi-node-driver-registrar\",\n
+          \         \"repository\": \"quay.io/k8scsi/csi-node-driver-registrar\",\n
+          \         \"tag\": \"v1.0-canary\",\n          \"imagePullPolicy\": \"IfNotPresent\"\n
+          \       }\n      ]\n    }\n  }\n]"
+        capabilities: Seamless Upgrades
+        categories: Storage
+        certified: "false"
+        containerImage: hedvig/hedvig-operator:2.0.0-ubi
+        createdAt: ""
+        description: Hedvig Operator is the official operator to deploy and manage
+          Hedvig components in container orchestrators such as Kubernetes and Openshift.
+        repository: ""
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Hedvig Deploy
+          displayName: HedvigDeploy
+          kind: HedvigDeploy
+          name: hedvigdeploys.hedvig.io
+          version: v1
+      description: "The Hedvig Distributed Storage Platform is a software-defined,
+        scale-out storage solution. It distributes data simultaneously across multiple
+        locations – from on-premises data centers to the cloud – and scales capacity
+        on-demand by leveraging the storage of commodity x86/ARM servers. The distributed
+        write maximizes availability and protects data from hardware failures ranging
+        from a single disk to an entire site, improving disaster recovery planning.\n\nHedvig
+        provides a CSI Driver for accelerating your journey into the container ecosystem.
+        CSI Driver enables containerized applications to maintain state by dynamically
+        provisioning and consuming Hedvig virtual disks as persistent volumes. \n###
+        \n\nHedvig Operator deploys the Hedvig Storage Proxy and the Hedvig CSI Driver
+        to manage the life cycle of persistent storage in Kubernetes and Openshift.\n\n**Supported
+        Container Orchestrators:**\n* Kubernetes 1.16+\n* Red Hat OpenShift 4.6+\n\n**Supported
+        Hedvig Releases:**\n* Hedvig 4.0+\n\nPlease refer to the [documentation](https://documentation.commvault.com/commvault/hedvig/others/pdf/Hedvig_Operator_User_Guide.pdf)
+        for steps to install and use the operator.\n\n\n\n\n\n"
+      displayName: Hedvig Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Storage
+      - CSI
+      - Hedvig
+      - Cloud
+      - Block
+      - NFS
+      - iSCSI
+      - Snapshot
+      - Volume
+      links:
+      - name: Documentation
+        url: https://documentation.commvault.com/commvault/hedvig/article
+      - name: Hedvig CSI User Guide
+        url: https://documentation.commvault.com/commvault/hedvig/others/pdf/Hedvig_CSI_User_Guide.pdf
+      maintainers:
+      - email: ashenoy@commvault.com
+        name: Abhijith Shenoy
+      maturity: stable
+      provider:
+        name: Commvault
+      relatedImages:
+      - hedvig/hedvig-operator:2.0.0-ubi
+      version: 1.0.2
+    name: stable
+  defaultChannel: stable
+  packageName: hedvig-operator
+  provider:
+    name: Commvault

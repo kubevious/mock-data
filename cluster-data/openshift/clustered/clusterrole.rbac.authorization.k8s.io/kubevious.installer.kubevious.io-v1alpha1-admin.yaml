@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2022-10-03T18:35:31Z"
+  labels:
+    olm.opgroup.permissions/aggregate-to-1f209ba7c92311e7-admin: "true"
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+  name: kubevious.installer.kubevious.io-v1alpha1-admin
+  ownerReferences:
+  - apiVersion: apiextensions.k8s.io/v1
+    blockOwnerDeletion: false
+    controller: false
+    kind: CustomResourceDefinition
+    name: kubevious.installer.kubevious.io
+    uid: df1e74f3-a66c-4a12-91e3-754693bdeda9
+  resourceVersion: "30688"
+  uid: ba15ef2e-85c0-45c6-a478-c9090036590b
+rules:
+- apiGroups:
+  - installer.kubevious.io
+  resources:
+  - kubevious
+  verbs:
+  - '*'

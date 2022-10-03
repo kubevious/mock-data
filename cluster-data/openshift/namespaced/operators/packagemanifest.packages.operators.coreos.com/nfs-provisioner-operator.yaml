@@ -1,0 +1,95 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:50:20Z"
+  labels:
+    catalog: community-operators
+    catalog-namespace: openshift-marketplace
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Jooho Lee
+    provider-url: https://github.com/jooho/nfs-provisioner-operator
+  name: nfs-provisioner-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: community-operators
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: openshift-marketplace
+  catalogSourcePublisher: Red Hat
+  channels:
+  - currentCSV: nfs-provisioner-operator.v0.0.5
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "cache.jhouse.com/v1alpha1",
+              "kind": "NFSProvisioner",
+              "metadata": {
+                "name": "nfsprovisioner-sample"
+              },
+              "spec": {
+                "scForNFS": "nfs",
+                "scForNFSPvc": "local-sc",
+                "storageSize": "1G"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        certified: "false"
+        containerImage: quay.io/jooholee/nfs-provisioner-operator:0.0.5
+        createdAt: "2022-07-06T15:13:31Z"
+        description: Create and manage NFS Server and Provisioner
+        operators.operatorframework.io/builder: operator-sdk-v1.22.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/jooho/nfs-provisioner-operator
+        support: NFS
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: NFSProvisioner is the Schema for the nfsprovisioners API
+          displayName: NFS Provisioner App
+          kind: NFSProvisioner
+          name: nfsprovisioners.cache.jhouse.com
+          version: v1alpha1
+      description: "This operator deploy NFS server with local storage and also provide
+        provisioner for storageClass.\n### Core Capabilities\n* **NFS Server:** Deployed\n*
+        **NFS Provisioner:** Help customers to create PV using StorageClass\n* **StorageClass:**
+        Dynamically create PV for requested PVC\n### NFS Provisioner Operator Features\n*
+        NFS Server can use localStorage PVC or HostPath on the node\n### Must-Gather
+        \n> isv-cli must-gather --image=quay.io/jooholee/nfs-provisioner-operator-must-gather:0.0.1\n"
+      displayName: NFS Provisioner Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - nfs
+      - storage
+      links:
+      - name: Nfs Provisioner Operator
+        url: https://github.com/jooho/nfs-provisioner-operator
+      maintainers:
+      - email: ljhiyh@gmail.com
+        name: Jooho
+      maturity: alpha
+      provider:
+        name: Jooho Lee
+        url: https://github.com/jooho/nfs-provisioner-operator
+      relatedImages:
+      - quay.io/jooholee/nfs-provisioner-operator:0.0.5
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      version: 0.0.5
+    name: alpha
+  defaultChannel: alpha
+  packageName: nfs-provisioner-operator
+  provider:
+    name: Jooho Lee
+    url: https://github.com/jooho/nfs-provisioner-operator

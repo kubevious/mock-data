@@ -1,0 +1,139 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Jens Reimann
+    provider-url: ""
+  name: hawkbit-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hawkbit-operator.v0.1.5
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "kind": "Hawkbit",
+              "apiVersion": "iot.eclipse.org/v1alpha1",
+              "metadata": {
+                "name": "default"
+              },
+              "spec": {
+                "database": {
+                  "embedded": {}
+                },
+                "rabbit": {
+                  "managed": {}
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: ghcr.io/ctron/hawkbit-operator:0.1.5
+        createdAt: 2021-09-07T172:02:00Z
+        description: Eclipse hawkBit is a firmware update platform.
+        olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.9"}]'
+        repository: https://github.com/ctron/hawkbit-operator
+        support: Jens Reimann
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Eclipse hawkBit™ is a firmware update platform.
+          displayName: Eclipse hawkBit
+          kind: Hawkbit
+          name: hawkbits.iot.eclipse.org
+          version: v1alpha1
+        required:
+        - description: A Keycloak instance.
+          displayName: Keycloak
+          kind: Keycloak
+          name: keycloaks.keycloak.org
+          version: v1alpha1
+        - description: A Keycloak realm.
+          displayName: Keycloak Realm
+          kind: KeycloakRealm
+          name: keycloakrealms.keycloak.org
+          version: v1alpha1
+        - description: A client to a Keycloak realm.
+          displayName: Keycloak Client
+          kind: KeycloakClient
+          name: keycloakclients.keycloak.org
+          version: v1alpha1
+        - description: Manages users in a Keycloak realm.
+          displayName: KeycloakUser
+          kind: KeycloakUser
+          name: keycloakusers.keycloak.org
+          version: v1alpha1
+      description: |
+        The Hawkbit Operator creates and maintains an Eclipse hawkBit™ instance.
+
+        [Eclipse hawkBit](https://eclipse.org/hawkbit) is a firmware update platform.
+
+        ### Supported Features
+        * **Installation** | Deploy an instance of Eclipse hawkBit.
+        * **Getting started** | Easy gettting started experience with an optional broker and database deployment.
+        * **Sign On** | Deploy a Keycloak instance alongside hawkBit for managing users instead of simple "admin" user.
+
+        ### Pre-requisites
+        * **Keycloak Operator** | Requires an installation of the [Keycloak operator](https://operatorhub.io/operator/keycloak-operator).
+
+        ### Post-installation
+        * **Sign on credentials** | Extract from Kubernetes secrets, dependening on the [configuration of the sign on solution](https://github.com/ctron/hawkbit-operator#sign-on-solution).
+
+        ### Contributing
+        You can contribute by:
+        * Raising any issues you find using the hawkBit Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/ctron/hawkbit-operator/pulls)
+        * Improving [documentation](https://github.com/ctron/hawkbit-operator)
+        * Talking about the hawkBit Operator
+
+        All bugs, tasks or enhancements are tracked as [GitHub issues](https://github.com/ctron/hawkbit-operator/issues).
+
+        ### License
+        The hawkBit operator is licensed under the [Eclipse Public License 2.0](https://github.com/ctron/hawkbit-operator/blob/master/LICENSE)
+      displayName: Eclipse Hawkbit
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - IoT
+      - Firmware Update
+      links:
+      - name: GitHub
+        url: https://github.com/ctron/hawkbit-operator
+      - name: Eclipse hawkBit™
+        url: https://github.com/eclipse/hawkbit
+      maintainers:
+      - email: ctron@dentrassi.de
+        name: Jens Reimann
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: Jens Reimann
+      relatedImages:
+      - ghcr.io/ctron/hawkbit-operator:0.1.5
+      version: 0.1.5
+    name: alpha
+  defaultChannel: alpha
+  packageName: hawkbit-operator
+  provider:
+    name: Jens Reimann

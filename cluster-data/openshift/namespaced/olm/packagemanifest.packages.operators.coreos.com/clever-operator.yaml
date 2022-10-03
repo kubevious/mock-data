@@ -1,0 +1,221 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Clever Cloud
+    provider-url: ""
+  name: clever-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cleveroperator.v0.5.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [{
+            "apiVersion": "api.clever-cloud.com/v1",
+            "kind": "PostgreSql",
+            "metadata": {
+              "namespace": "default",
+              "name": "postgresql"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "options": {
+                "version": 13,
+                "encryption": true
+              },
+              "instance": {
+                "region": "par",
+                "plan": "plan_xxxx"
+              }
+            }
+          }, {
+            "apiVersion": "api.clever-cloud.com/v1",
+            "kind": "Redis",
+            "metadata": {
+              "namespace": "default",
+              "name": "redis"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "options": {
+                "version": 6010,
+                "encryption": true
+              },
+              "instance": {
+                "region": "par",
+                "plan": "plan_xxxx"
+              }
+            }
+          }, {
+            "apiVersion": "api.clever-cloud.com/v1",
+            "kind": "MySql",
+            "metadata": {
+              "namespace": "default",
+              "name": "mysql"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "options": {
+                "version": 80,
+                "encryption": true
+              },
+              "instance": {
+                "region": "par",
+                "plan": "plan_xxxx"
+              }
+            }
+          }, {
+            "apiVersion": "api.clever-cloud.com/v1",
+            "kind": "MongoDb",
+            "metadata": {
+              "namespace": "default",
+              "name": "mongodb"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "options": {
+                "version": 403,
+                "encryption": true
+              },
+              "instance": {
+                "region": "par",
+                "plan": "plan_xxxx"
+              }
+            }
+          }, {
+            "apiVersion": "api.clever-cloud.com/v1beta1",
+            "kind": "Pulsar",
+            "metadata": {
+              "namespace": "default",
+              "name": "pulsar"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "instance": {
+                "region": "par"
+              }
+            }
+          }, {
+            "apiVersion": "api.clever-cloud.com/v1",
+            "kind": "ConfigProvider",
+            "metadata": {
+              "namespace": "default",
+              "name": "config-provider"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "variables": {
+                "ENV_VAR": "VALUE"
+              }
+            }
+          }, {
+            "apiVersion": "api.clever-cloud.com/v1",
+            "kind": "ElasticSearch",
+            "metadata": {
+              "namespace": "default",
+              "name": "elasticsearch"
+            },
+            "spec": {
+              "organisation": "orga_xxxx",
+              "instance": {
+                "region": "par",
+                "plan": "s"
+              },
+              "options": {
+                "version": 7,
+                "encryption": true,
+                "kibana": true,
+                "apm": true
+              }
+            }
+          }]
+        capabilities: Full Lifecycle
+        categories: Developer Tools, Integration & Delivery, Cloud Provider
+        certified: "false"
+        containerImage: docker.io/clevercloud/clever-operator:e7cfe6efc4c4da80c722416fe1de373b789612f6
+        createdAt: "2021-09-21T12:00:00.000Z"
+        description: A kubernetes operator that expose clever cloud's resources through
+          custom resource definition
+        repository: https://github.com/CleverCloud/clever-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Clever Cloud's managed postgresql database
+          displayName: PostgreSql
+          kind: PostgreSql
+          name: postgresqls.api.clever-cloud.com
+          version: v1
+        - description: Clever Cloud's managed redis database
+          displayName: Redis
+          kind: Redis
+          name: redis.api.clever-cloud.com
+          version: v1
+        - description: Clever Cloud's managed mysql database
+          displayName: MySql
+          kind: MySql
+          name: mysqls.api.clever-cloud.com
+          version: v1
+        - description: Clever Cloud's managed mongodb database
+          displayName: MongoDb
+          kind: MongoDb
+          name: mongodbs.api.clever-cloud.com
+          version: v1
+        - description: Clever Cloud's managed pulsar messaging system
+          displayName: Pulsar
+          kind: Pulsar
+          name: pulsars.api.clever-cloud.com
+          version: v1beta1
+        - description: Clever Cloud's configuration provider addon
+          displayName: ConfigProvider
+          kind: ConfigProvider
+          name: configproviders.api.clever-cloud.com
+          version: v1
+        - description: Clever Cloud's managed elasticsearch indexes
+          displayName: ElasticSearch
+          kind: ElasticSearch
+          name: elasticsearches.api.clever-cloud.com
+          version: v1
+      description: A kubernetes operator that expose clever cloud's resources through
+        custom resource definition
+      displayName: clever-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      links:
+      - name: GitHub
+        url: https://github.com/CleverCloud/clever-operator
+      - name: Clever Cloud
+        url: https://www.clever-cloud.com
+      maintainers:
+      - email: florentin.dubois@clever-cloud.com
+        name: Florentin Dubois
+      maturity: alpha
+      minKubeVersion: v1.21.0
+      provider:
+        name: Clever Cloud
+      relatedImages:
+      - docker.io/clevercloud/clever-operator:e7cfe6efc4c4da80c722416fe1de373b789612f6
+      version: 0.5.3
+    name: alpha
+  defaultChannel: alpha
+  packageName: clever-operator
+  provider:
+    name: Clever Cloud

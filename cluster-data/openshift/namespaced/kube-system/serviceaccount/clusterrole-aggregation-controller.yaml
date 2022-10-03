@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: clusterrole-aggregation-controller-dockercfg-tvs6l
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:05Z"
+  name: clusterrole-aggregation-controller
+  namespace: kube-system
+  resourceVersion: "1239"
+  uid: 9b4b69a5-ae7a-4888-a764-b19cd5787e01
+secrets:
+- name: clusterrole-aggregation-controller-token-59gbx
+- name: clusterrole-aggregation-controller-dockercfg-tvs6l

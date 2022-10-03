@@ -1,0 +1,52 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: "2022-10-03T18:58:24Z"
+  labels:
+    olm.owner: kubevious-operator.v0.0.38
+    olm.owner.kind: ClusterServiceVersion
+    olm.owner.namespace: kubevious
+    operators.coreos.com/kubevious-operator.kubevious: ""
+  name: kubevious-operator.v0.0.38-kubevious-operator-contro-65d8784944
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: operators.coreos.com/v1alpha1
+    blockOwnerDeletion: false
+    controller: false
+    kind: ClusterServiceVersion
+    name: kubevious-operator.v0.0.38
+    uid: 1449e422-e4f6-4efa-818b-6c6736af7415
+  resourceVersion: "19297"
+  uid: c25dd6ee-86a5-407a-8859-dc7355758227
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch

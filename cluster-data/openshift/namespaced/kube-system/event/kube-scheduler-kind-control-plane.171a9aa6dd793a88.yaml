@@ -1,0 +1,27 @@
+apiVersion: v1
+count: 2
+eventTime: null
+firstTimestamp: "2022-10-03T16:04:13Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{kube-scheduler}
+  kind: Pod
+  name: kube-scheduler-kind-control-plane
+  namespace: kube-system
+  uid: c534a26b3c79b42ea583a3639f5034a6
+kind: Event
+lastTimestamp: "2022-10-03T19:41:10Z"
+message: Container image "k8s.gcr.io/kube-scheduler:v1.24.0" already present on machine
+metadata:
+  creationTimestamp: "2022-10-03T19:41:10Z"
+  name: kube-scheduler-kind-control-plane.171a9aa6dd793a88
+  namespace: kube-system
+  resourceVersion: "39798"
+  uid: 4e41304b-e7d1-4fad-ae03-a9b69559bbc5
+reason: Pulled
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Normal

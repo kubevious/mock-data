@@ -1,0 +1,98 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Joget, Inc.
+    provider-url: ""
+  name: joget-tomcat-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: joget-tomcat-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.joget.com/v1alpha1",
+              "kind": "JogetTomcat",
+              "metadata": {
+                "name": "joget-tomcat"
+              },
+              "spec": {
+                "size": 1
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Application Runtime,Developer Tools
+        certified: "false"
+        containerImage: jogetworkflow/joget-tomcat-operator:latest
+        createdAt: "2020-11-12 12:59:59"
+        description: No-code/low-code platform to visually build and run apps
+        operators.operatorframework.io/builder: operator-sdk-v1.0.1
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+        repository: https://github.com/jogetworkflow/
+        support: Joget, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Joget DX on Apache Tomcat
+          displayName: Joget DX
+          kind: JogetTomcat
+          name: jogettomcats.apps.joget.com
+          version: v1alpha1
+      description: "Joget DX is the next generation open source no-code / low-code
+        application platform that combines the best of Rapid Application Development,
+        Business Process Automation and Workflow Management. \nJoget DX empowers business
+        users, non-coders or coders with a single platform to easily build, deliver,
+        monitor and maintain enterprise applications.\n\nThis operator installs a
+        Joget DX cluster running on Apache Tomcat.\n\n### Features\n* Build full-fledged
+        apps e.g. CRM, HR, Healthcare, etc\n* Drag and drop forms, lists, UI\n* Add
+        workflow to automate processes\n* Extend via plugins\n* Apps are mobile optimized
+        and cloud ready\n* Download ready-made apps from the Joget Marketplace\n\n###
+        Before You Start\nDeploy a [MySQL](https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/#deploy-mysql)
+        database.\n\n### Post Deployment\nAccess the service URL and complete the
+        one-time [Database Setup](https://dev.joget.org/community/display/DX7/Setting+Up+Database)\n"
+      displayName: Joget DX on Apache Tomcat
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - lowcode
+      - appdev
+      - workflow
+      - automation
+      links:
+      - name: Joget DX
+        url: https://www.joget.org
+      maintainers:
+      - email: support@joget.org
+        name: Joget, Inc.
+      maturity: alpha
+      provider:
+        name: Joget, Inc.
+      relatedImages:
+      - jogetworkflow/joget-tomcat-operator:latest
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: joget-tomcat-operator
+  provider:
+    name: Joget, Inc.

@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: replicaset-controller-dockercfg-2h42j
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:05Z"
+  name: replicaset-controller
+  namespace: kube-system
+  resourceVersion: "1241"
+  uid: 1b94f2a7-ff2e-49c8-9bf1-db37286551bb
+secrets:
+- name: replicaset-controller-token-mdc2x
+- name: replicaset-controller-dockercfg-2h42j

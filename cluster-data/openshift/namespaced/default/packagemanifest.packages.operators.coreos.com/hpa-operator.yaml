@@ -1,0 +1,103 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Banzai Cloud
+    provider-url: ""
+  name: hpa-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hpa-operator.v0.1.6
+    currentCSVDesc:
+      annotations:
+        capabilities: Full Lifecycle
+        categories: Security
+        certified: "false"
+        containerImage: banzaicloud/hpa-operator:0.1.6
+        createdAt: "2019-04-09T08:00:00Z"
+        description: Autoscale deployments / replica-sets by annotations
+        repository: https://github.com/banzaicloud/hpa-operator
+        support: Banzai Cloud
+      apiservicedefinitions: {}
+      customresourcedefinitions: {}
+      description: |
+        The HPA Operator simplifies deployment autoscaling, watching for your Deployment or StatefulSet and automatically creating an HorizontalPodAutoscaler resource, should you provide the correct autoscale annotations.
+
+        All annotations must contain the `autoscaling.banzaicloud.io` prefix. It is required to specify minReplicas/maxReplicas and at least one metric to be used for autoscale.
+        You can add *Resource* type metrics for cpu & memory and *Custom* type metrics.
+        Autoscale annotations can be placed on Deployment / StatefulSet:
+
+             ```
+              apiVersion: extensions/v1beta1
+              kind: Deployment
+              metadata:
+                name: example
+                labels:
+                annotations:
+                  hpa.autoscaling.banzaicloud.io/minReplicas: "1"
+                  hpa.autoscaling.banzaicloud.io/maxReplicas: "3"
+                  cpu.hpa.autoscaling.banzaicloud.io/targetAverageUtilization: "70"
+              ```
+
+        Examples of supported metric types:
+
+          - pod resource metrics: cpu & memory
+
+            ``cpu.hpa.autoscaling.banzaicloud.io/targetAverageUtilization: "{targetAverageUtilizationPercentage}"``
+
+            ``memory.hpa.autoscaling.banzaicloud.io/targetAverageUtilization: "{targetAverageUtilizationPercentage}"``
+
+          - custom metrics based on `Prometheus` queries:
+
+            ``
+            prometheus.customMetricName.hpa.autoscaling.banzaicloud.io/query: "sum({kubernetes_pod_name=~"^YOUR_POD_NAME.*",__name__=~"YOUR_PROMETHUES_METRICNAME"})"
+            prometheus.customMetricName.hpa.autoscaling.banzaicloud.io/targetValue: "{targetValue}"
+            prometheus.customMetricName.hpa.autoscaling.banzaicloud.io/targetAverageValue: "{targetAverageValue}"
+            ``
+      displayName: HPA Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - hpa
+      - autoscale
+      - banzaicloud
+      - open source
+      links:
+      - name: Blog
+        url: https://banzaicloud.com/blog/k8s-hpa-operator/
+      - name: Documentation
+        url: https://github.com/banzaicloud/hpa-operator/blob/master/README.md
+      - name: Hpa Operator Source Code
+        url: https://github.com/banzaicloud/hpa-operator
+      maintainers:
+      - email: info@banzaicloud.com
+        name: Banzai Cloud
+      maturity: alpha
+      provider:
+        name: Banzai Cloud
+      relatedImages:
+      - banzaicloud/hpa-operator:latest
+      version: 0.1.6
+    name: beta
+  defaultChannel: beta
+  packageName: hpa-operator
+  provider:
+    name: Banzai Cloud

@@ -1,0 +1,170 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 766303fbe523e37ba09aa9223a8c9eab579faad344e7fffef2fb9e082fd42aef
+    cni.projectcalico.org/podIP: 172.30.142.144/32
+    cni.projectcalico.org/podIPs: 172.30.142.144/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.144"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.144"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+  creationTimestamp: "2022-10-03T18:46:10Z"
+  generateName: vpn-555c48d48c-
+  labels:
+    app: vpn
+    kubernetes-dashboard-policy: allow
+    openvpn_timestamp: 2022-10-03T184549Z
+    pod-template-hash: 555c48d48c
+  name: vpn-555c48d48c-q72lb
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: vpn-555c48d48c
+    uid: 01609795-9d19-4e6f-a231-fc1fce563b61
+  resourceVersion: "11524"
+  uid: 4db81cff-70c2-49ac-84aa-067766fefcdf
+spec:
+  containers:
+  - env:
+    - name: K8S_CERT_DIR
+      value: /etc/kubernetes/cert
+    image: registry.ng.bluemix.net/armada-master/vpn-client:2.5.6-r1-IKS-648
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      exec:
+        command:
+        - /bin/sh
+        - -c
+        - ping -w 3 192.168.255.1
+      failureThreshold: 5
+      initialDelaySeconds: 120
+      periodSeconds: 60
+      successThreshold: 1
+      timeoutSeconds: 30
+    name: vpn
+    resources:
+      requests:
+        cpu: 5m
+        memory: 5Mi
+    securityContext:
+      privileged: true
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /etc/kubernetes/cert
+      name: vpn-config
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-rf78t
+      readOnly: true
+  dnsPolicy: Default
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: default-dockercfg-f25gl
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000000000
+  priorityClassName: system-cluster-critical
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - name: vpn-config
+    secret:
+      defaultMode: 416
+      secretName: vpn-config
+  - name: kube-api-access-rf78t
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:22Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:43Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:43Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:22Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://6a42966552944d79cd2d607c17c0aab7a1a5f22937e834a5b11b3fa8b3bbe71a
+    image: registry.ng.bluemix.net/armada-master/vpn-client:2.5.6-r1-IKS-648
+    imageID: registry.ng.bluemix.net/armada-master/vpn-client@sha256:4908be2a6e23cdcd5b3c0f34cebf091140fb1e4234831ab924f7e91bc3f604a0
+    lastState: {}
+    name: vpn
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:48:43Z"
+  hostIP: 10.161.112.142
+  phase: Running
+  podIP: 172.30.142.144
+  podIPs:
+  - ip: 172.30.142.144
+  qosClass: Burstable
+  startTime: "2022-10-03T18:47:22Z"

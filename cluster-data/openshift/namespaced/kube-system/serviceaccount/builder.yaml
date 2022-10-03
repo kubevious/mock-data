@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: builder-dockercfg-t5n4c
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:25:56Z"
+  name: builder
+  namespace: kube-system
+  resourceVersion: "1107"
+  uid: 61c5308b-3fe1-49a4-bbfc-aff947f00b23
+secrets:
+- name: builder-token-8lgv8
+- name: builder-dockercfg-t5n4c

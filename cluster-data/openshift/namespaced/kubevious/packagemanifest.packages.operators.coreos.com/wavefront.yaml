@@ -1,0 +1,134 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: VMware
+    provider-url: ""
+  name: wavefront
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: wavefront-operator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n  {\n    \"apiVersion\": \"wavefront.com/v1alpha1\",\n    \"kind\":
+          \"WavefrontProxy\",\n    \"metadata\": {\n      \"name\": \"wavefront-proxy\",\n
+          \     \"namespace\": \"wavefront\"\n    },\n    \"spec\": {\n      \"token\":
+          \"\\u003cTOKEN\\u003e\",\n      \"url\": \"\\u003chttps://YOUR_CLUSTER.wavefront.com/api/\\u003e\",\n
+          \     \"image\": \"wavefronthq/proxy:5.7\",\n      \"enableAutoUpgrade\":
+          true\n    }\n  },\n  {\n    \"apiVersion\": \"wavefront.com/v1alpha1\",\n
+          \   \"kind\": \"WavefrontCollector\",\n    \"metadata\": {\n      \"name\":
+          \"wavefront-collector\",\n      \"namespace\": \"wavefront\"\n    },\n    \"spec\":
+          {\n      \"daemon\": true,\n      \"enableAutoUpgrade\": true, \n      \"env\":
+          [\n        {\n          \"name\": \"HOST_PROC\",\n          \"value\": \"/host/proc\"\n
+          \       },\n        {\n          \"name\": \"POD_NODE_NAME\",\n          \"valueFrom\":
+          {\n            \"fieldRef\": {\n              \"apiVersion\": \"v1\",\n
+          \             \"fieldPath\": \"spec.nodeName\"\n            }\n          }\n
+          \       },\n        {\n          \"name\": \"POD_NAMESPACE_NAME\",\n          \"valueFrom\":
+          {\n            \"fieldRef\": {\n              \"apiVersion\": \"v1\",\n
+          \             \"fieldPath\": \"metadata.namespace\"\n            }\n          }\n
+          \       }\n      ],\n      \"image\": \"wavefronthq/wavefront-kubernetes-collector:1.0.3\",\n
+          \     \"tolerations\": [\n        {\n          \"effect\": \"NoSchedule\",\n
+          \         \"key\": \"node.alpha.kubernetes.io/role\",\n          \"operator\":
+          \"Exists\"\n        },\n        {\n          \"effect\": \"NoSchedule\",\n
+          \         \"key\": \"node-role.kubernetes.io/master\",\n          \"operator\":
+          \"Exists\"\n        }\n      ]\n    }\n  }\n]"
+        capabilities: Seamless Upgrades
+        categories: Monitoring
+        certified: "true"
+        containerImage: wavefronthq/wavefront-operator-for-kubernetes:0.1.0-rc2
+        createdAt: "2019-11-29T02:09:59Z"
+        description: The Wavefront Operator for Kubernetes supports deploying the
+          Wavefront Collector and the Wavefront Proxy in Kubernetes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/wavefrontHQ/wavefront-operator
+        support: Wavefront by VMware
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: The Wavefront Proxy is a light-weight Java application that
+            can send your metrics, histograms, and trace data to Wavefront.
+          displayName: Wavefront Proxy
+          kind: WavefrontProxy
+          name: wavefrontproxies.wavefront.com
+          version: v1alpha1
+        - description: The Wavefront Collector for Kubernetes auto-discovers and enables
+            monitoring of Kubernetes, infrastructure, and Kubernetes workloads by
+            sending metrics to Wavefront.
+          displayName: Wavefront Collector
+          kind: WavefrontCollector
+          name: wavefrontcollectors.wavefront.com
+          version: v1alpha1
+      description: "Wavefront Kubernetes Operator automatically deploys Wavefront
+        Collector for Kubernetes and Wavefront Proxy, enabling developers and Kubernetes
+        operators to get automated observability across the Kubernetes environment,
+        including containerized applications, Kubernetes, and underlying infrastructure.
+        \n\nThis Operator deploys two Custom Resources Definitions:\n\n* **Wavefront
+        Proxy:-** A Wavefront proxy ingests metrics and forwards them to the Wavefront
+        service in a secure, fast, and reliable manner. After you install a proxy
+        in your environment, it can handle thousands of simultaneous clients. Your
+        data collection agents or custom code send data to the proxy, which consolidates
+        points into configurable batches and sends the data to the Wavefront service.\n\n*
+        **Wavefront Collector:-**  With zero-configuration installation, the Wavefront
+        Collector for Kubernetes auto-discovers and enables monitoring of Kubernetes,
+        infrastructure, and Kubernetes workloads by sending full-stack - Kubernetes
+        clusters, worker nodes, system, Kubernetes and Docker KPI, RED/USE of each
+        layer and custom applications metrics to Wavefront.\n\n### Prerequisite\n\n*
+        A Wavefront API token is needed to configure Wavefront Proxy.  Refer [Generating
+        an API Token] (https://docs.wavefront.com/users_account_managing.html#generating-an-api-token)
+        for generating a token.\n\n### Create Wavefront Proxy\n\n* Download example
+        Wavefront Proxy CR and update below configuration properties in the CR yaml
+        and create Wavefront Proxy.\n\n     * `metadata.namespace` : Wavefront Operator
+        namespace name.\n     * `spec.url`           : Wavefront cluster URL.\n     *
+        `spec.token`         : Wavefront API token.\n\n  ```\n      curl -O https://raw.githubusercontent.com/wavefrontHQ/wavefront-operator/master/deploy/crds/wavefront_proxy_basic_cr.yaml
+        \n      kubectl create -f wavefront_proxy_basic_cr.yaml\n  ```  \n\n### Create
+        Wavefront Collector\n\n* Download example Wavefront Collector CR with configMap
+        and update below property in the CR yaml and create Wavefront Collector.\n\n
+        \    * `metadata.namespace` : Wavefront Operator namespace name.\n     * `clusterName`
+        \       : This is a unique name for the kubernetes cluster. All metrics in
+        Wavefront will receive a `cluster` tag with this value.\n     * `sinks.proxyAddress`
+        : The address for the Wavefront Proxy. The proxy can be anywhere network reachable
+        including outside of the cluster.\n  \n  ```\n      curl -O https://raw.githubusercontent.com/wavefrontHQ/wavefront-operator/master/deploy/crds/wavefront_collector_bundle_cr.yaml\n
+        \     kubectl create -f wavefront_collector_bundle_cr.yaml\n  ```\n"
+      displayName: Wavefront Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - monitoring
+      - wavefront
+      - wavefront collector
+      - wavefront proxy
+      links:
+      - name: Wavefront Operator
+        url: https://github.com/wavefrontHQ/wavefront-operator
+      maintainers:
+      - email: support@wavefront.com
+        name: Wavefront by VMware
+      maturity: alpha
+      provider:
+        name: VMware
+      relatedImages:
+      - wavefronthq/wavefront-operator-for-kubernetes:0.1.0-rc2
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: wavefront
+  provider:
+    name: VMware

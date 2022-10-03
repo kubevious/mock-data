@@ -1,0 +1,47 @@
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 10.244.0.31
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  hostname: kubevious-mysql-0
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: kubevious-mysql-0
+    namespace: kubevious
+    uid: d5431a8f-15ce-4a2f-9817-3b9d757dee7f
+kind: EndpointSlice
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:39:56Z"
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  generateName: kubevious-mysql-
+  generation: 3
+  labels:
+    app.kubernetes.io/component: kubevious-mysql
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+    helm.sh/chart: kubevious-1.0.13
+    kubernetes.io/service-name: kubevious-mysql
+  name: kubevious-mysql-skcxj
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: kubevious-mysql
+    uid: 71fbcb29-fbc2-4d05-8d0a-562f57971835
+  resourceVersion: "31576"
+  uid: 64a80986-edf7-4e23-ac61-a554c32fc437
+ports:
+- name: mysql
+  port: 3306
+  protocol: TCP

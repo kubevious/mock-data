@@ -1,0 +1,181 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Palo Alto Networks
+    provider-url: ""
+  name: pcc-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: pcc-operator.v0.2.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pcc.paloaltonetworks.com/v1alpha1",
+              "kind": "Console",
+              "metadata": {
+                "name": "pcc-console",
+                "namespace": "twistlock"
+              },
+              "spec": {
+                "consoleConfig": {
+                  "serviceType": "ClusterIP"
+                },
+                "namespace": "twistlock",
+                "version": "21_08_520"
+              }
+            },
+            {
+              "apiVersion": "pcc.paloaltonetworks.com/v1alpha1",
+              "kind": "ConsoleDefender",
+              "metadata": {
+                "name": "pcc-consoledefender",
+                "namespace": "twistlock"
+              },
+              "spec": {
+                "consoleConfig": {
+                  "serviceType": "ClusterIP"
+                },
+                "defenderConfig": {
+                  "docker": false
+                },
+                "namespace": "twistlock",
+                "version": "21_08_520"
+              }
+            },
+            {
+              "apiVersion": "pcc.paloaltonetworks.com/v1alpha1",
+              "kind": "Defender",
+              "metadata": {
+                "name": "pcc-defender",
+                "namespace": "twistlock"
+              },
+              "spec": {
+                "defenderConfig": {
+                  "clusterAddress": "twistlock-console.example.com",
+                  "consoleAddress": "https://twistlock-console.example.com:8083",
+                  "docker": false
+                },
+                "namespace": "twistlock",
+                "version": "21_08_520"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Security
+        containerImage: quay.io/prismacloud/pcc-operator@sha256:b8fcfbd6c51286c874e00db1bd35523386cec406fa4050ef44c0a887730cf9b8
+        createdAt: "2021-11-15"
+        description: Deploy Prisma Cloud Compute for cloud-native security in your
+          clusters
+        operators.openshift.io/infrastructure-features: '["Disconnected"]'
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+        repository: https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator
+        support: pcc-integrations@paloaltonetworks.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Install the Prisma Cloud Compute Console and Defenders
+          displayName: Console and Defenders
+          kind: ConsoleDefender
+          name: consoledefenders.pcc.paloaltonetworks.com
+          version: v1alpha1
+        - description: Install the Prisma Cloud Compute Console
+          displayName: Console
+          kind: Console
+          name: consoles.pcc.paloaltonetworks.com
+          version: v1alpha1
+        - description: Install Prisma Cloud Compute Defenders
+          displayName: Defenders
+          kind: Defender
+          name: defenders.pcc.paloaltonetworks.com
+          version: v1alpha1
+      description: |
+        ## Features
+        - Deploy Console
+            - Create initial local administrator user
+            - Add license
+        - Deploy Defenders
+        - Support for offline deployments
+        - Upgrade Console
+        - Upgrade Defenders
+
+        ## Installation
+        See the [Prisma Cloud Compute Operator documentation](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator) for installation guides.
+
+        ## Support
+        This operator is available "as is," and should be seen as community-supported; however, Palo Alto Networks will continue contributing whenever possible.
+        Palo Alto Networks does not provide technical support or help with using or troubleshooting the operator through normal support channels.
+        We encourage you to open GitHub [issues](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/issues) and [pull requests](https://github.com/PaloAltoNetworks/prisma-cloud-compute-operator/pulls) to track bugs and feature requests.
+
+        ## Other links
+        [Prisma Cloud Compute product documentation](https://docs.paloaltonetworks.com/prisma/prisma-cloud/prisma-cloud-admin-compute.html)
+
+        [Prisma Cloud Compute API documentation](https://prisma.pan.dev/api/cloud/cwpp)
+      displayName: Prisma Cloud Compute Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - palo
+      - palo alto
+      - palo alto networks
+      - paloalto
+      - twistlock
+      - compute
+      - prisma
+      - prisma cloud
+      - prisma cloud compute
+      - security
+      - image
+      - images
+      - container
+      - containers
+      - docker
+      - podman
+      - vulnerability
+      - vulnerabilities
+      - compliance
+      - runtime
+      - scan
+      - scanning
+      - monitor
+      - monitoring
+      - alert
+      - alerting
+      links:
+      - name: Prisma Cloud
+        url: https://www.paloaltonetworks.com/prisma/cloud
+      maintainers:
+      - email: pcc-integrations@paloaltonetworks.com
+        name: Wyatt Gill
+      maturity: alpha
+      provider:
+        name: Palo Alto Networks
+      relatedImages:
+      - quay.io/prismacloud/pcc-operator@sha256:b8fcfbd6c51286c874e00db1bd35523386cec406fa4050ef44c0a887730cf9b8
+      version: 0.2.0
+    name: stable
+  defaultChannel: stable
+  packageName: pcc-operator
+  provider:
+    name: Palo Alto Networks

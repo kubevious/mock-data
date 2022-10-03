@@ -1,0 +1,182 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 2df6ab2db20e9d99d5a012fbe8fa22551f7be792d5a19af6e599eceeb218831f
+    cni.projectcalico.org/podIP: 172.30.142.139/32
+    cni.projectcalico.org/podIPs: 172.30.142.139/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.139"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.139"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+  creationTimestamp: "2022-10-03T18:39:37Z"
+  generateName: ibm-storage-metrics-agent-6f44664f5-
+  labels:
+    name: ibm-storage-metrics-agent
+    pod-template-hash: 6f44664f5
+  name: ibm-storage-metrics-agent-6f44664f5-ftzvx
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: ibm-storage-metrics-agent-6f44664f5
+    uid: 3588b212-3cb5-4e91-8344-52dc4591428a
+  resourceVersion: "11274"
+  uid: 7db311c2-90bd-4b29-81b0-b9f1e4077a7d
+spec:
+  containers:
+  - env:
+    - name: JOB_IMAGE
+      value: icr.io/obs/ibm-storage-metrics-agent:614b9aaac8feaf2260c28ec919df3beb767ec399
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    envFrom:
+    - configMapRef:
+        name: ibm-storage-metrics-agent
+    image: icr.io/obs/ibm-storage-metrics-agent:614b9aaac8feaf2260c28ec919df3beb767ec399
+    imagePullPolicy: Always
+    livenessProbe:
+      failureThreshold: 6
+      httpGet:
+        path: /liveness
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 60
+      periodSeconds: 2100
+      successThreshold: 1
+      timeoutSeconds: 10
+    name: ibm-storage-metrics-agent
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /etc/storage_ibmc/cluster_info
+      name: cluster-info
+      readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-fptwh
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000000000
+  priorityClassName: system-cluster-critical
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+  serviceAccount: ibm-storage-metrics-agent
+  serviceAccountName: ibm-storage-metrics-agent
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - configMap:
+      defaultMode: 420
+      name: cluster-info
+    name: cluster-info
+  - name: kube-api-access-fptwh
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:22Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:28Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:28Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:22Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://4d547844f4fc9546e67018b3511ca063eecc6d28edfef65b49b9e873135f00e6
+    image: icr.io/obs/ibm-storage-metrics-agent:614b9aaac8feaf2260c28ec919df3beb767ec399
+    imageID: icr.io/obs/ibm-storage-metrics-agent@sha256:4084a2ba779b08dfc0558d3f69e8bd6411f6b923c731ea172012cc9a2cc2717e
+    lastState: {}
+    name: ibm-storage-metrics-agent
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:48:28Z"
+  hostIP: 10.161.112.142
+  phase: Running
+  podIP: 172.30.142.139
+  podIPs:
+  - ip: 172.30.142.139
+  qosClass: Burstable
+  startTime: "2022-10-03T18:47:22Z"

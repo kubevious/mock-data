@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: "2022-09-30T19:14:47Z"
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: system:controller:disruption-controller
+  resourceVersion: "162"
+  uid: e5a8bab5-6f9d-4497-9f5c-1bb63f03b1c8
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:controller:disruption-controller
+subjects:
+- kind: ServiceAccount
+  name: disruption-controller
+  namespace: kube-system

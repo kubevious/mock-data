@@ -1,0 +1,121 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM Quantum
+    provider-url: ""
+  name: openshift-qiskit-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: openshift-qiskit-operator.v0.2.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "qiskit.ibm.com/v1alpha1",
+              "kind": "QiskitPlayground",
+              "metadata": {
+                "name": "qiskitplayground-sample"
+              },
+              "spec": {
+                "image": "qiskit/jupyter:0.1",
+                "imagePullPolicy": "Always",
+                "resources": {
+                  "requests": {
+                    "memory": "2G",
+                    "cpu": "1"
+                  },
+                  "limits": {
+                    "memory": "3G",
+                    "cpu": "1.5"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        certified: "false"
+        containerImage: docker.io/qiskit/operator:0.1
+        createdAt: 2021-004-23 22:25:53
+        description: |-
+          Launches a developement environment Jupyter notebok development environment for
+          developing quantum applications using Qiskit.
+        operators.operatorframework.io/builder: operator-sdk-v1.5.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/qiskit-community/openshift-quantum-operators/tree/master/operators-examples/kubernetes-qiskit-operator
+        support: https://github.com/qiskit-community/openshift-quantum-operators/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: QiskitPlayground is the Schema for the qiskitplaygrounds API
+          displayName: Qiskit Playground
+          kind: QiskitPlayground
+          name: qiskitplaygrounds.qiskit.ibm.com
+          version: v1alpha1
+      description: |-
+        ### Introduction
+        Launches a developement Jupiter lab environment with Qiskit.
+
+        QiskitPlayground is a Jupyter notebook with the pre installed qiskit libraries for implementing quantum application development.
+        It comes with pre installed python packages for visualising results. QiskitPlayground can run quantum
+        applications on simulator or on real quantum machines using IBM Q account.
+
+        ### Documentation
+        For detailed installation guide [follow](https://github.com/qiskit-community/openshift-quantum-operators/tree/master/operators-examples/kubernetes-qiskit-operator)
+
+        ### Contributing
+        You can contribute by
+          * Raising any [issues](https://github.com/qiskit-community/openshift-quantum-operators/issues) you find using ibm-quantum-operator community operator
+          * Fixing issues by opening [Pull Requests](https://github.com/qiskit-community/openshift-quantum-operators/pulls)
+          * Talking about openshift-qiskit-operator
+
+        ### License
+        kubernetes-qiskit-operator is licensed under the [Apache 2.0 license](https://github.com/qiskit-community/openshift-quantum-operators/blob/master/LICENSE)
+
+        #### Note
+        Any api could be changed any time without any notice. That said, your feedback is very important and appreciated to make this project more stable and useful.
+      displayName: QiskitPlayground
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Qiskit
+      - Open Source
+      - Quantum
+      links:
+      - name: GitHub
+        url: https://github.com/qiskit-community/openshift-quantum-operators/tree/master/operators-examples/kubernetes-qiskit-operator
+      maintainers:
+      - email: blublinsky@ibm.com
+        name: boris
+      maturity: alpha
+      provider:
+        name: IBM Quantum
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - docker.io/qiskit/operator:0.1
+      version: 0.2.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: openshift-qiskit-operator
+  provider:
+    name: IBM Quantum

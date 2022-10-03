@@ -1,0 +1,405 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Pulp Community
+    provider-url: https://github.com/pulp/pulp-operator
+  name: pulp-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: pulp-operator.v0.14.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "Pulp",
+              "metadata": {
+                "name": "example-pulp"
+              },
+              "spec": {
+                "file_storage_access_mode": "ReadWriteMany",
+                "file_storage_size": "375Gi",
+                "image": "quay.io/pulp/pulp",
+                "image_version": "stable",
+                "image_web": "quay.io/pulp/pulp-web",
+                "image_web_version": "stable",
+                "storage_type": "File"
+              }
+            },
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "Pulp",
+              "metadata": {
+                "name": "galaxy-demo"
+              },
+              "spec": {
+                "admin_password_secret": "example-pulp-admin-password",
+                "container_token_secret": "container-auth",
+                "content": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "file_storage_access_mode": "ReadWriteMany",
+                "file_storage_size": "10Gi",
+                "image": "quay.io/pulp/galaxy",
+                "image_version": "stable",
+                "image_web": "quay.io/pulp/galaxy-web",
+                "image_web_version": "stable",
+                "ingress_type": "Ingress",
+                "storage_type": "File",
+                "web": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "worker": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "Pulp",
+              "metadata": {
+                "name": "ocp-example"
+              },
+              "spec": {
+                "admin_password_secret": "example-pulp-admin-password",
+                "content": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "limits": {
+                      "cpu": "800m",
+                      "memory": "1Gi"
+                    },
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "file_storage_access_mode": "ReadWriteOnce",
+                "file_storage_size": "10Gi",
+                "ingress_type": "route",
+                "no_log": false,
+                "pulp_settings": {
+                  "allowed_export_paths": [
+                    "/tmp"
+                  ],
+                  "allowed_import_paths": [
+                    "/tmp"
+                  ],
+                  "telemetry": false
+                },
+                "route_host": "route_host_placeholder",
+                "route_tls_termination_mechanism": "edge",
+                "storage_type": "File",
+                "web": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "limits": {
+                      "cpu": "800m",
+                      "memory": "1Gi"
+                    },
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "worker": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "limits": {
+                      "cpu": "800m",
+                      "memory": "1Gi"
+                    },
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "Pulp",
+              "metadata": {
+                "name": "pulp-azure"
+              },
+              "spec": {
+                "admin_password_secret": "example-pulp-admin-password",
+                "content": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "ingress_type": "Ingress",
+                "object_storage_azure_secret": "example-pulp-object-storage",
+                "settings": {
+                  "debug": "True"
+                },
+                "storage_type": "Azure",
+                "web": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "worker": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "Pulp",
+              "metadata": {
+                "name": "pulp-s3"
+              },
+              "spec": {
+                "admin_password_secret": "example-pulp-admin-password",
+                "content": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "ingress_type": "Ingress",
+                "object_storage_s3_secret": "example-pulp-object-storage",
+                "settings": {
+                  "debug": "True"
+                },
+                "storage_type": "S3",
+                "web": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "worker": {
+                  "replicas": 1,
+                  "resource_requirements": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "256Mi"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "PulpBackup",
+              "metadata": {
+                "name": "ci-pulpbackup"
+              },
+              "spec": {
+                "deployment_name": "example-pulp",
+                "no_log": false
+              }
+            },
+            {
+              "apiVersion": "pulp.pulpproject.org/v1beta1",
+              "kind": "PulpRestore",
+              "metadata": {
+                "name": "ci-pulprestore"
+              },
+              "spec": {
+                "backup_name": "ci-pulpbackup",
+                "no_log": false
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        containerImage: quay.io/pulp/pulp-operator:v0.14.0
+        createdAt: "2021-03-26 16:57:40"
+        description: Pulp is a platform for managing repositories of software packages
+          and making them available to a large number of consumers.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+        repository: https://github.com/pulp/pulp-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Back up a deployment of the pulp, including all hosted Ansible
+            content
+          displayName: Pulp Backup
+          kind: PulpBackup
+          name: pulpbackups.pulp.pulpproject.org
+          version: v1beta1
+        - description: Restore a previous pulp deployment into the namespace
+          displayName: Pulp Restore
+          kind: PulpRestore
+          name: pulprestores.pulp.pulpproject.org
+          version: v1beta1
+        - description: Deploy a new instance of pulp
+          displayName: Pulp
+          kind: Pulp
+          name: pulps.pulp.pulpproject.org
+          version: v1beta1
+      description: |-
+        [Pulp](https://pulpproject.org/) is a platform for managing repositories of content, such as software packages, and making them available to a large number of consumers.
+
+        With Pulp you can:
+
+        * Locally mirror all or part of a repository
+        * Host your own content in a new repository
+        * Manage content from multiple sources in one place
+        * Promote content through different repos in an organized way
+
+        If you have dozens, hundreds, or thousands of software packages and need a better way to manage them, Pulp can help.
+
+        Pulp is completely free and open-source!
+
+        * License: GPLv2+
+        * Documentation: [https://docs.pulpproject.org/](https://docs.pulpproject.org/)
+        * Source: [https://github.com/pulp/pulpcore/](https://github.com/pulp/pulpcore/)
+        * Bugs: [https://pulp.plan.io/projects/pulp](https://pulp.plan.io/projects/pulp)
+
+        For more information, check out the project website: [https://pulpproject.org](https://pulpproject.org)
+
+        If you want to evaluate Pulp quickly, try [Pulp in One Container](https://pulpproject.org/pulp-in-one-container/)
+
+        ## Pulp Operator
+
+        An [Ansible Operator](https://www.ansible.com/blog/ansible-operator) for Pulp 3.
+
+        Pulp Operator is under active development and not production ready yet. The goal is to provide a scalable and robust cluster for Pulp 3.
+
+        Note that Pulp operator works with three different types of service containers (the operator itself, the main service and the web service):
+
+        |           | Operator | Main | Web |
+        | --------- | -------- | ---- | --- |
+        | **Image** | [pulp-operator](https://quay.io/repository/pulp/pulp-operator?tab=tags) |[pulp](https://quay.io/repository/pulp/pulp?tab=tags) | [pulp-web](https://quay.io/repository/pulp/pulp-web?tab=tags) |
+        | **Image** | [pulp-operator](https://quay.io/repository/pulp/pulp-operator?tab=tags) |[galaxy](https://quay.io/repository/pulp/galaxy?tab=tags) | [galaxy-web](https://quay.io/repository/pulp/galaxy-web?tab=tags) |
+
+        <br>Pulp operator is manually built and [hosted on quay.io](https://quay.io/repository/pulp/pulp-operator). Read more about the container images [here](https://docs.pulpproject.org/pulp_operator/container/).
+
+        ## Custom Resource Definitions
+        Pulp Operator currently provides three different kinds of [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#custom-resources): Pulp, Pulp Backup and Pulp Restore.
+        ### Pulp
+        Manages the Pulp application and its deployments, services, etc. Through the following ansible roles:
+
+        * [API](https://docs.pulpproject.org/pulp_operator/roles/pulp-api/)
+        * [Content](https://docs.pulpproject.org/pulp_operator/roles/pulp-content/)
+        * [Routes](https://docs.pulpproject.org/pulp_operator/roles/pulp-routes/)
+        * [Worker](https://docs.pulpproject.org/pulp_operator/roles/pulp-worker/)
+        * [Web](https://docs.pulpproject.org/pulp_operator/roles/pulp-web/)
+        * [Status](https://docs.pulpproject.org/pulp_operator/roles/pulp-status/)
+        * [Postgres](https://docs.pulpproject.org/pulp_operator/roles/postgres/)
+        * [Redis](https://docs.pulpproject.org/pulp_operator/roles/redis/)
+
+        ### Pulp Backup
+        Manages pulp backup through the following ansible role:
+
+        * [Backup](https://docs.pulpproject.org/pulp_operator/roles/backup/)
+
+        ### Pulp Restore
+        Manages the restoration of a pulp backup through the following ansible role:
+
+        * [Restore](https://docs.pulpproject.org/pulp_operator/roles/restore/)
+        ## Get Help
+
+        Documentation: [https://docs.pulpproject.org/pulp_operator/](https://docs.pulpproject.org/pulp_operator/)
+
+        Issue Tracker: [https://github.com/pulp/pulp-operator/issues](https://github.com/pulp/pulp-operator/issues)
+
+        Forum: [https://discourse.pulpproject.org/](https://discourse.pulpproject.org/)
+
+        Join [**#pulp** on Matrix](https://matrix.to/#/#pulp:matrix.org)
+
+        Join [**#pulp-dev** on Matrix](https://matrix.to/#/#pulp-dev:matrix.org) for Developer discussion.
+      displayName: Pulp Project
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - pulp
+      - pulpcore
+      - content
+      - repositories
+      - lifecycle
+      links:
+      - name: Pulp Operator
+        url: https://github.com/pulp/pulp-operator
+      - name: Pulp Project
+        url: https://pulpproject.org/
+      - name: Docs
+        url: https://docs.pulpproject.org/pulp_operator/
+      maintainers:
+      - email: pulp-list@redhat.com
+        name: Pulp Community
+      maturity: alpha
+      provider:
+        name: Pulp Community
+        url: https://github.com/pulp/pulp-operator
+      relatedImages:
+      - redis:latest
+      - postgres:13
+      - quay.io/pulp/pulp:stable
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
+      - quay.io/pulp/pulp-operator:v0.14.0
+      - quay.io/pulp/pulp-web:stable
+      version: 0.14.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: pulp-operator
+  provider:
+    name: Pulp Community
+    url: https://github.com/pulp/pulp-operator

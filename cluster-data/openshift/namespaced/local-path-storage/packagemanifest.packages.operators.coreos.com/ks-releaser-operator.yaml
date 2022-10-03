@@ -1,0 +1,95 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: KubeSphere
+    provider-url: ""
+  name: ks-releaser-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ks-releaser-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "devops.kubesphere.io/v1alpha1",
+              "kind": "ReleaserController",
+              "metadata": {
+                "name": "releasercontroller-sample"
+              },
+              "spec": {
+                "image": "ghcr.io/kubesphere-sigs/ks-releaser",
+                "version": "v0.0.13",
+                "webhook": false
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        containerImage: ghcr.io/kubesphere-sigs/ks-releaser-operator:v0.0.1
+        description: ks-releaser aims to help to release a project which especially
+          has multiple git repositories.
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/kubesphere-sigs/ks-releaser-operator
+        support: KubeSphere DevOps Team
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ReleaserController is the Schema for the releasercontrollers
+            API
+          displayName: Releaser Controller
+          kind: ReleaserController
+          name: releasercontrollers.devops.kubesphere.io
+          version: v1alpha1
+        - description: Releaser is the Schema for the releasercontrollers API
+          displayName: Releaser
+          kind: Releaser
+          name: releasers.devops.kubesphere.io
+          version: v1alpha1
+      description: ks-releaser
+      displayName: ks-releaser
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - releaser
+      - devops
+      links:
+      - name: Ks Releaser Operator
+        url: https://github.com/kubesphere-sigs/ks-releaser-operator/
+      - name: Ks Releaser
+        url: https://github.com/kubesphere-sigs/ks-releaser/
+      maintainers:
+      - email: linuxsuren@gmail.com
+        name: rick
+      maturity: alpha
+      provider:
+        name: KubeSphere
+      relatedImages:
+      - ghcr.io/kubesphere-sigs/ks-releaser-operator:v0.0.1
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: ks-releaser-operator
+  provider:
+    name: KubeSphere

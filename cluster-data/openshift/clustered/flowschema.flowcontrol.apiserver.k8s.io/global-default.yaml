@@ -1,0 +1,47 @@
+apiVersion: flowcontrol.apiserver.k8s.io/v1beta2
+kind: FlowSchema
+metadata:
+  annotations:
+    apf.kubernetes.io/autoupdate-spec: "true"
+  creationTimestamp: "2022-09-30T19:14:45Z"
+  generation: 1
+  name: global-default
+  resourceVersion: "72"
+  uid: a8e88e65-46b0-47d0-9f6a-3c22f426fbd9
+spec:
+  distinguisherMethod:
+    type: ByUser
+  matchingPrecedence: 9900
+  priorityLevelConfiguration:
+    name: global-default
+  rules:
+  - nonResourceRules:
+    - nonResourceURLs:
+      - '*'
+      verbs:
+      - '*'
+    resourceRules:
+    - apiGroups:
+      - '*'
+      clusterScope: true
+      namespaces:
+      - '*'
+      resources:
+      - '*'
+      verbs:
+      - '*'
+    subjects:
+    - group:
+        name: system:unauthenticated
+      kind: Group
+    - group:
+        name: system:authenticated
+      kind: Group
+status:
+  conditions:
+  - lastTransitionTime: "2022-09-30T19:14:45Z"
+    message: This FlowSchema references the PriorityLevelConfiguration object named
+      "global-default" and it exists
+    reason: Found
+    status: "False"
+    type: Dangling

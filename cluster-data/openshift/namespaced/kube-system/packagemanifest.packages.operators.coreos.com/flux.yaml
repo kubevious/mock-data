@@ -1,0 +1,367 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Flux project
+    provider-url: ""
+  name: flux
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: flux.v0.31.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n  {\n    \"apiVersion\": \"helm.toolkit.fluxcd.io/v2beta1\",\n
+          \   \"kind\": \"HelmRelease\",\n    \"metadata\": {\n        \"name\": \"podinfo\",\n
+          \       \"namespace\": \"default\"\n    },\n    \"spec\": {\n        \"interval\":
+          \"5m\",\n        \"chart\": {\n          \"spec\": {\n              \"chart\":
+          \"podinfo\",\n              \"version\": \"4.0.x\",\n              \"sourceRef\":
+          {\n                \"kind\": \"HelmRepository\",\n                \"name\":
+          \"podinfo\",\n                \"namespace\": \"flux-system\"\n              },\n
+          \             \"interval\": \"1m\"\n          }\n        },\n        \"values\":
+          {\n          \"replicaCount\": 2\n        }\n    }\n  },\n  {\n    \"apiVersion\":
+          \"source.toolkit.fluxcd.io/v1beta1\",\n    \"kind\": \"GitRepository\",\n
+          \   \"metadata\": {\n        \"name\": \"podinfo\",\n        \"namespace\":
+          \"dev\"\n    },\n    \"spec\": {\n        \"interval\": \"1m\",\n        \"ref\":
+          {\n          \"branch\": \"master\"\n        },\n        \"url\": \"https://github.com/stefanprodan/podinfo\"\n
+          \   }\n  },\n  {\n    \"apiVersion\": \"source.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"HelmRepository\",\n    \"metadata\": {\n        \"name\":
+          \"stable\",\n        \"namespace\": \"default\"\n    },\n    \"spec\": {\n
+          \       \"url\": \"https://kubernetes-charts.storage.googleapis.com/\",\n
+          \       \"interval\": \"10m\"\n    }\n  },\n  {\n    \"apiVersion\": \"source.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"HelmChart\",\n    \"metadata\": {\n        \"name\": \"redis\",\n
+          \       \"namespace\": \"default\"\n    },\n    \"spec\": {\n        \"chart\":
+          \"redis\",\n        \"version\": \"10.5.7\",\n        \"sourceRef\": {\n
+          \         \"name\": \"stable\",\n          \"kind\": \"HelmRepository\"\n
+          \       },\n        \"interval\": \"5m\"\n    }\n  },\n  {\n    \"apiVersion\":
+          \"source.toolkit.fluxcd.io/v1beta1\",\n    \"kind\": \"Bucket\",\n    \"metadata\":
+          {\n        \"name\": \"podinfo\",\n        \"namespace\": \"default\"\n
+          \   },\n    \"spec\": {\n        \"interval\": \"1m\",\n        \"provider\":
+          \"generic\",\n        \"bucketName\": \"podinfo\",\n        \"endpoint\":
+          \"minio.minio.svc.cluster.local:9000\",\n        \"insecure\": true,\n        \"secretRef\":
+          {\n          \"name\": \"minio-credentials\"\n        }\n    }\n  },\n  {\n
+          \   \"apiVersion\": \"kustomize.toolkit.fluxcd.io/v1beta2\",\n    \"kind\":
+          \"Kustomization\",\n    \"metadata\": {\n        \"name\": \"podinfo\",\n
+          \       \"namespace\": \"dev\"\n    },\n    \"spec\": {\n        \"interval\":
+          \"5m\",\n        \"path\": \"./deploy/overlays/dev\",\n        \"prune\":
+          true,              \n        \"sourceRef\": {\n          \"kind\": \"GitRepository\",\n
+          \         \"name\": \"podinfo\"\n        },\n        \"timeout\": \"2m\",\n
+          \       \"wait\": true\n    }\n  },\n  {\n    \"apiVersion\": \"notification.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"Provider\",\n    \"metadata\": {\n        \"name\": \"podinfo\",\n
+          \       \"namespace\": \"default\"\n    },\n    \"spec\": {\n        \"type\":
+          \"github\",\n        \"address\": \"https://github.com/stefanprodan/podinfo\",\n
+          \       \"secretRef\": {\n          \"name\": \"api-token\"\n        }\n
+          \   }\n  },\n  {\n    \"apiVersion\": \"notification.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"Alert\",\n    \"metadata\": {\n        \"name\": \"webapp\",\n
+          \       \"namespace\": \"default\"\n    },\n    \"spec\": {\n        \"providerRef\":
+          {\n          \"name\": \"on-call-slack\"\n        },\n        \"eventSeverity\":
+          \"info\",\n        \"eventSources\": [\n          {\n              \"kind\":
+          \"GitRepository\",\n              \"name\": \"webapp\"\n          },\n          {\n
+          \             \"kind\": \"Bucket\",\n              \"name\": \"secrets\"\n
+          \         },\n          {\n              \"kind\": \"Kustomization\",\n
+          \             \"name\": \"webapp-backend\"\n          },\n          {\n
+          \             \"kind\": \"Kustomization\",\n              \"name\": \"webapp-frontend\"\n
+          \         }\n        ]\n    }\n  },\n  {\n    \"apiVersion\": \"notification.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"Receiver\",\n    \"metadata\": {\n        \"name\": \"github-receiver\",\n
+          \       \"namespace\": \"default\"\n    },\n    \"spec\": {\n        \"type\":
+          \"github\",\n        \"events\": [\n          \"ping\",\n          \"push\"\n
+          \       ],\n        \"secretRef\": {\n          \"name\": \"webhook-token\"\n
+          \       },\n        \"resources\": [\n          {\n              \"kind\":
+          \"GitRepository\",\n              \"name\": \"webapp\"\n          },\n          {\n
+          \             \"kind\": \"HelmRepository\",\n              \"name\": \"webapp\"\n
+          \         }\n        ]\n    }\n  },\n  {\n    \"apiVersion\": \"image.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"ImageRepository\",\n    \"metadata\": {\n        \"name\":
+          \"podinfo\",\n        \"namespace\": \"flux-system\"\n    },\n    \"spec\":
+          {\n        \"image\": \"ghcr.io/stefanprodan/podinfo\",\n        \"interval\":
+          \"1m0s\"\n    }\n  },\n  {\n    \"apiVersion\": \"image.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"ImagePolicy\",\n    \"metadata\": {\n        \"name\": \"podinfo\",\n
+          \       \"namespace\": \"flux-system\"\n    },\n    \"spec\": {\n        \"imageRepositoryRef\":
+          {\n          \"name\": \"podinfo\"\n        },\n        \"policy\": {\n
+          \         \"semver\": {\n              \"range\": \"5.0.x\"\n          }\n
+          \       }\n    }\n  },\n  {\n    \"apiVersion\": \"image.toolkit.fluxcd.io/v1beta1\",\n
+          \   \"kind\": \"ImageUpdateAutomation\",\n    \"metadata\": {\n      \"name\":
+          \"flux-system\",\n      \"namespace\": \"flux-system\"\n    },\n    \"spec\":
+          {\n      \"interval\": \"1m0s\",\n      \"sourceRef\": {\n        \"kind\":
+          \"GitRepository\",\n        \"name\": \"flux-system\"\n      },\n      \"git\":
+          {\n        \"checkout\": {\n          \"ref\": {\n            \"branch\":
+          \"main\"\n          }\n        },\n        \"commit\": {\n          \"author\":
+          {\n            \"email\": \"fluxcdbot@users.noreply.github.com\",\n            \"name\":
+          \"fluxcdbot\"\n          },\n          \"messageTemplate\": \"{{range .Updated.Images}}{{println
+          .}}{{end}}\"\n        },\n        \"push\": {\n          \"branch\": \"main\"\n
+          \       }\n      },\n      \"update\": {\n        \"path\": \"./clusters/my-cluster\",\n
+          \       \"strategy\": \"Setters\"\n      }\n    }\n  }\n]"
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: ghcr.io/fluxcd/source-controller:v0.25.10
+        description: Flux is a Continuous Delivery solution for Kubernetes.
+        operatorframework.io/suggested-namespace: flux-system
+        support: The Flux community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Alert
+          displayName: Alert
+          kind: Alert
+          name: alerts.notification.toolkit.fluxcd.io
+          version: v1beta1
+        - description: Bucket
+          displayName: Bucket
+          kind: Bucket
+          name: buckets.source.toolkit.fluxcd.io
+          version: v1beta1
+        - description: Bucket
+          displayName: Bucket
+          kind: Bucket
+          name: buckets.source.toolkit.fluxcd.io
+          version: v1beta2
+        - description: GitRepository
+          displayName: GitRepository
+          kind: GitRepository
+          name: gitrepositories.source.toolkit.fluxcd.io
+          version: v1beta1
+        - description: GitRepository
+          displayName: GitRepository
+          kind: GitRepository
+          name: gitrepositories.source.toolkit.fluxcd.io
+          version: v1beta2
+        - description: HelmChart
+          displayName: HelmChart
+          kind: HelmChart
+          name: helmcharts.source.toolkit.fluxcd.io
+          version: v1beta1
+        - description: HelmChart
+          displayName: HelmChart
+          kind: HelmChart
+          name: helmcharts.source.toolkit.fluxcd.io
+          version: v1beta2
+        - description: HelmRelease
+          displayName: HelmRelease
+          kind: HelmRelease
+          name: helmreleases.helm.toolkit.fluxcd.io
+          version: v2beta1
+        - description: HelmRepository
+          displayName: HelmRepository
+          kind: HelmRepository
+          name: helmrepositories.source.toolkit.fluxcd.io
+          version: v1beta1
+        - description: HelmRepository
+          displayName: HelmRepository
+          kind: HelmRepository
+          name: helmrepositories.source.toolkit.fluxcd.io
+          version: v1beta2
+        - description: ImagePolicy
+          displayName: ImagePolicy
+          kind: ImagePolicy
+          name: imagepolicies.image.toolkit.fluxcd.io
+          version: v1alpha1
+        - description: ImagePolicy
+          displayName: ImagePolicy
+          kind: ImagePolicy
+          name: imagepolicies.image.toolkit.fluxcd.io
+          version: v1alpha2
+        - description: ImagePolicy
+          displayName: ImagePolicy
+          kind: ImagePolicy
+          name: imagepolicies.image.toolkit.fluxcd.io
+          version: v1beta1
+        - description: ImageRepository
+          displayName: ImageRepository
+          kind: ImageRepository
+          name: imagerepositories.image.toolkit.fluxcd.io
+          version: v1alpha1
+        - description: ImageRepository
+          displayName: ImageRepository
+          kind: ImageRepository
+          name: imagerepositories.image.toolkit.fluxcd.io
+          version: v1alpha2
+        - description: ImageRepository
+          displayName: ImageRepository
+          kind: ImageRepository
+          name: imagerepositories.image.toolkit.fluxcd.io
+          version: v1beta1
+        - description: ImageUpdateAutomation
+          displayName: ImageUpdateAutomation
+          kind: ImageUpdateAutomation
+          name: imageupdateautomations.image.toolkit.fluxcd.io
+          version: v1alpha1
+        - description: ImageUpdateAutomation
+          displayName: ImageUpdateAutomation
+          kind: ImageUpdateAutomation
+          name: imageupdateautomations.image.toolkit.fluxcd.io
+          version: v1alpha2
+        - description: ImageUpdateAutomation
+          displayName: ImageUpdateAutomation
+          kind: ImageUpdateAutomation
+          name: imageupdateautomations.image.toolkit.fluxcd.io
+          version: v1beta1
+        - description: Kustomization
+          displayName: Kustomization
+          kind: Kustomization
+          name: kustomizations.kustomize.toolkit.fluxcd.io
+          version: v1beta1
+        - description: Kustomization
+          displayName: Kustomization
+          kind: Kustomization
+          name: kustomizations.kustomize.toolkit.fluxcd.io
+          version: v1beta2
+        - description: Provider
+          displayName: Provider
+          kind: Provider
+          name: providers.notification.toolkit.fluxcd.io
+          version: v1beta1
+        - description: Receiver
+          displayName: Receiver
+          kind: Receiver
+          name: receivers.notification.toolkit.fluxcd.io
+          version: v1beta1
+      description: |-
+        [Flux](https://fluxcd.io/) is a Continuous Delivery solution for Kubernetes.
+        Flux is constructed with the [GitOps Toolkit](https://toolkit.fluxcd.io/components/), a set of composable APIs and specialized tools for keeping Kubernetes clusters in sync with sources of configuration (like Git & Helm repositories), and automating updates to configuration when there is new code to deploy.
+
+        Flux is a CNCF incubation project made for:
+
+        - **cluster operators** who automate provision and configuration of clusters
+        - **platform engineers** who build continuous delivery for developer teams
+        - **app developers** who rely on continuous delivery to get their code live
+
+        Features:
+
+        - Source configuration from Git and Helm repositories, and S3-compatible buckets (e.g., Minio)
+        - Kustomize and Helm support
+        - Event-triggered and periodic reconciliation
+        - Integration with Kubernetes RBAC
+        - Health assessment (clusters and workloads)
+        - Dependency management (infrastructure and workloads)
+        - Secrets management (builtin support for Mozilla SOPS and Cloud KMS)
+        - Alerting to external systems (webhook senders)
+        - External events handling (webhook receivers)
+        - Automated container image updates to Git (image scanning and patching)
+        - Policy-driven validation (OPA, Kyverno, admission controllers)
+        - Seamless integration with Git providers (GitHub, GitLab, Bitbucket)
+        - Interoperability with Cluster API (CAPI) providers
+
+        ### Steps to support bootstraping with Flux CLI
+
+        SecComp Profile should be removed as it requires a special privilege to get the access.
+        Also, it requires to enforce `runUserAs` to the same UID provided by the images to prevent OpenShift
+        to alter the user id expected by our controllers.
+
+        To do so, please specifiy a patch using the following Kustomization file, for example.
+
+        ```yaml
+        apiVersion: kustomize.config.k8s.io/v1beta1
+        kind: Kustomization
+        resources:
+          - gotk-components.yaml
+          - gotk-sync.yaml
+        patches:
+          - patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: all
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: manager
+                        securityContext:
+                          runAsUser: 65534
+                          seccompProfile:
+                            $patch: delete
+            target:
+              kind: Deployment
+              labelSelector: app.kubernetes.io/part-of=flux
+        ```
+
+        Then before installing Flux, please also perform the following steps to bind Flux to the `nonroot` SecurityContextConstraint (SCC). This applies to installation via OC's OLM or via Flux CLI.
+
+        ```sh
+        # replace default "flux-system" with the project/namespace name for your flux installation
+        namespace="flux-system"
+        oc adm policy add-scc-to-user nonroot system:serviceaccount:$namespace:source-controller
+        oc adm policy add-scc-to-user nonroot system:serviceaccount:$namespace:kustomize-controller
+        oc adm policy add-scc-to-user nonroot system:serviceaccount:$namespace:helm-controller
+        oc adm policy add-scc-to-user nonroot system:serviceaccount:$namespace:notification-controller
+        oc adm policy add-scc-to-user nonroot system:serviceaccount:$namespace:image-automation-controller
+        oc adm policy add-scc-to-user nonroot system:serviceaccount:$namespace:image-reflector-controller
+
+        ```
+
+        To see complete steps please refer to this [documentation](https://github.com/fluxcd/website/blob/main/content/en/docs/use-cases/openshift.md).
+
+        If you've already installed Flux, you might need to uninstall it after applying the above pre-requisite steps.
+
+        ### Network Policies
+
+        If you're using a CNI that requires network policies, you may need to [add Flux's policies](https://github.com/fluxcd/flux2/tree/main/manifests/policies).
+
+        ### Breaking Changes
+
+        - Flux 0.18.x ships with v1beta2 of the kustomize.toolkit.fluxcd.io/Kustomization CRD.
+        - Flux 0.25.x is the last Flux release where Kubernetes 1.19 is supported.
+
+        ### Flux on OpenShift Use Cases
+
+        - [The GitOps with Flux + OpenShift](https://www.youtube.com/watch?v=8ybCtNVP5To) talk by Andrew Block (Red Hat) showing how to setup multi-tenacy on OpenShift using Flux.
+        - [Flux OpenShift Use Case](https://fluxcd.io/docs/use-cases/openshift/) on FluxCD.io
+      displayName: Flux
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - flux
+      - gitops
+      - cd
+      - continuous delivery
+      - fluxcd
+      - helm
+      - kustomize
+      links:
+      - name: Homepage
+        url: https://fluxcd.io/
+      - name: Documentation
+        url: https://fluxcd.io/docs/
+      - name: Slack
+        url: https://cloud-native.slack.com/messages/flux
+      - name: Mailing List
+        url: https://lists.cncf.io/g/cncf-flux-dev
+      - name: Source Code
+        url: https://github.com/fluxcd/flux2
+      maintainers:
+      - email: support@weave.works
+        name: The Flux maintainers
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: The Flux project
+      relatedImages:
+      - ghcr.io/fluxcd/kustomize-controller:v0.26.3
+      - ghcr.io/fluxcd/notification-controller:v0.24.1
+      - ghcr.io/fluxcd/source-controller:v0.25.10
+      - ghcr.io/fluxcd/helm-controller:v0.22.2
+      - ghcr.io/fluxcd/image-automation-controller:v0.23.5
+      - ghcr.io/fluxcd/image-reflector-controller:v0.19.2
+      version: 0.31.4
+    name: stable
+  defaultChannel: stable
+  packageName: flux
+  provider:
+    name: The Flux project

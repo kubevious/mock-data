@@ -1,0 +1,47 @@
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 10.244.0.28
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  hostname: kubevious-redis-0
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: kubevious-redis-0
+    namespace: kubevious
+    uid: a4a8ff08-4a5e-4800-9edf-e566ec711257
+kind: EndpointSlice
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:39:03Z"
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  generateName: kubevious-redis-
+  generation: 2
+  labels:
+    app.kubernetes.io/component: kubevious-redis
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+    helm.sh/chart: kubevious-1.0.13
+    kubernetes.io/service-name: kubevious-redis
+  name: kubevious-redis-5xsbr
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: kubevious-redis
+    uid: c7f3bb26-371e-4d52-aad9-8e5f0876fae8
+  resourceVersion: "31420"
+  uid: e3ed7ace-43eb-496e-b451-e19c925552a1
+ports:
+- name: redis
+  port: 6379
+  protocol: TCP

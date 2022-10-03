@@ -1,0 +1,467 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Randoli
+    provider-url: https://www.randoli.ca/app-director-overview
+  name: app-director-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: app-director-operator.v0.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "ClusterWideGuvnor",
+              "metadata": {
+                "name": "guvnor"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret",
+                "namespace": "app-director-example-app"
+              }
+            },
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "Guvnor",
+              "metadata": {
+                "name": "guvnor",
+                "namespace": "app-director-example-app"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime,Developer Tools,Modernization & Migration
+        containerImage: docker.io/randoli/app-director-operator:0.0.2
+        createdAt: "2022-03-21"
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: App Director Agent that manages applications across the cluster.
+          displayName: Cluster Wide Guvnor
+          kind: ClusterWideGuvnor
+          name: clusterwideguvnors.appdirector.randoli.ca
+          version: v1beta1
+        - description: App Director Agent that manages applications for a particular
+            namespace only.
+          displayName: Guvnor
+          kind: Guvnor
+          name: guvnors.appdirector.randoli.ca
+          version: v1beta1
+      description: App Director® Operator manages the Guvnor agent that connects with
+        the App Director® Platform to receive deployments and send back events. The
+        agent can be scoped to a namespace or cluster-wide. More information can be
+        found at https://www.randoli.ca/app-director-overview. Tekton Pipelines are
+        a pre-requisite for this operator to work. If not already installed, the operator
+        will install the correct version on initial start-up.
+      displayName: App-Director
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - app
+      - deploy
+      - application runtime
+      - developer tools
+      - modernization
+      - migration
+      links:
+      - name: App Director Operator
+        url: https://www.randoli.ca/app-director-overview
+      maintainers:
+      - email: info@randoli.ca
+        name: Randoli Inc.
+      maturity: beta
+      provider:
+        name: Randoli
+        url: https://www.randoli.ca/app-director-overview
+      relatedImages:
+      - docker.io/randoli/app-director-operator:0.0.2
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      version: 0.0.2
+    name: 0.0.2
+  - currentCSV: app-director-operator.v0.0.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "ClusterWideGuvnor",
+              "metadata": {
+                "name": "guvnor"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret",
+                "namespace": "app-director-example-app"
+              }
+            },
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "Guvnor",
+              "metadata": {
+                "name": "guvnor",
+                "namespace": "app-director-example-app"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime,Developer Tools,Modernization & Migration
+        containerImage: docker.io/randoli/app-director-operator:0.0.3
+        createdAt: "2022-03-21"
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: App Director Agent that manages applications across the cluster.
+          displayName: Cluster Wide Guvnor
+          kind: ClusterWideGuvnor
+          name: clusterwideguvnors.appdirector.randoli.ca
+          version: v1beta1
+        - description: App Director Agent that manages applications for a particular
+            namespace only.
+          displayName: Guvnor
+          kind: Guvnor
+          name: guvnors.appdirector.randoli.ca
+          version: v1beta1
+      description: App Director® Operator manages the Guvnor agent that connects with
+        the App Director® Platform to receive deployments and send back events. The
+        agent can be scoped to a namespace or cluster-wide. More information can be
+        found at https://www.randoli.ca/app-director-overview. Tekton Pipelines are
+        a pre-requisite for this operator to work. If not already installed, the operator
+        will install the correct version on initial start-up.
+      displayName: App-Director
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - app
+      - deploy
+      - application runtime
+      - developer tools
+      - modernization
+      - migration
+      links:
+      - name: App Director Operator
+        url: https://www.randoli.ca/app-director-overview
+      maintainers:
+      - email: info@randoli.ca
+        name: Randoli Inc.
+      maturity: beta
+      provider:
+        name: Randoli
+        url: https://www.randoli.ca/app-director-overview
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - docker.io/randoli/app-director-operator:0.0.3
+      version: 0.0.3
+    name: 0.0.3
+  - currentCSV: app-director-operator.v0.7.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "ClusterWideGuvnor",
+              "metadata": {
+                "name": "guvnor"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret",
+                "namespace": "app-director-example-app"
+              }
+            },
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "Guvnor",
+              "metadata": {
+                "name": "guvnor",
+                "namespace": "app-director-example-app"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime,Developer Tools,Modernization & Migration
+        containerImage: docker.io/randoli/app-director-operator:0.7.3
+        createdAt: "2022-06-20"
+        description: Define, Manage and Deploy Apps Across Multiple OpenShift Clusters
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: App Director Agent that manages applications across the cluster.
+          displayName: Cluster Wide Guvnor
+          kind: ClusterWideGuvnor
+          name: clusterwideguvnors.appdirector.randoli.ca
+          version: v1beta1
+        - description: App Director Agent that manages applications for a particular
+            namespace only.
+          displayName: Guvnor
+          kind: Guvnor
+          name: guvnors.appdirector.randoli.ca
+          version: v1beta1
+      description: App Director® Operator manages the Guvnor agent that connects with
+        the App Director® Platform to receive deployments and send back events. The
+        agent can be scoped to a namespace or cluster-wide. More information can be
+        found at https://www.randoli.ca/app-director-overview. Tekton Pipelines are
+        a pre-requisite for this operator to work. If not already installed, the operator
+        will install the correct version on initial start-up.
+      displayName: App-Director
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - app
+      - deploy
+      - application runtime
+      - developer tools
+      - modernization
+      - migration
+      links:
+      - name: App Director Operator
+        url: https://www.randoli.ca/app-director-overview
+      maintainers:
+      - email: info@randoli.ca
+        name: Randoli Inc.
+      maturity: beta
+      provider:
+        name: Randoli
+        url: https://www.randoli.ca/app-director-overview
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - docker.io/randoli/app-director-operator:0.7.3
+      version: 0.7.3
+    name: 0.7.3
+  - currentCSV: app-director-operator.v0.8.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "ClusterWideGuvnor",
+              "metadata": {
+                "name": "guvnor"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret",
+                "namespace": "app-director-example-app"
+              }
+            },
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "Guvnor",
+              "metadata": {
+                "name": "guvnor",
+                "namespace": "app-director-example-app"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime,Developer Tools,Modernization & Migration
+        containerImage: docker.io/randoli/app-director-operator:0.8.0
+        createdAt: "2022-08-05"
+        description: Define, Manage and Deploy Apps Across Multiple OpenShift Clusters
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: App Director Agent that manages applications across the cluster.
+          displayName: Cluster Wide Guvnor
+          kind: ClusterWideGuvnor
+          name: clusterwideguvnors.appdirector.randoli.ca
+          version: v1beta1
+        - description: App Director Agent that manages applications for a particular
+            namespace only.
+          displayName: Guvnor
+          kind: Guvnor
+          name: guvnors.appdirector.randoli.ca
+          version: v1beta1
+      description: App Director® Operator manages the Guvnor agent that connects with
+        the App Director® Platform to receive deployments and send back events. The
+        agent can be scoped to a namespace or cluster-wide. More information can be
+        found at https://www.randoli.ca/app-director-overview. Tekton Pipelines are
+        a pre-requisite for this operator to work. If not already installed, the operator
+        will install the correct version on initial start-up.
+      displayName: App-Director
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - app
+      - deploy
+      - application runtime
+      - developer tools
+      - modernization
+      - migration
+      links:
+      - name: App Director Operator
+        url: https://www.randoli.ca/app-director-overview
+      maintainers:
+      - email: info@randoli.ca
+        name: Randoli Inc.
+      maturity: beta
+      provider:
+        name: Randoli
+        url: https://www.randoli.ca/app-director-overview
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - docker.io/randoli/app-director-operator:0.8.0
+      version: 0.8.0
+    name: 0.8.0
+  - currentCSV: app-director-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "ClusterWideGuvnor",
+              "metadata": {
+                "name": "guvnor"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret",
+                "namespace": "app-director-example-app"
+              }
+            },
+            {
+              "apiVersion": "appdirector.randoli.ca/v1beta1",
+              "kind": "Guvnor",
+              "metadata": {
+                "name": "guvnor",
+                "namespace": "app-director-example-app"
+              },
+              "spec": {
+                "guvnorCertsSecretName": "guvnor-certs",
+                "guvnorSecretName": "guvnor-secret"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime,Developer Tools,Modernization & Migration
+        containerImage: docker.io/randoli/app-director-operator:0.0.1
+        createdAt: "2022-03-10"
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: App Director Agent that manages applications across the cluster.
+          displayName: Cluster Wide Guvnor
+          kind: ClusterWideGuvnor
+          name: clusterwideguvnors.appdirector.randoli.ca
+          version: v1beta1
+        - description: App Director Agent that manages applications for a particular
+            namespace only.
+          displayName: Guvnor
+          kind: Guvnor
+          name: guvnors.appdirector.randoli.ca
+          version: v1beta1
+      description: App Director® Operator manages the Guvnor agent that connects with
+        the App Director® Platform to receive deployments and send back events. The
+        agent can be scoped to a namespace or cluster-wide. More information can be
+        found at https://www.randoli.ca/app-director-overview. Tekton Pipelines are
+        a pre-requisite for this operator to work. If not already installed, the operator
+        will install the correct version on initial start-up.
+      displayName: App-Director
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - app
+      - deploy
+      - application runtime
+      - developer tools
+      - modernization
+      - migration
+      links:
+      - name: App Director Operator
+        url: https://www.randoli.ca/app-director-overview
+      maintainers:
+      - email: info@randoli.ca
+        name: Randoli Inc.
+      maturity: beta
+      provider:
+        name: Randoli
+        url: https://www.randoli.ca/app-director-overview
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - docker.io/randoli/app-director-operator:0.0.1
+      version: 0.0.1
+    name: 0.0.1
+  defaultChannel: 0.8.0
+  packageName: app-director-operator
+  provider:
+    name: Randoli
+    url: https://www.randoli.ca/app-director-overview

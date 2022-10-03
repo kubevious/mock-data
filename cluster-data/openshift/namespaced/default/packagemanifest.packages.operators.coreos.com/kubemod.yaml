@@ -1,0 +1,146 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: KubeMod
+    provider-url: ""
+  name: kubemod
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kubemod.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "api.kubemod.io/v1beta1",
+              "kind": "ModRule",
+              "metadata": {
+                  "name": "my-modrule"
+              },
+              "spec": {
+                  "type": "Patch",
+                  "match": [
+                    {
+                        "select": "$.kind",
+                        "matchValue": "Deployment"
+                    },
+                    {
+                        "select": "$.metadata.labels.app",
+                        "matchValue": "nginx"
+                    },
+                    {
+                        "select": "$.spec.template.spec.containers[*].image",
+                        "matchRegex": "nginx:1\\.14\\..*"
+                    },
+                    {
+                        "select": "$.spec.template.spec.securityContext.runAsNonRoot == true",
+                        "negate": true
+                    }
+                  ],
+                  "patch": [
+                    {
+                        "op": "add",
+                        "path": "/metadata/annotations/my-annotation",
+                        "value": "whatever"
+                    },
+                    {
+                        "op": "add",
+                        "path": "/spec/template/spec/securityContext",
+                        "value": "fsGroup: 101\nrunAsGroup: 101\nrunAsUser: 101\nrunAsNonRoot: true"
+                    }
+                  ]
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Application Runtime,  Developer Tools, Integration & Delivery
+        certified: "false"
+        containerImage: kubemod/kubemod:v0.6.0
+        createdAt: "2020-10-16T12:00:00+00:00"
+        description: Universal Kubernetes resource mutator
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/kubemod/kubemod
+        support: KubeMod Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Mod Rule
+          displayName: ModRule
+          kind: ModRule
+          name: modrules.api.kubemod.io
+          version: v1beta1
+      description: |-
+        KubeMod unlocks the power of [Kubernetes Mutating
+        Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/)
+        by introducing `ModRule` - a custom Kubernetes resource which allows you to
+        intercept the creation of any Kubernetes object and apply targeted
+        modifications to it before it is deployed to the cluster.
+
+
+        ### Use KubeMod to
+
+        * Customize opaque Helm charts and Kubernetes operators
+
+        * Build a system of policy rules to reject misbehaving resources
+
+        * Develop your own sidecar container injections - no coding required
+
+        ### Operator features
+
+        * **Matching** - powerful matching mechanism based on [JSON Path](https://goessner.net/articles/JsonPath/) select expressions evaluated against
+          any type of Kubernetes resource at the time the resource is deployed.
+        * **Patching** - ability to patch the object using a series of [RFC6902 JSON Patch](http://tools.ietf.org/html/rfc6902) operations.
+        * **Templating** - the patch values are evaluated as Golang templates executed in the context of the matched Kubernetes object.
+        * **Resource rejection** - ability to reject the deployment of resources which match certain criteria.
+        * **Sandboxing** - each ModRule applies only to objects created in the namespace where the ModRule is deployed.
+
+        ### Motivation and use cases
+
+        See [documentation](https://github.com/kubemod/kubemod#motivation-and-use-cases) for more information.
+
+        ### Before you start
+
+        Namespace `kubemod-system` must be created before the operator is installed.
+      displayName: KubeMod
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - mutating
+      links:
+      - name: Documentation
+        url: https://github.com/kubemod/kubemod#kubemod
+      maintainers:
+      - email: kubemod@googlegroups.com
+        name: KubeMod
+      maturity: beta
+      minKubeVersion: 1.9.0
+      provider:
+        name: KubeMod
+      relatedImages:
+      - kubemod/kubemod:v0.6.0
+      - kubemod/kubemod-crt:v1.1.0
+      version: 0.6.0
+    name: beta
+  defaultChannel: beta
+  packageName: kubemod
+  provider:
+    name: KubeMod

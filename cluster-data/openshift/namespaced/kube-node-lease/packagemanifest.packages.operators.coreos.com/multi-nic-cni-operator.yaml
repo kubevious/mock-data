@@ -1,0 +1,327 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Foundation Model Stack
+    provider-url: ""
+  name: multi-nic-cni-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: multi-nic-cni-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "multinic.fms.io/v1",
+              "kind": "Config",
+              "metadata": {
+                "name": "multi-nic-cni-operator-multi-nicd",
+                "namespace": "multi-nic-cni-operator-system"
+              },
+              "spec": {
+                "addRoutePath": "/addl3",
+                "cniType": "multi-nic",
+                "daemon": {
+                  "env": [
+                    {
+                      "name": "DAEMON_PORT",
+                      "value": "11000"
+                    },
+                    {
+                      "name": "RT_TABLE_PATH",
+                      "value": "/opt/rt_tables"
+                    }
+                  ],
+                  "image": "ghcr.io/foundation-model-stack/multi-nic-cni-daemon:v1.0.2",
+                  "imagePullPolicy": "Always",
+                  "mounts": [
+                    {
+                      "hostpath": "/var/lib/cni/bin",
+                      "name": "cnibin",
+                      "podpath": "/host/opt/cni/bin"
+                    },
+                    {
+                      "hostpath": "/var/lib/kubelet/device-plugins",
+                      "name": "device-plugin",
+                      "podpath": "/var/lib/kubelet/device-plugins"
+                    },
+                    {
+                      "hostpath": "/etc/iproute2/rt_tables",
+                      "name": "rt-tables",
+                      "podpath": "/opt/rt_tables"
+                    }
+                  ],
+                  "port": 11000,
+                  "resources": {
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "50Mi"
+                    }
+                  },
+                  "securityContext": {
+                    "privileged": true
+                  }
+                },
+                "deleteRoutePath": "/deletel3",
+                "getInterfacePath": "/interface",
+                "ipamType": "multi-nic-ipam",
+                "joinPath": "/join"
+              }
+            },
+            {
+              "apiVersion": "multinic.fms.io/v1",
+              "kind": "Config",
+              "metadata": {
+                "name": "multi-nicd"
+              },
+              "spec": {
+                "addRoutePath": "/addl3",
+                "cniType": "multi-nic",
+                "daemon": {
+                  "env": [
+                    {
+                      "name": "DAEMON_PORT",
+                      "value": "11000"
+                    },
+                    {
+                      "name": "RT_TABLE_PATH",
+                      "value": "/opt/rt_tables"
+                    }
+                  ],
+                  "image": "ghcr.io/foundation-model-stack/multi-nic-cni-daemon:v1.0.2",
+                  "imagePullPolicy": "Always",
+                  "mounts": [
+                    {
+                      "hostpath": "/var/lib/cni/bin",
+                      "name": "cnibin",
+                      "podpath": "/host/opt/cni/bin"
+                    },
+                    {
+                      "hostpath": "/var/lib/kubelet/device-plugins",
+                      "name": "device-plugin",
+                      "podpath": "/var/lib/kubelet/device-plugins"
+                    },
+                    {
+                      "hostpath": "/etc/iproute2/rt_tables",
+                      "name": "rt-tables",
+                      "podpath": "/opt/rt_tables"
+                    }
+                  ],
+                  "port": 11000,
+                  "resources": {
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "50Mi"
+                    }
+                  },
+                  "securityContext": {
+                    "privileged": true
+                  }
+                },
+                "deleteRoutePath": "/deletel3",
+                "getInterfacePath": "/interface",
+                "ipamType": "multi-nic-ipam",
+                "joinPath": "/join"
+              }
+            },
+            {
+              "apiVersion": "multinic.fms.io/v1",
+              "kind": "DeviceClass",
+              "metadata": {
+                "name": "multi-nic-cni-operator-highspeed",
+                "namespace": "multi-nic-cni-operator-system"
+              },
+              "spec": {
+                "ids": [
+                  {
+                    "products": [
+                      "1019",
+                      "101d"
+                    ],
+                    "vendor": "15b3"
+                  },
+                  {
+                    "products": [
+                      "efa0",
+                      "efa1"
+                    ],
+                    "vendor": "1d0f"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "multinic.fms.io/v1",
+              "kind": "DeviceClass",
+              "metadata": {
+                "name": "highspeed"
+              },
+              "spec": {
+                "ids": [
+                  {
+                    "products": [
+                      "1019",
+                      "101d"
+                    ],
+                    "vendor": "15b3"
+                  },
+                  {
+                    "products": [
+                      "efa0",
+                      "efa1"
+                    ],
+                    "vendor": "1d0f"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "multinic.fms.io/v1",
+              "kind": "MultiNicNetwork",
+              "metadata": {
+                "name": "multi-nic-cni-operator-sample-network",
+                "namespace": "multi-nic-cni-operator-system"
+              },
+              "spec": {
+                "ipam": "{\n  \"type\": \"multi-nic-ipam\",\n  \"hostBlock\": 8, \n  \"interfaceBlock\": 2,\n  \"vlanMode\": \"l2\"\n}\n",
+                "multiNICIPAM": true,
+                "plugin": {
+                  "args": {
+                    "mode": "l2"
+                  },
+                  "cniVersion": "0.3.0",
+                  "type": "ipvlan"
+                },
+                "subnet": "192.168.0.0/16"
+              }
+            },
+            {
+              "apiVersion": "multinic.fms.io/v1",
+              "kind": "MultiNicNetwork",
+              "metadata": {
+                "name": "sample-network"
+              },
+              "spec": {
+                "ipam": "{\n  \"type\": \"multi-nic-ipam\",\n  \"hostBlock\": 8, \n  \"interfaceBlock\": 2,\n  \"vlanMode\": \"l2\"\n}\n",
+                "multiNICIPAM": true,
+                "plugin": {
+                  "args": {
+                    "mode": "l2"
+                  },
+                  "cniVersion": "0.3.0",
+                  "type": "ipvlan"
+                },
+                "subnet": "192.168.0.0/16"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Networking
+        containerImage: ghcr.io/foundation-model-stack/multi-nic-cni-controller:v1.0.2
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: CIDR is the Schema for the cidrs API
+          displayName: CIDR
+          kind: CIDR
+          name: cidrs.multinic.fms.io
+          version: v1
+        - description: Config is the Schema for the configs API
+          displayName: Config
+          kind: Config
+          name: configs.multinic.fms.io
+          version: v1
+        - description: DeviceClass is the Schema for the deviceclasses API
+          displayName: Device Class
+          kind: DeviceClass
+          name: deviceclasses.multinic.fms.io
+          version: v1
+        - description: HostInterface is the Schema for the hostinterfaces API
+          displayName: Host Interface
+          kind: HostInterface
+          name: hostinterfaces.multinic.fms.io
+          version: v1
+        - description: IPPool is the Schema for the ippools API
+          displayName: IPPool
+          kind: IPPool
+          name: ippools.multinic.fms.io
+          version: v1
+        - description: MultiNicNetwork is the Schema for the multinicnetworks API
+          displayName: Multi Nic Network
+          kind: MultiNicNetwork
+          name: multinicnetworks.multinic.fms.io
+          version: v1
+      description: "Multi-NIC CNI Operator helps to attaching secondary network interfaces
+        that is linked to \ndifferent network interfaces on host (NIC) to pod provides
+        benefits of network segmentation \nand top-up network bandwidth in the containerization
+        system.\n\nMulti-NIC CNI is the CNI plugin operating on top of Multus CNI.
+        \nHowever, instead of defining and handling each secondary network interface
+        one by one, \nthis CNI automatically discovers all available secondary interfaces
+        and handles them as a NIC pool. \nWith this manner, it can provide the following
+        benefits.\n\ni) Common secondary network definition: User can manage only
+        one network definition for \n   multiple secondary interfaces with a common
+        CNI main plugin such as ipvlan, macvlan, and sr-iov.\n\nii) Common NAT-bypassing
+        network solution: All secondary NICs on each host can be assigned \n    with
+        non-conflict CIDR and non-conflict L3 routing configuration that can omit
+        an overlay networking overhead. \n    Particularyly, the CNI is built-in with
+        L3 IPVLAN solution composing of the following functionalities.\n\n    1. Interface-host-devision
+        CIDR Computation: compute allocating CIDR range for each host and each interface
+        \n       from a single global subnet with the number of bits for hosts and
+        for interface.\n    2. L3 Host Route Configuration: configure L3 routes (next
+        hop via dev) in host route table according to the computed CIDR.\n    3. Distributed
+        IP Allocation Management: manage IP allocation/deallocation distributedly
+        via the communication \n       between CNI program and daemon at each host.\n\niii)
+        Policy-based secondary network attachment: Instead of statically set the desired
+        \n     host's master interface name one by one, user can define a policy on
+        attaching multiple secondary network \n     interfaces such as specifying
+        only the number of desired interfaces, filtering only highspeed NICs.\n\n##
+        Instructions\n\nPlease check the [installation](https://github.com/foundation-model-stack/multi-nic-cni#usage)
+        documentation"
+      displayName: multi-nic-cni-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - multi-nic
+      - cni
+      - network
+      links:
+      - name: Multi-NIC CNI Operator
+        url: https://github.com/foundation-model-stack/multi-nic-cni
+      maintainers:
+      - email: sunyanan.choochotkaew1@ibm.com
+        name: Sunyanan Choochotkaew
+      - email: chiba@jp.ibm.com
+        name: Tatsuhiro Chiba
+      maturity: alpha
+      provider:
+        name: Foundation Model Stack
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - ghcr.io/foundation-model-stack/multi-nic-cni-controller:v1.0.2
+      version: 1.0.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: multi-nic-cni-operator
+  provider:
+    name: Foundation Model Stack

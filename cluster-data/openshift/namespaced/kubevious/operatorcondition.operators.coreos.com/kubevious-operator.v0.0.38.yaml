@@ -1,0 +1,24 @@
+apiVersion: operators.coreos.com/v2
+kind: OperatorCondition
+metadata:
+  creationTimestamp: "2022-10-03T18:35:18Z"
+  generation: 1
+  labels:
+    operators.coreos.com/kubevious-operator.kubevious: ""
+  name: kubevious-operator.v0.0.38
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: operators.coreos.com/v1alpha1
+    blockOwnerDeletion: false
+    controller: true
+    kind: ClusterServiceVersion
+    name: kubevious-operator.v0.0.38
+    uid: c616343d-2dd0-4c01-be37-dc087d3bbc87
+  resourceVersion: "30559"
+  uid: 18178e4d-dbf3-4914-87ab-08c4c1b4561d
+spec:
+  deployments:
+  - kubevious-operator-controller-manager
+  serviceAccounts:
+  - kubevious-operator-controller-manager
+  - kubevious-operator-controller-manager

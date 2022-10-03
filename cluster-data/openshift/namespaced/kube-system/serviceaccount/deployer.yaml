@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: deployer-dockercfg-plfvg
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:25:56Z"
+  name: deployer
+  namespace: kube-system
+  resourceVersion: "1082"
+  uid: 24673e67-1b72-4159-9a7b-206f3eeb52f5
+secrets:
+- name: deployer-token-d6d5m
+- name: deployer-dockercfg-plfvg

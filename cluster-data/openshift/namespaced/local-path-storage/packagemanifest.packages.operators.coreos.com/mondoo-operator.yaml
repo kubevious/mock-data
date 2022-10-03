@@ -1,0 +1,473 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Mondoo, Inc
+    provider-url: ""
+  name: mondoo-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: mondoo-operator.v0.7.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "k8s.mondoo.com/v1alpha2",
+              "kind": "MondooAuditConfig",
+              "metadata": {
+                "name": "mondoo-client",
+                "namespace": "mondoo-operator"
+              },
+              "spec": {
+                "admission": {
+                  "certificateProvisioning": {
+                    "mode": "cert-manager"
+                  },
+                  "enable": true
+                },
+                "kubernetesResources": {
+                  "enable": false
+                },
+                "mondooCredsSecretRef": {
+                  "name": "mondoo-client"
+                },
+                "nodes": {
+                  "enable": true
+                }
+              }
+            },
+            {
+              "apiVersion": "k8s.mondoo.com/v1alpha2",
+              "kind": "MondooOperatorConfig",
+              "metadata": {
+                "name": "mondoo-operator-config"
+              },
+              "spec": {
+                "metrics": {
+                  "enable": false
+                },
+                "skipContainerResolution": false
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Security
+        certified: "false"
+        containerImage: ghcr.io/mondoohq/mondoo-operator:v0.7.1
+        description: Mondoo is a cloud security platform for infrastructure developers.
+          Using Mondoo, your team will get automated risk assessment and real-time
+          insights into all of your business critical infrastructure, across all of
+          your infrastructure platforms.
+        operators.operatorframework.io/builder: operator-sdk-v1.22.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/mondoohq/mondoo-operator
+        support: Mondoo
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: MondooAuditConfig is the Schema for the mondooauditconfigs
+            API
+          displayName: Mondoo Audit Config
+          kind: MondooAuditConfig
+          name: mondooauditconfigs.k8s.mondoo.com
+          version: v1alpha2
+        - description: MondooOperatorConfig is the Schema for the mondoooperatorconfigs
+            API
+          displayName: Mondoo Operator Config
+          kind: MondooOperatorConfig
+          name: mondoooperatorconfigs.k8s.mondoo.com
+          version: v1alpha2
+      description: |
+        The **Mondoo Operator** provides a new [Kubernetes](https://kubernetes.io/) native way to do a security assessment of your whole Kubernetes Cluster. The purpose of this project is to simplify and automate the configuration for a Mondoo-based security assessment for Kubernetes clusters.
+
+        The Mondoo Operator provides the following features:
+
+        - Continuous validation of deployed workloads
+        - Continuous validation of Kubernetes nodes **without** priviledged access
+        - Admission Controller (coming soon)
+
+        It is backed by Mondoo's powerful [Policy-as-Code](https://mondoo.com/docs/getstarted/policy-as-code) engine and [MQL](https://mondoo.com/docs/getstarted/policy-as-code#introducing-the-mondoo-query-language-mql). Mondoo ships out-of-the-box security polices for:
+
+        - CIS Kubernetes Benchmark
+        - Kubernetes Application Benchmark
+
+        Further information is available at [service-account-doc](https://github.com/mondoohq/mondoo-operator/blob/main/docs/user-manual-olm.md).
+        ```
+
+        1. Install the operator
+
+        2. Configure the Mondoo Secret
+
+        - Create a new Mondoo service account to report assessments to [Mondoo Platform](https://mondoo.com/docs/platform/service_accounts)
+        - Store the service account json into a local file `creds.json`
+        - Store service account as a secret in the mondoo namespace via:
+
+        ```bash
+        kubectl create secret generic mondoo-client --namespace mondoo-operator --from-file=config=creds.json
+        ```
+
+        3. Create `mondoo-config.yaml`
+
+        ```yaml
+        apiVersion: k8s.mondoo.com/v1alpha2
+        kind: MondooAuditConfig
+        metadata:
+          name: mondoo-client
+          namespace: mondoo-operator
+        spec:
+          kubernetesResources:
+            enable: true
+            serviceAccountName: mondoo-operator-k8s-resources-scanning
+          nodes:
+            enable: true
+          mondooCredsSecretRef: mondoo-client
+        ```
+
+        Apply the configuration via:
+
+        ```bash
+        kubectl apply -f mondoo-config.yaml
+        ```
+
+        4. You can see the results in the [dashboard](https://console.mondoo.com)
+      displayName: mondoo-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - policy-as-code
+      links:
+      - name: Mondoo
+        url: https://mondoo.com
+      maintainers:
+      - email: hello@mondoo.com
+        name: Mondoo
+      maturity: alpha
+      provider:
+        name: Mondoo, Inc
+      relatedImages:
+      - ghcr.io/mondoohq/mondoo-operator:v0.7.1
+      version: 0.7.1
+    name: alpha
+  - currentCSV: mondoo-operator.v0.8.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "k8s.mondoo.com/v1alpha2",
+              "kind": "MondooAuditConfig",
+              "metadata": {
+                "name": "mondoo-client",
+                "namespace": "mondoo-operator"
+              },
+              "spec": {
+                "admission": {
+                  "certificateProvisioning": {
+                    "mode": "cert-manager"
+                  },
+                  "enable": false
+                },
+                "kubernetesResources": {
+                  "containerImageScanning": true,
+                  "enable": true
+                },
+                "mondooCredsSecretRef": {
+                  "name": "mondoo-client"
+                },
+                "nodes": {
+                  "enable": false
+                }
+              }
+            },
+            {
+              "apiVersion": "k8s.mondoo.com/v1alpha2",
+              "kind": "MondooOperatorConfig",
+              "metadata": {
+                "name": "mondoo-operator-config"
+              },
+              "spec": {
+                "metrics": {
+                  "enable": false
+                },
+                "skipContainerResolution": false
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Security
+        certified: "false"
+        containerImage: ghcr.io/mondoohq/mondoo-operator:v0.8.2
+        description: Mondoo is a cloud security platform for infrastructure developers.
+          Using Mondoo, your team will get automated risk assessment and real-time
+          insights into all of your business critical infrastructure, across all of
+          your infrastructure platforms.
+        operators.operatorframework.io/builder: operator-sdk-v1.22.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/mondoohq/mondoo-operator
+        support: Mondoo
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: MondooAuditConfig is the Schema for the mondooauditconfigs
+            API
+          displayName: Mondoo Audit Config
+          kind: MondooAuditConfig
+          name: mondooauditconfigs.k8s.mondoo.com
+          version: v1alpha2
+        - description: MondooOperatorConfig is the Schema for the mondoooperatorconfigs
+            API
+          displayName: Mondoo Operator Config
+          kind: MondooOperatorConfig
+          name: mondoooperatorconfigs.k8s.mondoo.com
+          version: v1alpha2
+      description: |
+        The **Mondoo Operator** provides a new [Kubernetes](https://kubernetes.io/) native way to do a security assessment of your whole Kubernetes Cluster. The purpose of this project is to simplify and automate the configuration for a Mondoo-based security assessment for Kubernetes clusters.
+
+        The Mondoo Operator provides the following features:
+
+        - Continuous validation of deployed workloads
+        - Continuous validation of Kubernetes nodes **without** priviledged access
+        - Admission Controller (coming soon)
+
+        It is backed by Mondoo's powerful [Policy-as-Code](https://mondoo.com/docs/getstarted/policy-as-code) engine and [MQL](https://mondoo.com/docs/getstarted/policy-as-code#introducing-the-mondoo-query-language-mql). Mondoo ships out-of-the-box security polices for:
+
+        - CIS Kubernetes Benchmark
+        - Kubernetes Application Benchmark
+
+        Further information is available at [service-account-doc](https://github.com/mondoohq/mondoo-operator/blob/main/docs/user-manual-olm.md).
+        ```
+
+        1. Install the operator
+
+        2. Configure the Mondoo Secret
+
+        - Create a new Mondoo service account to report assessments to [Mondoo Platform](https://mondoo.com/docs/platform/service_accounts)
+        - Store the service account json into a local file `creds.json`
+        - Store service account as a secret in the mondoo namespace via:
+
+        ```bash
+        kubectl create secret generic mondoo-client --namespace mondoo-operator --from-file=config=creds.json
+        ```
+
+        3. Create `mondoo-config.yaml`
+
+        ```yaml
+        apiVersion: k8s.mondoo.com/v1alpha2
+        kind: MondooAuditConfig
+        metadata:
+          name: mondoo-client
+          namespace: mondoo-operator
+        spec:
+          kubernetesResources:
+            enable: true
+            serviceAccountName: mondoo-operator-k8s-resources-scanning
+          nodes:
+            enable: true
+          mondooCredsSecretRef: mondoo-client
+        ```
+
+        Apply the configuration via:
+
+        ```bash
+        kubectl apply -f mondoo-config.yaml
+        ```
+
+        4. You can see the results in the [dashboard](https://console.mondoo.com)
+      displayName: mondoo-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - policy-as-code
+      links:
+      - name: Mondoo
+        url: https://mondoo.com
+      maintainers:
+      - email: hello@mondoo.com
+        name: Mondoo
+      maturity: alpha
+      provider:
+        name: Mondoo, Inc
+      relatedImages:
+      - ghcr.io/mondoohq/mondoo-operator:v0.8.2
+      version: 0.8.2
+    name: alpha-0.8
+  - currentCSV: mondoo-operator.v1.6.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "k8s.mondoo.com/v1alpha2",
+              "kind": "MondooAuditConfig",
+              "metadata": {
+                "name": "mondoo-client",
+                "namespace": "mondoo-operator"
+              },
+              "spec": {
+                "admission": {
+                  "certificateProvisioning": {
+                    "mode": "cert-manager"
+                  },
+                  "enable": false
+                },
+                "kubernetesResources": {
+                  "containerImageScanning": true,
+                  "enable": true
+                },
+                "mondooCredsSecretRef": {
+                  "name": "mondoo-client"
+                },
+                "nodes": {
+                  "enable": false
+                }
+              }
+            },
+            {
+              "apiVersion": "k8s.mondoo.com/v1alpha2",
+              "kind": "MondooOperatorConfig",
+              "metadata": {
+                "name": "mondoo-operator-config"
+              },
+              "spec": {
+                "metrics": {
+                  "enable": false
+                },
+                "skipContainerResolution": false
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Security
+        certified: "false"
+        containerImage: ghcr.io/mondoohq/mondoo-operator:v1.6.1
+        description: Mondoo is a cloud security platform for infrastructure developers.
+          Using Mondoo, your team will get automated risk assessment and real-time
+          insights into all of your business critical infrastructure, across all of
+          your infrastructure platforms.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v4-alpha
+        repository: https://github.com/mondoohq/mondoo-operator
+        support: Mondoo
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: MondooAuditConfig is the Schema for the mondooauditconfigs
+            API
+          displayName: Mondoo Audit Config
+          kind: MondooAuditConfig
+          name: mondooauditconfigs.k8s.mondoo.com
+          version: v1alpha2
+        - description: MondooOperatorConfig is the Schema for the mondoooperatorconfigs
+            API
+          displayName: Mondoo Operator Config
+          kind: MondooOperatorConfig
+          name: mondoooperatorconfigs.k8s.mondoo.com
+          version: v1alpha2
+      description: |
+        The **Mondoo Operator** provides a new [Kubernetes](https://kubernetes.io/) native way to do a security assessment of your whole Kubernetes Cluster. The purpose of this project is to simplify and automate the configuration for a Mondoo-based security assessment for Kubernetes clusters.
+
+        The Mondoo Operator provides the following features:
+
+        - Continuous validation of deployed workloads
+        - Continuous validation of Kubernetes nodes **without** priviledged access
+        - Admission Controller (coming soon)
+
+        It is backed by Mondoo's powerful [Policy-as-Code](https://mondoo.com/docs/getstarted/policy-as-code) engine and [MQL](https://mondoo.com/docs/getstarted/policy-as-code#introducing-the-mondoo-query-language-mql). Mondoo ships out-of-the-box security polices for:
+
+        - CIS Kubernetes Benchmark
+        - Kubernetes Application Benchmark
+
+        Further information is available at [service-account-doc](https://github.com/mondoohq/mondoo-operator/blob/main/docs/user-manual-olm.md).
+        ```
+
+        1. Install the operator
+
+        2. Configure the Mondoo Secret
+
+        - Create a new Mondoo service account to report assessments to [Mondoo Platform](https://mondoo.com/docs/platform/service_accounts)
+        - Store the service account json into a local file `creds.json`
+        - Store service account as a secret in the mondoo namespace via:
+
+        ```bash
+        kubectl create secret generic mondoo-client --namespace mondoo-operator --from-file=config=creds.json
+        ```
+
+        3. Create `mondoo-config.yaml`
+
+        ```yaml
+        apiVersion: k8s.mondoo.com/v1alpha2
+        kind: MondooAuditConfig
+        metadata:
+          name: mondoo-client
+          namespace: mondoo-operator
+        spec:
+          kubernetesResources:
+            enable: true
+            serviceAccountName: mondoo-operator-k8s-resources-scanning
+          nodes:
+            enable: true
+          mondooCredsSecretRef: mondoo-client
+        ```
+
+        Apply the configuration via:
+
+        ```bash
+        kubectl apply -f mondoo-config.yaml
+        ```
+
+        4. You can see the results in the [dashboard](https://console.mondoo.com)
+      displayName: mondoo-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - policy-as-code
+      links:
+      - name: Mondoo
+        url: https://mondoo.com
+      maintainers:
+      - email: hello@mondoo.com
+        name: Mondoo
+      maturity: alpha
+      provider:
+        name: Mondoo, Inc
+      relatedImages:
+      - ghcr.io/mondoohq/mondoo-operator:v1.6.1
+      version: 1.6.1
+    name: stable-v1
+  defaultChannel: stable-v1
+  packageName: mondoo-operator
+  provider:
+    name: Mondoo, Inc

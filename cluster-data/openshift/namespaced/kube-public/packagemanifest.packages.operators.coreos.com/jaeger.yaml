@@ -1,0 +1,110 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: CNCF
+    provider-url: ""
+  name: jaeger
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: jaeger-operator.v1.38.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "jaegertracing.io/v1",
+              "kind": "Jaeger",
+              "metadata": {
+                "name": "my-jaeger"
+              },
+              "spec": {
+                "strategy": "allInOne"
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Logging & Tracing
+        certified: "false"
+        containerImage: quay.io/jaegertracing/jaeger-operator:1.38.0
+        createdAt: "2019-09-04T13:28:40+00:00"
+        description: Provides tracing, monitoring and troubleshooting for microservices-based
+          distributed systems
+        operators.openshift.io/infrastructure-features: '["disconnected"]'
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/jaegertracing/jaeger-operator
+        support: Jaeger Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Jaeger is the Schema for the jaegers API
+          displayName: Jaeger
+          kind: Jaeger
+          name: jaegers.jaegertracing.io
+          version: v1
+      description: |-
+        Jaeger, inspired by [Dapper](https://research.google.com/pubs/pub36356.html) and [OpenZipkin](http://zipkin.io/), is a distributed tracing system released as open source by Uber Technologies. It is used for monitoring and troubleshooting microservices-based distributed systems.
+        ### Core capabilities
+        Jaeger is used for monitoring and troubleshooting microservices-based distributed systems, including:
+        * Distributed context propagation
+        * Distributed transaction monitoring
+        * Root cause analysis
+        * Service dependency analysis
+        * Performance / latency optimization
+        * OpenTracing compatible data model
+        * Multiple storage backends: Badger, Cassandra, Elasticsearch, Memory.
+        ### Operator features
+        * **Multiple modes** - Supports `allInOne`, `production` and `streaming` [modes of deployment](https://www.jaegertracing.io/docs/latest/operator/#deployment-strategies).
+        * **Configuration** - The Operator manages [configuration information](https://www.jaegertracing.io/docs/latest/operator/#configuring-the-custom-resource) when installing Jaeger instances.
+        * **Storage** - [Configure storage](https://www.jaegertracing.io/docs/latest/operator/#storage-options) used by Jaeger. By default, `memory` is used. Other options include `badger`, `cassandra` or `elasticsearch`. On OpenShift, the operator can delegate creation of an Elasticsearch cluster to the Elasticsearch Operator if deployed.
+        * **Agent** - can be deployed as [sidecar](https://www.jaegertracing.io/docs/latest/operator/#auto-injecting-jaeger-agent-sidecars) (default) and/or [daemonset](https://www.jaegertracing.io/docs/latest/operator/#installing-the-agent-as-daemonset).
+        * **UI** - Optionally setup ingress (Kubernetes) or secure route (OpenShift) to provide [access to the Jaeger UI](https://www.jaegertracing.io/docs/latest/operator/#accessing-the-jaeger-console-ui).
+        ### Before you start
+        1. Ensure that the appropriate storage solution, that will be used by the Jaeger instance, is available and configured.
+        2. If intending to deploy an Elasticsearch cluster via the Jaeger custom resource, then the Elasticsearch Operator must first be installed.
+        ### Troubleshooting
+        * https://www.jaegertracing.io/docs/latest/troubleshooting/
+      displayName: Community Jaeger Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - tracing
+      - monitoring
+      - troubleshooting
+      links:
+      - name: Jaeger Operator Source Code
+        url: https://github.com/jaegertracing/jaeger-operator
+      maintainers:
+      - email: jaeger-tracing@googlegroups.com
+        name: Jaeger Google Group
+      maturity: alpha
+      provider:
+        name: CNCF
+      relatedImages:
+      - quay.io/jaegertracing/jaeger-operator:1.38.0
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+      version: 1.38.0
+    name: stable
+  defaultChannel: stable
+  packageName: jaeger
+  provider:
+    name: CNCF

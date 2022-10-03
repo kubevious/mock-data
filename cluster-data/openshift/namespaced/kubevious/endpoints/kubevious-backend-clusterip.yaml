@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:38:32Z"
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  labels:
+    app.kubernetes.io/component: kubevious-backend
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-backend-clusterip
+  namespace: kubevious
+  resourceVersion: "31308"
+  uid: eb7aed4c-c31b-4e7f-8892-294731582b53
+subsets:
+- addresses:
+  - ip: 10.244.0.25
+    nodeName: kind-control-plane
+    targetRef:
+      kind: Pod
+      name: kubevious-backend-5965867f89-2rxqd
+      namespace: kubevious
+      uid: 20d08af6-cafc-4910-93c0-1e35add249e2
+  ports:
+  - name: http
+    port: 4001
+    protocol: TCP

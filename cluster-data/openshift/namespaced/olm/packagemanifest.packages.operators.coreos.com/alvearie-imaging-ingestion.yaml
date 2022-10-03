@@ -1,0 +1,277 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Alvearie
+    provider-url: https://alvearie.github.io
+  name: alvearie-imaging-ingestion
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: imaging-ingestion-operator.v0.0.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DicomEventBridge",
+              "metadata": {
+                "name": "events"
+              },
+              "spec": {
+                "dicomEventDrivenIngestionName": "core",
+                "eventBridge": {},
+                "imagePullPolicy": "Always",
+                "natsSecure": true,
+                "natsSubjectRoot": "events",
+                "natsTokenSecret": "nats-events-secure-bound-token",
+                "natsUrl": "jetstream.imaging-ingestion.svc.cluster.local:4222",
+                "role": "hub"
+              }
+            },
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DicomEventDrivenIngestion",
+              "metadata": {
+                "name": "core"
+              },
+              "spec": {
+                "databaseConfigName": "db-config",
+                "databaseSecretName": "db-secret",
+                "eventProcessor": {
+                  "concurrency": 0,
+                  "maxReplicas": 3,
+                  "minReplicas": 0
+                },
+                "imagePullPolicy": "Always"
+              }
+            },
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DicomInstanceBinding",
+              "metadata": {
+                "name": "stow"
+              },
+              "spec": {
+                "bindingConfigName": "instance-binding-config",
+                "bindingSecretName": "instance-binding-secret",
+                "dicomEventDrivenIngestionName": "core",
+                "imagePullPolicy": "Always",
+                "instanceBinding": {
+                  "concurrency": 0,
+                  "maxReplicas": 3,
+                  "minReplicas": 0
+                }
+              }
+            },
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DicomStudyBinding",
+              "metadata": {
+                "name": "fhir"
+              },
+              "spec": {
+                "bindingConfigName": "study-binding-config",
+                "bindingSecretName": "study-binding-secret",
+                "dicomEventDrivenIngestionName": "core",
+                "imagePullPolicy": "Always",
+                "studyBinding": {
+                  "concurrency": 0,
+                  "maxReplicas": 3,
+                  "minReplicas": 0
+                }
+              }
+            },
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DicomwebIngestionService",
+              "metadata": {
+                "name": "ingestion"
+              },
+              "spec": {
+                "bucketConfigName": "imaging-ingestion",
+                "bucketSecretName": "imaging-ingestion",
+                "dicomEventDrivenIngestionName": "core",
+                "imagePullPolicy": "Always",
+                "providerName": "provider",
+                "stowService": {
+                  "concurrency": 0,
+                  "maxReplicas": 3,
+                  "minReplicas": 0
+                },
+                "wadoService": {
+                  "concurrency": 0,
+                  "maxReplicas": 3,
+                  "minReplicas": 0
+                }
+              }
+            },
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DimseIngestionService",
+              "metadata": {
+                "name": "ingestion"
+              },
+              "spec": {
+                "applicationEntityTitle": "DICOM-INGEST",
+                "bucketConfigName": "imaging-ingestion",
+                "bucketSecretName": "imaging-ingestion",
+                "dicomEventDrivenIngestionName": "core",
+                "dimseService": {},
+                "imagePullPolicy": "Always",
+                "natsSecure": true,
+                "natsSubjectRoot": "DIMSE",
+                "natsTokenSecret": "ingestion-nats-secure-bound-token",
+                "natsUrl": "nats-secure.imaging-ingestion.svc.cluster.local:4222",
+                "providerName": "provider"
+              }
+            },
+            {
+              "apiVersion": "imaging-ingestion.alvearie.org/v1alpha1",
+              "kind": "DimseProxy",
+              "metadata": {
+                "name": "ingestion"
+              },
+              "spec": {
+                "applicationEntityTitle": "DCM4CHEE",
+                "imagePullPolicy": "Always",
+                "natsSecure": true,
+                "natsSubjectRoot": "DIMSE",
+                "natsTokenSecret": "ingestion-nats-secure-bound-token",
+                "natsUrl": "nats-secure.imaging-ingestion.svc.cluster.local:4222",
+                "proxy": {},
+                "targetDimseHost": "arc.dcm4chee.svc.cluster.local",
+                "targetDimsePort": 11112
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        containerImage: alvearie/imaging-ingestion-operator:0.0.3
+        createdAt: "2021-04-08T15:29:55Z"
+        description: The Alvearie Imaging Ingestion provides a collection of components
+          for extending enterprise medical imaging informatics systems to Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.16.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Alvearie/imaging-ingestion
+        support: alvearie.slack.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: DicomEventBridge is the Schema for the dicomeventbridges API
+          displayName: Dicom Event Bridge
+          kind: DicomEventBridge
+          name: dicomeventbridges.imaging-ingestion.alvearie.org
+          version: v1alpha1
+        - description: Event driven manifest of all DICOM data across all associated
+            S3 buckets
+          displayName: Dicom Event Driven Ingestion
+          kind: DicomEventDrivenIngestion
+          name: dicomeventdriveningestions.imaging-ingestion.alvearie.org
+          version: v1alpha1
+        - description: Fan-out notification of DICOM instance data (STOW-RS)
+          displayName: Dicom Instance Binding
+          kind: DicomInstanceBinding
+          name: dicominstancebindings.imaging-ingestion.alvearie.org
+          version: v1alpha1
+        - description: Fan-out notification of DICOM studies (FHIRv4 ImagingStudy)
+          displayName: Dicom Study Binding
+          kind: DicomStudyBinding
+          name: dicomstudybindings.imaging-ingestion.alvearie.org
+          version: v1alpha1
+        - description: Provides DICOMweb WADO-RS and STOW-RS access to a S3 bucket
+          displayName: Dicomweb Ingestion Service
+          kind: DicomwebIngestionService
+          name: dicomwebingestionservices.imaging-ingestion.alvearie.org
+          version: v1alpha1
+        - description: Provides a proxied DIMSE Application Entity (AE) in the cluster
+            for C-STORE operations to a storage space
+          displayName: Dimse Ingestion Service
+          kind: DimseIngestionService
+          name: dimseingestionservices.imaging-ingestion.alvearie.org
+          version: v1alpha1
+        - description: Provides a bidirectional proxied DIMSE Application Entity (AE)
+            in the cluster
+          displayName: Dimse Proxy
+          kind: DimseProxy
+          name: dimseproxies.imaging-ingestion.alvearie.org
+          version: v1alpha1
+      description: |
+        The Alvearie Imaging Ingestion provides a collection of components for extending enterprise medical imaging informatics systems to Kubernetes.
+
+        ## About this Operator
+        This operator enables standards-based medical imaging application interfaces such as DICOM Message Service Element (DIMSE) and DICOMweb.
+        The API's provided allow for extending enterprise imaging systems to the cloud with custom, fit for purpose deployments.
+        This is possible at speed, low cost, and little or zero integration effort.or extending enterprise medical imaging informatics systems to a modern cloud.
+
+
+        Some potential usages:
+
+        - Perform lightweight secure bridging of DICOM from the enterprise imaging zone to a cloud availability zone.
+        - Utilize S3 buckets for segregating DICOM data to be used for clinical or scientific purposes.
+        - Fan-out DICOM data to a number of different DICOM subscribers
+        - Generate FHIRv4 *ImagingStudy* resources from ingested content and publish to a FHIRv4 based patient logitudinal record.
+        - Distribute imaging study arrival and update notifications to imaging study subscribers
+
+
+        ## Prerequisites
+
+        - [Knative](https://operatorhub.io/operator/knative-operator)
+        - ProgresSQL such as [Crunchy](https://operatorhub.io/operator/postgresql)
+        - S3 storage such as [MinIO](https://operatorhub.io/operator/minio-operator)
+        - [NATS operator](https://github.com/nats-io/nats-operator/) (Optional:  only required for DIMSE Proxy component)
+
+
+
+        ## Documentation
+
+        Visit the [official github repository](https://github.com/Alvearie/imaging-ingestion) for documentation and examples.
+      displayName: Alvearie Imaging Ingestion Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - dicom
+      - medical imaging
+      - fhir
+      - dimse-c
+      - dimse
+      - imaging study
+      links:
+      - name: Alvearie Imaging Ingestion Operator
+        url: https://github.com/Alvearie/imaging-ingestion
+      maintainers:
+      - email: rduggan@ca.ibm.com
+        name: Richard Duggan
+      - email: jjacob@us.ibm.com
+        name: Jeesmon Jacob
+      maturity: alpha
+      provider:
+        name: Alvearie
+        url: https://alvearie.github.io
+      relatedImages:
+      - alvearie/imaging-ingestion-operator:0.0.3
+      version: 0.0.3
+    name: alpha
+  defaultChannel: alpha
+  packageName: alvearie-imaging-ingestion
+  provider:
+    name: Alvearie
+    url: https://alvearie.github.io

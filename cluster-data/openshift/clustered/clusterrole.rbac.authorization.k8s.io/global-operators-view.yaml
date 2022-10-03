@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  labels:
+    olm.owner: global-operators
+    olm.owner.kind: OperatorGroup
+    olm.owner.namespace: operators
+  name: global-operators-view
+  resourceVersion: "29139"
+  uid: b6e74326-f185-48c5-a216-dbec25eb3427
+rules: null

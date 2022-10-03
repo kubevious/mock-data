@@ -1,0 +1,170 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Siddhi
+    provider-url: ""
+  name: siddhi-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: siddhi-operator.v0.2.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "siddhi.io/v1alpha2",
+              "kind": "SiddhiProcess",
+              "metadata": {
+                "name": "power-surge-app"
+              },
+              "spec": {
+                "apps": [
+                  {
+                    "script": "@App:name(\"PowerSurgeDetection\")\n@App:description(\"App consumes events from HTTP as a JSON message of { 'deviceType': 'dryer', 'power': 6000 } format and inserts the events into DevicePowerStream, and alerts the user if the device type is dryer and power level is greater than or equal to 600W by printing a message in the log.\")\n\n/*\n    Input: deviceType string and powerConsuption int(Watt)\n    Output: Alert user from printing a log, if there is a power surge in the dryer. In other words, notify when power is greater than or equal to 600W.\n*/\n\n@source(\n  type='http',\n  receiver.url='${RECEIVER_URL}',\n  basic.auth.enabled='${BASIC_AUTH_ENABLED}',\n  @map(type='json')\n)\ndefine stream DevicePowerStream(deviceType string, power int);\n\n@sink(type='log', prefix='LOGGER')  \ndefine stream PowerSurgeAlertStream(deviceType string, power int); \n\n@info(name='surge-detector')  \nfrom DevicePowerStream[deviceType == 'dryer' and power >= 600] \nselect deviceType, power  \ninsert into PowerSurgeAlertStream;\n"
+                  }
+                ],
+                "container": {
+                  "env": [
+                    {
+                      "name": "RECEIVER_URL",
+                      "value": "http://0.0.0.0:8080/checkPower"
+                    },
+                    {
+                      "name": "BASIC_AUTH_ENABLED",
+                      "value": "false"
+                    }
+                  ],
+                  "image": "siddhiio/siddhi-runner-ubuntu:5.1.2"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: siddhiio/siddhi-operator:0.2.2
+        createdAt: "2020-01-02T16:45:00Z"
+        description: Siddhi is an open source, lightweight, stream processing and
+          complex event processing engine
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/siddhi-io/siddhi-operator/
+        support: Siddhi
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: SiddhiProcess is the central custom resource definition used
+            by the Siddhi operator to deploy Siddhi apps.
+          displayName: SiddhiProcess
+          kind: SiddhiProcess
+          name: siddhiprocesses.siddhi.io
+          version: v1alpha2
+      description: "[Siddhi](https://github.com/siddhi-io/siddhi/) Operator allows
+        deploying and running highly available and scalable event-driven, micro streaming,
+        and complex event processing applications natively on Kubernetes. This enables
+        users to build use cases such as real-time analytics, data integration, notification,
+        and adaptive decision-making.\nFollowing type of deployments are supported
+        by Siddhi operator,\n\n  1. Stateless Siddhi App deployment\n  1. Stateful
+        Siddhi App deployment\n  1. Distributed stateful Siddhi App deployment (supports
+        high availability and scalability)\n  1. Distributed stateful Siddhi App deployment
+        with existing NATS (supports high availability and scalability)\n\nRefer the
+        [Siddhi documentation](http://siddhi.io/redirect/docs) for more details on
+        the deployment types, the [Siddhi Operator CRD spec](https://github.com/siddhi-io/siddhi-operator/blob/master/docs/spec-guide-v1alpha2.md)
+        on writing SiddhiProcesses to deploy via the Siddhi Operator, and the [interactive
+        Katacoda samples](https://www.katacoda.com/siddhi/courses/siddhi-deployment)
+        to get a hands-on experience on deploying Siddhi Apps using the Siddhi Operator.
+        \n\n## Prerequisites\n- Kubernetes v1.10.11+\n- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+        version v1.11.3+\n- [NATS operator 0.5.0+](https://github.com/nats-io/nats-operator/releases)
+        (only for distributed Siddhi App deployments)\n- [NATS Streaming operator
+        0.2.2](https://github.com/nats-io/nats-streaming-operator/releases) (only
+        for distributed Siddhi App deployments)\n- [NGINX Ingress controller 0.22.0+](https://kubernetes.github.io/ingress-nginx/deploy/)
+        (for receiving external traffic)\n\nSiddhi Operator uses NATS and NATS Streaming
+        to distribute the events among the distributed Siddhi applications and uses
+        NGINX ingress to exposes the internal HTTP/HTTPS endpoints to get external
+        traffic.\n\n## Using Siddhi Operator\n\nSiddhi Operator automatically creates
+        deployments, services, and ingress for the deployed Siddhi Apps. \n\nUse the
+        following kubectl commands to get details about deployed Siddhi Apps.\n\n```sh\n$
+        kubectl get siddhi\nNAME              STATUS    READY     AGE\npower-surge-app
+        \  Ready     1/1       5m\n\n$ kubectl describe siddhi power-surge-app\nName:
+        \        power-surge-app\nNamespace:    default\nAnnotations:  kubectl.kubernetes.io/last-applied-configuration={\"apiVersion\":\"siddhi.io/v1alpha2\",\"kind\":\"SiddhiProcess\",\"metadata\":{\"annotations\":{},\"name\":\"power-surge-app\",\"namespace\":\"default\"},\"spec\":{\"apps\":[...\nAPI
+        Version:  siddhi.io/v1alpha2\nKind:         SiddhiProcess\nSpec:\n  Apps:\n
+        \   Script:  @App:name(\"PowerSurgeDetection\")...\n\n  Container:\n    Env:\n
+        \     Name:   RECEIVER_URL\n      Value:  http://0.0.0.0:8080/checkPower\n
+        \     Name:   BASIC_AUTH_ENABLED\n      Value:  false\n    Image:    siddhiio/siddhi-runner-ubuntu:5.1.2\nStatus:\n
+        \ Current Version:  0\n  Event Type:       Timer\n  Partial Apps:\n    App:\n
+        \     @App:name(\"PowerSurgeDetection\") … \n    Deployment Name:  power-surge-app-0\n
+        \ Previous Version:   0\n  Ready:              1/1\n  Status:             Ready\nEvents:\n
+        \ Type    Reason             Age   From                      Message\n  ----
+        \   ------             ----  ----                      -------\n  Normal  DeploymentCreated
+        \ 41s   siddhiprocess-controller  power-surge-app-0 deployment created successfully\n
+        \ Normal  ServiceCreated     41s   siddhiprocess-controller  power-surge-app-0
+        service created successfully\n\n$ kubectl get deployment\nNAME                      READY
+        \    UP-TO-DATE   AVAILABLE   AGE\npower-surge-app-0         1/1       1            1
+        \          5m\nsiddhi-operator           1/1       1            1           5m\n\n$
+        kubectl get service\nNAME                TYPE           CLUSTER-IP      EXTERNAL-IP
+        \  PORT(S)          AGE\nkubernetes          ClusterIP      10.96.0.1       <none>
+        \       443/TCP          4d\npower-surge-app-0   ClusterIP      10.108.129.48
+        \  <none>        8080/TCP         5m\nsiddhi-operator     ClusterIP      10.111.214.21
+        \  <none>        8383/TCP         5m\n\n$ kubectl get ingress\nNAME      HOSTS
+        \    ADDRESS     PORTS     AGE\nsiddhi    siddhi    10.0.2.15   80        5m\n\n$
+        kubectl logs $(kubectl get pods | awk '{ print $1 }' | grep ^power-surge-app-0)
+        | tail -n 10\n\n...\n[2019-08-02 05:13:07,008] INFO {io.siddhi.core.stream.output.sink.LogSink}
+        - LOGGER : Event{timestamp=1564722787005, data=[dryer, 600], isExpired=false}\n```\n\nSiddhi
+        operator supports the following deployment types for a given Siddhi app. Try
+        the following interactive Katacoda samples to get a clear understanding of
+        these deployment types.\n\n1. [Stateless Siddhi app deployment](https://www.katacoda.com/siddhi/courses/siddhi-deployment/stateless-deployment)\n1.
+        [Stateful Siddhi app deployment](https://www.katacoda.com/siddhi/courses/siddhi-deployment/stateful-deployment)\n1.
+        [Distributed stateful Siddhi App](https://www.katacoda.com/siddhi/courses/siddhi-deployment/distributed-stateful-deployment)\n1.
+        [Distributed stateful Siddhi App with existing NATS](https://www.katacoda.com/siddhi/courses/siddhi-deployment/distributed-stateful-nats-deployment)\n\nPlease
+        refer to the [Siddhi documentation](http://siddhi.io/redirect/docs) for more
+        details about the Siddhi application deployment in Kubernetes.\n"
+      displayName: Siddhi Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - siddhi
+      - streaming
+      - streamprocessing
+      links:
+      - name: Blog
+        url: https://medium.com/siddhi-io
+      - name: Documentation
+        url: https://siddhi.io/en/v5.1/docs/siddhi-as-a-kubernetes-microservice/
+      - name: Twitter
+        url: https://twitter.com/siddhi_io
+      - name: Slack
+        url: https://siddhi.io/community/#community-collaboration
+      - name: Katacoda
+        url: https://www.katacoda.com/siddhi/courses/siddhi-deployment/
+      maintainers:
+      - email: siddhi-dev@googlegroups.com
+        name: Siddhi Community
+      maturity: stable
+      provider:
+        name: Siddhi
+      relatedImages:
+      - siddhiio/siddhi-operator:0.2.2
+      version: 0.2.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: siddhi-operator
+  provider:
+    name: Siddhi

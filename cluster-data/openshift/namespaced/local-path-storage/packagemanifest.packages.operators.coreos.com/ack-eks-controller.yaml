@@ -1,0 +1,140 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-eks-controller
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-eks-controller.v0.1.7
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "eks.services.k8s.aws/v1alpha1",
+              "kind": "Addon",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "eks.services.k8s.aws/v1alpha1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "eks.services.k8s.aws/v1alpha1",
+              "kind": "FargateProfile",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "eks.services.k8s.aws/v1alpha1",
+              "kind": "Nodegroup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/eks-controller:v0.1.7
+        createdAt: "2022-09-13 12:57:09"
+        description: AWS EKS controller is a service controller for managing EKS resources
+          in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Addon represents the state of an AWS eks Addon resource.
+          displayName: Addon
+          kind: Addon
+          name: addons.eks.services.k8s.aws
+          version: v1alpha1
+        - description: Cluster represents the state of an AWS eks Cluster resource.
+          displayName: Cluster
+          kind: Cluster
+          name: clusters.eks.services.k8s.aws
+          version: v1alpha1
+        - description: FargateProfile represents the state of an AWS eks FargateProfile
+            resource.
+          displayName: FargateProfile
+          kind: FargateProfile
+          name: fargateprofiles.eks.services.k8s.aws
+          version: v1alpha1
+        - description: Nodegroup represents the state of an AWS eks Nodegroup resource.
+          displayName: Nodegroup
+          kind: Nodegroup
+          name: nodegroups.eks.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Elastic Kubernetes Service (EKS) resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon EKS**
+
+        Amazon Elastic Kubernetes Service (Amazon EKS) is a managed service that you can use to run Kubernetes on AWS without needing to install, operate, and maintain your own Kubernetes control plane or nodes. Kubernetes is an open-source system for automating the deployment, scaling, and management of containerized applications.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon EKS
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - eks
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon EKS Developer Resources
+        url: https://aws.amazon.com/eks/getting-started/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: eks maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/eks-controller:v0.1.7
+      version: 0.1.7
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-eks-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

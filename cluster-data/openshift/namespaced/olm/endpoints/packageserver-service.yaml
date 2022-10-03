@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:25:31Z"
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  name: packageserver-service
+  namespace: olm
+  resourceVersion: "29267"
+  uid: 2b4c8991-2a35-4ccd-9265-c5e151341ed9
+subsets:
+- addresses:
+  - ip: 10.244.0.15
+    nodeName: kind-control-plane
+    targetRef:
+      kind: Pod
+      name: packageserver-5cdd79495d-td9kf
+      namespace: olm
+      uid: 31df5485-473a-4cd3-9eb1-5ea365dd66f8
+  - ip: 10.244.0.16
+    nodeName: kind-control-plane
+    targetRef:
+      kind: Pod
+      name: packageserver-5cdd79495d-r9222
+      namespace: olm
+      uid: 1e9a9773-217e-4bff-8f41-2568e7e49eed
+  ports:
+  - name: "5443"
+    port: 5443
+    protocol: TCP

@@ -1,0 +1,650 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Community
+    provider-url: ""
+  name: synapse-helm
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: synapse-helm.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "charts.opdev.io/v1alpha1",
+              "kind": "Synapse",
+              "metadata": {
+                "name": "synapse-sample"
+              },
+              "spec": {
+                "bridges": {
+                  "affinity": false,
+                  "discord": {
+                    "auth": {
+                      "botToken": "",
+                      "clientId": ""
+                    },
+                    "channelName": "[Discord] :guild :name",
+                    "data": {
+                      "capacity": "512Mi",
+                      "storageClass": ""
+                    },
+                    "defaultVisibility": "public",
+                    "enabled": false,
+                    "image": {
+                      "pullPolicy": "Always",
+                      "repository": "halfshot/matrix-appservice-discord",
+                      "tag": "latest"
+                    },
+                    "joinLeaveEvents": true,
+                    "presence": true,
+                    "readReceipt": true,
+                    "replicaCount": 1,
+                    "resources": {},
+                    "selfService": false,
+                    "service": {
+                      "port": 9005,
+                      "type": "ClusterIP"
+                    },
+                    "typingNotifications": true,
+                    "users": {
+                      "nickname": ":nick",
+                      "username": ":username#:tag"
+                    }
+                  },
+                  "irc": {
+                    "data": {
+                      "capacity": "1Mi"
+                    },
+                    "database": "matrix_irc",
+                    "databaseSslVerify": true,
+                    "enabled": false,
+                    "image": {
+                      "pullPolicy": "IfNotPresent",
+                      "repository": "matrixdotorg/matrix-appservice-irc",
+                      "tag": "release-0.26.0"
+                    },
+                    "presence": false,
+                    "replicaCount": 1,
+                    "resources": {},
+                    "servers": {
+                      "chat.freenode.net": {
+                        "name": "Freenode",
+                        "port": 6697,
+                        "ssl": true
+                      }
+                    },
+                    "service": {
+                      "port": 9006,
+                      "type": "ClusterIP"
+                    }
+                  },
+                  "volume": {
+                    "accessMode": "ReadWriteMany",
+                    "capacity": "1Mi",
+                    "storageClass": ""
+                  },
+                  "whatsapp": {
+                    "bot": {
+                      "avatar": "mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr",
+                      "displayName": "WhatsApp bridge bot",
+                      "username": "whatsappbot"
+                    },
+                    "callNotices": true,
+                    "communityName": "whatsapp_{{.Localpart}}={{.Server}}",
+                    "connection": {
+                      "maxAttempts": 3,
+                      "qrRegenCount": 2,
+                      "reportRetry": true,
+                      "retryDelay": -1,
+                      "timeout": 20
+                    },
+                    "data": {
+                      "capacity": "512Mi",
+                      "storageClass": ""
+                    },
+                    "enabled": false,
+                    "image": {
+                      "pullPolicy": "Always",
+                      "repository": "dock.mau.dev/tulir/mautrix-whatsapp",
+                      "tag": "latest"
+                    },
+                    "permissions": {
+                      "*": "relaybot"
+                    },
+                    "relaybot": {
+                      "enabled": false,
+                      "invites": [],
+                      "management": "!foo:example.com"
+                    },
+                    "replicaCount": 1,
+                    "resources": {},
+                    "service": {
+                      "port": 29318,
+                      "type": "ClusterIP"
+                    },
+                    "users": {
+                      "displayName": "{{if .Notify}}{{.Notify}}{{else}}{{.Jid}}{{end}} (WA)",
+                      "username": "whatsapp_{{.}}"
+                    }
+                  }
+                },
+                "coturn": {
+                  "allowGuests": true,
+                  "enabled": true,
+                  "image": {
+                    "pullPolicy": "IfNotPresent",
+                    "repository": "coturn/coturn",
+                    "tag": "4.5.2"
+                  },
+                  "kind": "DaemonSet",
+                  "labels": {
+                    "component": "coturn"
+                  },
+                  "ports": {
+                    "from": 49152,
+                    "to": 49172
+                  },
+                  "replicaCount": 1,
+                  "resources": {},
+                  "service": {
+                    "type": "ClusterIP"
+                  },
+                  "sharedSecret": "ChangeMe",
+                  "uris": []
+                },
+                "fullnameOverride": "",
+                "imagePullSecrets": [],
+                "ingress": {
+                  "annotations": {
+                    "nginx.ingress.kubernetes.io/configuration-snippet": "proxy_intercept_errors off;\n"
+                  },
+                  "enabled": true,
+                  "federation": true,
+                  "hosts": {
+                    "federation": "matrix-fed.chart-example.local",
+                    "riot": "element.chart-example.local",
+                    "synapse": "matrix.chart-example.local"
+                  },
+                  "tls": []
+                },
+                "isOpenshift": true,
+                "mail": {
+                  "enabled": true,
+                  "external": {
+                    "host": "",
+                    "password": "",
+                    "port": 25,
+                    "requireTransportSecurity": true,
+                    "username": ""
+                  },
+                  "from": "Matrix \u003cmatrix@example.com\u003e",
+                  "relay": {
+                    "enabled": true,
+                    "image": {
+                      "pullPolicy": "IfNotPresent",
+                      "repository": "devture/exim-relay",
+                      "tag": "4.94.2-r0-1"
+                    },
+                    "labels": {
+                      "component": "mail"
+                    },
+                    "probes": {
+                      "liveness": {},
+                      "readiness": {},
+                      "startup": {}
+                    },
+                    "replicaCount": 1,
+                    "resources": {},
+                    "service": {
+                      "port": 25,
+                      "type": "ClusterIP"
+                    }
+                  },
+                  "riotUrl": ""
+                },
+                "matrix": {
+                  "adminEmail": "admin@example.com",
+                  "blockNonAdminInvites": false,
+                  "disabled": false,
+                  "disabledMessage": "",
+                  "encryptByDefault": "invite",
+                  "federation": {
+                    "allowPublicRooms": true,
+                    "blacklist": [
+                      "127.0.0.0/8",
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16",
+                      "100.64.0.0/10",
+                      "169.254.0.0/16",
+                      "::1/128",
+                      "fe80::/64",
+                      "fc00::/7"
+                    ],
+                    "enabled": true
+                  },
+                  "logging": {
+                    "rootLogLevel": "WARNING",
+                    "sqlLogLevel": "WARNING",
+                    "synapseLogLevel": "WARNING"
+                  },
+                  "presence": true,
+                  "registration": {
+                    "allowGuests": false,
+                    "autoJoinRooms": [],
+                    "enabled": false
+                  },
+                  "retentionPeriod": "7d",
+                  "search": true,
+                  "security": {
+                    "surpressKeyServerWarning": true
+                  },
+                  "serverName": "example.com",
+                  "telemetry": false,
+                  "uploads": {
+                    "maxPixels": "32M",
+                    "maxSize": "10M"
+                  },
+                  "urlPreviews": {
+                    "enabled": false,
+                    "rules": {
+                      "ip": {
+                        "blacklist": [
+                          "127.0.0.0/8",
+                          "10.0.0.0/8",
+                          "172.16.0.0/12",
+                          "192.168.0.0/16",
+                          "100.64.0.0/10",
+                          "169.254.0.0/16",
+                          "::1/128",
+                          "fe80::/64",
+                          "fc00::/7"
+                        ]
+                      },
+                      "maxSize": "10M",
+                      "url": {}
+                    }
+                  }
+                },
+                "nameOverride": "",
+                "networkPolicies": {
+                  "enabled": true
+                },
+                "postgresql": {
+                  "database": "matrix",
+                  "enabled": true,
+                  "extraEnv": [],
+                  "global": {
+                    "postgresql": {}
+                  },
+                  "hostname": "",
+                  "image": {
+                    "debug": false,
+                    "pullPolicy": "IfNotPresent",
+                    "registry": "docker.io",
+                    "repository": "bitnami/postgresql",
+                    "tag": "11.6.0-debian-9-r0"
+                  },
+                  "initdbScriptsConfigMap": "{{ .Release.Name }}-postgresql-initdb",
+                  "ldap": {
+                    "baseDN": "",
+                    "bindDN": "",
+                    "enabled": false,
+                    "port": "",
+                    "prefix": "",
+                    "scheme": "",
+                    "search_attr": "",
+                    "search_filter": "",
+                    "server": "",
+                    "suffix": "",
+                    "tls": false,
+                    "url": ""
+                  },
+                  "livenessProbe": {
+                    "enabled": true,
+                    "failureThreshold": 6,
+                    "initialDelaySeconds": 30,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 5
+                  },
+                  "master": {
+                    "affinity": {},
+                    "annotations": {},
+                    "extraInitContainers": "",
+                    "extraVolumeMounts": [],
+                    "extraVolumes": [],
+                    "labels": {},
+                    "nodeSelector": {},
+                    "podAnnotations": {},
+                    "podLabels": {},
+                    "tolerations": []
+                  },
+                  "metrics": {
+                    "enabled": false,
+                    "image": {
+                      "pullPolicy": "IfNotPresent",
+                      "registry": "docker.io",
+                      "repository": "bitnami/postgres-exporter",
+                      "tag": "0.7.0-debian-9-r12"
+                    },
+                    "livenessProbe": {
+                      "enabled": true,
+                      "failureThreshold": 6,
+                      "initialDelaySeconds": 5,
+                      "periodSeconds": 10,
+                      "successThreshold": 1,
+                      "timeoutSeconds": 5
+                    },
+                    "prometheusRule": {
+                      "additionalLabels": {},
+                      "enabled": false,
+                      "namespace": "",
+                      "rules": []
+                    },
+                    "readinessProbe": {
+                      "enabled": true,
+                      "failureThreshold": 6,
+                      "initialDelaySeconds": 5,
+                      "periodSeconds": 10,
+                      "successThreshold": 1,
+                      "timeoutSeconds": 5
+                    },
+                    "securityContext": {
+                      "enabled": false,
+                      "runAsUser": 1001
+                    },
+                    "service": {
+                      "annotations": {
+                        "prometheus.io/port": "9187",
+                        "prometheus.io/scrape": "true"
+                      },
+                      "type": "ClusterIP"
+                    },
+                    "serviceMonitor": {
+                      "additionalLabels": {},
+                      "enabled": false
+                    }
+                  },
+                  "networkPolicy": {
+                    "allowExternal": true,
+                    "enabled": false
+                  },
+                  "password": "matrix",
+                  "persistence": {
+                    "accessModes": [
+                      "ReadWriteOnce"
+                    ],
+                    "annotations": {},
+                    "enabled": true,
+                    "mountPath": "/bitnami/postgresql",
+                    "size": "8Gi",
+                    "subPath": ""
+                  },
+                  "port": 5432,
+                  "postgresqlDataDir": "/bitnami/postgresql/data",
+                  "postgresqlPassword": "ChangeMe!",
+                  "postgresqlUsername": "postgres",
+                  "readinessProbe": {
+                    "enabled": true,
+                    "failureThreshold": 6,
+                    "initialDelaySeconds": 5,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 5
+                  },
+                  "replication": {
+                    "applicationName": "my_application",
+                    "enabled": false,
+                    "numSynchronousReplicas": 0,
+                    "password": "repl_password",
+                    "slaveReplicas": 1,
+                    "synchronousCommit": "off",
+                    "user": "repl_user"
+                  },
+                  "resources": {
+                    "requests": {
+                      "cpu": "250m",
+                      "memory": "256Mi"
+                    }
+                  },
+                  "securityContext": {
+                    "enabled": true,
+                    "fsGroup": 1000,
+                    "runAsUser": 1000
+                  },
+                  "service": {
+                    "annotations": {},
+                    "port": 5432,
+                    "type": "ClusterIP"
+                  },
+                  "serviceAccount": {
+                    "enabled": false
+                  },
+                  "shmVolume": {
+                    "enabled": true
+                  },
+                  "slave": {
+                    "affinity": {},
+                    "annotations": {},
+                    "extraInitContainers": "",
+                    "extraVolumeMounts": [],
+                    "extraVolumes": [],
+                    "labels": {},
+                    "nodeSelector": {},
+                    "podAnnotations": {},
+                    "podLabels": {},
+                    "tolerations": []
+                  },
+                  "ssl": false,
+                  "sslMode": "prefer",
+                  "updateStrategy": {
+                    "type": "RollingUpdate"
+                  },
+                  "username": "matrix",
+                  "volumePermissions": {
+                    "enabled": true,
+                    "image": {
+                      "pullPolicy": "Always",
+                      "registry": "docker.io",
+                      "repository": "bitnami/minideb",
+                      "tag": "stretch"
+                    },
+                    "securityContext": {
+                      "runAsUser": 0
+                    }
+                  }
+                },
+                "riot": {
+                  "branding": {
+                    "authFooterLinks": [],
+                    "authHeaderLogoUrl": "",
+                    "brand": "Element",
+                    "welcomeBackgroundUrl": ""
+                  },
+                  "enabled": true,
+                  "image": {
+                    "pullPolicy": "IfNotPresent",
+                    "repository": "vectorim/riot-web",
+                    "tag": "v1.7.30"
+                  },
+                  "integrations": {
+                    "api": "https://scalar.vector.im/api",
+                    "enabled": true,
+                    "ui": "https://scalar.vector.im/",
+                    "widgets": [
+                      "https://scalar.vector.im/_matrix/integrations/v1",
+                      "https://scalar.vector.im/api",
+                      "https://scalar-staging.vector.im/_matrix/integrations/v1",
+                      "https://scalar-staging.vector.im/api",
+                      "https://scalar-staging.riot.im/scalar/api"
+                    ]
+                  },
+                  "labels": {
+                    "component": "element"
+                  },
+                  "labs": [
+                    "feature_new_spinner",
+                    "feature_pinning",
+                    "feature_custom_status",
+                    "feature_custom_tags",
+                    "feature_state_counters",
+                    "feature_many_integration_managers",
+                    "feature_mjolnir",
+                    "feature_dm_verification",
+                    "feature_bridge_state",
+                    "feature_presence_in_room_list",
+                    "feature_custom_themes"
+                  ],
+                  "permalinkPrefix": "https://matrix.to",
+                  "probes": {
+                    "liveness": {},
+                    "readiness": {},
+                    "startup": {}
+                  },
+                  "replicaCount": 1,
+                  "resources": {},
+                  "roomDirectoryServers": [
+                    "matrix.org"
+                  ],
+                  "service": {
+                    "port": 80,
+                    "type": "ClusterIP"
+                  },
+                  "welcomeUserId": ""
+                },
+                "synapse": {
+                  "image": {
+                    "pullPolicy": "IfNotPresent",
+                    "repository": "matrixdotorg/synapse",
+                    "tag": "v1.35.1"
+                  },
+                  "labels": {
+                    "component": "synapse"
+                  },
+                  "metrics": {
+                    "annotations": true,
+                    "enabled": true,
+                    "port": 9092
+                  },
+                  "probes": {
+                    "liveness": {
+                      "periodSeconds": 10,
+                      "timeoutSeconds": 5
+                    },
+                    "readiness": {
+                      "periodSeconds": 10,
+                      "timeoutSeconds": 5
+                    },
+                    "startup": {
+                      "failureThreshold": 6,
+                      "periodSeconds": 5,
+                      "timeoutSeconds": 5
+                    }
+                  },
+                  "replicaCount": 1,
+                  "resources": {},
+                  "service": {
+                    "federation": {
+                      "port": 80,
+                      "type": "ClusterIP"
+                    },
+                    "port": 80,
+                    "type": "ClusterIP"
+                  }
+                },
+                "volumes": {
+                  "media": {
+                    "capacity": "10Gi",
+                    "storageClass": ""
+                  },
+                  "signingKey": {
+                    "capacity": "1Mi",
+                    "storageClass": ""
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        certified: "false"
+        containerImage: quay.io/mgoerens/synapse-helm:v0.0.11
+        operators.operatorframework.io/builder: operator-sdk-v1.7.1+git
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+        repository: https://github.com/opdev/synapse-helm
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - kind: Synapse
+          name: synapses.charts.opdev.io
+          version: v1alpha1
+      description: |-
+        ## Helm based operator for Synapse
+
+        Currently in early alpha !
+
+        This operator automates the deployment of Synapse, a reference homeserver
+        implementation of a Matrix, on Kubernetes.
+
+        It supports the deployment of:
+
+        - Synapse
+        - (Optional) Riot Web
+        - (Optional) Choice of lightweight Exim relay or external mail server for
+          email notifications
+        - (Optional) Coturn TURN server for VoIP calls
+        - (Optional) PostgreSQL cluster via stable/postgresql chart
+
+        Credit to @dacruz21 for the original Helm chart powering this Operator.
+      displayName: synapse-helm
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - synapse
+      - matrix
+      - helm
+      links:
+      - name: Helm Synapse Operator repository
+        url: https://github.com/opdev/synapse-helm
+      - name: Base Helm chart
+        url: https://github.com/mgoerens/matrix-chart
+      - name: Synapse repository
+        url: https://github.com/matrix-org/synapse
+      maintainers:
+      - email: mgoerens@redhat.com
+        name: Matthias Goerens
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: Community
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/mgoerens/synapse-helm:v0.0.11
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: synapse-helm
+  provider:
+    name: Community

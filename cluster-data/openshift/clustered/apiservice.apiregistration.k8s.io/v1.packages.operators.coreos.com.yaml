@@ -1,0 +1,28 @@
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  labels:
+    olm.owner: packageserver
+    olm.owner.kind: ClusterServiceVersion
+    olm.owner.namespace: olm
+  name: v1.packages.operators.coreos.com
+  resourceVersion: "29273"
+  uid: 0e319ffd-86b7-4af7-8928-76b0944fd0c0
+spec:
+  caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ2VENDQVdLZ0F3SUJBZ0lJV1hnb1FpdGJiMDB3Q2dZSUtvWkl6ajBFQXdJd1FqRVdNQlFHQTFVRUNoTU4KVW1Wa0lFaGhkQ3dnU1c1akxqRW9NQ1lHQTFVRUF4TWZiMnh0TFhObGJHWnphV2R1WldRdE5UazNPREk0TkRJeQpZalZpTm1ZMFpEQWVGdzB5TWpFd01ETXhPREkxTWpOYUZ3MHlOREV3TURJeE9ESTFNak5hTUVJeEZqQVVCZ05WCkJBb1REVkpsWkNCSVlYUXNJRWx1WXk0eEtEQW1CZ05WQkFNVEgyOXNiUzF6Wld4bWMybG5ibVZrTFRVNU56Z3kKT0RReU1tSTFZalptTkdRd1dUQVRCZ2NxaGtqT1BRSUJCZ2dxaGtqT1BRTUJCd05DQUFUb2N4eEVzcURRcEZFZApSSXh0VjBpak0zTkNDVDNDYzRhb0hIMmdZa1pNMmdZV3haODY0ZzI5NEc5cTJ0aDJwR05Id3dscWNoUllUbGpNCmthYUdvamtpbzBJd1FEQU9CZ05WSFE4QkFmOEVCQU1DQWdRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlYKSFE0RUZnUVVxL1ZwQjdUNjE4TkRGa1VzZS80cGF0OWRFZjh3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQU5KTgpuWVRndEEyRmJCNFQ0KzNpL2h0SCtQUy8wbUxzYUpRSTRPTzlMUkJzQWlFQXdDaFA4RHRYdDNHMDk1bmMxY3ZlCjE5Zy9YUEI0WlJ2dzRkbCtwWjA5c3E0PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  group: packages.operators.coreos.com
+  groupPriorityMinimum: 2000
+  service:
+    name: packageserver-service
+    namespace: olm
+    port: 5443
+  version: v1
+  versionPriority: 15
+status:
+  conditions:
+  - lastTransitionTime: "2022-10-03T18:25:31Z"
+    message: all checks passed
+    reason: Passed
+    status: "True"
+    type: Available

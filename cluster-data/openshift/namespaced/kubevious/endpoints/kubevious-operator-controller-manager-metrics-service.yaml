@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T19:45:15Z"
+  creationTimestamp: "2022-10-03T18:35:18Z"
+  labels:
+    control-plane: controller-manager
+    operators.coreos.com/kubevious-operator.kubevious: ""
+  name: kubevious-operator-controller-manager-metrics-service
+  namespace: kubevious
+  resourceVersion: "40301"
+  uid: b2565f0b-4d30-4be0-97f1-4075f23d33d7
+subsets:
+- addresses:
+  - ip: 10.244.0.23
+    nodeName: kind-control-plane
+    targetRef:
+      kind: Pod
+      name: kubevious-operator-controller-manager-7b95db69fb-sqpfs
+      namespace: kubevious
+      uid: 89e4022f-712e-4128-895c-4854110e6ea7
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP

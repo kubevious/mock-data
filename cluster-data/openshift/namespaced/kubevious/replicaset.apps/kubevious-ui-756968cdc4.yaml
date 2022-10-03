@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/component: kubevious-ui
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+    pod-template-hash: 756968cdc4
+  name: kubevious-ui-756968cdc4
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: kubevious-ui
+    uid: cdee7cda-32cd-4ec1-a017-2ba6ac127e7e
+  resourceVersion: "21847"
+  uid: 6022f4af-42e0-4ad9-a9cd-899e62e87c93
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: kubevious-ui
+      app.kubernetes.io/instance: kubevious
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kubevious
+      pod-template-hash: 756968cdc4
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: kubevious-ui
+        app.kubernetes.io/instance: kubevious
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: kubevious
+        app.kubernetes.io/version: 1.0.13
+        helm.sh/chart: kubevious-1.0.13
+        pod-template-hash: 756968cdc4
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: production
+        - name: KUBEVIOUS_VERSION
+          value: 1.0.13
+        image: docker.io/kubevious/ui-ubi:1.0.13
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: kubevious
+        ports:
+        - containerPort: 4000
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 25m
+            memory: 50Mi
+        securityContext: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/caddy/Caddyfile
+          name: caddy-config
+          subPath: Caddyfile
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: kubevious-ui-caddy
+        name: caddy-config
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

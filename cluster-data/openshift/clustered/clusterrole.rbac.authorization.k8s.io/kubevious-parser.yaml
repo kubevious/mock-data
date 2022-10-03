@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  labels:
+    app.kubernetes.io/component: kubevious-parser
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-parser
+  resourceVersion: "31053"
+  uid: 9e1aec4e-5627-4254-808d-fc6c024d9186
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch

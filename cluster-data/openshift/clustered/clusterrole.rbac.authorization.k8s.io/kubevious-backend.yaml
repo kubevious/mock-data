@@ -1,0 +1,37 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  labels:
+    app.kubernetes.io/component: kubevious-backend
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-backend
+  resourceVersion: "31052"
+  uid: 462f6ea5-d9b7-47a3-8a47-c815206bee29
+rules:
+- apiGroups:
+  - kubevious.io
+  resources:
+  - changepackages
+  verbs:
+  - get
+  - list
+  - watch
+  - delete
+- apiGroups:
+  - kubevious.io
+  resources:
+  - validationstates
+  verbs:
+  - get
+  - list
+  - create
+  - delete
+  - update

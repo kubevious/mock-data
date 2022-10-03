@@ -1,0 +1,143 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubernetes.io/config.hash: 77f03901e52b07d6fa98daba58dfe736
+    kubernetes.io/config.mirror: 77f03901e52b07d6fa98daba58dfe736
+    kubernetes.io/config.seen: "2022-10-03T13:44:46.059020600-05:00"
+    kubernetes.io/config.source: file
+    scheduler.alpha.kubernetes.io/tolerations: '[{"key":"CriticalAddonsOnly", "operator":"Exists"}]'
+  creationTimestamp: "2022-10-03T18:45:59Z"
+  labels:
+    app: ibm-master-proxy-static
+  name: ibm-master-proxy-static-10.161.112.141
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: v1
+    controller: true
+    kind: Node
+    name: 10.161.112.141
+    uid: 7b583578-9da3-4b0a-8e4e-6fec377ca6c1
+  resourceVersion: "8714"
+  uid: a3ce89b1-4976-4a6f-9f37-12bc6ad3b307
+spec:
+  containers:
+  - command:
+    - /docker-entrypoint.sh
+    - -f
+    - /usr/local/etc/haproxy/haproxy-static-pod.cfg
+    - -V
+    - -dR
+    image: us.icr.io/armada-master/haproxy:1f66ba53618d9f421f51c498307706294927ef98
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        host: 172.20.0.1
+        path: /version
+        port: 2040
+        scheme: HTTPS
+      initialDelaySeconds: 120
+      periodSeconds: 120
+      successThreshold: 1
+      timeoutSeconds: 60
+    name: ibm-master-proxy-static
+    ports:
+    - containerPort: 2040
+      hostPort: 2040
+      name: apiserver
+      protocol: TCP
+    resources:
+      limits:
+        cpu: 300m
+        memory: 512M
+      requests:
+        cpu: 25m
+        memory: 32M
+    securityContext:
+      capabilities:
+        add:
+        - NET_BIND_SERVICE
+      runAsUser: 1001
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /usr/local/etc/haproxy
+      name: etc-config
+      readOnly: true
+  - image: us.icr.io/armada-master/pause:3.6
+    imagePullPolicy: IfNotPresent
+    name: pause
+    resources:
+      requests:
+        cpu: 1m
+        memory: 1Ki
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostNetwork: true
+  nodeName: 10.161.112.141
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000001000
+  priorityClassName: system-node-critical
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    runAsUser: 1001
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - operator: Exists
+  volumes:
+  - hostPath:
+      path: /etc/haproxy
+      type: ""
+    name: etc-config
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:44:46Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:44:48Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:44:48Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:44:46Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://8f69a0371df442564edfe982d364ba4962f6a948c0ad710b985949d87c85c925
+    image: us.icr.io/armada-master/haproxy:1f66ba53618d9f421f51c498307706294927ef98
+    imageID: us.icr.io/armada-master/haproxy@sha256:e97df4062858fda8ed595b19e0d243166eeb62fd95c0a8cc94d6369865e10517
+    lastState: {}
+    name: ibm-master-proxy-static
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:44:47Z"
+  - containerID: cri-o://a42041d177ccca772de08fb20ec0bd53bf4dbc3bb0eeb027b73a85c20d0312c1
+    image: us.icr.io/armada-master/pause:3.6
+    imageID: us.icr.io/armada-master/pause@sha256:1031106831038d30da500b6611220edab384506e6b5f1d7192d3132d5a7c3b53
+    lastState: {}
+    name: pause
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:44:48Z"
+  hostIP: 10.161.112.141
+  phase: Running
+  podIP: 10.161.112.141
+  podIPs:
+  - ip: 10.161.112.141
+  qosClass: Burstable
+  startTime: "2022-10-03T18:44:46Z"

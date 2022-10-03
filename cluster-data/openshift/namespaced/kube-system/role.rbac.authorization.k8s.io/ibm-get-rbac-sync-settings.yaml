@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"name":"ibm-get-rbac-sync-settings","namespace":"kube-system"},"rules":[{"apiGroups":["*"],"resourceNames":["rbac-sync-settings"],"resources":["configmaps"],"verbs":["get"]}]}'
+  creationTimestamp: "2022-10-03T18:37:16Z"
+  name: ibm-get-rbac-sync-settings
+  namespace: kube-system
+  resourceVersion: "6210"
+  uid: c8847c4d-7580-4fee-82f5-22547e0c0947
+rules:
+- apiGroups:
+  - '*'
+  resourceNames:
+  - rbac-sync-settings
+  resources:
+  - configmaps
+  verbs:
+  - get

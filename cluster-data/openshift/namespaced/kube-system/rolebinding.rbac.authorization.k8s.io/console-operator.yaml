@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    include.release.openshift.io/ibm-cloud-managed: "true"
+    include.release.openshift.io/self-managed-high-availability: "true"
+    include.release.openshift.io/single-node-developer: "true"
+  creationTimestamp: "2022-10-03T18:26:52Z"
+  name: console-operator
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: config.openshift.io/v1
+    kind: ClusterVersion
+    name: version
+    uid: 2ab0f2b7-2394-44cb-bb26-d3d07e8e627c
+  resourceVersion: "3907"
+  uid: c3a9839d-708e-4c52-b868-a1b08fb7735f
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+- kind: ServiceAccount
+  name: console-operator
+  namespace: openshift-console-operator

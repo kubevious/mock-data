@@ -1,0 +1,105 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: https://github.com/Kuadrant/limitador-operator
+  name: limitador-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: limitador-operator.v0.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "limitador.kuadrant.io/v1alpha1",
+              "kind": "Limitador",
+              "metadata": {
+                "name": "limitador-sample"
+              },
+              "spec": {
+                "limits": [
+                  {
+                    "conditions": [
+                      "get-toy == yes"
+                    ],
+                    "max_value": 2,
+                    "namespace": "toystore-app",
+                    "seconds": 30,
+                    "variables": []
+                  }
+                ],
+                "listener": {
+                  "grpc": {
+                    "port": 8081
+                  },
+                  "http": {
+                    "port": 8080
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        containerImage: quay.io/kuadrant/limitador-operator:v0.3.0
+        operators.operatorframework.io/builder: operator-sdk-v1.22.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Kuadrant/limitador-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Defines the Limitador Instance settings and its rate limits
+            objects
+          displayName: Limitador
+          kind: Limitador
+          name: limitadors.limitador.kuadrant.io
+          version: v1alpha1
+      description: The Limitador Operator manages the lifecycle of Limitador instances
+      displayName: Limitador
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - api
+      - rate-limit
+      links:
+      - name: Kuadrant
+        url: https://kuadrant.io/
+      maintainers:
+      - email: eastizle@redhat.com
+        name: eguzki
+      - email: didier@redhat.com
+        name: dd
+      maturity: alpha
+      minKubeVersion: 1.22.7
+      provider:
+        name: Red Hat
+        url: https://github.com/Kuadrant/limitador-operator
+      relatedImages:
+      - quay.io/kuadrant/limitador-operator:v0.3.0
+      version: 0.3.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: limitador-operator
+  provider:
+    name: Red Hat
+    url: https://github.com/Kuadrant/limitador-operator

@@ -1,0 +1,89 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: VMware Tanzu
+    provider-url: ""
+  name: rabbitmq-single-active-consumer-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: rabbitmq-single-active-consumer-operator.v0.2.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"rabbitmq.com/v1alpha1","kind":"SuperStreamConsumer","metadata":{"name":"consumers"},"spec":{"superStreamReference":"orders",
+          "consumerPodSpec":{}}}]'
+        capabilities: Deep Insights
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: docker.io/rabbitmqoperator/single-active-consumer-operator:0.2.2
+        createdAt: "2022-08-22T13:28:40+00:00"
+        description: This Kubernetes operator serves as an automated orchestration
+          layer to create a single-active-consumer topology on a RabbitMQ Cluster
+          with SuperStreams. In this topology, a single SuperStream can be partitioned
+          into smaller partition streams; the purpose of this operator is to ensure
+          that for each partition, exactly one application Pod is consuming from the
+          partition stream at any given time.
+        repository: https://github.com/rabbitmq/single-active-consumer-operator
+        support: VMware Tanzu
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Super Stream Consumer
+          displayName: SuperStreamConsumer
+          kind: SuperStreamConsumer
+          name: superstreamconsumers.rabbitmq.com
+          version: v1alpha1
+      description: "## About the managed application\n\nRabbitMQ is an open-source
+        message-broker software that originally implemented the Advanced Message Queuing
+        Protocol and has since been extended with a plug-in architecture to support
+        Streaming Text Oriented Messaging Protocol, MQ Telemetry Transport, and other
+        protocols.\n## About this Operator\nThis Kubernetes operator serves as an
+        automated orchestration layer to create a single-active-consumer topology
+        on a RabbitMQ Cluster with SuperStreams.  In this topology, a single SuperStream
+        can be partitioned into smaller partition streams; the purpose of this operator
+        is to ensure that for each partition,  exactly one application Pod is consuming
+        from the partition stream at any given time.       \n## Prerequisites for
+        enabling this Operator\nThe operator works on top of the RabbitMQ cluster
+        operator and the RabbitMQ messaging topology operator, so these needs to be
+        installed before using this operator.\n"
+      displayName: rabbitmq-single-active-consumer-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      links:
+      - name: github
+        url: https://github.com/rabbitmq/single-active-consumer-operator
+      - name: doc
+        url: https://blog.rabbitmq.com/posts/2022/07/rabbitmq-3-11-feature-preview-single-active-consumer-for-streams
+      maintainers:
+      - email: rabbitmq-platform@groups.vmware.com
+        name: VMware Tanzu
+      maturity: beta
+      minKubeVersion: 1.19.0
+      provider:
+        name: VMware Tanzu
+      relatedImages:
+      - docker.io/rabbitmqoperator/single-active-consumer-operator:0.2.2
+      version: 0.2.2
+    name: stable
+  defaultChannel: stable
+  packageName: rabbitmq-single-active-consumer-operator
+  provider:
+    name: VMware Tanzu

@@ -1,0 +1,150 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Manoj Dhanorkar
+    provider-url: ""
+  name: mariadb-operator-app
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: mariadb-operator.v0.0.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+                "apiVersion":"mariadb.persistentsys/v1alpha1",
+                "kind":"MariaDB",
+                "metadata":{
+                  "name":"mariadb"
+                },
+                "spec":{
+                  "database":"test-db",
+                  "username":"db-user",
+                  "password":"db-user",
+                  "rootpwd":"password",
+                  "size":1,
+                  "image":"mariadb/server:10.3",
+                  "dataStoragePath":"/mnt/data",
+                  "dataStorageSize":"1Gi"
+                }
+            },
+            {
+                "apiVersion":"mariadb.persistentsys/v1alpha1",
+                "kind":"Backup",
+                "metadata":{
+                  "name":"mariadb-backup"
+                },
+                "spec":{
+                  "backupPath":"/mnt/backup",
+                  "backupSize":"1Gi",
+                  "schedule":"0 0 * * *"
+                }
+            },
+            {
+                "apiVersion":"mariadb.persistentsys/v1alpha1",
+                "kind":"Monitor",
+                "metadata":{
+                  "name":"mariadb-monitor"
+                },
+                "spec":{
+                  "size":1,
+                  "dataSourceName":"root:password@(192.168.99.127:30685)/test-db",
+                  "image":"prom/mysqld-exporter"
+                }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/manojdhanorkar/mariadb-operator:v0.0.4
+        createdAt: "2020-04-07T11:17:00Z"
+        description: Create mariadb server and database on Kubernetes
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/abalki001/mariadb-operator
+        support: Manoj Dhanorkar
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a resource for managing MariaDB database
+          displayName: MariaDB server
+          kind: MariaDB
+          name: mariadbs.mariadb.persistentsys
+          version: v1alpha1
+        - description: Represents a resource for managing MariaDB Backup
+          displayName: MariaDB Backup
+          kind: Backup
+          name: backups.mariadb.persistentsys
+          version: v1alpha1
+        - description: Represents a resource for monitoring MariaDB
+          displayName: MariaDB Monitor
+          kind: Monitor
+          name: monitors.mariadb.persistentsys
+          version: v1alpha1
+      description: "This operator enables you to create MariaDB server and database
+        easily by defining simple Custom Resource. Operator's features are as follows:\n\n*
+        Setup a MariaDB server with configured version  \n* Create a custom database
+        along with a user credential set for the custom database \n* Operator uses
+        Persistent Volume where MariaDB can write its data files \n* Seamless upgrades
+        of MariaDB is possible without loosing existing data \n* Take full backup
+        of Database at user defined location \n* Schedule backup at regular intervals
+        \n* Monitor metrics for mariadb node  \r\n\r\n## Installation\r\nMariaDB Database
+        uses external location on host to store all Database files. This location
+        is default set to `/mnt/data` from MariaDB CR file.  \r\n\r\nEnsure that the
+        path exists for Database files and has all necessary permissions.  \r\n\r\nUser
+        can change the storage location and storage size from CR file and apply the
+        changes.  \r\n\r\nSimilarly, Database backup storage location is default set
+        to `/mnt/backup` and can be updated from MariaDB Backup CR.  Along with this
+        property, user can also update storage size, and backup schedule (in standard
+        cron format).  \r\n\r\n\r\n Operator creates the Persistent Volumes on its
+        own, from the path mentioned in CR.  So before starting the operator, ensure
+        that locations exists and PVs are not present for same location.  \r\n\r\n\r\n
+        For monitoring support you need to install prometheus and grafana operators
+        from operatorhub.  \n Detailed installation instructions are avaiable at https://github.com/abalki001/mariadb-operator/blob/master/README.md
+        \r\n\r\n"
+      displayName: Mariadb Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - mariadb-operator
+      - mariadb
+      - kubernetes
+      - database
+      links:
+      - name: MariaDB Operator
+        url: https://github.com/abalki001/mariadb-operator
+      maintainers:
+      - email: manoj_dhanorkar@persistent.com
+        name: Manoj Dhanorkar
+      - email: abhijit_balki@persistent.com
+        name: Abhijit Balki
+      maturity: alpha
+      minKubeVersion: 1.8.2
+      provider:
+        name: Manoj Dhanorkar
+      relatedImages:
+      - quay.io/manojdhanorkar/mariadb-operator:v0.0.4
+      version: 0.0.4
+    name: alpha
+  defaultChannel: alpha
+  packageName: mariadb-operator-app
+  provider:
+    name: Manoj Dhanorkar

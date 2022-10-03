@@ -1,0 +1,96 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Weaveworks
+    provider-url: ""
+  name: tf-controller
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: tf-controller.v0.9.0-rc.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n  {\n    \"apiVersion\": \"infra.contrib.fluxcd.io/v1alpha1\",\n
+          \   \"kind\": \"Terraform\",\n    \"metadata\": {\n        \"name\": \"helloworld-tf\",\n
+          \       \"namespace\": \"flux-system\"\n    },\n    \"spec\": {\n        \"interval\":
+          \"5m\",\n        \"approvePlan\": \"auto\",\n        \"path\": \"./\",\n
+          \       \"sourceRef\": {\n          \"kind\": \"GitRepository\",\n          \"name\":
+          \"helloworld\",\n          \"namespace\": \"flux-system\"\n        }      \n
+          \   }\n  }\n]"
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: ghcr.io/weaveworks/tf-controller:v0.9.0-rc.8
+        description: Weave TF-controller is a Flux controller that brings GitOps to
+          Terraform resources.
+        operatorframework.io/suggested-namespace: flux-system
+        support: Weaveworks
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Terraform
+          displayName: Terraform
+          kind: Terraform
+          name: terraforms.infra.contrib.fluxcd.io
+          version: v1alpha1
+      description: "**Weave GitOps Terraform Controller** (aka Weave TF-controller)
+        is a Flux controller for reconciling Terraform resources in the GitOps way.
+        \nWith the power of Flux together with Terraform, TF-controller allows you
+        to GitOps-ify infrastructure, \nand application resources, in the Kubernetes
+        and Terraform universe, together at your own pace.\n\nTF-controller offers
+        many GitOps models:\n  1. **GitOps Automation Model:** GitOps your Terraform
+        resources from the provision steps to the enforcement steps, like a whole
+        EKS cluster.\n  2. **Hybrid GitOps Automation Model:** GitOps parts of your
+        existing infrastructure resources. For example, you have an existing EKS cluster.
+        You can choose to GitOps only its nodegroup, or its security group.\n  3.
+        **State Enforcement Model:** You have a TFSTATE file, and you'd like to use
+        GitOps enforce it, without changing anything else.\n  4. **Drift Detection
+        Model:** You have a TFSTATE file, and you'd like to use GitOps just for drift
+        detection, so you can decide to do things later when a drift occurs.\n\nFeatures\n
+        \ * GitOps Automation for Terraform\n  * Drift detection\n  * Plan and Manual
+        Approve"
+      displayName: Weave GitOps Terraform Controller
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - weave
+      - flux
+      - cd
+      - continuous delivery
+      - terraform
+      - gitops
+      links:
+      - name: Weave GitOps Terraform Controller
+        url: https://github.com/weaveworks/tf-controller
+      - name: Documentation
+        url: https://weaveworks.github.io/tf-controller/
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: Weaveworks
+      relatedImages:
+      - ghcr.io/weaveworks/tf-controller:v0.9.0-rc.8
+      version: 0.9.0-rc.8
+    name: stable
+  defaultChannel: stable
+  packageName: tf-controller
+  provider:
+    name: Weaveworks

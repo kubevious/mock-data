@@ -1,0 +1,180 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Skydive Community
+    provider-url: ""
+  name: skydive-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: skydive-operator.v0.0.50
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "skydive-group.example.com/v1",
+              "kind": "Skydive",
+              "metadata": {
+                "name": "skydive-sample",
+                "namespace": "skydive"
+              },
+              "spec": {
+                "agents": {
+                  "daemonSet": {
+                    "env": [
+                      {
+                        "name": "SKYDIVE_ANALYZERS",
+                        "value": "$(SKYDIVE_ANALYZER_SERVICE_HOST):$(SKYDIVE_ANALYZER_SERVICE_PORT_API)"
+                      },
+                      {
+                        "name": "SKYDIVE_LOGGING_LEVEL",
+                        "value": "ERROR"
+                      }
+                    ]
+                  }
+                },
+                "analyzer": {
+                  "deployment": {
+                    "env": [
+                      {
+                        "name": "SKYDIVE_LOGGING_LEVEL",
+                        "value": "ERROR"
+                      }
+                    ]
+                  }
+                },
+                "enable": {
+                  "agents": true,
+                  "analyzer": true,
+                  "flowExporter": false,
+                  "prometheusConnector": false,
+                  "route": false
+                },
+                "flowExporter": {
+                  "deployment": {
+                    "env": [
+                      {
+                        "name": "SKYDIVE_LOGGING_LEVEL",
+                        "value": "ERROR"
+                      },
+                      {
+                        "name": "SKYDIVE_PIPELINE_SUBSCRIBER_URL",
+                        "value": "ws://$(SKYDIVE_ANALYZER_SERVICE_HOST):$(SKYDIVE_ANALYZER_SERVICE_PORT_API)/ws/subscriber/flow"
+                      }
+                    ]
+                  }
+                },
+                "namespace": "skydive",
+                "openShiftDeployment": false,
+                "prometheusConnector": {
+                  "deployment": {
+                    "env": [
+                      {
+                        "name": "SKYDIVE_LOGGING_LEVEL",
+                        "value": "DEBUG"
+                      },
+                      {
+                        "name": "SKYDIVE_PIPELINE_SUBSCRIBER_URL",
+                        "value": "ws://skydive-analyzer:8082/ws/subscriber/flow"
+                      },
+                      {
+                        "name": "SKYDIVE_PIPELINE_MANGLE",
+                        "value": "none"
+                      },
+                      {
+                        "name": "SKYDIVE_PIPELINE_TRANSFORM_TYPE",
+                        "value": "none"
+                      },
+                      {
+                        "name": "SKYDIVE_PIPELINE_STORE_TYPE",
+                        "value": "prom_sky_con"
+                      },
+                      {
+                        "name": "SKYDIVE_PIPELINE_STORE_PROM_SKY_CON_PORT",
+                        "value": "9100"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Logging & Tracing, Monitoring
+        containerImage: docker.io/skydive/skydive-operator:0.0.50
+        createdAt: "2021-05-01T10:21:00Z"
+        description: An operator to run the Skydive network monitoring tool
+        operators.operatorframework.io/builder: operator-sdk-v1.5.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/skydive-project/skydive-golang-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Skydive is the Schema for the skydives API
+          displayName: Skydive
+          kind: Skydive
+          name: skydives.skydive-group.example.com
+          version: v1
+      description: |
+        # Skydive operator
+        This is an operator to deploy skydive analyzer, agents, flow-exporter and promethues connector.
+
+        ## Skydive
+        Skydive is an open source real-time network topology and protocols analyzer. It aims to provide a comprehensive way of understanding what is happening in the network infrastructure.
+
+        Skydive agents collect topology information and flows and forward them to a central agent for further analysis. All the information is stored in an Elasticsearch database.
+
+        Skydive is SDN-agnostic but provides SDN drivers in order to enhance the topology and flows information.
+
+        ## Skydive flow-exporter
+        The Skydive Flow Exporter provides a framework for building pipelines which extract flows from the Skydive Analyzer (via it WebSocket API), process them and send the results upstream. read more [here](https://github.com/skydive-project/skydive-flow-exporter)
+
+        ##Prometheus-connector
+        Prometheus is an open-source systems monitoring and alerting tool. Many different types of data are collected by different tools and are forwarded to Prometheus via various types of exporters. For example, the Prometheus Node Exporter exposes a wide variety of hardware- and kernel-related metrics. We developed an exporter for Skydive that reports metrics of individual captured network flows. The connector translates data from Skydive captured flows into a format that can be consumed by Prometheus. The first implementation of the Skydive-Prometheus connector periodically provides the byte transfer counts for each network connection under observation. The code can be easily tailored to provide additional flow information. read more [here](https://github.com/skydive-project/skydive.network/blob/3fcd5f66c6926d96460af7e7420339e69480cad1/blog/prometheus-connector.md)
+
+        ### Default deploy
+        This Operator will deploy an Analyzer and an Agent on each one of the worker nodes.
+        For more information about skydive and how it works please visit skydive project on [github](https://github.com/skydive-project/skydive)
+      displayName: skydive-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - skydive
+      links:
+      - name: Skydive
+        url: https://github.com/skydive-project/skydive
+      maintainers:
+      - email: oran.nahoum1@ibm.com
+        name: IBM
+      maturity: alpha
+      provider:
+        name: Skydive Community
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - docker.io/skydive/skydive-operator:0.0.50
+      version: 0.0.50
+    name: alpha
+  defaultChannel: alpha
+  packageName: skydive-operator
+  provider:
+    name: Skydive Community

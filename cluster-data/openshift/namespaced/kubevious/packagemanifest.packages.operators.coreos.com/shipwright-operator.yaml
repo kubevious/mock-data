@@ -1,0 +1,120 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Shipwright Contributors
+    provider-url: https://shipwright.io
+  name: shipwright-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: shipwright-operator.v0.11.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.shipwright.io/v1alpha1",
+              "kind": "ShipwrightBuild",
+              "metadata": {
+                "name": "shipwright-build"
+              },
+              "spec": {
+                "targetNamespace": "shipwright-build"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        certified: "false"
+        containerImage: ghcr.io/shipwright-io/operator/operator:0.11.0@sha256:7065e38ac30e09f0e63f6af94edb16430bc0e3654415070d916b498a1cf3c26d
+        description: Shipwright is a framework for building container images on Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.16.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/shipwright-io/operator
+        support: The Shipwright Contributors
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ShipwrightBuild represents the deployment of Shipwright's build
+            controller on a Kubernetes cluster.
+          displayName: Shipwright Build
+          kind: ShipwrightBuild
+          name: shipwrightbuilds.operator.shipwright.io
+          version: v1alpha1
+        required:
+        - kind: TektonConfig
+          name: tektonconfigs.operator.tekton.dev
+          version: v1alpha1
+      description: |
+        Shipwright is a framework for building container images on Kubernetes.
+
+        Read more: [https://shipwright.io](https://shipwright.io)
+
+        ## Usage
+
+        To deploy and manage [Shipwright Builds](https://github.com/shipwright-io/build) in your cluster,
+        first make sure this operator is installed and running on your cluster.
+
+        Next, create the following:
+
+        ```yaml
+        ---
+        apiVersion: operator.shipwright.io/v1alpha1
+        kind: ShipwrightBuild
+        metadata:
+          name: shipwright-operator
+        spec:
+          targetNamespace: shipwright-build
+        ```
+
+        The operator will deploy Shipwright Builds in the provided `targetNamespace`.
+        When `.spec.targetNamespace` is not set, the namespace will default to `shipwright-build`.
+        Refer to the [ShipwrightBuild documentation](https://github.com/shipwright-io/operator/blob/main/docs/shipwrightbuild.md) for more information about this custom resource.
+      displayName: Shipwright Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - build
+      - shipwright
+      - tekton
+      - cicd
+      links:
+      - name: Documentation
+        url: https://shipwright.io
+      - name: Shipwright Builds
+        url: https://github.com/shipwright-io/build
+      maintainers:
+      - email: shipwright-dev@lists.shipwright.io
+        name: The Shipwright Contributors
+      maturity: alpha
+      provider:
+        name: The Shipwright Contributors
+        url: https://shipwright.io
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - ghcr.io/shipwright-io/operator/operator:0.11.0@sha256:7065e38ac30e09f0e63f6af94edb16430bc0e3654415070d916b498a1cf3c26d
+      version: 0.11.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: shipwright-operator
+  provider:
+    name: The Shipwright Contributors
+    url: https://shipwright.io

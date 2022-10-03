@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: ttl-after-finished-controller-dockercfg-lpbvq
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:05Z"
+  name: ttl-after-finished-controller
+  namespace: kube-system
+  resourceVersion: "1245"
+  uid: 7a6ef76c-7d0e-4788-814e-2f338bc1bfb3
+secrets:
+- name: ttl-after-finished-controller-token-ntkmn
+- name: ttl-after-finished-controller-dockercfg-lpbvq

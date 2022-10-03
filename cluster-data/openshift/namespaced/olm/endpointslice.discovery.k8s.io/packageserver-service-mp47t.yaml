@@ -1,0 +1,52 @@
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 10.244.0.15
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: packageserver-5cdd79495d-td9kf
+    namespace: olm
+    uid: 31df5485-473a-4cd3-9eb1-5ea365dd66f8
+- addresses:
+  - 10.244.0.16
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: packageserver-5cdd79495d-r9222
+    namespace: olm
+    uid: 1e9a9773-217e-4bff-8f41-2568e7e49eed
+kind: EndpointSlice
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:25:31Z"
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  generateName: packageserver-service-
+  generation: 5
+  labels:
+    endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+    kubernetes.io/service-name: packageserver-service
+  name: packageserver-service-mp47t
+  namespace: olm
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: packageserver-service
+    uid: af790ec0-0df1-41d7-ae6c-870b9258a4d7
+  resourceVersion: "29269"
+  uid: 0b0adf39-9a9d-4de3-9add-774497ef3272
+ports:
+- name: "5443"
+  port: 5443
+  protocol: TCP

@@ -1,0 +1,17 @@
+apiVersion: coordination.k8s.io/v1
+kind: Lease
+metadata:
+  creationTimestamp: "2022-09-30T19:14:49Z"
+  name: kind-control-plane
+  namespace: kube-node-lease
+  ownerReferences:
+  - apiVersion: v1
+    kind: Node
+    name: kind-control-plane
+    uid: 376779aa-2546-4834-9367-fad4b512b9c6
+  resourceVersion: "47911"
+  uid: f7fa5732-d6ad-4736-ba82-27cde5538e6e
+spec:
+  holderIdentity: kind-control-plane
+  leaseDurationSeconds: 40
+  renewTime: "2022-10-03T20:41:51.306468Z"

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    control-plane.alpha.kubernetes.io/leader: '{"holderIdentity":"kubevious-operator-controller-manager-7b95db69fb-sqpfs_95e7f03e-b36c-4a02-936b-3f4fe39947ae","leaseDurationSeconds":15,"acquireTime":"2022-10-03T19:45:29Z","renewTime":"2022-10-03T20:41:02Z","leaderTransitions":2}'
+  creationTimestamp: "2022-10-03T18:35:22Z"
+  name: kubevious-operator
+  namespace: kubevious
+  resourceVersion: "47804"
+  uid: cd12c5ce-20eb-461a-af55-8fed658825da

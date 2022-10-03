@@ -1,0 +1,21 @@
+apiVersion: operators.coreos.com/v2
+kind: OperatorCondition
+metadata:
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  generation: 1
+  name: packageserver
+  namespace: olm
+  ownerReferences:
+  - apiVersion: operators.coreos.com/v1alpha1
+    blockOwnerDeletion: false
+    controller: true
+    kind: ClusterServiceVersion
+    name: packageserver
+    uid: 7c324ea9-1bf5-463d-8024-733382e205b6
+  resourceVersion: "29154"
+  uid: e692bf3b-8a40-47fe-892e-4dcbdec1ddbe
+spec:
+  deployments:
+  - packageserver
+  serviceAccounts:
+  - olm-operator-serviceaccount

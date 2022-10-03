@@ -1,0 +1,107 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Falarica Analytics Private Limited
+    provider-url: ""
+  name: steerd-presto-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: steerd-presto-operator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[  \n  {\n    \"apiVersion\": \"falarica.io/v1alpha1\",\n    \"kind\":
+          \"Presto\",\n    \"metadata\": {\n      \"name\": \"mycluster\",\n      \"namespace\":
+          \"presto\"\n    },\n    \"spec\": {\n      \"service\": {\n        \"type\":
+          \"NodePort\",\n        \"port\": 8100,\n        \"nodePort\": 30002\n      },\n
+          \     \"catalogs\": {\n        \"catalogSpec\": [\n          {\n            \"name\":
+          \"newtpch\",\n            \"content\": {\n              \"connector.name\":
+          \"tpch\"\n            }\n          },\n          {\n            \"name\":
+          \"newtpcds\",\n            \"content\": {\n              \"connector.name\":
+          \"tpcds\"\n            }\n          }\n        ]\n      },\n      \"volumes\":
+          [\n        {\n          \"name\": \"spillvol\",\n          \"emptyDir\":
+          {},\n          \"mountPath\": \"/prestospill\"\n        }\n      ],\n      \"coordinator\":
+          {\n        \"memoryLimit\": \"1Gi\",\n        \"cpuLimit\": \"0.5\",\n        \"httpsEnabled\":
+          false,\n        \"httpsKeyPairSecretName\": \"prestokeystore\",\n        \"httpsKeyPairSecretKey\":
+          \"prestoserverkeystore.jks\",\n        \"httpsKeyPairPassword\": \"hemant\"\n
+          \     },\n      \"worker\": {\n        \"memoryLimit\": \"1Gi\",\n        \"cpuLimit\":
+          \"0.5\",\n        \"count\": 1,\n        \"autoscaling\": {\n          \"enabled\":
+          false,\n          \"minReplicas\": 2,\n          \"maxReplicas\": 3,\n          \"targetCPUUtilizationPercentage\":
+          20\n        },\n        \"additionalProps\": {\n          \"shutdown.grace-period\":
+          \"10s\",\n          \"spill-enabled\": \"true\",\n          \"spiller-spill-path\":
+          \"/prestospill\"\n        }\n      },\n      \"imageDetails\": {\n        \"bootstrapCommandPath\":
+          \"/usr/lib/presto/bin/run-presto\",\n        \"name\": \"prestosql/presto:333\"\n
+          \     },\n      \"additionalPrestoPropFiles\": {\n        \"access-control.properties\":
+          \"access-control.name=read-only\"\n      }\n      \n    }\n  }\n]"
+        capabilities: Seamless Upgrades
+        categories: Database
+        certified: "false"
+        containerImage: falarica/steerd-presto-operator:0.1.0
+        createdAt: "2021-01-14"
+        description: SteerD Presto Operator is a Kubernetes Operator for Presto to
+          manage Presto clusters which are deployed as custom resources .
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/falarica/steerd-presto-operator
+        support: Falarica Analytics
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: SteerD Presto Operator is a Kubernetes Operator for Presto
+            to manage Presto clusters which are deployed as custom resources .
+          displayName: Presto Cluster
+          kind: Presto
+          name: prestos.falarica.io
+          version: v1alpha1
+      description: 'SteerD Presto Operator is a Kubernetes Operator for Presto to
+        manage Presto clusters which are deployed as custom resources. In short, the
+        task of configuring, creating, managing, automatically scaling up and scaling-in
+        of Presto cluster(s) in a Kubernetes environment has been made simple, easy
+        and quick.SteerD Presto Operator supports both PrestoDB and PrestoSQL forks. '
+      displayName: Steerd Presto Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - presto
+      - steerd-presto
+      - falarica
+      links:
+      - name: Intro to Steerd Presto Operator
+        url: https://github.com/falarica/steerd-presto-operator
+      - name: Creating Steerd presto cluster
+        url: https://github.com/falarica/steerd-presto-operator/blob/master/docs/prestoresource.md
+      - name: Managing Steerd presto cluster
+        url: https://github.com/falarica/steerd-presto-operator/blob/master/docs/status.md
+      maintainers:
+      - email: contact@falarica.io
+        name: Falarica Analytics Private Limited
+      maturity: stable
+      minKubeVersion: 1.11.0
+      provider:
+        name: Falarica Analytics Private Limited
+      relatedImages:
+      - falarica/steerd-presto-operator:0.1.0
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: steerd-presto-operator
+  provider:
+    name: Falarica Analytics Private Limited

@@ -1,0 +1,79 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  creationTimestamp: "2022-10-03T18:57:56Z"
+  generation: 1
+  labels:
+    operators.coreos.com/kubevious-operator.kubevious: ""
+  name: kubevious-operator
+  namespace: kubevious
+  resourceVersion: "19312"
+  uid: 80433ad0-7fb9-43f5-a3c8-7952cba87b9e
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: kubevious-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: kubevious-operator.v0.0.38
+status:
+  catalogHealth:
+  - catalogSourceRef:
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: CatalogSource
+      name: certified-operators
+      namespace: openshift-marketplace
+      resourceVersion: "15227"
+      uid: 02fd1dc1-5638-4f15-882d-d1a12da37e91
+    healthy: true
+    lastUpdated: "2022-10-03T18:57:57Z"
+  - catalogSourceRef:
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: CatalogSource
+      name: community-operators
+      namespace: openshift-marketplace
+      resourceVersion: "15257"
+      uid: 01ebdc40-802e-4f16-932f-581ef95a2151
+    healthy: true
+    lastUpdated: "2022-10-03T18:57:57Z"
+  - catalogSourceRef:
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: CatalogSource
+      name: redhat-marketplace
+      namespace: openshift-marketplace
+      resourceVersion: "15264"
+      uid: f4378a87-fdf9-4eed-b155-484284fa8ece
+    healthy: true
+    lastUpdated: "2022-10-03T18:57:57Z"
+  - catalogSourceRef:
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: CatalogSource
+      name: redhat-operators
+      namespace: openshift-marketplace
+      resourceVersion: "15143"
+      uid: eddd5987-8b17-447e-86a1-bed41e547f55
+    healthy: true
+    lastUpdated: "2022-10-03T18:57:57Z"
+  conditions:
+  - lastTransitionTime: "2022-10-03T18:57:57Z"
+    message: all available catalogsources are healthy
+    reason: AllCatalogSourcesHealthy
+    status: "False"
+    type: CatalogSourcesUnhealthy
+  currentCSV: kubevious-operator.v0.0.38
+  installPlanGeneration: 1
+  installPlanRef:
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-qwxkc
+    namespace: kubevious
+    resourceVersion: "18908"
+    uid: 1f4c5054-92ed-48eb-8bed-1f748e9870d2
+  installedCSV: kubevious-operator.v0.0.38
+  installplan:
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-qwxkc
+    uuid: 1f4c5054-92ed-48eb-8bed-1f748e9870d2
+  lastUpdated: "2022-10-03T18:58:25Z"
+  state: AtLatestKnown

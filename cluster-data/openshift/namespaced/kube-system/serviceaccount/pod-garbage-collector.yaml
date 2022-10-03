@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: pod-garbage-collector-dockercfg-h782q
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:03Z"
+  name: pod-garbage-collector
+  namespace: kube-system
+  resourceVersion: "1198"
+  uid: 4d0a7774-afe0-44b2-bf04-55dfd3b356f0
+secrets:
+- name: pod-garbage-collector-token-t78pg
+- name: pod-garbage-collector-dockercfg-h782q

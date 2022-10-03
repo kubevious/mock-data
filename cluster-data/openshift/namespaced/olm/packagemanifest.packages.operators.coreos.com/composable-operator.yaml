@@ -1,0 +1,137 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: composable-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: composable-operator.v0.1.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion": "ibmcloud.ibm.com/v1alpha1", "kind": "Composable",
+          "metadata": {"name": "comp"}, "spec": {"template": {"apiVersion": "ibmcloud.ibm.com/v1alpha1",
+          "kind": "Service"}}}]'
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: cloudoperators/composable-controller:0.1.3
+        createdAt: "2019-11-16T20:39:31Z"
+        description: Operator that can wrap any resource to make it dynamically configurable
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/IBM/composable
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Overlay operator that allows its underlying object to be dynamically
+            configurable
+          displayName: Composable
+          kind: Composable
+          name: composables.ibmcloud.ibm.com
+          version: v1alpha1
+      description: "Kubernetes object specifications often require constant values
+        for their fields. When deploying an entire application with many different
+        resources, this limitation often results in the need for staged deployments,
+        because some resources have to be deployed first in order to determine what
+        data to provide for the specifications of dependent resources. This undermines
+        the declarative nature of Kubernetes object specification and requires workflows,
+        manual step-by-step instructions and/or brittle automated scripts for the
+        deployment of applications as a whole.\nThe Composable operator alleviates
+        this problem by wrapping any resource (native Kubernetes or CRD instance)
+        and allowing it to be specified with references to fields of other objects.
+        These references are resolved dynamically by the Compsable controller when
+        the data becomes available. This allows the yaml for the entire application
+        to be deployed at once regardless of dependencies, and leverages Kubernetes
+        native mechanisms to stage the deployment of different resources. \nFor example,
+        consider a Knative KafkaSource resource:\n\n    apiVersion: sources.eventing.knative.dev/v1alpha1\n
+        \   kind: KafkaSource\n    metadata:\n      name: kafka-source\n    spec:\n
+        \     consumerGroup: knative-group\n      bootstrapServers: my-cluster-kafka-bootstrap.kafka:9092,my-cluster0-kafka-bootstrap.kafka:9093\n
+        \     topics: knative-demo-topic\n    sink:\n      apiVersion: serving.knative.dev/v1\n
+        \     kind: Service\n      name: event-display\n      \nThe KafkaSource resource
+        requires a field bootstrapServers whose value can only be known if a Kafka
+        service has already been deployed successfully. So one must first deploy Kafka,
+        obtain this data, then create the above yaml and deploy it.\n \nWith the Composable
+        operator, this yaml can be deployed at the same time as the rest of the application,
+        as follows:\n\n\n    apiVersion: ibmcloud.ibm.com/v1alpha1\n    kind: Composable\n
+        \   metadata:\n      name: kafka-source\n    spec:\n      template:\n        apiVersion:
+        sources.eventing.knative.dev/v1alpha1\n        kind: KafkaSource\n        metadata:\n
+        \         name: kafka-source\n        spec:\n          consumerGroup: knative-group\n
+        \         bootstrapServers:\n            getValueFrom:\n              kind:
+        Secret\n              name: my-kafka-binding\n              path: '{.data.kafka_brokers_sasl}'\n
+        \             format-transformers:\n              - \"Base64ToString\" \n
+        \             - \"JsonToObject\"\n              - \"ArrayToCSString\"\n          topics:
+        knative-demo-topic\n          sink:\n            apiVersion: serving.knative.dev/v1\n
+        \           kind: Service\n            name: event-display\n            \nWith
+        Composable as the wrapper object, the field `bootstrapServers` can be specified
+        with a reference `getValueFrom` to another object, in this case a secret named
+        `my-kafka-binding` that contains binding information for the Kafka service
+        (created by a different operator). When the Composable object is deployed,
+        the Composable controller tries to resolve this value and keeps trying if
+        the secret has not been created yet. Once the secret is created and the data
+        becomes available, the Composable operator then deploys the underlying object.\n
+        \nOften there is data formatting mismatch between a source and a referencing
+        field, so Composable also provides a series of handy data transformers that
+        can be piped together in order to obtain the correct format. In this case,
+        the base64 secret data is first decoded  to obtain a Json string, which is
+        then parsed producing an array of urls. Finally this array is transformed
+        into a comma-separated string.\n \nThe Composable operator allows all yamls
+        of an application to be deployed at once, in one step, by supporting cross-resource
+        references that are resolved dynamically, and leverages native Kubernetes
+        mechanisms to stage the deployment of a collection of resources.\n \nThe Composable
+        Operator is currently in preview. It will get updated as we release new versions
+        of the [upstream repository](https://github.com/IBM/composable).\n## Requirements\nThe
+        operator can be installed on any OLM-enabled Kubernetes cluster with version
+        >= 1.11. \n## Using the Composable Operator\nFor additional configuration
+        options, samples and more information on using the operator, consult  the
+        [Composable Operator documentation](https://github.com/IBM/composable).\n"
+      displayName: Composable
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - Cloud
+      links:
+      - name: Composable Operator
+        url: https://github.com/IBM/composable
+      maintainers:
+      - email: dettori@us.ibm.com
+        name: Paolo Dettori
+      - email: luan@us.ibm.com
+        name: Laura Zaihua Luan
+      - email: roytman@il.ibm.com
+        name: Alexey Roytman
+      - email: tardieu@us.ibm.com
+        name: Olivier Tardieu
+      - email: mvaziri@us.ibm.com
+        name: Mandana Vaziri
+      maturity: alpha
+      provider:
+        name: IBM
+      relatedImages:
+      - cloudoperators/composable-controller:0.1.3
+      version: 0.1.3
+    name: alpha
+  defaultChannel: alpha
+  packageName: composable-operator
+  provider:
+    name: IBM

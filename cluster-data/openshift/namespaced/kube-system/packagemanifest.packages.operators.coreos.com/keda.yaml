@@ -1,0 +1,226 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: KEDA Community
+    provider-url: ""
+  name: keda
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: keda.v2.7.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "keda.sh/v1alpha1",
+              "kind": "KedaController",
+              "metadata": {
+                "name": "keda",
+                "namespace": "keda"
+              },
+              "spec": {
+                "watchNamespace": "",
+                "operator": {
+                  "logLevel": "info",
+                  "logEncoder": "console"
+                },
+                "metricsServer": {
+                  "logLevel": "0"
+                },
+                "serviceAccount": {}
+              }
+            },
+            {
+              "apiVersion": "keda.sh/v1alpha1",
+              "kind": "ScaledJob",
+              "metadata": {
+                "name": "scaledjob-sample"
+              },
+              "spec": {
+                "failedJobsHistoryLimit": 5,
+                "jobTargetRef": {
+                  "activeDeadlineSeconds": 600,
+                  "backoffLimit": 6,
+                  "completions": 1,
+                  "parallelism": 1,
+                  "template": null
+                },
+                "maxReplicaCount": 100,
+                "pollingInterval": 30,
+                "successfulJobsHistoryLimit": 5,
+                "triggers": [
+                  {
+                    "metadata": {
+                      "property": "examle-property"
+                    },
+                    "type": "example-trigger"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "keda.sh/v1alpha1",
+              "kind": "ScaledObject",
+              "metadata": {
+                "name": "example-scaledobject"
+              },
+              "spec": {
+                "cooldownPeriod": 300,
+                "maxReplicaCount": 100,
+                "minReplicaCount": 0,
+                "pollingInterval": 30,
+                "scaleTargetRef": {
+                  "name": "example-deployment"
+                },
+                "triggers": [
+                  {
+                    "metadata": {
+                      "property": "examle-property"
+                    },
+                    "type": "example-trigger"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "keda.sh/v1alpha1",
+              "kind": "TriggerAuthentication",
+              "metadata": {
+                "name": "example-triggerauthentication"
+              },
+              "spec": {
+                "secretTargetRef": [
+                  {
+                    "key": "example-role-key",
+                    "name": "example-secret-name",
+                    "parameter": "exmaple-secret-parameter"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "keda.sh/v1alpha1",
+              "kind": "ClusterTriggerAuthentication",
+              "metadata": {
+                "name": "example-clustertriggerauthentication"
+              },
+              "spec": {
+                "secretTargetRef": [
+                  {
+                    "key": "example-role-key",
+                    "name": "example-secret-name",
+                    "parameter": "exmaple-secret-parameter"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: ghcr.io/kedacore/keda-olm-operator:2.7.1
+        createdAt: "2022-05-11T00:00:00.000Z"
+        description: Operator that provides KEDA, a Kubernetes-based event driver
+          autoscaler
+        operatorframework.io/suggested-namespace: keda
+        operators.operatorframework.io/builder: operator-sdk-v1.1.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/kedacore/keda-olm-operator
+        support: KEDA Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: |
+            Represents an installation of a particular version of KEDA Controller.
+          displayName: KedaController
+          kind: KedaController
+          name: kedacontrollers.keda.sh
+          version: v1alpha1
+        - description: Defines how KEDA should scale your jobs and what the triggers
+          displayName: ScaledJob
+          kind: ScaledJob
+          name: scaledjobs.keda.sh
+          version: v1alpha1
+        - description: Defines how KEDA should scale your application and what the
+            triggers are
+          displayName: ScaledObject
+          kind: ScaledObject
+          name: scaledobjects.keda.sh
+          version: v1alpha1
+        - description: Describes authentication parameters
+          displayName: TriggerAuthentication
+          kind: TriggerAuthentication
+          name: triggerauthentications.keda.sh
+          version: v1alpha1
+        - description: Describes cluster wide authentication parameters
+          displayName: ClusterTriggerAuthentication
+          kind: ClusterTriggerAuthentication
+          name: clustertriggerauthentications.keda.sh
+          version: v1alpha1
+      description: "## About the managed application\nKEDA is a Kubernetes-based event
+        driven autoscaler.  KEDA can monitor event sources like Kafka, RabbitMQ, or
+        cloud event sources and feed the metrics from those sources into the Kubernetes
+        horizontal pod autoscaler.  With KEDA, you can have event driven and serverless
+        scale of deployments within any Kubernetes cluster.\n## About this Operator\nThe
+        KEDA Operator deploys and manages installation of KEDA Controller in the cluster.
+        Install this operator and follow installation instructions on how to install
+        KEDA in you cluster.\n\n## Prerequisites for enabling this Operator\nPlease
+        note that you can not run both KEDA 1.x and 2.x on the same Kubernetes cluster.
+        You need to uninstall KEDA 1.x first, in order to install and use KEDA 2.x.\n\nDon't
+        forget to uninstall KEDA v1 CRDs as well, to ensure that, please run:\n\n```
+        oc delete crd scaledobjects.keda.k8s.io ```\n\n``` oc delete crd triggerauthentications.keda.k8s.io
+        \ ```\n## How to install KEDA in the cluster\nThe installation of KEDA is
+        triggered by the creation of `KedaController` resource, please refer to [KedaController
+        Example](https://github.com/kedacore/keda-olm-operator#kedacontroller-spec)
+        for more deatils on available options.\n\nOnly resource named `keda` in namespace
+        `keda` will trigger the installation, reconfiguration or removal of the KEDA
+        Controller resource.\n\nThere could be only one KEDA Controller in the cluster.
+        \n"
+      displayName: KEDA
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - keda
+      - scaling
+      - event
+      links:
+      - name: Homepage
+        url: https://keda.sh
+      - name: Source Code
+        url: https://github.com/kedacore/keda
+      - name: Slack Channel
+        url: https://kubernetes.slack.com/messages/CKZJ36A5D
+      maintainers:
+      - email: cncf-keda-maintainers@lists.cncf.io
+        name: KEDA Community
+      maturity: alpha
+      minKubeVersion: 1.17.0
+      provider:
+        name: KEDA Community
+      relatedImages:
+      - ghcr.io/kedacore/keda-olm-operator:2.7.1
+      version: 2.7.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: keda
+  provider:
+    name: KEDA Community

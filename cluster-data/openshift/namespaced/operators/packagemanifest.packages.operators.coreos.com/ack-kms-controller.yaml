@@ -1,0 +1,126 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:50:20Z"
+  labels:
+    catalog: community-operators
+    catalog-namespace: openshift-marketplace
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-kms-controller
+  namespace: operators
+spec: {}
+status:
+  catalogSource: community-operators
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: openshift-marketplace
+  catalogSourcePublisher: Red Hat
+  channels:
+  - currentCSV: ack-kms-controller.v0.1.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "kms.services.k8s.aws/v1alpha1",
+              "kind": "Alias",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "kms.services.k8s.aws/v1alpha1",
+              "kind": "Grant",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "kms.services.k8s.aws/v1alpha1",
+              "kind": "Key",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/kms-controller:v0.1.2
+        createdAt: "2022-09-12 22:18:43"
+        description: AWS KMS controller is a service controller for managing KMS resources
+          in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Alias represents the state of an AWS kms Alias resource.
+          displayName: Alias
+          kind: Alias
+          name: aliases.kms.services.k8s.aws
+          version: v1alpha1
+        - description: Grant represents the state of an AWS kms Grant resource.
+          displayName: Grant
+          kind: Grant
+          name: grants.kms.services.k8s.aws
+          version: v1alpha1
+        - description: Key represents the state of an AWS kms Key resource.
+          displayName: Key
+          kind: Key
+          name: keys.kms.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Key Management Service (KMS) resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon KMS**
+
+        AWS Key Management Service (AWS KMS) is a managed service that makes it easy for you to create and control the cryptographic keys that are used to protect your data. AWS KMS uses hardware security modules (HSM) to protect and validate your AWS KMS keys under the [FIPS 140-2 Cryptographic Module Validation Program](https://csrc.nist.gov/projects/cryptographic-module-validation-program/Certificate/3139), except in the China (Beijing) and China (Ningxia) Regions.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon KMS
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - kms
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon KMS Developer Resources
+        url: https://aws.amazon.com/kms/resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: kms maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/kms-controller:v0.1.2
+      version: 0.1.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-kms-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

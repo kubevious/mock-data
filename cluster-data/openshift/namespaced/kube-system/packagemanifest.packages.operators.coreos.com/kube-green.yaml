@@ -1,0 +1,129 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: kube-green Community
+    provider-url: https://kube-green.dev
+  name: kube-green
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kube-green.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "kube-green.com/v1alpha1",
+              "kind": "SleepInfo",
+              "metadata": {
+                "name": "sleepinfo-sample"
+              },
+              "spec": {
+                "excludeRef": [
+                  {
+                    "apiVersion": "apps/v1",
+                    "kind": "Deployment",
+                    "name": "api-gateway"
+                  }
+                ],
+                "sleepAt": "20:00",
+                "suspendCronJobs": true,
+                "timeZone": "Europe/Rome",
+                "wakeUpAt": "08:00",
+                "weekdays": "1-5"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Developer Tools
+        containerImage: docker.io/kubegreen/kube-green:0.4.0
+        createdAt: "2021-02-21T00:00:00Z"
+        description: Suspend your pods when no-one's using them to save energy and
+          restore when necessary
+        operators.operatorframework.io/builder: operator-sdk-v1.22.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/kube-green/kube-green
+        support: kube-green Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: SleepInfo is the Schema for the sleepinfos API
+          displayName: Sleep Info
+          kind: SleepInfo
+          name: sleepinfos.kube-green.com
+          version: v1alpha1
+      description: |
+        ## About this Operator
+
+        [kube-green](https://kube-green.dev) shuts down (some of) your resources when you don't need them, reducing the consumption of resources of the cluster.
+
+        Install this operator and apply the SleepInfo CRD to stop your dev namespaces from running during weekends, nights or when it is not necessary.
+        See the [docs](https://kube-green.dev/docs/getting-started/) for more information.
+        This operator is responsible to suspend and restart pods at specific times, defined by the SleepInfo CRD.
+
+        An example of SleepInfo:
+
+        ```yaml
+        apiVersion: kube-green.com/v1alpha1
+        kind: SleepInfo
+        metadata:
+          name: working-hours
+        spec:
+          weekdays: "1-5"
+          sleepAt: "20:00"
+          wakeUpAt: "08:00"
+          timeZone: "Europe/Rome"
+        ```
+
+        This configuration stop pods everyday from monday to friday at 20:00 and restore them at 8:00.
+        In this way, your cluster nodes could downscale, producing less CO2 and saving money.
+      displayName: kube-green
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - green
+      - green software
+      - resources
+      - downscale
+      - autoscale
+      links:
+      - name: Homepage
+        url: https://kube-green.dev
+      - name: Source Code
+        url: https://github.com/kube-green/kube-green
+      maintainers:
+      - email: bianchidavide12+kubegreen@gmail.com
+        name: Davide
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: kube-green Community
+        url: https://kube-green.dev
+      relatedImages:
+      - docker.io/kubegreen/kube-green:0.4.0
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
+      version: 0.4.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: kube-green
+  provider:
+    name: kube-green Community
+    url: https://kube-green.dev

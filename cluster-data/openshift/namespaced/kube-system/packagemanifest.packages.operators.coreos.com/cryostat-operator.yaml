@@ -1,0 +1,175 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Cryostat Community
+    provider-url: ""
+  name: cryostat-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cryostat-operator.v2.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.cryostat.io/v1beta1",
+              "kind": "Cryostat",
+              "metadata": {
+                "name": "cryostat-sample"
+              },
+              "spec": {
+                "enableCertManager": true,
+                "eventTemplates": [],
+                "minimal": false,
+                "reportOptions": {
+                  "replicas": 0
+                },
+                "storageOptions": {
+                  "pvc": {
+                    "annotations": {},
+                    "labels": {},
+                    "spec": {}
+                  }
+                },
+                "trustedCertSecrets": []
+              }
+            },
+            {
+              "apiVersion": "operator.cryostat.io/v1beta1",
+              "kind": "FlightRecorder",
+              "metadata": {
+                "name": "example-flightrecorder"
+              },
+              "spec": {
+                "recordingSelector": {
+                  "matchLabels": {
+                    "operator.cryostat.io/flightrecorder": "example-flightrecorder"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "operator.cryostat.io/v1beta1",
+              "kind": "Recording",
+              "metadata": {
+                "name": "example-recording"
+              },
+              "spec": {
+                "archive": true,
+                "duration": "30s",
+                "eventOptions": [
+                  "template=ALL"
+                ],
+                "flightRecorder": {
+                  "name": "example-flightrecorder"
+                },
+                "name": "example-recording"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring, Developer Tools
+        containerImage: quay.io/cryostat/cryostat-operator:2.1.1
+        createdAt: "2022-06-14 00:00:00"
+        description: JVM monitoring and profiling tool
+        operatorframework.io/initialization-resource: |-
+          {
+            "apiVersion": "operator.cryostat.io/v1beta1",
+            "kind": "Cryostat",
+            "metadata": {
+              "name": "cryostat-sample"
+            },
+            "spec": {
+              "enableCertManager": true,
+              "minimal": false,
+              "reportOptions": {
+                "replicas": 0
+              }
+            }
+          }
+        operators.operatorframework.io/builder: operator-sdk-v1.4.0+git
+        operators.operatorframework.io/internal-objects: '["flightrecorders.operator.cryostat.io","recordings.operator.cryostat.io"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: github.com/cryostatio/cryostat-operator
+        support: Cryostat Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Cryostat contains configuration options for controlling the
+            Deployment of the Cryostat application and its related components. A Cryostat
+            instance must be created to instruct the operator to deploy the Cryostat
+            application.
+          displayName: Cryostat
+          kind: Cryostat
+          name: cryostats.operator.cryostat.io
+          version: v1beta1
+        - description: FlightRecorder represents a target Pod that is capable of creating
+            JDK Flight Recordings using Cryostat. The Cryostat operator creates FlightRecorder
+            objects when it finds compatible Pods.
+          displayName: Flight Recorder
+          kind: FlightRecorder
+          name: flightrecorders.operator.cryostat.io
+          version: v1beta1
+        - description: Recording represents a JDK Flight Recording. Create a Recording
+            object to instruct Cryostat to start a new recording for a Pod. An alternative
+            to managing recordings with the Cryostat web application.
+          displayName: Recording
+          kind: Recording
+          name: recordings.operator.cryostat.io
+          version: v1beta1
+      description: |
+        Cryostat provides a cloud-based solution for interacting with the JDK Flight Recorder already present in OpenJDK 11+ JVMs. With Cryostat, users can remotely start, stop, retrieve, and even analyze JFR event data, providing the capability to easily take advantage of Flight Recorder's extremely low runtime cost and overhead and the flexibility to monitor applications and analyze recording data without transferring data outside of the cluster the application runs within.
+        ##Prerequisites
+        Cryostat requires [cert-manager](https://cert-manager.io/) to run. If not already installed in your cluster, please [install](https://cert-manager.io/docs/installation/) it using your preferred method.
+        When running on Kubernetes, the operator also requires [Ingress configurations](https://github.com/cryostatio/cryostat-operator/blob/v2.0.0/docs/config.md#network-options) for each of its services to make them available outside of the cluster. The user is responsible for providing the hostnames for each Ingress.
+      displayName: Cryostat Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - flightrecorder
+      - java
+      - jdk
+      - jfr
+      - jmc
+      - missioncontrol
+      - monitoring
+      - profiling
+      - diagnostic
+      links:
+      - name: Upstream Project
+        url: https://github.com/cryostatio/cryostat
+      - name: Website
+        url: https://cryostat.io/
+      maintainers:
+      - email: cryostat-development@googlegroups.com
+        name: The Cryostat Authors
+      maturity: stable
+      provider:
+        name: The Cryostat Community
+      relatedImages:
+      - quay.io/cryostat/cryostat-operator:2.1.1
+      version: 2.1.1
+    name: stable
+  defaultChannel: stable
+  packageName: cryostat-operator
+  provider:
+    name: The Cryostat Community

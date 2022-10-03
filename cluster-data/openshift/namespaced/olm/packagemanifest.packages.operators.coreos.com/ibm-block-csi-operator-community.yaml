@@ -1,0 +1,500 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: ibm-block-csi-operator-community
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ibm-block-csi-operator.v1.5.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "IBMBlockCSI",
+              "metadata": {
+                "name": "ibm-block-csi"
+              },
+              "spec": {
+                "controller": {
+                  "repository": "ibmcom/ibm-block-csi-driver-controller",
+                  "tag": "1.5.1",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "node": {
+                  "repository": "ibmcom/ibm-block-csi-driver-node",
+                  "tag": "1.5.1",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "sidecars": [
+                  {
+                    "name": "csi-node-driver-registrar",
+                    "repository": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
+                    "tag": "v2.0.1",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-provisioner",
+                    "repository": "k8s.gcr.io/sig-storage/csi-provisioner",
+                    "tag": "v2.0.4",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-attacher",
+                    "repository": "k8s.gcr.io/sig-storage/csi-attacher",
+                    "tag": "v3.0.2",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-snapshotter",
+                    "repository": "k8s.gcr.io/sig-storage/csi-snapshotter",
+                    "tag": "v3.0.2",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-resizer",
+                    "repository": "k8s.gcr.io/sig-storage/csi-resizer",
+                    "tag": "v1.0.1",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "livenessprobe",
+                    "repository": "k8s.gcr.io/sig-storage/livenessprobe",
+                    "tag": "v2.1.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage,Cloud Provider
+        certified: "true"
+        containerImage: ibmcom/ibm-block-csi-operator:1.5.1
+        createdAt: "2021-06-24T22:00:00Z"
+        description: Run IBM block storage CSI driver on OpenShift.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/IBM/ibm-block-csi-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an block storage CSI driver
+          displayName: IBM block storage CSI driver
+          kind: IBMBlockCSI
+          name: ibmblockcsis.csi.ibm.com
+          version: v1
+      description: "The Container Storage Interface (CSI) Driver for IBM block storage
+        systems enables container orchestrators such as Kubernetes to manage the life
+        cycle of persistent storage.\n\nThis is the official operator to deploy and
+        manage IBM block storage CSI driver.\n\nSupported container platforms (and
+        architectures):\n  - OpenShift v4.6 (x86, IBM Z, and IBM Power Systems)\n
+        \ - OpenShift v4.7 (x86, IBM Z, and IBM Power Systems)\n  - Kubernetes v1.19
+        (x86)\n  - Kubernetes v1.20 (x86)\n\nSupported IBM storage systems:\n  - IBM
+        Spectrum Virtualize Family including IBM SAN Volume Controller (SVC) and IBM
+        FlashSystem® family members built with IBM Spectrum® Virtualize (FlashSystem
+        5010, 5030, 5100, 5200, 7200, 9100, 9200, 9200R)\n  - IBM FlashSystem A9000
+        and A9000R\n  - IBM DS8000 Family\n\nSupported operating systems (and architectures):\n
+        \ - RHEL 7.x (x86)\n  - RHCOS (x86, IBM Z, and IBM Power Systems)\n\nFull
+        documentation can be found on the [IBM Knowledge Center](https://www.ibm.com/support/knowledgecenter/SSRQ8T).\n\n##
+        Prerequisites\n> **Note**: The operator can be installed directly from the
+        RedHat OpenShift web console, through the OperatorHub. The prerequisites below
+        also mentioned and can be viewed via OpenShift.\n\n### Preparing worker nodes\nPerform
+        these steps for each worker node in Kubernetes cluster:\n\n#### 1. Perform
+        this step to ensure iSCSI connectivity, when using RHEL OS.\nIf using RHCOS
+        or if the packages are already installed, continue to the next step.\n\nRHEL
+        7.x:\n```bash\nyum -y install iscsi-initiator-utils   # Only if iSCSI connectivity
+        is required\nyum -y install xfsprogs                # Only if XFS file system
+        is required\n```\n\n#### 2. Configure Linux® multipath devices on the host.\n\n**Important:**
+        Be sure to configure each worker with storage connectivity according to your
+        storage system instructions.\nFor more information, find your storage system
+        documentation on [IBM Knowledge Center](https://www.ibm.com/support/knowledgecenter).\n\n#####
+        2.1 Additional configuration steps for OpenShift® Container Platform users
+        (RHEL and RHCOS). Other users can continue to step 3.\n\nDownload and save
+        the following yaml file:\n```bash\ncurl https://raw.githubusercontent.com/IBM/ibm-block-csi-operator/master/deploy/99-ibm-attach.yaml
+        > 99-ibm-attach.yaml\n```\nThis file can be used for both Fibre Channel and
+        iSCSI configurations. To support iSCSI, uncomment the last two lines in the
+        file.\n\n**Important:** The  `99-ibm-attach.yaml` configuration file overrides
+        any files that already exist on your system. Only use this file if the files
+        mentioned in the yaml below are not already created. If one or more have been
+        created, edit this yaml file, as necessary.\n\nApply the yaml file.\n```bash\noc
+        apply -f 99-ibm-attach.yaml\n```\n\n#### 3. If needed, enable support for
+        volume snapshots (FlashCopy® function) on your Kubernetes cluster.\nFor more
+        information and instructions, see the Kubernetes blog post, [Kubernetes 1.17
+        Feature: Kubernetes Volume Snapshot Moves to Beta](https://kubernetes.io/blog/2019/12/09/kubernetes-1-17-feature-cis-volume-snapshot-beta/).\n\n####
+        4. Configure storage system connectivity\n##### 4.1. Define the hostname of
+        each Kubernetes node on the relevant storage systems with the valid WWPN(for
+        Fibre Channel) or IQN(for iSCSI) of the node.\n\n##### 4.2. For Fibre Channel,
+        configure the relevant zoning from the storage to the host.\n\n\n## Installation\n\n###
+        Install the operator\n\n\n#### 1. Download the manifest from GitHub.\n\n```bash\ncurl
+        https://raw.githubusercontent.com/IBM/ibm-block-csi-operator/master/deploy/installer/generated/ibm-block-csi-operator.yaml
+        > ibm-block-csi-operator.yaml\n```\n\n#### 2. (Optional): If required, update
+        the image fields in the ibm-block-csi-operator.yaml.\n\n\n#### 3. Create a
+        namespace.\n\n```bash\n$ kubectl create ns <namespace>\n```\n\n#### 4. Install
+        the operator, while using a user-defined namespace.\n\n```bash\n$ kubectl
+        -n <namespace> apply -f ibm-block-csi-operator.yaml\n```\n\n### Verify the
+        operator is running:\n\n```bash\n$ kubectl get pod -l app.kubernetes.io/name=ibm-block-csi-operator
+        -n <namespace>\nNAME                                    READY   STATUS    RESTARTS
+        \  AGE\nibm-block-csi-operator-5bb7996b86-xntss 1/1     Running   0          10m\n```\n\n###
+        Create an IBMBlockCSI custom resource\n\n\n#### 1. Download the manifest from
+        GitHub.\n```bash\ncurl https://raw.githubusercontent.com/IBM/ibm-block-csi-operator/master/deploy/crds/csi.ibm.com_v1_ibmblockcsi_cr.yaml
+        > csi.ibm.com_v1_ibmblockcsi_cr.yaml\n```\n\n#### 2. (Optional): If required,
+        update the image fields in the csi.ibm.com_v1_ibmblockcsi_cr.yaml.\n\n####
+        3. Install the csi.ibm.com_v1_ibmblockcsi_cr.yaml.\n\n```bash\n$ kubectl -n
+        <namespace> apply -f csi.ibm.com_v1_ibmblockcsi_cr.yaml\n```\n\n### Verify
+        the driver is running:\n\n```bash\n$ kubectl get all -n <namespace>  -l csi\nNAME
+        \                            READY   STATUS    RESTARTS   AGE\npod/ibm-block-csi-controller-0
+        \  6/6     Running   0          9m36s\npod/ibm-block-csi-node-jvmvh     3/3
+        \    Running   0          9m36s\npod/ibm-block-csi-node-tsppw     3/3     Running
+        \  0          9m36s\n\nNAME                                DESIRED   CURRENT
+        \  READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE\ndaemonset.apps/ibm-block-csi-node
+        \  2         2         2       2            2           <none>          9m36s\n\nNAME
+        \                                       READY   AGE\nstatefulset.apps/ibm-block-csi-controller
+        \  1/1     9m36s\n```\n\n\n## Configuring k8s secret and storage class\nIn
+        order to use the driver, create the relevant storage classes and secrets,
+        as needed.\n\nThis section describes how to:\n 1. Create a storage system
+        secret - to define the storage system credentials (user and password) and
+        its address.\n 2. Configure the storage class - to define the storage system
+        pool name, secret reference, `SpaceEfficiency`, and `fstype`.\n\n#### 1. Create
+        an array secret\nCreate a secret file as follows `array-secret.yaml` and update
+        the relevant credentials:\n\n```\nkind: Secret\napiVersion: v1\nmetadata:\n
+        \ name: <NAME>\n  namespace: <NAMESPACE>\ntype: Opaque\nstringData:\n  management_address:
+        <ADDRESS-1, ADDRESS-2> # Array management addresses\n  username: <USERNAME>
+        \                  # Array username\ndata:\n  password: <PASSWORD base64>
+        \           # Array password\n```\n\nApply the secret:\n\n```\n$ kubectl apply
+        -f array-secret.yaml\n```\n\nTo create the secret using a command line terminal,
+        use the following command:\n```bash\nkubectl create secret generic <NAME>
+        --from-literal=username=<USER> --fromliteral=password=<PASSWORD> --from-literal=management_address=<ARRAY_MGMT>
+        -n <namespace>\n```\n\n#### 2. Create storage classes\n\nCreate a storage
+        class `demo-storageclass-gold-pvc.yaml` file as follows, with the relevant
+        capabilities, pool and, array secret.\n\nUse the `SpaceEfficiency` parameters
+        for each storage system. These values are not case sensitive:\n* IBM FlashSystem
+        A9000 and A9000R\n    * Always includes deduplication and compression.\n    No
+        need to specify during configuration.\n* IBM Spectrum Virtualize Family\n
+        \   * `thick` (default value, if not specified)\n    * `thin`\n    * `compressed`\n
+        \   * `deduplicated`\n* IBM DS8000 Family\n    * `none` (default value, if
+        not specified)\n    * `thin`\n\n```\nkind: StorageClass\napiVersion: storage.k8s.io/v1\nmetadata:\n
+        \ name: gold\nprovisioner: block.csi.ibm.com\nparameters:\n  SpaceEfficiency:
+        <VALUE>          # Optional: Values applicable for Spectrum Virtualize Family
+        are: thin, compressed, or deduplicated\n  pool: <POOL_NAME>\t                #
+        DS8000 Family paramater is pool ID\n\n  csi.storage.k8s.io/provisioner-secret-name:
+        <ARRAY_SECRET>\n  csi.storage.k8s.io/provisioner-secret-namespace: <ARRAY_SECRET_NAMESPACE>\n
+        \ csi.storage.k8s.io/controller-publish-secret-name: <ARRAY_SECRET>\n  csi.storage.k8s.io/controller-publish-secret-namespace:
+        <ARRAY_SECRET_NAMESPACE>\n  csi.storage.k8s.io/controller-expand-secret-name:
+        <ARRAY_SECRET>\n  csi.storage.k8s.io/controller-expand-secret-namespace: <ARRAY_SECRET_NAMESPACE>\n\n
+        \ csi.storage.k8s.io/fstype: xfs    # Optional: Values ext4/xfs. The default
+        is ext4.\n  volume_name_prefix: <prefix_name> # Optional: DS8000 Family maximum
+        prefix length is 5 characters. Maximum prefix length for other systems is
+        20 characters.\nallowVolumeExpansion: true\n```\n\n#### 3. Apply the storage
+        class:\n\n```bash\n$ kubectl apply -f demo-storageclass-gold-pvc.yaml\nstorageclass.storage.k8s.io/gold
+        created\n```\n"
+      displayName: Operator for IBM block storage CSI driver
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - BlockStorage
+      - CSI
+      links:
+      - name: Source Code
+        url: https://github.com/IBM/ibm-block-csi-operator
+      maintainers:
+      - email: csi.block1@il.ibm.com
+        name: IBM Block CSI Team
+      maturity: stable
+      minKubeVersion: 1.18.0
+      provider:
+        name: IBM
+      relatedImages:
+      - ibmcom/ibm-block-csi-operator:1.5.1
+      version: 1.5.1
+    name: maintenance-1.5
+  - currentCSV: ibm-block-csi-operator.v1.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "IBMBlockCSI",
+              "metadata": {
+                "name": "ibm-block-csi"
+              },
+              "spec": {
+                "controller": {
+                  "repository": "ibmcom/ibm-block-csi-driver-controller",
+                  "tag": "1.10.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "node": {
+                  "repository": "ibmcom/ibm-block-csi-driver-node",
+                  "tag": "1.10.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "sidecars": [
+                  {
+                    "name": "csi-node-driver-registrar",
+                    "repository": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
+                    "tag": "v2.5.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-provisioner",
+                    "repository": "k8s.gcr.io/sig-storage/csi-provisioner",
+                    "tag": "v3.1.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-attacher",
+                    "repository": "k8s.gcr.io/sig-storage/csi-attacher",
+                    "tag": "v3.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-snapshotter",
+                    "repository": "k8s.gcr.io/sig-storage/csi-snapshotter",
+                    "tag": "v5.0.1",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-resizer",
+                    "repository": "k8s.gcr.io/sig-storage/csi-resizer",
+                    "tag": "v1.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-addons-replicator",
+                    "repository": "quay.io/csiaddons/volumereplication-operator",
+                    "tag": "v0.2.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "livenessprobe",
+                    "repository": "k8s.gcr.io/sig-storage/livenessprobe",
+                    "tag": "v2.6.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "HostDefinition",
+              "metadata": {
+                "name": "host-definition"
+              },
+              "spec": {
+                "hostDefinition": {
+                  "nodeName": "node-name"
+                }
+              }
+            },
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "HostDefiner",
+              "metadata": {
+                "name": "host-definer"
+              },
+              "spec": {
+                "hostDefiner": {
+                  "allowDelete": true,
+                  "dynamicNodeLabeling": false,
+                  "repository": "ibmcom/ibm-block-csi-host-definer",
+                  "tag": "1.10.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage,Cloud Provider
+        certified: "true"
+        containerImage: docker.io/ibmcom/ibm-block-csi-operator:1.10.0
+        createdAt: "2022-03-31T11:00:00Z"
+        description: Run IBM block storage CSI driver.
+        repository: https://github.com/IBM/ibm-block-csi-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a block storage CSI driver
+          displayName: IBM block storage CSI driver
+          kind: IBMBlockCSI
+          name: ibmblockcsis.csi.ibm.com
+          version: v1
+        - description: Represents a Host Definition for IBM block storage
+          displayName: IBM block storage Host Definition
+          kind: HostDefinition
+          name: hostdefinitions.csi.ibm.com
+          version: v1
+        - description: Represents Host Definer for block storage CSI driver
+          displayName: IBM block storage CSI Host Definer driver
+          kind: HostDefiner
+          name: hostdefiners.csi.ibm.com
+          version: v1
+      description: |
+        The Container Storage Interface (CSI) Driver for IBM block storage systems enables container orchestrators such as Kubernetes to manage the life cycle of persistent storage.
+
+        This is the official operator to deploy and manage IBM block storage CSI driver.
+
+        For compatibility, prerequisites, release notes, and other user information, see [IBM block storage CSI driver documentation](https://www.ibm.com/docs/en/stg-block-csi-driver).
+      displayName: IBM block storage CSI driver operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - BlockStorage
+      - CSI
+      links:
+      - name: Source Code
+        url: https://github.com/IBM/ibm-block-csi-operator
+      maintainers:
+      - email: csi.block1@il.ibm.com
+        name: IBM Block CSI Team
+      maturity: stable
+      minKubeVersion: 1.22.0
+      provider:
+        name: IBM
+      relatedImages:
+      - docker.io/ibmcom/ibm-block-csi-operator:1.10.0
+      version: 1.10.0
+    name: stable
+  defaultChannel: stable
+  packageName: ibm-block-csi-operator-community
+  provider:
+    name: IBM

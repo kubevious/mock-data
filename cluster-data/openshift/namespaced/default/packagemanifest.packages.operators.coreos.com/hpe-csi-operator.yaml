@@ -1,0 +1,127 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: HPE
+    provider-url: ""
+  name: hpe-csi-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hpe-csi-operator.v2.2.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "storage.hpe.com/v1",
+              "kind": "HPECSIDriver",
+              "metadata": {
+                "name": "csi-driver"
+              },
+              "spec": {
+                "disable": {
+                   "nimble": false,
+                   "primera": false,
+                   "alletra6000": false,
+                   "alletra9000": false
+                },
+                "imagePullPolicy": "IfNotPresent",
+                "logLevel": "info",
+                "disableNodeConformance": false,
+                "iscsi": {
+                  "chapUser": "",
+                  "chapPassword": ""
+                },
+                "registry": "quay.io",
+                "kubeletRootDir": "/var/lib/kubelet/",
+                "disableNodeGetVolumeStats": false,
+                "controller": {
+                  "affinity": {},
+                  "labels": {},
+                  "nodeSelector": {},
+                  "tolerations": []
+                },
+                "csp": {
+                  "affinity": {},
+                  "labels": {},
+                  "nodeSelector": {},
+                  "tolerations": []
+                },
+                "node": {
+                  "affinity": {},
+                  "labels": {},
+                  "nodeSelector": {},
+                  "tolerations": []
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Storage
+        certified: "true"
+        containerImage: quay.io/hpestorage/csi-driver-operator:v2.2.0
+        createdAt: Wed Jun 16 11:30:38 PDT 2021
+        description: A Container Storage Interface (CSI) driver for HPE storage platforms.
+          The CSI driver allows you to use HPE storage with your preferred container
+          orchestrator.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.24"
+        repository: https://github.com/hpe-storage/co-deployments
+        support: HPE
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: HPECSI Driver
+          displayName: HPECSIDriver
+          kind: HPECSIDriver
+          name: hpecsidrivers.storage.hpe.com
+          version: v1
+      description: |
+        The HPE CSI Operator for Kubernetes deploys the HPE CSI Driver on Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE storage systems.
+        The HPE CSI Driver for Kubernetes leverages HPE storage platforms to provide scalable and persistent storage for stateful applications.
+        Please refer to our CSI driver [documentation](https://scod.hpedev.io/csi_driver/index.html) for supported HPE platforms and full list of supported CSI features.
+        ## Installation
+        Refer to the HPE CSI Operator for Kubernetes [documentation](https://scod.hpedev.io/csi_driver/deployment.html#operator).
+      displayName: HPE CSI Operator for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - HPE
+      - HPE CSI
+      - HPE Storage
+      - CSI
+      links:
+      - name: Documentation
+        url: https://scod.hpedev.io/csi_driver/index.html
+      maintainers:
+      - email: hpe-containers-dev@hpe.com
+        name: HPE Storage Containers Team
+      maturity: stable
+      minKubeVersion: 1.21.0
+      provider:
+        name: HPE
+      relatedImages:
+      - quay.io/hpestorage/csi-driver-operator:v2.2.0
+      version: 2.2.1
+    name: stable
+  defaultChannel: stable
+  packageName: hpe-csi-operator
+  provider:
+    name: HPE

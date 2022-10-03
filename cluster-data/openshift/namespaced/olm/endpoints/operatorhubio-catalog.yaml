@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:26:02Z"
+  creationTimestamp: "2022-10-03T18:25:22Z"
+  labels:
+    olm.service-spec-hash: 7f9477b9df
+  name: operatorhubio-catalog
+  namespace: olm
+  resourceVersion: "29346"
+  uid: 159f1259-60b0-4073-a137-5b381ef1ce04
+subsets:
+- addresses:
+  - ip: 10.244.0.14
+    nodeName: kind-control-plane
+    targetRef:
+      kind: Pod
+      name: operatorhubio-catalog-7vg8w
+      namespace: olm
+      uid: 1cd008c6-af82-4baa-ae99-29525e8c52d2
+  ports:
+  - name: grpc
+    port: 50051
+    protocol: TCP

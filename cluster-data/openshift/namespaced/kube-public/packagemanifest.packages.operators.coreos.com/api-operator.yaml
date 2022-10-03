@@ -1,0 +1,649 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: WSO2
+    provider-url: ""
+  name: api-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: api-operator.v1.2.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "Security",
+              "metadata": {
+                "name": "default-security-jwt",
+                "namespace": "wso2-system"
+              },
+              "spec": {
+                "securityConfig": [
+                  {
+                    "certificate": "wso2am320-secret",
+                    "issuer": "https://wso2apim:32001/oauth2/token",
+                    "validateSubscription": false
+                  },
+                  {
+                    "certificate": "wso2am320-secret",
+                    "issuer": "https://localhost:9443/oauth2/token",
+                    "validateSubscription": false
+                  }
+                ],
+                "type": "JWT"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "Security",
+              "metadata": {
+                "name": "petstoreoauth"
+              },
+              "spec": {
+                "securityConfig": [
+                  {
+                    "certificate": "wso2am320-secret",
+                    "credentials": "oauth-credentials",
+                    "endpoint": "https://wso2apim.wso2:9443"
+                  }
+                ],
+                "type": "Oauth"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "Security",
+              "metadata": {
+                "name": "petstorebasic"
+              },
+              "spec": {
+                "securityConfig": [
+                  {
+                    "credentials": "secret-basic"
+                  }
+                ],
+                "type": "basic"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "Security",
+              "metadata": {
+                "name": "petstorejwt"
+              },
+              "spec": {
+                "securityConfig": [
+                  {
+                    "audience": "http://org.wso2.apimgt/gateway",
+                    "certificate": "wso2am320-secret",
+                    "issuer": "https://wso2apim:32001/oauth2/token",
+                    "validateSubscription": false
+                  }
+                ],
+                "type": "JWT"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "Security",
+              "metadata": {
+                "name": "petstoreapikey"
+              },
+              "spec": {
+                "securityConfig": [
+                  {
+                    "alias": "ballerina",
+                    "audience": "http://org.wso2.apimgt/gateway",
+                    "issuer": "https://localhost:9095/apikey",
+                    "validateAllowedAPIs": false
+                  }
+                ],
+                "type": "apiKey"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "API",
+              "metadata": {
+                "name": "test-api-publisher",
+                "namespace": "wso2-system"
+              },
+              "spec": {
+                "definition": {
+                  "interceptors": {},
+                  "swaggerConfigmapNames": [
+                    "online-store-1-swagger"
+                  ],
+                  "type": "swagger"
+                },
+                "mode": "privateJet",
+                "override": true,
+                "replicas": 1
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "RateLimiting",
+              "metadata": {
+                "name": "testing1ratelimiting",
+                "namespace": "wso2-system"
+              },
+              "spec": {
+                "bandwidth": {
+                  "dataAmount": "",
+                  "dataUnit": ""
+                },
+                "conditions": {
+                  "headerCondition": {
+                    "headerName": "“host”",
+                    "headerValue": "“abc.com”"
+                  },
+                  "ipCondition": {
+                    "endIp": "10.100.7.255",
+                    "negation": false,
+                    "specificIp": "",
+                    "startIp": "10.100.7.2",
+                    "type": "ipRange"
+                  }
+                },
+                "description": "Allow 1000 requests per minute",
+                "requestCount": {
+                  "limit": 1000
+                },
+                "stopOnQuotaReach": false,
+                "timeUnit": "min",
+                "type": "subscription",
+                "unitTime": 1
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha1",
+              "kind": "TargetEndpoint",
+              "metadata": {
+                "labels": {
+                  "app": "wso2"
+                },
+                "name": "products-privatejet"
+              },
+              "spec": {
+                "applicationProtocol": "http",
+                "deploy": {
+                  "cpuLimit": "120m",
+                  "dockerImage": "pubudu/products:1.0.0",
+                  "maxReplicas": 3,
+                  "minReplicas": 2,
+                  "name": "products-pj-service",
+                  "reqMemory": "32Mi",
+                  "requestCPU": "60m"
+                },
+                "mode": "privateJet",
+                "ports": [
+                  {
+                    "name": "prod-ep",
+                    "port": 80,
+                    "targetPort": 9090
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Developer Tools, Integration & Delivery, Cloud Provider
+        certified: "false"
+        containerImage: wso2/k8s-api-operator:1.2.3
+        createdAt: "2021-05-14T03:00:00.000Z"
+        description: API Operator provides a fully automated experience for cloud-native
+          API management of microservices.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/wso2/k8s-api-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: API holds API-related information. API takes the Swagger definition
+            as a configMap along with replica count and micro-gateway deployment mode.
+          displayName: API
+          kind: API
+          name: apis.wso2.com
+          version: v1alpha1
+        - description: RateLimiting is the Schema for the ratelimitings API
+          displayName: Ratelimiting
+          kind: RateLimiting
+          name: ratelimitings.wso2.com
+          version: v1alpha1
+        - description: 'Security holds security-related information. Security supports
+            different security types: basic-auth, OAuth2, JWT, etc.'
+          displayName: Security
+          kind: Security
+          name: securities.wso2.com
+          version: v1alpha1
+        - description: |-
+            TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here.
+            API gateway can be deployed in three patterns: shared, private-jet, and sidecar.
+            If your backend is already running and you need to expose it via a microgateway, you can define the target URL in the Swagger itself.
+            If your backend service is not running, but you plan to run it in the same Kubernetes cluster, you can use TargetEndpoint with its relevant Docker image.
+            Then APIM Operator will spin-up the corresponding Kubernetes deployment for the defined backend service itself with the microgateway.
+            In shared and private-jet mode, the backend can be running in separate PODs, but in sidecar mode, the gateway will run in the same POD adjacent to the backend service.
+          displayName: TargetEndpoint
+          kind: TargetEndpoint
+          name: targetendpoints.wso2.com
+          version: v1alpha1
+      description: |
+        ## Introduction
+
+        As microservices are increasingly being deployed on Kubernetes, the need to expose these microservices as well documented, easy to consume, managed APIs is becoming important to develop great applications. The API operator for Kubernetes makes APIs a first-class citizen in the Kubernetes ecosystem. Similar to deploying microservices, you can now use this operator to deploy APIs for individual microservices or compose several microservices into individual APIs. With this users will be able to expose their microservice as managed API in Kubernetes environment without any additional work.
+
+        ## About this Operator
+
+        API Operator provides a fully automated experience for cloud-native API management. A user can expose an already deployed microservice as an API using the API Operator by providing the API definition of the particular microservice.
+
+        Once the API is deployed, it will be deployed as a managed API. Also you will be able to add business plans and security schemes to your micro-services using the available CRDs.
+
+        Further, by integrating with an API portal it can provide additional features, such as distributed throttling, token generation, token revocation and monitor statistics using dashboard.
+
+        ## Prerequisites
+
+        - [Kubernetes v1.14 or above](https://Kubernetes.io/docs/setup/) <br>
+
+            - Minimum CPU : 6vCPU
+            - Minimum Memory : 6GB
+
+        - An account in DockerHub or private docker registry
+
+        ## Step 1: Configure API Controller
+
+        - Download API controller v3.2.2 or the latest v3.2.x from the [API Manager Tooling web site](https://wso2.com/api-management/tooling/)
+
+            - Under Dev-Ops Tooling section, you can download the tool based on your operating system.
+
+        - Extract the API controller distribution and navigate inside the extracted folder using the command-line tool
+
+        - Add the location of the extracted folder to your system's $PATH variable to be able to access the executable from anywhere.
+
+        - You can find available operations using the below command.
+
+            ```
+            >> apictl --help
+            ```
+
+        - By default API controller does not support kubectl command.
+
+        - Set the API Controller’s mode to Kubernetes to be compatible with kubectl commands
+
+            ```
+            >> apictl set --mode k8s
+            ```
+
+        ## Step 2: Install API Operator Configurations
+
+        * Download [k8s-api-operator-1.2.3.zip](https://github.com/wso2/k8s-api-operator/releases/download/v1.2.3/k8s-api-operator-1.2.3.zip)
+
+            - This zip contains the artifacts that required to deploy in Kubernetes.
+            - Extract k8s-api-operator-1.2.3.zip
+
+              ```
+              >> cd k8s-api-operator-1.2.3
+              ```
+        * Create a namespace and deploy the controller level configurations
+
+            ```
+            >> apictl apply -f api-operator/operatorhub-controller-configs/namespace.yaml \
+                            -f api-operator/operatorhub-controller-configs/
+
+            Output:
+            namespace/wso2-system created
+            configmap/controller-config created
+            configmap/apim-config created
+            configmap/ingress-configs created
+            configmap/kaniko-arguments created
+            configmap/route-configs created
+            security.wso2.com/default-security-jwt created
+            secret/wso2am320-secret created
+            configmap/docker-registry-config ceated
+            configmap/dockerfile-template created
+            configmap/mgw-conf-mustache created
+            ```
+
+        *  When you create an API, a docker image of it will be created and pushed to a docker registry. For this, credentials for your docker registry are required.
+
+            ```
+            >> apictl change registry
+            Choose registry type:
+            1: Docker Hub
+            2: Amazon ECR
+            3: GCR
+            4: HTTP Private Registry
+            5: HTTPS Private Registry
+            6: Quay.io
+            Choose a number: 1: 1
+            Enter repository name: docker.io/john
+            Enter username: john
+            Enter password:
+            Repository: docker.io/john
+            Username  : john
+            Confirm configurations: Y: Y
+
+            Output:
+
+            configmap/docker-registry-config configured
+            secret/docker-registry-credentials configured
+            ```
+
+        ## Step 3: Expose the sample microservice as a managed API
+
+        Let’s deploy an API for our microservice. The Open API definition of the API can be found in the scenario/scenario-1/products-swagger.yaml.
+
+        The endpoint of our microservice is referred in the API definition.
+
+        - Deploy the API using the following command
+
+            ```
+            >> apictl add api -n <API_NAME> --from-file=<LOCATION_TO_THE_OPEN_API_DEFINITION>
+
+            >> apictl add api -n online-store --from-file=scenarios/scenario-1/products_swagger.yaml
+
+            Output:
+            creating configmap with swagger definition
+            configmap/online-store-swagger created
+            api.wso2.com/online-store created
+            ```
+
+            Optional Parameters
+
+            ```
+            --replicas=3          Number of replicas
+            --namespace=wso2      Namespace to deploy the API
+            --override            Overwrite the docker image creation for already created docker image
+
+            >> apictl add api -n <API_NAME> --from-file=<LOCATION_TO_THE_OPEN_API_DEFINITION> --replicas=<NUMBER_OF_REPLICAS> --namespace=<DESIRED_NAMESPACE>
+            ```
+
+            **_Note:_** Namespace and replicas are optional parameters. If they are not provided, the default namespace will be used and 1 replica will be created.
+
+            When you deploy the API, it will first run the Kaniko job. This basically builds the docker image of the API and pushes it to Docker-Hub.
+
+            Once the Kaniko job is completed, it will deploy the managed API for your microservice.
+
+        - Verify the API deployment
+
+            If you list down the pods immediately after the add API command you will only see the pod related to Kaniko job. Once it is completed you will see the deployed API. If you are on Minikube, this might take several minutes.
+
+            ```
+            >> apictl get pods
+
+            Output:
+            NAME                                   READY   STATUS    RESTARTS   AGE
+            online-store-kaniko-fxvkt              1/1     Running   0          45s
+            online-store-6957fc89d6-kn9sp          1/1     Running   0          21s
+            ```
+
+            ```
+            >> apictl get services
+
+            Output:
+            NAME               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                         AGE
+            online-store       LoadBalancer   10.83.9.142    35.232.188.134   9095:31055/TCP,9090:32718/TCP   57s
+            ```
+
+            You now have a microgateway deployed in Kubernetes that runs your API for the microservice.
+
+        ## Step 4: Invoke the API
+
+        - Retrieve the API service endpoint details
+
+            The API service is exposed as the Load Balancer service type. You can get the API service endpoint details by using the following command.
+
+            ```
+            >> apictl get services
+
+            Output:
+            NAME               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                         AGE
+            online-store       LoadBalancer   10.83.9.142    35.232.188.134   9095:31055/TCP,9090:32718/TCP   57s
+            ```
+
+        - Invoke the API with an access token
+
+            You can find a sample token below.
+
+            ```
+            TOKEN=eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbkBjYXJib24uc3VwZXIiLCJhdWQiOiJKRmZuY0djbzRodGNYX0xkOEdIVzBBR1V1ME1hIiwibmJmIjoxNTk3MjExOTUzLCJhenAiOiJKRmZuY0djbzRodGNYX0xkOEdIVzBBR1V1ME1hIiwic2NvcGUiOiJhbV9hcHBsaWNhdGlvbl9zY29wZSBkZWZhdWx0IiwiaXNzIjoiaHR0cHM6XC9cL3dzbzJhcGltOjMyMDAxXC9vYXV0aDJcL3Rva2VuIiwiZXhwIjoxOTMwNTQ1Mjg2LCJpYXQiOjE1OTcyMTE5NTMsImp0aSI6IjMwNmI5NzAwLWYxZjctNDFkOC1hMTg2LTIwOGIxNmY4NjZiNiJ9.UIx-l_ocQmkmmP6y9hZiwd1Je4M3TH9B8cIFFNuWGHkajLTRdV3Rjrw9J_DqKcQhQUPZ4DukME41WgjDe5L6veo6Bj4dolJkrf2Xx_jHXUO_R4dRX-K39rtk5xgdz2kmAG118-A-tcjLk7uVOtaDKPWnX7VPVu1MUlk-Ssd-RomSwEdm_yKZ8z0Yc2VuhZa0efU0otMsNrk5L0qg8XFwkXXcLnImzc0nRXimmzf0ybAuf1GLJZyou3UUTHdTNVAIKZEFGMxw3elBkGcyRswzBRxm1BrIaU9Z8wzeEv4QZKrC5NpOpoNJPWx9IgmKdK2b3kIWJEFreT3qyoGSBrM49Q
+            ```
+            Copy and paste the above token in the command line. Now you can invoke the API using the cURL command as below.
+
+            ```
+            Format:
+
+            >> curl -X GET "https://<EXTERNAL-IP>:9095/<API-context>/<API-resource>"  -H "Authorization:Bearer $TOKEN" -k
+            ```
+
+            Example commands:
+
+            ```
+            >> curl -X GET "https://35.232.188.134:9095/store/v1.0.0/products" -H "Authorization:Bearer $TOKEN" -k
+
+            >> curl -X GET "https://35.232.188.134:9095/store/v1.0.0/products/101" -H "Authorization:Bearer $TOKEN" -k
+            ```
+
+            Find more samples in [K8s API Operator github repository](https://github.com/wso2/k8s-api-operator/tree/v1.2.3/scenarios).
+      displayName: API Operator for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - API
+      - ManagedAPI
+      - APIManagement
+      - Cloud-native
+      - Security
+      - Ratelimiting
+      - Analytics
+      links:
+      - name: Documentation
+        url: https://github.com/wso2/k8s-api-operator/tree/v1.2.3/docs
+      - name: Quick Start Guide
+        url: https://github.com/wso2/k8s-api-operator/tree/v1.2.3#quick-start-guide
+      - name: Web page
+        url: https://wso2.com/api-management/
+      - name: Slack channel
+        url: https://apim-slack.wso2.com
+      maintainers:
+      - email: announce@wso2.org
+        name: WSO2 product releases
+      maturity: stable
+      provider:
+        name: WSO2
+      relatedImages:
+      - wso2/k8s-api-operator:1.2.3
+      version: 1.2.3
+    name: stable
+  - currentCSV: api-operator.v2.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "wso2.com/v1alpha2",
+              "kind": "API",
+              "metadata": {
+                "name": "petstore-api"
+              },
+              "spec": {
+                "certsValues": "certs-cm",
+                "paramsValues": "params-cm",
+                "swaggerConfigMapName": "petstore-cm"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha2",
+              "kind": "Integration",
+              "metadata": {
+                "name": "test-integration"
+              },
+              "spec": {
+                "autoScale": {
+                  "enabled": "true",
+                  "maxReplicas": 3
+                },
+                "deploySpec": {
+                  "cpuLimit": "2000m",
+                  "memoryLimit": "2048Mi",
+                  "minReplicas": 1,
+                  "reqMemory": "512Mi",
+                  "requestCPU": "500m"
+                },
+                "env": [
+                  {
+                    "name": "DEV_ENV_USER_EP",
+                    "value": "https://reqres.in/api"
+                  }
+                ],
+                "expose": {
+                  "inboundPorts": [
+                    8000
+                  ],
+                  "passthroPort": 8290
+                },
+                "image": "sajithagimash/test:1.0.0"
+              }
+            },
+            {
+              "apiVersion": "wso2.com/v1alpha2",
+              "kind": "TargetEndpoint",
+              "metadata": {
+                "labels": {
+                  "app": "wso2"
+                },
+                "name": "products-privatejet"
+              },
+              "spec": {
+                "applicationProtocol": "http",
+                "deploy": {
+                  "cpuLimit": "120m",
+                  "dockerImage": "pubudu/products:1.0.0",
+                  "maxReplicas": 3,
+                  "minReplicas": 2,
+                  "name": "products-pj-service",
+                  "reqMemory": "32Mi",
+                  "requestCPU": "60m"
+                },
+                "mode": "privateJet",
+                "ports": [
+                  {
+                    "name": "prod-ep",
+                    "port": 80,
+                    "targetPort": 9090
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Developer Tools, Integration & Delivery, Cloud Provider
+        certified: "false"
+        containerImage: wso2/k8s-api-operator:2.0.0
+        createdAt: "2021-04-28T10:00:00.000Z"
+        description: API Operator provides a fully automated experience for cloud-native
+          API management of microservices.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/wso2/k8s-api-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: API is the Schema for the apis API
+          displayName: API
+          kind: API
+          name: apis.wso2.com
+          version: v1alpha2
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.wso2.com
+          version: v1alpha2
+        - description: TargetEndpoint is the Schema for the targetendpoints API
+          displayName: TargetEndpoint
+          kind: TargetEndpoint
+          name: targetendpoints.wso2.com
+          version: v1alpha2
+      description: |
+        ## API Operator for deploying Integrations
+
+        The API operator for Kubernetes provides first-class support for Micro Integrator deployments in the Kubernetes
+        ecosystem. It uses the Integration custom resource (integration_cr.yaml file) that is available in the Kubernetes
+        project (exported from WSO2 Integration Studio) and deploys the integration in your Kubernetes environment.
+
+        ![Alt text](images/K8s-API-Operator.png?raw=true "K8s API Operator")
+
+        ## Use the following command to install default configs for API Operator
+
+        ```sh
+        >> kubectl apply -f https://github.com/wso2/k8s-api-operator/releases/download/v2.0.0/api-operator-operatorhub-configs.yaml
+        ```
+
+        ## Deploying Integrations
+
+        Deploy integrations using K8s API Operator, see [Deploying Integrations using the Operator](https://apim.docs.wso2.com/en/4.0.0/install-and-setup/setup/kubernetes-operators/k8s-api-operator/manage-integrations/integration-deployments/).
+
+        ## Documentation
+
+        You can find the documentation [here](https://apim.docs.wso2.com/en/4.0.0/reference/k8s-operators/k8s-api-operator/).
+      displayName: API Operator for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - API
+      - ManagedAPI
+      - APIManagement
+      - Cloud-native
+      - Security
+      - Ratelimiting
+      - Analytics
+      links:
+      - name: Documentation
+        url: https://apim.docs.wso2.com/en/4.0.0/reference/k8s-operators/k8s-api-operator/
+      - name: Quick Start Guide
+        url: https://apim.docs.wso2.com/en/4.0.0/deploy-and-publish/deploy-on-gateway/choreo-connect/getting-started/quick-start-guide/quick-start-guide-kubernetes/
+      - name: Web page
+        url: https://wso2.com/api-management/
+      - name: Slack channel
+        url: https://apim-slack.wso2.com
+      maintainers:
+      - email: announce@wso2.org
+        name: WSO2 product releases
+      maturity: stable
+      provider:
+        name: WSO2
+      relatedImages:
+      - wso2/k8s-api-operator:2.0.0
+      version: 2.0.0
+    name: 2.x-stable
+  defaultChannel: 2.x-stable
+  packageName: api-operator
+  provider:
+    name: WSO2

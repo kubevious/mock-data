@@ -1,0 +1,95 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: AtlasMap
+    provider-url: ""
+  name: atlasmap-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: atlasmap-operator.v0.4.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "atlasmap.io/v1alpha1",
+              "kind": "AtlasMap",
+              "metadata": {
+                "name": "example-atlasmap"
+              },
+              "spec": {
+                "replicas": 1
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/atlasmap/atlasmap-operator:0.4.1
+        description: AtlasMap is a data mapping solution with an interactive web based
+          user interface, that simplifies configuring integrations between Java, XML,
+          and JSON data sources
+        operators.operatorframework.io/builder: operator-sdk-v1.10.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/atlasmap/atlasmap-operator
+        support: AtlasMap
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: AtlasMap is the Schema for the atlasmaps API
+          displayName: Atlas Map
+          kind: AtlasMap
+          name: atlasmaps.atlasmap.io
+          version: v1alpha1
+      description: |
+        AtlasMap is a data mapping solution with an interactive web based user interface, that simplifies configuring integrations between Java, XML, and JSON data sources.
+
+        The AtlasMap operator simplifies the deployment of AtlasMap on OpenShift / Kubernetes clusters.
+
+        For further information about AtlasMap and the operator, visit the documentation.
+
+        * [AtlasMap documentation](https://www.atlasmap.io/)
+        * [AtlasMap operator documentation](https://github.com/atlasmap/atlasmap-operator)
+      displayName: AtlasMap Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - atlasmap
+      - data mapping
+      - data transformation
+      links:
+      - name: AtlasMap website
+        url: https://www.atlasmap.io/
+      maintainers:
+      - email: fuse-online@redhat.com
+        name: Red Hat Fuse Online
+      maturity: alpha
+      provider:
+        name: AtlasMap
+      relatedImages:
+      - quay.io/atlasmap/atlasmap-operator:0.4.1
+      version: 0.4.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: atlasmap-operator
+  provider:
+    name: AtlasMap

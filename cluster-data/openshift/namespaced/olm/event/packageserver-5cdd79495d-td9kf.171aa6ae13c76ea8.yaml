@@ -1,0 +1,29 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:44:38Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{packageserver}
+  kind: Pod
+  name: packageserver-5cdd79495d-td9kf
+  namespace: olm
+  resourceVersion: "29165"
+  uid: 31df5485-473a-4cd3-9eb1-5ea365dd66f8
+kind: Event
+lastTimestamp: "2022-10-03T19:44:38Z"
+message: 'Readiness probe failed: Get "https://10.244.0.15:5443/healthz": context
+  deadline exceeded (Client.Timeout exceeded while awaiting headers)'
+metadata:
+  creationTimestamp: "2022-10-03T19:44:42Z"
+  name: packageserver-5cdd79495d-td9kf.171aa6ae13c76ea8
+  namespace: olm
+  resourceVersion: "40195"
+  uid: bc9785d9-37dc-4231-8622-2484123fc565
+reason: Unhealthy
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Warning

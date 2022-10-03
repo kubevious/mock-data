@@ -1,0 +1,500 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Intel® Corporation
+    provider-url: https://intel.com
+  name: intel-device-plugins-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: intel-device-plugins-operator.v0.24.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "DlbDevicePlugin",
+              "metadata": {
+                "name": "dlbdeviceplugin-sample"
+              },
+              "spec": {
+                "image": "intel/intel-dlb-plugin:0.24.0",
+                "logLevel": 4,
+                "nodeSelector": {
+                  "intel.feature.node.kubernetes.io/dlb": "true"
+                }
+              }
+            },
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "DsaDevicePlugin",
+              "metadata": {
+                "name": "dsadeviceplugin-sample"
+              },
+              "spec": {
+                "image": "intel/intel-dsa-plugin:0.24.0",
+                "logLevel": 4,
+                "nodeSelector": {
+                  "intel.feature.node.kubernetes.io/dsa": "true"
+                },
+                "sharedDevNum": 10
+              }
+            },
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "FpgaDevicePlugin",
+              "metadata": {
+                "name": "fpgadeviceplugin-sample"
+              },
+              "spec": {
+                "image": "intel/intel-fpga-plugin:0.24.0",
+                "initImage": "intel/intel-fpga-initcontainer:0.24.0",
+                "logLevel": 4,
+                "mode": "region",
+                "nodeSelector": {
+                  "intel.feature.node.kubernetes.io/fpga-arria10": "true"
+                }
+              }
+            },
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "GpuDevicePlugin",
+              "metadata": {
+                "name": "gpudeviceplugin-sample"
+              },
+              "spec": {
+                "image": "intel/intel-gpu-plugin:0.24.0",
+                "initImage": "intel/intel-gpu-initcontainer:0.24.0",
+                "logLevel": 4,
+                "nodeSelector": {
+                  "intel.feature.node.kubernetes.io/gpu": "true"
+                },
+                "sharedDevNum": 10
+              }
+            },
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "IaaDevicePlugin",
+              "metadata": {
+                "name": "iaadeviceplugin-sample"
+              },
+              "spec": {
+                "image": "intel/intel-iaa-plugin:0.24.0",
+                "logLevel": 4,
+                "sharedDevNum": 10
+              }
+            },
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "QatDevicePlugin",
+              "metadata": {
+                "name": "qatdeviceplugin-sample"
+              },
+              "spec": {
+                "dpdkDriver": "vfio-pci",
+                "image": "intel/intel-qat-plugin:0.24.0",
+                "initImage": "intel/intel-qat-initcontainer:0.24.0",
+                "kernelVfDrivers": [
+                  "c6xxvf",
+                  "4xxxvf"
+                ],
+                "logLevel": 4,
+                "maxNumDevices": 1,
+                "nodeSelector": {
+                  "intel.feature.node.kubernetes.io/qat": "true"
+                }
+              }
+            },
+            {
+              "apiVersion": "deviceplugin.intel.com/v1",
+              "kind": "SgxDevicePlugin",
+              "metadata": {
+                "name": "sgxdeviceplugin-sample"
+              },
+              "spec": {
+                "enclaveLimit": 110,
+                "image": "intel/intel-sgx-plugin:0.24.0",
+                "initImage": "intel/intel-sgx-initcontainer:0.24.0",
+                "logLevel": 4,
+                "nodeSelector": {
+                  "intel.feature.node.kubernetes.io/sgx": "true"
+                },
+                "provisionLimit": 110
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.0-nlb0-orchestrated"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "ce48969398f05f33946d560708be108a",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.0-nlb0-preprogrammed"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "ce48969398f05f33946d560708be108a",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.0-nlb3-orchestrated"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "ce48969398f05f33946d560708be108a",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.0-nlb3-preprogrammed"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "ce48969398f05f33946d560708be108a",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.1-nlb0-orchestrated"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "9926ab6d6c925a68aabca7d84c545738",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.1-nlb0-preprogrammed"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "9926ab6d6c925a68aabca7d84c545738",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.1-nlb3-orchestrated"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "9926ab6d6c925a68aabca7d84c545738",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.1-nlb3-preprogrammed"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "9926ab6d6c925a68aabca7d84c545738",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.2-nlb0-orchestrated"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "69528db6eb31577a8c3668f9faa081f6",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.2-nlb0-preprogrammed"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "69528db6eb31577a8c3668f9faa081f6",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.2-nlb3-orchestrated"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "69528db6eb31577a8c3668f9faa081f6",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "arria10.dcp1.2-nlb3-preprogrammed"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "69528db6eb31577a8c3668f9faa081f6",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "d5005-matrix-mult-orchestrated"
+              },
+              "spec": {
+                "afuId": "40007c0623210742000ebc58df6f5343e668b03a",
+                "interfaceId": "bfac4d851ee856fe8c95865ce1bbaa2d",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "d5005-nlb0-orchestrated"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "bfac4d851ee856fe8c95865ce1bbaa2d",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "d5005-nlb0-preprogrammed"
+              },
+              "spec": {
+                "afuId": "d8424dc4a4a3c413f89e433683f9040b",
+                "interfaceId": "bfac4d851ee856fe8c95865ce1bbaa2d",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "d5005-nlb3-orchestrated"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "bfac4d851ee856fe8c95865ce1bbaa2d",
+                "mode": "region"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "AcceleratorFunction",
+              "metadata": {
+                "name": "d5005-nlb3-preprogrammed"
+              },
+              "spec": {
+                "afuId": "f7df405cbd7acf7222f144b0b93acd18",
+                "interfaceId": "bfac4d851ee856fe8c95865ce1bbaa2d",
+                "mode": "af"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "FpgaRegion",
+              "metadata": {
+                "name": "arria10.dcp1.0"
+              },
+              "spec": {
+                "interfaceId": "ce48969398f05f33946d560708be108a"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "FpgaRegion",
+              "metadata": {
+                "name": "arria10.dcp1.1"
+              },
+              "spec": {
+                "interfaceId": "9926ab6d6c925a68aabca7d84c545738"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "FpgaRegion",
+              "metadata": {
+                "name": "arria10.dcp1.2"
+              },
+              "spec": {
+                "interfaceId": "69528db6eb31577a8c3668f9faa081f6"
+              }
+            },
+            {
+              "apiVersion": "fpga.intel.com/v2",
+              "kind": "FpgaRegion",
+              "metadata": {
+                "name": "d5005"
+              },
+              "spec": {
+                "interfaceId": "bfac4d851ee856fe8c95865ce1bbaa2d"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Drivers and plugins
+        containerImage: intel/intel-deviceplugin-operator:0.24.0
+        createdAt: "2022-05-20"
+        description: This operator is a Kubernetes custom controller whose goal is
+          to serve the installation and lifecycle management of Intel device plugins
+          for Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/intel/intel-device-plugins-for-kubernetes
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: AcceleratorFunction is a specification for an Accelerator Function
+            resource provided by a FPGA-based programmable hardware accelerator.
+          displayName: Accelerator Function
+          kind: AcceleratorFunction
+          name: acceleratorfunctions.fpga.intel.com
+          version: v2
+        - description: DlbDevicePlugin is the Schema for the dlbdeviceplugins API.
+            It represents the DLB device plugin responsible for advertising DLB device
+            nodes to the kubelet.
+          displayName: Intel Dynamic Load Balancer Device Plugin
+          kind: DlbDevicePlugin
+          name: dlbdeviceplugins.deviceplugin.intel.com
+          version: v1
+        - description: DsaDevicePlugin is the Schema for the dsadeviceplugins API.
+            It represents the DSA device plugin responsible for advertising Intel
+            DSA hardware resources to the kubelet.
+          displayName: Intel DSA Device Plugin
+          kind: DsaDevicePlugin
+          name: dsadeviceplugins.deviceplugin.intel.com
+          version: v1
+        - description: FpgaDevicePlugin is the Schema for the fpgadeviceplugins API.
+            It represents the FPGA device plugin responsible for advertising Intel
+            FPGA hardware resources to the kubelet.
+          displayName: Intel FPGA Device Plugin
+          kind: FpgaDevicePlugin
+          name: fpgadeviceplugins.deviceplugin.intel.com
+          version: v1
+        - description: FpgaRegion is a specification for a FPGA region resource which
+            can be programmed with a bitstream.
+          displayName: FPGA Region
+          kind: FpgaRegion
+          name: fpgaregions.fpga.intel.com
+          version: v2
+        - description: GpuDevicePlugin is the Schema for the gpudeviceplugins API.
+            It represents the GPU device plugin responsible for advertising Intel
+            GPU hardware resources to the kubelet.
+          displayName: Intel GPU Device Plugin
+          kind: GpuDevicePlugin
+          name: gpudeviceplugins.deviceplugin.intel.com
+          version: v1
+        - description: IaaDevicePlugin is the Schema for the iaadeviceplugins API.
+            It represents the IAA device plugin responsible for advertising Intel
+            IAA hardware resources to the kubelet.
+          displayName: Intel IAA Device Plugin
+          kind: IaaDevicePlugin
+          name: iaadeviceplugins.deviceplugin.intel.com
+          version: v1
+        - description: QatDevicePlugin is the Schema for the qatdeviceplugins API.
+            It represents the QAT device plugin responsible for advertising Intel
+            QuickAssist Technology hardware resources to the kubelet.
+          displayName: Intel QuickAssist Technology Device Plugin
+          kind: QatDevicePlugin
+          name: qatdeviceplugins.deviceplugin.intel.com
+          version: v1
+        - description: SgxDevicePlugin is the Schema for the sgxdeviceplugins API.
+            It represents the SGX device plugin responsible for advertising SGX device
+            nodes to the kubelet.
+          displayName: Intel Software Guard Extensions Device Plugin
+          kind: SgxDevicePlugin
+          name: sgxdeviceplugins.deviceplugin.intel.com
+          version: v1
+      description: |
+        [Intel Device Plugins for Kubernetes](https://github.com/intel/intel-device-plugins-for-kubernetes) is a collection of
+        [device plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/) advertising Intel specific hardware resources
+        to the kubelet. Currently the operator has basic support for the QAT, GPU, FPGA, SGX, DSA, IAA device plugins: it validates container image references and extends
+        reported statuses.
+      displayName: Intel Device Plugins Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - fpga
+      - qat
+      - sgx
+      - gpu
+      - dsa
+      - dlb
+      links:
+      - name: Intel Device Plugins Operator
+        url: https://github.com/intel/intel-device-plugins-for-kubernetes
+      maintainers:
+      - email: hyeongju.lee@intel.com
+        name: Hyeongju Lee
+      - email: mikko.ylinen@intel.com
+        name: Mikko Ylinen
+      maturity: alpha
+      minKubeVersion: 1.21.0
+      provider:
+        name: Intel® Corporation
+        url: https://intel.com
+      relatedImages:
+      - intel/intel-deviceplugin-operator:0.24.0
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      version: 0.24.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: intel-device-plugins-operator
+  provider:
+    name: Intel® Corporation
+    url: https://intel.com

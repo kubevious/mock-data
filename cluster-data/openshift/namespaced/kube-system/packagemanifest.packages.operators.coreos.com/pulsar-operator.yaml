@@ -1,0 +1,358 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: StreamNative
+    provider-url: https://streamnative.io
+  name: pulsar-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: pulsar-operator.v0.12.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pulsar.streamnative.io/v1alpha1",
+              "kind": "PulsarBroker",
+              "metadata": {
+                "name": "pulsarbroker-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            },
+            {
+              "apiVersion": "pulsar.streamnative.io/v1alpha1",
+              "kind": "PulsarProxy",
+              "metadata": {
+                "name": "pulsar"
+              },
+              "spec": {
+                "configMapName": "proxy-configmap",
+                "image": "apachepulsar/pulsar:2.5.0",
+                "imagePullPolicy": "Always",
+                "replicas": 3
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        containerImage: quay.io/streamnativeio/pulsar-operator:v0.12.4
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The Pulsar Operator manages the Pulsar service instances deployed
+          on a Kubernetes cluster.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PulsarBroker is the Schema for the pulsarbrokers API
+          displayName: Pulsar Broker
+          kind: PulsarBroker
+          name: pulsarbrokers.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarConnection is the Schema for the pulsarconnections API
+          displayName: Pulsar Connection
+          kind: PulsarConnection
+          name: pulsarconnections.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarNamespace is the Schema for the pulsarnamespaces API
+          displayName: Pulsar Namespace
+          kind: PulsarNamespace
+          name: pulsarnamespaces.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarPermission is the Schema for the pulsarpermissions API
+          displayName: Pulsar Permission
+          kind: PulsarPermission
+          name: pulsarpermissions.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarProxy is the Schema for the pulsarproxies API
+          displayName: Pulsar Proxy
+          kind: PulsarProxy
+          name: pulsarproxies.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarTenant is the Schema for the pulsartenants API
+          displayName: Pulsar Tenant
+          kind: PulsarTenant
+          name: pulsartenants.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarTopic is the Schema for the pulsartopics API
+          displayName: Pulsar Topic
+          kind: PulsarTopic
+          name: pulsartopics.pulsar.streamnative.io
+          version: v1alpha1
+      description: |
+        The Pulsar Operator is a controller that manages Pulsar clusters in Kubernetes. It provides a full management life-cycle for Pulsar, including deployment, upgrades, scaling, and configuration changes. With the Pulsar Operator, Pulsar can run seamlessly in the Kubernetes clusters deployed on a public or private cloud. You can then manage Pulsar clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool.
+
+        Prerequisites:
+        - Install cert-manager operator first.
+      displayName: Pulsar Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/pulsar-operator/tutorial/deploy-pulsar
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/pulsar-operator:v0.12.4
+      version: 0.12.4
+    name: stable
+  - currentCSV: pulsar-operator.v0.12.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pulsar.streamnative.io/v1alpha1",
+              "kind": "PulsarBroker",
+              "metadata": {
+                "name": "pulsarbroker-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            },
+            {
+              "apiVersion": "pulsar.streamnative.io/v1alpha1",
+              "kind": "PulsarProxy",
+              "metadata": {
+                "name": "pulsar"
+              },
+              "spec": {
+                "configMapName": "proxy-configmap",
+                "image": "apachepulsar/pulsar:2.5.0",
+                "imagePullPolicy": "Always",
+                "replicas": 3
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        containerImage: quay.io/streamnativeio/pulsar-operator:v0.12.4
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The Pulsar Operator manages the Pulsar service instances deployed
+          on a Kubernetes cluster.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PulsarBroker is the Schema for the pulsarbrokers API
+          displayName: Pulsar Broker
+          kind: PulsarBroker
+          name: pulsarbrokers.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarConnection is the Schema for the pulsarconnections API
+          displayName: Pulsar Connection
+          kind: PulsarConnection
+          name: pulsarconnections.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarNamespace is the Schema for the pulsarnamespaces API
+          displayName: Pulsar Namespace
+          kind: PulsarNamespace
+          name: pulsarnamespaces.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarPermission is the Schema for the pulsarpermissions API
+          displayName: Pulsar Permission
+          kind: PulsarPermission
+          name: pulsarpermissions.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarProxy is the Schema for the pulsarproxies API
+          displayName: Pulsar Proxy
+          kind: PulsarProxy
+          name: pulsarproxies.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarTenant is the Schema for the pulsartenants API
+          displayName: Pulsar Tenant
+          kind: PulsarTenant
+          name: pulsartenants.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarTopic is the Schema for the pulsartopics API
+          displayName: Pulsar Topic
+          kind: PulsarTopic
+          name: pulsartopics.pulsar.streamnative.io
+          version: v1alpha1
+      description: |
+        The Pulsar Operator is a controller that manages Pulsar clusters in Kubernetes. It provides a full management life-cycle for Pulsar, including deployment, upgrades, scaling, and configuration changes. With the Pulsar Operator, Pulsar can run seamlessly in the Kubernetes clusters deployed on a public or private cloud. You can then manage Pulsar clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool.
+
+        Prerequisites:
+        - Install cert-manager operator first.
+      displayName: Pulsar Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/pulsar-operator/tutorial/deploy-pulsar
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/pulsar-operator:v0.12.4
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      version: 0.12.4
+    name: alpha
+  - currentCSV: pulsar-operator.v0.12.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pulsar.streamnative.io/v1alpha1",
+              "kind": "PulsarBroker",
+              "metadata": {
+                "name": "pulsarbroker-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            },
+            {
+              "apiVersion": "pulsar.streamnative.io/v1alpha1",
+              "kind": "PulsarProxy",
+              "metadata": {
+                "name": "pulsar"
+              },
+              "spec": {
+                "configMapName": "proxy-configmap",
+                "image": "apachepulsar/pulsar:2.5.0",
+                "imagePullPolicy": "Always",
+                "replicas": 3
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        containerImage: quay.io/streamnativeio/pulsar-operator:v0.12.4
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The Pulsar Operator manages the Pulsar service instances deployed
+          on a Kubernetes cluster.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PulsarBroker is the Schema for the pulsarbrokers API
+          displayName: Pulsar Broker
+          kind: PulsarBroker
+          name: pulsarbrokers.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarConnection is the Schema for the pulsarconnections API
+          displayName: Pulsar Connection
+          kind: PulsarConnection
+          name: pulsarconnections.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarNamespace is the Schema for the pulsarnamespaces API
+          displayName: Pulsar Namespace
+          kind: PulsarNamespace
+          name: pulsarnamespaces.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarPermission is the Schema for the pulsarpermissions API
+          displayName: Pulsar Permission
+          kind: PulsarPermission
+          name: pulsarpermissions.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarProxy is the Schema for the pulsarproxies API
+          displayName: Pulsar Proxy
+          kind: PulsarProxy
+          name: pulsarproxies.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarTenant is the Schema for the pulsartenants API
+          displayName: Pulsar Tenant
+          kind: PulsarTenant
+          name: pulsartenants.pulsar.streamnative.io
+          version: v1alpha1
+        - description: PulsarTopic is the Schema for the pulsartopics API
+          displayName: Pulsar Topic
+          kind: PulsarTopic
+          name: pulsartopics.pulsar.streamnative.io
+          version: v1alpha1
+      description: |
+        The Pulsar Operator is a controller that manages Pulsar clusters in Kubernetes. It provides a full management life-cycle for Pulsar, including deployment, upgrades, scaling, and configuration changes. With the Pulsar Operator, Pulsar can run seamlessly in the Kubernetes clusters deployed on a public or private cloud. You can then manage Pulsar clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool.
+
+        Prerequisites:
+        - Install cert-manager operator first.
+      displayName: Pulsar Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/pulsar-operator/tutorial/deploy-pulsar
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/pulsar-operator:v0.12.4
+      version: 0.12.4
+    name: beta
+  defaultChannel: alpha
+  packageName: pulsar-operator
+  provider:
+    name: StreamNative
+    url: https://streamnative.io

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2022-10-03T18:25:09Z"
+  labels:
+    kubernetes.io/metadata.name: olm
+    olm.operatorgroup.uid/d60a1108-0aa9-40e3-b2fb-73f364bc56da: ""
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+  name: olm
+  resourceVersion: "29127"
+  uid: 116a931d-0984-4eaa-bc6b-8f85501e2671
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

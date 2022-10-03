@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1
+kind: OLMConfig
+metadata:
+  creationTimestamp: "2022-10-03T18:25:12Z"
+  generation: 1
+  name: cluster
+  resourceVersion: "29125"
+  uid: 26787ff9-9442-4720-9f96-9355ede9adb4
+status:
+  conditions:
+  - lastTransitionTime: "2022-10-03T18:25:23Z"
+    message: Copied CSVs are enabled and present across the cluster
+    reason: CopiedCSVsEnabled
+    status: "False"
+    type: DisabledCopiedCSVs

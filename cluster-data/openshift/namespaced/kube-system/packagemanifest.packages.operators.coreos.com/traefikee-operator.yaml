@@ -1,0 +1,118 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Containous
+    provider-url: ""
+  name: traefikee-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: traefikee-operator.v2.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "containo.us/v1alpha1",
+              "kind": "Traefikee",
+              "metadata": {
+                "name": "example-traefikee",
+                "namespace": "traefikee"
+              },
+              "spec": {
+                "cluster": "traefikee",
+                "controllers": 1,
+                "image": "store/containous/traefikee:v2.1.0-ubi",
+                "proxies": 2
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Networking
+        certified: "false"
+        containerImage: containous/traefikee-operator:v2.1.1
+        createdAt: "2019-12-12T09:01:00Z"
+        description: Traefik Enterprise Edition
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        support: https://docs.containo.us
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a TraefikEE installation
+          displayName: TraefikEE
+          kind: Traefikee
+          name: traefikees.containo.us
+          version: v1alpha1
+      description: |
+        TraefikEE is a distributed, and highly available edge routing solution built on top of the open source Traefik and natively integrates with Openshift to:
+
+        * Load balance any applications and easily scale out to meet production traffic needs
+        * Secure services with end-to-end network and application encryption
+        * Provide end-to-end monitoring and real-time tracing for better insight into application uptime and performance
+
+        ## Before You Start
+
+        To start using the operator you''ll need a license key
+
+        Request your [30-days free trial](https://info.containo.us/free-trial-traefikee-red-hat-openshift)
+
+        * Create a Secret with your License key
+        ```
+        kubectl create namespace traefikee
+        kubectl create -n traefikee secret generic license --from-literal=license=${TRAEFIKEE_LICENSE_KEY}
+        ```
+
+        * Generate the client credentials
+        ```
+        export CLUSTER=test
+        teectl setup --cluster="${CLUSTER}" --kubernetes --force
+        kubectl create secret -n traefikee generic "${CLUSTER}-mtls" --from-file=bundle.zip=./bundle.zip
+        kubectl label secret -n traefikee "${CLUSTER}-mtls" app=traefikee
+        kubectl label secret -n traefikee "${CLUSTER}-mtls" release="${CLUSTER}"
+        ```
+      displayName: Traefikee Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - load balancer
+      - reverse proxy
+      - traefik
+      - traefikee
+      - microservice
+      links:
+      - name: TraefikEE
+        url: https://containo.us/traefikee
+      - name: Documentation
+        url: https://docs.containo.us
+      maintainers:
+      - email: michael@containo.us
+        name: mmatur
+      maturity: stable
+      provider:
+        name: Containous
+      relatedImages:
+      - containous/traefikee-operator:v2.1.0
+      version: 2.1.1
+    name: stable
+  defaultChannel: stable
+  packageName: traefikee-operator
+  provider:
+    name: Containous

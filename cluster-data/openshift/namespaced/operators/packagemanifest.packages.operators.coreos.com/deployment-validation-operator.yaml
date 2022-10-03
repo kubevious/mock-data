@@ -1,0 +1,76 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:50:20Z"
+  labels:
+    catalog: community-operators
+    catalog-namespace: openshift-marketplace
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: deployment-validation-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: community-operators
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: openshift-marketplace
+  catalogSourcePublisher: Red Hat
+  channels:
+  - currentCSV: deployment-validation-operator.v0.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[]'
+        capabilities: Basic Install
+        categories: Application Runtime, Monitoring, Security
+        certified: "false"
+        containerImage: quay.io/deployment-validation-operator/dv-operator:0.3.0
+        createdAt: 12/14/2021
+        description: The deployment validation operator
+        ignore-check.kube-linter.io/minimum-three-replicas: This deployment uses 1
+          pod as currently replicating does not replicate metric data causing installation
+          issues
+        repository: https://github.com/app-sre/deployment-validation-operator
+        support: Best Effort
+      apiservicedefinitions: {}
+      customresourcedefinitions: {}
+      description: "The Deployment Validator Operator(DVO) checks deployments and
+        other resources against a curated collection of best practices.\nThese best
+        practices focus mainly on ensuring that the applications are fault-tolerant.\n\n###
+        Configuration\n To configure the checks Operator runs or to run your own custom
+        checks, you can use a  ConfigMap created in the **same namespace** as operator
+        itself. ConfigMap should be named as  *deployment-validation-operator-config*
+        and contain *deployment-validation-operator-config.yaml* as data. [Example](https://github.com/app-sre/deployment-validation-operator/blob/master/deploy/openshift/configmap.yaml)\n
+        \n### Metrics\nDVO will report failed validations via Prometheus metrics.
+        All the metrics are gauges that will report `1` if the best-practice has failed.\nThere
+        is  [Instruction](https://github.com/app-sre/deployment-validation-operator#install-dashboard)
+        to install a simple grafana dashboard."
+      displayName: Deployment Validation Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: AllNamespaces
+      - supported: false
+        type: MultiNamespace
+      keywords:
+      - dvo
+      links:
+      - name: repository
+        url: https://github.com/app-sre/deployment-validation-operator
+      - name: containerImage
+        url: https://quay.io/deployment-validation-operator/dv-operator:0.3.0
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/deployment-validation-operator/dv-operator:0.3.0
+      version: 0.3.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: deployment-validation-operator
+  provider:
+    name: Red Hat

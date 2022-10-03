@@ -1,0 +1,118 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Appsody
+    provider-url: ""
+  name: appsody-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: appsody-operator.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"appsody.dev/v1beta1","kind":"AppsodyApplication","metadata":{"name":"example-appsodyapplication"},"spec":{"applicationImage":"registry.connect.redhat.com/ibm/open-liberty-samples:springPetClinic","stack":"java-openliberty"}}]'
+        capabilities: Seamless Upgrades
+        categories: Application Runtime
+        certified: "true"
+        containerImage: appsody/application-operator:0.6.0
+        createdAt: "2020-05-21 09:00:00"
+        description: Deploys Appsody based applications
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/appsody/appsody-operator
+        support: Appsody
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Configuration for the deployment of an Appsody application
+          displayName: Appsody Application
+          kind: AppsodyApplication
+          name: appsodyapplications.appsody.dev
+          version: v1beta1
+      description: |
+        The Appsody Operator allows easy deployment of applications developed with [Appsody](https://appsody.dev) to Kubernetes environments. The operator provides the following key features:
+
+        #### Routing
+
+        Expose your application to external users via a single toggle to create a Route on OpenShift or an Ingress on other Kubernetes environments. Advanced configuration, such as TLS settings, are also easily enabled.  Expiring Route certificates are re-issued.
+
+        #### High Availability
+
+        Run multiple instances of your application for high availability. Either specify a static number of replicas or easily configure auto scaling to create (and delete) instances based on resource consumption.
+
+        #### Persistence
+
+        Enable persistence for your application by specifying storage requirements.
+
+        #### Service Binding
+
+        Easily bind to available services in your cluster.
+
+        #### Knative
+
+        Deploy your serverless application on [Knative](https://knative.dev) using a single toggle.
+
+        #### Integration with OpenShift's Certificate Manager
+        The Appsody Operator takes advantage of the [cert-manager tool](https://cert-manager.io/), if it is installed on the cluster. This allows the operator to automatically provision TLS certificates for pods as well as routes.
+
+        #### Kubernetes Application Navigator (kAppNav)
+
+        Automatically configures the Kubernetes resources for integration with [kAppNav](https://kappnav.io/).
+
+        See our [**documentation**](https://github.com/appsody/appsody-operator/tree/master/doc/) for more information.
+      displayName: Appsody Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Appsody
+      - Application
+      - Node
+      - Swift
+      - MicroProfile
+      - Spring
+      - Java
+      - Runtime
+      - Kabanero
+      - Open Source
+      links:
+      - name: Documentation
+        url: https://github.com/appsody/appsody-operator/tree/master/doc/
+      - name: Appsody
+        url: https://appsody.dev
+      maintainers:
+      - email: dzmitry@ca.ibm.com
+        name: Artur Dzmitryieu
+      - email: navidst@ca.ibm.com
+        name: Navid Shakibapour Tabrizi
+      - email: leojc@ca.ibm.com
+        name: Leo Christy Jesuraj
+      - email: arthurdm@ca.ibm.com
+        name: Arthur De Magalhaes
+      maturity: beta
+      provider:
+        name: Appsody
+      relatedImages:
+      - appsody/application-operator:0.6.0
+      version: 0.6.0
+    name: beta
+  defaultChannel: beta
+  packageName: appsody-operator
+  provider:
+    name: Appsody

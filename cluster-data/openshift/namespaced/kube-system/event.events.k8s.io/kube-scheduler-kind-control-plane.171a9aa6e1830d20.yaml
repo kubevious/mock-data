@@ -1,0 +1,25 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 2
+deprecatedFirstTimestamp: "2022-10-03T16:04:13Z"
+deprecatedLastTimestamp: "2022-10-03T19:41:10Z"
+deprecatedSource:
+  component: kubelet
+  host: kind-control-plane
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:41:11Z"
+  name: kube-scheduler-kind-control-plane.171a9aa6e1830d20
+  namespace: kube-system
+  resourceVersion: "39799"
+  uid: 4b39c22b-caf0-4a92-9b63-c613def77390
+note: Created container kube-scheduler
+reason: Created
+regarding:
+  apiVersion: v1
+  fieldPath: spec.containers{kube-scheduler}
+  kind: Pod
+  name: kube-scheduler-kind-control-plane
+  namespace: kube-system
+  uid: c534a26b3c79b42ea583a3639f5034a6
+type: Normal

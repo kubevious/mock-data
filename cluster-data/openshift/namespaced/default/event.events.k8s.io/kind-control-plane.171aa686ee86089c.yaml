@@ -1,0 +1,22 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 1
+deprecatedFirstTimestamp: "2022-10-03T19:41:50Z"
+deprecatedLastTimestamp: "2022-10-03T19:41:50Z"
+deprecatedSource:
+  component: node-controller
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:41:50Z"
+  name: kind-control-plane.171aa686ee86089c
+  namespace: default
+  resourceVersion: "39867"
+  uid: 594dedc7-f31f-4ab3-9cc3-d50012bcaa32
+note: 'Node kind-control-plane event: Registered Node kind-control-plane in Controller'
+reason: RegisteredNode
+regarding:
+  apiVersion: v1
+  kind: Node
+  name: kind-control-plane
+  uid: 376779aa-2546-4834-9367-fad4b512b9c6
+type: Normal

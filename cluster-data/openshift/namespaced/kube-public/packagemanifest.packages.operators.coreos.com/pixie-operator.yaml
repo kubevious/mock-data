@@ -1,0 +1,106 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Pixie Maintainers
+    provider-url: ""
+  name: pixie-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: pixie-operator.v0.0.22
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "px.dev/v1alpha1",
+              "kind": "Vizier",
+              "metadata": {
+                "name": "pixie"
+              },
+              "spec": {
+                "cloudAddr": "withpixie.ai:443",
+                "clusterName": "test-cluster",
+                "dataAccess": "Full",
+                "deployKey": "<DEPLOY KEY GOES HERE>"
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Monitoring
+        containerImage: gcr.io/pixie-oss/pixie-prod/operator/operator_image:0.0.22
+        createdAt: "2022-04-08T23:43:00Z"
+        description: Out-of-the-box visibility and auto-telemetry for requests, metrics,
+          application profiles, and more.
+        repository: https://github.com/pixie-io/pixie
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A Vizier is an instance of Pixie's data collector and data
+            processing engine. There should be one instance of Vizier deployed per
+            Kubernetes cluster that should be monitored.
+          displayName: Vizier
+          kind: Vizier
+          name: viziers.px.dev
+          version: v1alpha1
+      description: |
+        [Pixie](https://github.com/pixie-io/pixie) is an observability tool to provide instant, out-of-the-box visibility into your Kubernetes applications. Use Pixie to view the high-level state of your cluster (service maps, cluster resources, application traffic) and also drill-down into more detailed views (pod state, flame graphs, individual full-body application requests).
+
+        Three features enable Pixie's magical developer experience:
+          * **Auto-telemetry**: Pixie uses eBPF to automatically collect telemetry data such as full-body requests, resource and network metrics, application profiles, and more. See list of full resources [here](https://docs.px.dev/about-pixie/data-sources/).
+          * **In-Cluster Edge Compute**: Pixie collects, stores and queries all telemetry data locally in the cluster. Pixie uses less than 5% of cluster CPU, and in most cases less than 2%.
+          * **Scriptability**: [PxL](https://docs.px.dev/reference/pxl/), Pixie’s flexible Pythonic query language, can be used across Pixie’s UI, CLI, and client APIs.
+
+        The Pixie operator automates the deployment and management of Pixie on your Kubernetes cluster. The operator will help determine the optimal configurations in which to deploy Pixie and automate the deployment flow. The operator will also ensure that Pixie remains up-to-date.
+
+        To use the Pixie operator, you must have either:
+
+        * A Pixie account and deployment key on [Community Cloud for Pixie](https://docs.px.dev/installing-pixie/install-guides/community-cloud-for-pixie/).
+        * A Pixie account and deployment key on a [self-hosted Pixie Cloud](https://docs.px.dev/installing-pixie/install-guides/self-hosted-pixie/).
+      displayName: Pixie Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pixie
+      - monitoring
+      - observability
+      - open-source
+      links:
+      - name: Pixie Website
+        url: https://px.dev
+      - name: Blog
+        url: https://blog.px.dev
+      - name: Documentation
+        url: https://docs.px.dev
+      maintainers:
+      - email: dev@px.dev
+        name: Pixie
+      maturity: alpha
+      provider:
+        name: Pixie Maintainers
+      relatedImages:
+      - gcr.io/pixie-oss/pixie-prod/operator/operator_image:0.0.22
+      version: 0.0.22
+    name: stable
+  defaultChannel: stable
+  packageName: pixie-operator
+  provider:
+    name: Pixie Maintainers

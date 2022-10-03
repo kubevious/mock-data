@@ -1,0 +1,171 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: eG Innovations
+    provider-url: https://www.eginnovations.com
+  name: eginnovations-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: eginnovations-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "eginnovations.com/v1beta1",
+              "kind": "EgUniversalAgent",
+              "metadata": {
+                "name": "eguniversalagent-sample"
+              },
+              "spec": {
+                "matchingLabels": [
+                  "enablemwc"
+                ],
+                "monitoredNamespaces": [
+                  "default"
+                ],
+                "unMonitoredNamespaces": [
+                  "egagent"
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/eginnovations/universal-agent-operator:0.0.1
+        createdAt: "2022-07-03T13:28:40+00:00"
+        operators.operatorframework.io/builder: operator-sdk-v1.16.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/eginnovations/universal-agent-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: EgUniversalAgent is the Schema for the eguniversalagents API
+          displayName: Eg Universal Agent
+          kind: EgUniversalAgent
+          name: eguniversalagents.eginnovations.com
+          version: v1beta1
+      description: |
+        eG Innovations’ converged application and infrastructure performance monitoring capabilities provide end-to-end visibility and correlated analytics for every layer, every tier of your IT landscape.
+
+        The eG Enterprise Universal Agent Operator automatically configures a host agent on every Kubernetes worker node. The host agent auto-discovers the worker nodes and application containers running as Pods on each node and tracks their performance and utilization levels. In-depth monitoring of applications running on containers is also provided using the same host agent. No additional agents are required for the containers.
+      displayName: eG Innovations Universal Agent Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Monitoring
+      - Tracing
+      links:
+      - name: eG Innovations Kubernetes Monitoring Overview
+        url: https://www.eginnovations.com/documentation/Kubernetes/Introduction-to-Monitoring-Kubernetes.htm
+      maintainers:
+      - email: devops@eginnovations.com
+        name: eG Innovations
+      maturity: alpha
+      minKubeVersion: 1.22.0
+      provider:
+        name: eG Innovations
+        url: https://www.eginnovations.com
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - docker.io/eginnovations/universal-agent-operator:0.0.1
+      version: 0.0.1
+    name: beta
+  - currentCSV: eginnovations-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "eginnovations.com/v1beta1",
+              "kind": "EgUniversalAgent",
+              "metadata": {
+                "name": "eguniversalagent-sample"
+              },
+              "spec": {
+                "matchingLabels": [
+                  "enablemwc"
+                ],
+                "monitoredNamespaces": [
+                  "default"
+                ],
+                "unMonitoredNamespaces": [
+                  "egagent"
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/eginnovations/universal-agent-operator:0.0.1
+        createdAt: "2022-07-03T13:28:40+00:00"
+        operators.operatorframework.io/builder: operator-sdk-v1.16.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/eginnovations/universal-agent-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: EgUniversalAgent is the Schema for the eguniversalagents API
+          displayName: Eg Universal Agent
+          kind: EgUniversalAgent
+          name: eguniversalagents.eginnovations.com
+          version: v1beta1
+      description: |
+        eG Innovations’ converged application and infrastructure performance monitoring capabilities provide end-to-end visibility and correlated analytics for every layer, every tier of your IT landscape.
+
+        The eG Enterprise Universal Agent Operator automatically configures a host agent on every Kubernetes worker node. The host agent auto-discovers the worker nodes and application containers running as Pods on each node and tracks their performance and utilization levels. In-depth monitoring of applications running on containers is also provided using the same host agent. No additional agents are required for the containers.
+      displayName: eG Innovations Universal Agent Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Monitoring
+      - Tracing
+      links:
+      - name: eG Innovations Kubernetes Monitoring Overview
+        url: https://www.eginnovations.com/documentation/Kubernetes/Introduction-to-Monitoring-Kubernetes.htm
+      maintainers:
+      - email: devops@eginnovations.com
+        name: eG Innovations
+      maturity: alpha
+      minKubeVersion: 1.22.0
+      provider:
+        name: eG Innovations
+        url: https://www.eginnovations.com
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - docker.io/eginnovations/universal-agent-operator:0.0.1
+      version: 0.0.1
+    name: candidate
+  defaultChannel: beta
+  packageName: eginnovations-operator
+  provider:
+    name: eG Innovations
+    url: https://www.eginnovations.com

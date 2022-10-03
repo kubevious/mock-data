@@ -1,0 +1,133 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: medik8s
+    provider-url: https://www.medik8s.io/
+  name: poison-pill-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: poison-pill.v0.1.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "poison-pill.medik8s.io/v1alpha1",
+              "kind": "PoisonPillConfig",
+              "metadata": {
+                "name": "poison-pill-config",
+                "namespace": "poison-pill"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "poison-pill.medik8s.io/v1alpha1",
+              "kind": "PoisonPillRemediation",
+              "metadata": {
+                "name": "poisonpillremediation-sample"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "poison-pill.medik8s.io/v1alpha1",
+              "kind": "PoisonPillRemediationTemplate",
+              "metadata": {
+                "name": "poisonpillremediationtemplate-sample"
+              },
+              "spec": {
+                "template": {
+                  "spec": {}
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/medik8s/poison-pill-operator:0.1.4
+        operatorframework.io/suggested-namespace: poison-pill
+        operators.operatorframework.io/builder: operator-sdk-v1.4.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/medik8s/poison-pill
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PoisonPillConfig is the Schema for the poisonpillconfigs API
+            in which a user can configure the poison pill agents
+          displayName: Poison Pill Config
+          kind: PoisonPillConfig
+          name: poisonpillconfigs.poison-pill.medik8s.io
+          version: v1alpha1
+        - description: PoisonPillRemediation is the Schema for the poisonpillremediations
+            API
+          displayName: Poison Pill Remediation
+          kind: PoisonPillRemediation
+          name: poisonpillremediations.poison-pill.medik8s.io
+          version: v1alpha1
+        - description: PoisonPillRemediationTemplate is the Schema for the poisonpillremediationtemplates
+            API
+          displayName: Poison Pill Remediation Template
+          kind: PoisonPillRemediationTemplate
+          name: poisonpillremediationtemplates.poison-pill.medik8s.io
+          version: v1alpha1
+      description: This poison pill operator is using an alternate mechanism for a
+        node in a cluster to detect its health status and take actions to remediate
+        itself in case of a failure. While not all remediation events can result in
+        the node returning to a healthy state, the operator does allow surviving parts
+        of the cluster to assume the node has reached a safe state so that it’s workloads
+        can be automatically recovered. A prerequesuite for the poison pill operator
+        is a functioning health detection system that implements the external remediation
+        API, such as Node Healthcheck Operator, Machine Healthcehck Controller (in
+        OCP or Cluster-API based clusters). Once a node/machine is unhealthy, the
+        detection system will create the PoisonPillRemediation CR, which triggers
+        the poison pill operator. To get started, a user would need to create a PoisonPillRemediationTemplate,
+        and reference that CR with an NHC/MHC CR. Note that this is in a tech preview
+        phase.
+      displayName: Poison Pill Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - fencing
+      - remediation
+      - auto-healing
+      - recovery
+      - high-availability
+      - baremetal
+      links:
+      - name: Poison Pill
+        url: https://www.medik8s.io/
+      maintainers:
+      - email: medik8s@googlegroups.com
+        name: medik8s team
+      maturity: alpha
+      provider:
+        name: medik8s
+        url: https://www.medik8s.io/
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/medik8s/poison-pill-operator:0.1.4
+      version: 0.1.4
+    name: alpha
+  defaultChannel: alpha
+  packageName: poison-pill-operator
+  provider:
+    name: medik8s
+    url: https://www.medik8s.io/

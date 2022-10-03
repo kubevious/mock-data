@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: root-ca-cert-publisher-dockercfg-fcv6x
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:16Z"
+  name: root-ca-cert-publisher
+  namespace: kube-system
+  resourceVersion: "1826"
+  uid: 41fd76b3-264b-4836-846f-cc48c2c9284e
+secrets:
+- name: root-ca-cert-publisher-token-xkhjd
+- name: root-ca-cert-publisher-dockercfg-fcv6x

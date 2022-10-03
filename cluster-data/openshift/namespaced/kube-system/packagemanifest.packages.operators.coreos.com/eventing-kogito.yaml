@@ -1,0 +1,109 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: eventing-kogito
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: eventing-kogito.v1.2.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "kogito.knative.dev/v1alpha1",
+              "kind": "KogitoSource",
+              "metadata": {
+                "name": "kogito-order-processing"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "eventing.knative.dev/v1",
+                    "kind": "Broker",
+                    "name": "default"
+                  }
+                },
+                "subject": {
+                  "apiVersion": "serving.knative.dev/v1",
+                  "kind": "Service",
+                  "name": "serverless-workflow-order-processing"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Networking
+        containerImage: gcr.io/knative-releases/knative.dev/eventing-kogito/cmd/controller:v1.2.0
+        createdAt: "2021-08-25T12:00:00Z"
+        olm.targetNamespaces: knative-kogito
+        operators.operatorframework.io/builder: operator-sdk-v1.16.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/knative-sandbox/eventing-kogito
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: KogitoSource is the representation of a Knative Eventing Source
+            for a Kogito custom Service.
+          displayName: Kogito Source
+          kind: KogitoSource
+          name: kogitosources.kogito.knative.dev
+          version: v1alpha1
+      description: |-
+        Knative Eventing Source for Kogito Services. This controller will enable easy configuration of any Kogito custom Service
+        with the Knative Eventing platform. Please find more information about using this source in the [Official Kogito Documentation](https://docs.jboss.org/kogito/release/latest/html_single/#_kogito_knative_eventing_add_on)
+
+        **Note:** The admission webhooks are not installed via OLM at this time. Because of that, please ensure that you create the `KogitoSource` objects with the subbject and sink information with the appropriate namespace.
+      displayName: Kogito Knative Eventing Source
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - serverless workflow
+      - kogito
+      - knative
+      - dmn
+      - bpmn
+      - eventing
+      - cloudevents
+      - messaging
+      links:
+      - name: Source Repository
+        url: https://github.com/knative-sandbox/eventing-kogito
+      - name: Kogito Knative Add-On Documentation
+        url: https://docs.jboss.org/kogito/release/latest/html_single/#_kogito_knative_eventing_add_on
+      maintainers:
+      - email: bsig-cloud@redhat.com
+        name: Red Hat
+      maturity: alpha
+      minKubeVersion: 1.20.0
+      provider:
+        name: Red Hat
+      relatedImages:
+      - gcr.io/knative-releases/knative.dev/eventing-kogito/cmd/controller:v1.2.0
+      version: 1.2.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: eventing-kogito
+  provider:
+    name: Red Hat

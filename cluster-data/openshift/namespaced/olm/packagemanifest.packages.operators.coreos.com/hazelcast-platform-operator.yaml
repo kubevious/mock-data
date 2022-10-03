@@ -1,0 +1,182 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Hazelcast, Inc
+    provider-url: ""
+  name: hazelcast-platform-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hazelcast-platform-operator.v5.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "hazelcast.com/v1alpha1",
+              "kind": "Hazelcast",
+              "metadata": {
+                "name": "hazelcast"
+              },
+              "spec": {
+                "clusterSize": 3,
+                "licenseKeySecret": "hazelcast-license-key",
+                "repository": "docker.io/hazelcast/hazelcast-enterprise",
+                "version": "5.1.3"
+              }
+            },
+            {
+              "apiVersion": "hazelcast.com/v1alpha1",
+              "kind": "ManagementCenter",
+              "metadata": {
+                "name": "managementcenter"
+              },
+              "spec": {
+                "externalConnectivity": {
+                  "type": "LoadBalancer"
+                },
+                "hazelcastClusters": [
+                  {
+                    "address": "hazelcast",
+                    "name": "dev"
+                  }
+                ],
+                "licenseKeySecret": "hazelcast-license-key",
+                "persistence": {
+                  "enabled": true,
+                  "size": "10Gi"
+                },
+                "repository": "hazelcast/management-center",
+                "version": "5.1.4"
+              }
+            },
+            {
+              "apiVersion": "hazelcast.com/v1alpha1",
+              "kind": "Map",
+              "metadata": {
+                "name": "map"
+              },
+              "spec": {
+                "hazelcastResourceName": "hazelcast"
+              }
+            },
+            {
+              "apiVersion": "hazelcast.com/v1alpha1",
+              "kind": "WanReplication",
+              "metadata": {
+                "name": "wanreplication-sample"
+              },
+              "spec": {
+                "endpoints": "35.192.33.252",
+                "mapResourceName": "map",
+                "targetClusterName": "dev"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Database
+        containerImage: docker.io/hazelcast/hazelcast-platform-operator:5.4
+        createdAt: "2022-09-05T11:59:59Z"
+        description: Install Hazelcast clusters in Kubernetes environments.
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        support: Hazelcast, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Hazelcast is the Schema for the hazelcasts API
+          displayName: Hazelcast
+          kind: Hazelcast
+          name: hazelcasts.hazelcast.com
+          version: v1alpha1
+        - kind: HotBackup
+          name: hotbackups.hazelcast.com
+          version: v1alpha1
+        - description: ManagementCenter is the Schema for the managementcenters API
+          displayName: Management Center
+          kind: ManagementCenter
+          name: managementcenters.hazelcast.com
+          version: v1alpha1
+        - description: Map is the Schema for the maps API
+          displayName: Map
+          kind: Map
+          name: maps.hazelcast.com
+          version: v1alpha1
+        - description: WanReplication is the Schema for the wanreplications API
+          displayName: Wan Replication
+          kind: WanReplication
+          name: wanreplications.hazelcast.com
+          version: v1alpha1
+      description: |
+        # Hazelcast Platform Operator #
+
+        Easily deploy Hazelcast clusters and Management Center into Kubernetes environments and manage their lifecycles.
+
+        ## Before You Start
+
+        If you are planning to create Hazelcast Platform Enterprise clusters, you need to [create a secret](https://docs.hazelcast.com/operator/latest/get-started#step-2-start-the-hazelcast-cluster) for the license. You can request a trial license key from [here](https://trialrequest.hazelcast.com).
+
+        For Hazelcast Platform clusters, you can simply continue.
+
+        ## Documentation
+
+        1. [Get started](https://docs.hazelcast.com/operator/latest/get-started) with the Operator.
+        2. [Connect to the cluster from outside Kubernetes](https://guides.hazelcast.org/hazelcast-platform-operator-expose-externally/main)
+          from the outside.
+
+        ## Features
+
+        Hazelcast Platform Operator supports the features below:
+
+        * Custom resource for Hazelcast Platform (Open Source & Enterprise) and Management Center
+        * Observe status of Hazelcast and Management Center clusters
+        * Scale up and down Hazelcast clusters
+        * Expose Hazelcast cluster to external
+          clients ([Smart & Unisocket](https://docs.hazelcast.com/hazelcast/latest/clients/java#java-client-operation-modes))
+      displayName: Hazelcast Platform Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - hazelcast
+      - keyvalue
+      - in-memory
+      - database
+      - caching
+      links:
+      - name: Documentation
+        url: https://docs.hazelcast.com/operator/latest/
+      - name: Source Code
+        url: https://github.com/hazelcast/hazelcast-platform-operator
+      maintainers:
+      - email: cloudnative@hazelcast.com
+        name: Hazelcast Cloud Native Team
+      maturity: alpha
+      minKubeVersion: 1.16.0
+      provider:
+        name: Hazelcast, Inc
+      relatedImages:
+      - docker.io/hazelcast/hazelcast-platform-operator:5.4
+      version: 5.4.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: hazelcast-platform-operator
+  provider:
+    name: Hazelcast, Inc

@@ -1,0 +1,107 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: authorino-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: authorino-operator.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.authorino.kuadrant.io/v1beta1",
+              "kind": "Authorino",
+              "metadata": {
+                "name": "authorino-sample"
+              },
+              "spec": {
+                "listener": {
+                  "tls": {
+                    "enabled": false
+                  }
+                },
+                "oidcServer": {
+                  "tls": {
+                    "enabled": false
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        containerImage: quay.io/kuadrant/authorino-operator:v0.4.0
+        createdAt: 2021-12-08T10-00-00Z
+        operators.operatorframework.io/builder: operator-sdk-v1.22.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Kuadrant/authorino-operator
+        support: kuadrant
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: API to describe the desired protection for a service
+          displayName: AuthConfig
+          kind: AuthConfig
+          name: authconfigs.authorino.kuadrant.io
+          version: v1beta1
+        - description: API to create instances of authorino
+          displayName: Authorino
+          kind: Authorino
+          name: authorinos.operator.authorino.kuadrant.io
+          version: v1beta1
+      description: The operator to manage instances of Authorino
+      displayName: Authorino Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Authorino
+      - Authorino Operator
+      - Kuadrant
+      - Authorization
+      - Authentication
+      links:
+      - name: Authorino Operator
+        url: https://github.com/Kuadrant/authorino-operator
+      - name: Authorino
+        url: https://github.com/Kuadrant/authorino
+      maintainers:
+      - email: dcesare@redhat.com
+        name: Didier Di Cesare
+      - email: eastizle@redhat.com
+        name: Eguzki Astiz Lezaun
+      - email: mcassola@redhat.com
+        name: Guilherme Cassolato
+      maturity: alpha
+      minKubeVersion: 1.8.0
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/kuadrant/authorino-operator:v0.4.0
+      version: 0.4.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: authorino-operator
+  provider:
+    name: Red Hat

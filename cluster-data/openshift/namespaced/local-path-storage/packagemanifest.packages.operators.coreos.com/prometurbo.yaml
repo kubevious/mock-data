@@ -1,0 +1,228 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.arm64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    provider: Turbonomic, Inc.
+    provider-url: ""
+  name: prometurbo
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: prometurbo-operator.v8.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Prometurbo","metadata":{"name":"prometurbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/turbonomic/prometurbo-operator:8.6
+        createdAt: "2019-05-01 00:00:00"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/prometurbo/tree/master/deploy/prometurbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Prometurbo Operator
+          kind: Prometurbo
+          name: prometurbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — PromeTurbo — that runs next to your Prometheus sever, which monitors your environment.
+        PromeTurbo sends application and infrastructure monitoring data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Prometurbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Prometurbo Operator
+        url: https://github.com/turbonomic/prometurbo/tree/master/deploy/prometurbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - docker.io/turbonomic/prometurbo-operator:8.6
+      version: 8.6.0
+    name: stable
+  - currentCSV: prometurbo-operator.v8.5.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Prometurbo","metadata":{"name":"prometurbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: turbonomic/prometurbo-operator:8.5
+        createdAt: "2019-05-01 00:00:00"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/prometurbo/tree/master/deploy/prometurbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Prometurbo Operator
+          kind: Prometurbo
+          name: prometurbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — PromeTurbo — that runs next to your Prometheus sever, which monitors your environment.
+        PromeTurbo sends application and infrastructure monitoring data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Prometurbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Prometurbo Operator
+        url: https://github.com/turbonomic/prometurbo/tree/master/deploy/prometurbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - turbonomic/prometurbo-operator:8.5
+      version: 8.5.0
+    name: v8.5.0
+  - currentCSV: prometurbo-operator.v8.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Prometurbo","metadata":{"name":"prometurbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/turbonomic/prometurbo-operator:8.6
+        createdAt: "2019-05-01 00:00:00"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/prometurbo/tree/master/deploy/prometurbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Prometurbo Operator
+          kind: Prometurbo
+          name: prometurbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — PromeTurbo — that runs next to your Prometheus sever, which monitors your environment.
+        PromeTurbo sends application and infrastructure monitoring data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Prometurbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Prometurbo Operator
+        url: https://github.com/turbonomic/prometurbo/tree/master/deploy/prometurbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - docker.io/turbonomic/prometurbo-operator:8.6
+      version: 8.6.0
+    name: v8.6.0
+  defaultChannel: stable
+  packageName: prometurbo
+  provider:
+    name: Turbonomic, Inc.

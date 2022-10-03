@@ -1,0 +1,142 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Snyk Ltd.
+    provider-url: ""
+  name: snyk-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: snyk-operator.v1.92.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "charts.helm.k8s.io/v1alpha1",
+              "kind": "SnykMonitor",
+              "metadata": {
+                "name": "snyk-monitor"
+              },
+              "spec": {
+                "clusterName": "",
+                "image": {
+                  "pullPolicy": "Always",
+                  "repository": "snyk/kubernetes-monitor",
+                  "tag": "1.92.0-ubi8"
+                },
+                "integrationApi": "",
+                "monitorSecrets": "snyk-monitor",
+                "scope": "Cluster",
+                "temporaryStorageSize": "50Gi",
+                "pvc": {
+                  "enabled": false,
+                  "create": false,
+                  "name": "snyk-monitor-pvc",
+                  "storageClassName": null
+                },
+                "initContainerImage": {
+                  "repository": "busybox",
+                  "tag": "latest"
+                },
+                "requests": {
+                  "memory": "400Mi"
+                },
+                "limits": {
+                  "memory": "2Gi"
+                },
+                "nodeAffinity": {
+                  "disableBetaArchNodeSelector": false
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools, Security
+        certified: "false"
+        containerImage: docker.io/snyk/kubernetes-operator:1.92.0
+        createdAt: "2022-06-09T17:50:40Z"
+        description: A Kubernetes Operator for creating and managing Snyk controller
+          instances.
+        olm.skipRange: <1.68.2
+        repository: https://github.com/snyk/kubernetes-monitor
+        support: Snyk Ltd.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a deployment of the Snyk controller, which scans
+            container images in the cluster for vulnerabilities.
+          displayName: Snyk Monitor
+          kind: SnykMonitor
+          name: snykmonitors.charts.helm.k8s.io
+          version: v1alpha1
+      description: |-
+        A Kubernetes Operator for creating and managing Snyk Kubernetes controller instances.
+
+        Snyk integrates with Kubernetes, enabling you to import and test your running workloads and identify vulnerabilities in their associated images and configurations that might make those workloads less secure. Once imported, Snyk continues to monitor those workloads, identifying additional security issues as new images are deployed and the workload configuration changes.
+
+        ## Prerequisites
+
+        To start using the Operator and the Snyk controller that it manages, you will need to create a secret containing your Snyk integrationId and Docker config file:
+
+        ```
+        kubectl create namespace snyk-monitor
+        kubectl create secret generic snyk-monitor -n snyk-monitor --from-literal=dockercfg.json={} --from-literal=integrationId=${SNYK_INTEGRATION_ID}
+        ```
+
+        Refer to the [Snyk documentation](https://support.snyk.io/hc/en-us/articles/360003916138-Kubernetes-integration-overview) for more details.
+      displayName: Snyk Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - snyk
+      - controller
+      - monitor
+      - operator
+      - security
+      - cluster
+      - container
+      - image
+      - security
+      - vulnerabilities
+      - advisories
+      - audit
+      - scan
+      - scanning
+      links:
+      - name: Website
+        url: https://snyk.io
+      - name: Documentation
+        url: https://support.snyk.io/hc/en-us/articles/360003916138-Kubernetes-integration-overview
+      maintainers:
+      - email: support@snyk.io
+        name: Snyk Ltd.
+      maturity: stable
+      provider:
+        name: Snyk Ltd.
+      relatedImages:
+      - docker.io/snyk/kubernetes-operator:1.92.0
+      version: 1.92.0
+    name: stable
+  defaultChannel: stable
+  packageName: snyk-operator
+  provider:
+    name: Snyk Ltd.

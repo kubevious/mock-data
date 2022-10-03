@@ -1,0 +1,29 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:44:40Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{packageserver}
+  kind: Pod
+  name: packageserver-5cdd79495d-r9222
+  namespace: olm
+  resourceVersion: "29171"
+  uid: 1e9a9773-217e-4bff-8f41-2568e7e49eed
+kind: Event
+lastTimestamp: "2022-10-03T19:44:40Z"
+message: 'Liveness probe failed: Get "https://10.244.0.16:5443/healthz": context deadline
+  exceeded'
+metadata:
+  creationTimestamp: "2022-10-03T19:44:44Z"
+  name: packageserver-5cdd79495d-r9222.171aa6ae6e3e9154
+  namespace: olm
+  resourceVersion: "40205"
+  uid: 7be985ad-5d8f-4ec9-8f99-cfc08b725f29
+reason: Unhealthy
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Warning

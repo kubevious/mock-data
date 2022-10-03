@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+      pods in this namespace.  It is auto-managed by a controller; remove subjects
+      to disable.
+  creationTimestamp: "2022-10-03T18:25:57Z"
+  name: system:deployers
+  namespace: kube-system
+  resourceVersion: "645"
+  uid: ae365039-7f1d-4ea6-9b42-1b17ad79d615
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:deployer
+subjects:
+- kind: ServiceAccount
+  name: deployer
+  namespace: kube-system

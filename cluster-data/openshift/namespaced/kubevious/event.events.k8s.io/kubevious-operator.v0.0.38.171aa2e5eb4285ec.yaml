@@ -1,0 +1,24 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 2
+deprecatedFirstTimestamp: "2022-10-03T18:35:20Z"
+deprecatedLastTimestamp: "2022-10-03T19:44:55Z"
+deprecatedSource:
+  component: operator-lifecycle-manager
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:44:55Z"
+  name: kubevious-operator.v0.0.38.171aa2e5eb4285ec
+  namespace: kubevious
+  resourceVersion: "40236"
+  uid: 526e4854-b11b-47d9-a046-8bc61595598d
+note: all requirements found, attempting install
+reason: AllRequirementsMet
+regarding:
+  apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  name: kubevious-operator.v0.0.38
+  namespace: kubevious
+  resourceVersion: "40231"
+  uid: c616343d-2dd0-4c01-be37-dc087d3bbc87
+type: Normal

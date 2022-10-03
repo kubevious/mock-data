@@ -1,0 +1,123 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: yaacov.com
+    provider-url: ""
+  name: virt-gateway-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: virt-gateway-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "ocgate.yaacov.com/v1beta1",
+              "kind": "GateServer",
+              "metadata": {
+                "name": "gateserver-sample",
+                "namespace": "kube-gateway"
+              },
+              "spec": {
+                "apiURL": "https://kubernetes.default.svc",
+                "generateSecret": true,
+                "image": "quay.io/yaacov/kube-gateway",
+                "passThrough": false,
+                "route": "kube-gateway-proxy.apps-crc.testing",
+                "serviceAccountAPIGroups": [
+                  "subresources.kubevirt.io"
+                ],
+                "serviceAccountResources": [
+                  "virtualmachineinstances"
+                ],
+                "serviceAccountVerbs": [
+                  "get"
+                ],
+                "webAppImage": "quay.io/yaacov/kube-gateway-web-app-novnc"
+              }
+            },
+            {
+              "apiVersion": "ocgate.yaacov.com/v1beta1",
+              "kind": "GateToken",
+              "metadata": {
+                "name": "gatetoken-sample",
+                "namespace": "kube-gateway"
+              },
+              "spec": {
+                "APIGroups": [
+                  "subresources.kubevirt.io"
+                ],
+                "generateServiceAccount": false,
+                "namespace": "default",
+                "resourceNames": [
+                  "testvm"
+                ],
+                "resources": [
+                  "virtualmachineinstances"
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/yaacov/virt-gateway-operator:v0.0.1
+        operators.operatorframework.io/builder: operator-sdk-v1.4.2
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: GateServer is the Schema for the gateservers API
+          displayName: Gate Server
+          kind: GateServer
+          name: gateservers.ocgate.yaacov.com
+          version: v1beta1
+        - description: GateToken is the Schema for the gatetokens API
+          displayName: Gate Token
+          kind: GateToken
+          name: gatetokens.ocgate.yaacov.com
+          version: v1beta1
+      description: Generate access tokens for oc gate service
+      displayName: OC Gate operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - jwt
+      - k8s
+      - access
+      links:
+      - name: Kube Gateway Service
+        url: https://github.com/yaacov/kube-gateway
+      - name: Virt Gateway Operator
+        url: https://github.com/yaacov/virt-gateway-operator
+      maturity: alpha
+      provider:
+        name: yaacov.com
+      relatedImages:
+      - quay.io/yaacov/virt-gateway-operator:v0.0.1
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: virt-gateway-operator
+  provider:
+    name: yaacov.com

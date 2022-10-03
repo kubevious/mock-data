@@ -1,0 +1,173 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: radanalytics.io
+    provider-url: ""
+  name: radanalytics-spark
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: sparkoperator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "radanalytics.io/v1",
+              "kind": "SparkCluster",
+              "metadata": {
+                "name": "my-spark-cluster"
+              },
+              "spec": {
+                "worker": {
+                  "instances": "2"
+                },
+                "master": {
+                  "instances": "1"
+                }
+              }
+            },
+            {
+              "apiVersion": "radanalytics.io/v1",
+              "kind": "SparkApplication",
+              "metadata": {
+                "name": "my-spark-app"
+              },
+              "spec": {
+                "mainApplicationFile": "local:///opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar",
+                "mainClass": "org.apache.spark.examples.SparkPi",
+                "driver": {
+                  "cores": 0.2,
+                  "coreLimit": "500m"
+                },
+                "executor": {
+                  "instances": 2,
+                  "cores": 1,
+                  "coreLimit": "1000m"
+                }
+              }
+            },
+            {
+              "apiVersion": "radanalytics.io/v1",
+              "kind": "SparkHistoryServer",
+              "metadata": {
+                  "name": "my-history-server"
+              },
+              "spec": {
+                  "type": "remoteStorage",
+                  "expose": true,
+                  "logDirectory": "s3a://my-history-server/",
+                  "updateInterval": 10,
+                  "retainedApplications": 50,
+                  "customImage": "quay.io/jkremser/openshift-spark:2.4.0-aws",
+                  "sparkConfiguration": [
+                    {
+                        "name": "spark.hadoop.fs.s3a.impl",
+                        "value": "org.apache.hadoop.fs.s3a.S3AFileSystem"
+                    },
+                    {
+                        "name": "spark.hadoop.fs.s3a.access.key",
+                        "value": "foo"
+                    },
+                    {
+                        "name": "spark.hadoop.fs.s3a.secret.key",
+                        "value": "bar"
+                    },
+                    {
+                        "name": "spark.hadoop.fs.s3a.endpoint",
+                        "value": "http://ceph-nano-0:8000"
+                    }
+                  ]
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Big Data
+        certified: "false"
+        containerImage: quay.io/radanalyticsio/spark-operator:1.0.2
+        createdAt: "2019-01-17 12:00:00"
+        description: An operator for managing the Apache Spark clusters and intelligent
+          applications that spawn those clusters.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/radanalyticsio/spark-operator
+        support: jkremser@redhat.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Apache Spark cluster
+          displayName: Spark Cluster
+          kind: SparkCluster
+          name: sparkclusters.radanalytics.io
+          version: v1
+        - description: Apache Spark application
+          displayName: Spark Application
+          kind: SparkApplication
+          name: sparkapplications.radanalytics.io
+          version: v1
+        - description: Server that keeps track of finished Spark jobs
+          displayName: Spark History Server
+          kind: SparkHistoryServer
+          name: sparkhistoryservers.radanalytics.io
+          version: v1
+      description: |
+        **Apache Spark** is a unified analytics engine for large-scale data processing. Using this operator you can deploy and manage Spark clusters that run in standalone mode. You can expose the metrics for Prometheus, prepare data for Spark workers or add custom Maven dependencies for your cluster. Operator also supports `SparkApplications` that share the same API with the GCP Spark operator. These applications spawn their own ad-hoc clusters using K8s as the native scheduler.
+
+        Usage:
+        ```
+        # create cluster
+        cat <<EOF | kubectl create -f -
+        apiVersion: radanalytics.io/v1
+        kind: SparkCluster
+        metadata:
+          name: my-spark-cluster
+        spec:
+          worker:
+            instances: 2
+        EOF
+        ```
+
+        For more advanced examples please consult [examples](https://github.com/radanalyticsio/spark-operator/tree/master/examples).
+      displayName: Apache Spark Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Spark
+      - Apache Spark
+      links:
+      - name: Apache Spark Operator Source Code
+        url: https://github.com/radanalyticsio/spark-operator
+      - name: Apache Spark
+        url: https://spark.apache.org/
+      maintainers:
+      - email: jkremser@redhat.com
+        name: Red Hat, Inc.
+      maturity: alpha
+      minKubeVersion: 1.10.0
+      provider:
+        name: radanalytics.io
+      relatedImages:
+      - quay.io/radanalyticsio/spark-operator:1.0.2
+      version: 1.0.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: radanalytics-spark
+  provider:
+    name: radanalytics.io

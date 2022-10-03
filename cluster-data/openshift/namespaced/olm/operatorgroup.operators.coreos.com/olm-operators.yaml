@@ -1,0 +1,19 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: PackageManifest.v1.packages.operators.coreos.com
+  creationTimestamp: "2022-10-03T18:25:12Z"
+  generation: 1
+  name: olm-operators
+  namespace: olm
+  resourceVersion: "29137"
+  uid: d60a1108-0aa9-40e3-b2fb-73f364bc56da
+spec:
+  targetNamespaces:
+  - olm
+  upgradeStrategy: Default
+status:
+  lastUpdated: "2022-10-03T18:25:23Z"
+  namespaces:
+  - olm

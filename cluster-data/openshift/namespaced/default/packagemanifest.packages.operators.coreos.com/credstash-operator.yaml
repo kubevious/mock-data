@@ -1,0 +1,168 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Ouzi
+    provider-url: ""
+  name: credstash-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: credstash-operator.v1.13.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+            "apiVersion": "credstash.ouzi.tech/v1alpha1",
+            "kind": "CredstashSecret",
+            "metadata": {
+              "name": "very-secret",
+              "namespace": "test"
+            },
+            "spec": {
+              "name": "example",
+              "secrets": [
+                {
+                  "key": "test-secret",
+                  "name": "renamed-test-secret",
+                  "table": "credential-store",
+                  "version": "1",
+                  "context": {
+                    "key1": "value1",
+                    "key2": "value2"
+                  }
+                }
+              ],
+              "type": "Opaque"
+            }
+          } ]
+        capabilities: Seamless Upgrades
+        categories: Security
+        certified: "false"
+        containerImage: quay.io/ouzi/credstash-operator:v1.13.0
+        createdAt: "2020-07-20 01:01:01"
+        description: An operator that creates and manages Kubernetes secrets from
+          Credstash secrets
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/ouzi-dev/credstash-operator
+        support: Ouzi Team
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: CredstashSecret is the Schema for the credstashsecrets API
+          displayName: CredstashSecret
+          kind: CredstashSecret
+          name: credstashsecrets.credstash.ouzi.tech
+          version: v1alpha1
+      description: |
+        ### Overview
+        [Credstash Operator](https://github.com/ouzi-dev/credstash-operator) is a Kubernetes Controller that allows you to compose Kubernetes Secretes from Credstash Secrets.
+        ### Prerequisites
+        The controller requires AWS credentials to be set before deploying it. This is accomplished by creating a secret with name aws-credentials in the controller namespace with the following keys;
+        ```
+        AWS_ACCESS_KEY_ID
+        AWS_SECRET_ACCESS_KEY
+        AWS_REGION
+        ```
+        For example running the following will create an appropriate secret in the credstash namespace;
+        `kubectl create secret generic aws-credentials --from-literal=AWS_ACCESS_KEY_ID=access_key --from-literal=AWS_SECRET_ACCESS_KEY=secret_access_key --from-literal=AWS_REGION=us-west-2 --namespace=placeholder`
+        ### Example Credstash Secrets
+        #### Opaque
+        ```
+        apiVersion: credstash.ouzi.tech/v1alpha1
+        kind: CredstashSecret
+        metadata:
+          name: very-secret
+          namespace: test
+        spec:
+          # Name of the target secret (Optional. Defaults to the CR name)
+          name: example
+          # List of secrets from credstash to add to the body of the secret
+          secrets:
+              # key: the key in credstash to fetch. (Required)
+            - key: test-secret
+              # name: the name of the resulting data element in the k8s secret (Optional. Defaults to the credstash key)
+              name: renamed-test-secret
+              # table: the dynamoDB table that contains the credstash secrets (Optional. Defaults to credential-store)
+              table: credential-store
+              # version: the version of the secret in credstash for the provided key (Optional. Defaults to the latest version)
+              version: 1
+              # context: key value pairs to the encryption context (Optional)
+              context:
+                key1: value1
+                key2: value2
+          # type: the type of the resulting kubernetes secret (Optional. Defaults to Opaque)
+          type: Opaque
+        ```
+        #### Docker Config
+        ```
+        apiVersion: credstash.ouzi.tech/v1alpha1
+        kind: CredstashSecret
+        metadata:
+          name: dockerconfigjson
+          namespace: test
+        spec:
+          # Name of the target secret (Optional. Defaults to the CR name)
+          name: dockerconfigjson
+          # List of secrets from credstash to add to the body of the secret
+          secrets:
+              # key: the key in credstash to fetch. (Required)
+            - key: docker_secret
+              # name: the name of the resulting data element in the k8s secret (Optional. Defaults to the credstash key)
+              name: .dockerconfigjson
+              # table: the dynamoDB table that contains the credstash secrets (Optional. Defaults to credential-store)
+              table: credential-store
+              # context: key value pairs to the encryption context (Optional)
+              context:
+                key1: value1
+                key2: value2
+          # type: the type of the resulting kubernetes secret (Optional. Defaults to Opaque)
+          type: kubernetes.io/dockerconfigjson
+        ```
+        ### Documentation
+        For further Documentation, visit the [credstash-operator repo in github](https://github.com/ouzi-dev/credstash-operator)
+      displayName: credstash-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - k8s
+      - credstash
+      - secret
+      links:
+      - name: Operator Source Code
+        url: https://github.com/ouzi-dev/credstash-operator
+      - name: https://ouzi.io
+        url: https://ouzi.io
+      maintainers:
+      - email: team@ouzi.dev
+        name: Ouzi Team
+      maturity: alpha
+      minKubeVersion: 1.14.0
+      provider:
+        name: Ouzi
+      relatedImages:
+      - quay.io/ouzi/credstash-operator:v1.13.0
+      version: 1.13.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: credstash-operator
+  provider:
+    name: Ouzi

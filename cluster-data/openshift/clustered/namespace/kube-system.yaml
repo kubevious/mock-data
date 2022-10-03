@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2022-09-30T19:14:45Z"
+  labels:
+    kubernetes.io/metadata.name: kube-system
+  name: kube-system
+  resourceVersion: "12"
+  uid: 6d1232ee-995b-47a1-8280-f237a03ce4ca
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

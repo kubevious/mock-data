@@ -1,0 +1,47 @@
+apiVersion: flowcontrol.apiserver.k8s.io/v1beta2
+kind: FlowSchema
+metadata:
+  annotations:
+    apf.kubernetes.io/autoupdate-spec: "true"
+  creationTimestamp: "2022-09-30T19:14:45Z"
+  generation: 1
+  name: catch-all
+  resourceVersion: "76"
+  uid: 95496484-f777-40fc-9455-ad097f1ec18a
+spec:
+  distinguisherMethod:
+    type: ByUser
+  matchingPrecedence: 10000
+  priorityLevelConfiguration:
+    name: catch-all
+  rules:
+  - nonResourceRules:
+    - nonResourceURLs:
+      - '*'
+      verbs:
+      - '*'
+    resourceRules:
+    - apiGroups:
+      - '*'
+      clusterScope: true
+      namespaces:
+      - '*'
+      resources:
+      - '*'
+      verbs:
+      - '*'
+    subjects:
+    - group:
+        name: system:unauthenticated
+      kind: Group
+    - group:
+        name: system:authenticated
+      kind: Group
+status:
+  conditions:
+  - lastTransitionTime: "2022-09-30T19:14:45Z"
+    message: This FlowSchema references the PriorityLevelConfiguration object named
+      "catch-all" and it exists
+    reason: Found
+    status: "False"
+    type: Dangling

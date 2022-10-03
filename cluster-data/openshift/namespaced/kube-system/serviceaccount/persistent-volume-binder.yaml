@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: persistent-volume-binder-dockercfg-kxvnm
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:03Z"
+  name: persistent-volume-binder
+  namespace: kube-system
+  resourceVersion: "1125"
+  uid: 2474faa0-e3cd-4e3c-9bab-863207a4596f
+secrets:
+- name: persistent-volume-binder-token-8vst7
+- name: persistent-volume-binder-dockercfg-kxvnm

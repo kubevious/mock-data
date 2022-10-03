@@ -1,0 +1,118 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Eric Ace
+    provider-url: ""
+  name: nuxeo-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: nuxeo-operator.v0.7.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appzygy.net/v1alpha1",
+              "kind": "Nuxeo",
+              "metadata": {
+                "name": "nuxeo-sample"
+              },
+              "spec": {
+                "access": {
+                  "hostname": "nuxeo-server.apps-crc.testing"
+                },
+                "nodeSets": [
+                  {
+                    "interactive": true,
+                    "name": "cluster",
+                    "nuxeoConfig": {
+                      "nuxeoPackages": [
+                        "nuxeo-web-ui"
+                      ]
+                    },
+                    "replicas": 1
+                  }
+                ],
+                "nuxeoImage": "nuxeo:LTS-2019",
+                "version": "10.10"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Application Runtime
+        certified: "false"
+        containerImage: docker.io/appzygy/nuxeo-operator:0.7.1
+        createdAt: "2020-09-26T00:00:00Z"
+        description: |
+          The Nuxeo Operator manages a Nuxeo cluster, integrating it
+          with backing services like Kafka, Elastic Search, MongoDB, and PostgreSQL
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        operators.operatorframework.io/builder: operator-sdk-v1.0.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/aceeric/nuxeo-operator
+        support: https://github.com/aceeric/nuxeo-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Nuxeo Cluster
+          displayName: Nuxeo
+          kind: Nuxeo
+          name: nuxeos.appzygy.net
+          version: v1alpha1
+      description: |
+        The Nuxeo Operator manages a Nuxeo cluster and integrates it with backing services like
+        Kafka, Elastic Search, MongoDB, and PostgreSQL. The operator supports the ability to configure many Nuxeo
+        runtime options, like JAVA_OPTS, templates, nuxeo.conf settings, custom contributions, cluster size,
+        and so on. Backing service integration is done declaratively. And some backing services are supported via
+        built-in configurations so that with just a few lines of YAML is is possible to run Nuxeo with those
+        backing services.
+      displayName: Nuxeo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - nuxeo
+      - digital
+      - asset
+      - management
+      - kafka
+      - elasticsearch
+      - postgres
+      - mongodb
+      links:
+      - name: Nuxeo Operator
+        url: https://github.com/aceeric/nuxeo-operator
+      - name: Nuxeo Digital Asset Management
+        url: https://www.nuxeo.com/
+      maintainers:
+      - name: Eric Ace
+      maturity: alpha
+      provider:
+        name: Eric Ace
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - docker.io/appzygy/nuxeo-operator:0.7.1
+      version: 0.7.1
+    name: stable
+  defaultChannel: stable
+  packageName: nuxeo-operator
+  provider:
+    name: Eric Ace

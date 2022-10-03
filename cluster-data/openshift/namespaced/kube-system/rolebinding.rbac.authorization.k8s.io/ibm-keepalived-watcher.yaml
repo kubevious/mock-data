@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    armada-service: cruiser-kube-addons
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"annotations":{"armada-service":"cruiser-kube-addons","version":"4.9.48_1556_openshift"},"labels":{"addonmanager.kubernetes.io/mode":"Reconcile","kubernetes.io/cluster-service":"true"},"name":"ibm-keepalived-watcher","namespace":"kube-system"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"Role","name":"ibm-keepalived-watcher"},"subjects":[{"kind":"ServiceAccount","name":"ibm-keepalived-watcher","namespace":"kube-system"}]}
+    version: 4.9.48_1556_openshift
+  creationTimestamp: "2022-10-03T18:35:04Z"
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+    kubernetes.io/cluster-service: "true"
+  name: ibm-keepalived-watcher
+  namespace: kube-system
+  resourceVersion: "6816"
+  uid: efa2dea0-8d80-4ff0-b899-4205e168940c
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ibm-keepalived-watcher
+subjects:
+- kind: ServiceAccount
+  name: ibm-keepalived-watcher
+  namespace: kube-system

@@ -1,0 +1,174 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Datadog
+    provider-url: ""
+  name: datadog-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: datadog-operator.v0.8.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "datadoghq.com/v1alpha1",
+              "kind": "DatadogAgent",
+              "metadata": {
+                "name": "datadog"
+              },
+              "spec": {
+                "agent": {
+                  "apm": {
+                    "enabled": false
+                  },
+                  "log": {
+                    "enabled": false,
+                    "logsConfigContainerCollectAll": false
+                  },
+                  "process": {
+                    "enabled": true,
+                    "processCollection": false
+                  },
+                  "security": {
+                    "compliance": {
+                      "enabled": false
+                    },
+                    "runtime": {
+                      "enabled": false
+                    }
+                  },
+                  "systemProbe": {
+                    "bpfDebugEnabled": false
+                  }
+                },
+                "clusterAgent": {
+                  "config": {
+                    "admissionController": {
+                      "enabled": false
+                    },
+                    "clusterChecksEnabled": false,
+                    "externalMetrics": {
+                      "enabled": false
+                    }
+                  },
+                  "replicas": 2
+                },
+                "clusterChecksRunner": {
+                  "replicas": 2
+                },
+                "clusterName": "\u003cCLUSTER_NAME\u003e",
+                "credentials": {
+                  "apiKey": "\u003cDATADOG_API_KEY\u003e",
+                  "appKey": "\u003cDATADOG_APP_KEY\u003e",
+                  "token": "\u003cDATADOG_CLUSTER_AGENT_TOKEN\u003e"
+                }
+              }
+            },
+            {
+              "apiVersion": "datadoghq.com/v1alpha1",
+              "kind": "DatadogMetric",
+              "metadata": {
+                "name": "datadogmetric-sample"
+              },
+              "spec": {
+                "query": "avg:kubernetes.cpu.usage.total{app:foo}.rollup(avg,30)/(avg:kubernetes.cpu.limits{app:foo}.rollup(avg,30)*10000000)"
+              }
+            },
+            {
+              "apiVersion": "datadoghq.com/v1alpha1",
+              "kind": "DatadogMonitor",
+              "metadata": {
+                "name": "datadogmonitor-sample"
+              },
+              "spec": {
+                "message": "Something is wrong and we need to fix it.",
+                "query": "avg(last_15m):avg:foo{env:staging,service:bar} \u003e 1",
+                "tags": [
+                  "env:staging",
+                  "service:bar"
+                ],
+                "title": "Latency is increasing on staging",
+                "type": "metric alert"
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Monitoring, Logging & Tracing
+        containerImage: gcr.io/datadoghq/operator:0.8.1
+        description: Datadog provides a modern monitoring and analytics platform.
+          Gather metrics, logs and traces for full observability of your Kubernetes
+          cluster with Datadog Operator.
+        olm.skipRange: <0.8.1
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/DataDog/datadog-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: DatadogAgent Deployment with Datadog Operator.
+          displayName: Datadog Agent
+          kind: DatadogAgent
+          name: datadogagents.datadoghq.com
+          version: v1alpha1
+        - description: DatadogMetric allows autoscaling on arbitrary Datadog query
+          displayName: Datadog Metric
+          kind: DatadogMetric
+          name: datadogmetrics.datadoghq.com
+          version: v1alpha1
+        - description: DatadogMonitor allows to define and manage Monitors from your
+            Kubernetes Cluster
+          displayName: Datadog Monitor
+          kind: DatadogMonitor
+          name: datadogmonitors.datadoghq.com
+          version: v1alpha1
+      description: Datadog provides a modern monitoring and analytics platform. Gather
+        metrics, logs and traces for full observability of your Kubernetes cluster
+        with Datadog Operator.
+      displayName: Datadog Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Datadog
+      - Monitoring
+      - Logs
+      - Tracing
+      links:
+      - name: Documentation
+        url: https://docs.datadoghq.com/agent/kubernetes/
+      - name: Kubernetes Monitoring Info
+        url: https://www.datadoghq.com/blog/tag/kubernetes/
+      maintainers:
+      - email: support@datadoghq.com
+        name: Datadog Inc.
+      maturity: alpha
+      minKubeVersion: 1.16.0
+      provider:
+        name: Datadog
+      relatedImages:
+      - gcr.io/datadoghq/operator:0.8.1
+      version: 0.8.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: datadog-operator
+  provider:
+    name: Datadog

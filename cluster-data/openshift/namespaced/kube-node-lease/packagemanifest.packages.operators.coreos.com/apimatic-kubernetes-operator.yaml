@@ -1,0 +1,229 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: APIMatic.io
+    provider-url: https://www.apimatic.io/
+  name: apimatic-kubernetes-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: apimatic-kubernetes-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apicodegen.apimatic.io/v1beta1",
+              "kind": "APIMatic",
+              "metadata": {
+                "name": "apimatic-sample"
+              },
+              "spec": {
+                "licensespec": {
+                  "licenseSourceName": "apimaticlicense",
+                  "licenseSourceType": "ConfigMap"
+                },
+                "podspec": {
+                  "apimaticContainerSpec": {
+                    "image": "apimaticio/apimatic-codegen",
+                    "imagePullSecret": "apimaticimagesecret"
+                  }
+                },
+                "replicas": 3,
+                "servicespec": {
+                  "apimaticserviceport": {
+                    "nodePort": 32000,
+                    "port": 8070
+                  },
+                  "servicetype": "NodePort"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        containerImage: docker.io/apimaticio/apimatic-kubernetes-operator:v0.0.1
+        createdAt: "2021-08-24 12:00:00"
+        description: Generate client SDKs and interactive Documentation for your APIs
+          in minutes
+        operators.operatorframework.io/builder: operator-sdk-v1.9.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/apimatic/apimatic-kubernetes-operator
+        support: APIMatic.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: APIMatic is the Schema for the apimatics API
+          displayName: APIMatic App
+          kind: APIMatic
+          name: apimatics.apicodegen.apimatic.io
+          version: v1beta1
+      description: "##About APIMatic \n\n APIMatic is a Developer Experience   platform
+        for Web APIs that empowers users to create multi-language SDKs with API reference
+        docs, dynamic code samples, assisted authentication and more - all auto-generated
+        to provide a comprehensive developer experience beyond any API documentation
+        tool.\n\n## Table of contents\n\n* [Introduction](#introduction)\n* [Features](#features)\n*
+        [Running the Sample](#running-the-sample)\n  * [Prerequisites](#prerequisites)\n
+        \ * [Steps for Direct Deployment](#steps-for-direct-deployment)\n  * [Steps
+        for OLM Deployment](#steps-for-olm-deployment)\n* [Technical Support](#technical-support)\n*
+        [Copyrights](#copyrights)\n\n## Introduction\n\nAPIMatic Operator simplifies
+        the configuration and lifecycle management of the APIMatic code and docs generation
+        solution on different Kubernetes distributions and OpenShift. The Operator
+        encapsulates key operational knowledge on how to configure and upgrade the
+        APIMatic CodeGen application, making it easy to get up and running.\n\n\nMore
+        information about the underlying APIMatic CodeGen API that is exposed\nby
+        this operator can be found [here](https://apimatic-core-v3-docs.netlify.app/#/http/getting-started/overview-apimatic-core).\n\n##
+        Features\n\nAPIMatic Operator provides the following features:\n- Deploys
+        the APIMatic CodeGen Web API service within the Kubernetes or OpenShift cluster.\n-
+        Exposes the APIMatic CodeGen API external to the cluster, using Service type
+        as [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport),
+        [LoadBalancer](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
+        or [ExternalName](https://kubernetes.io/docs/concepts/services-networking/service/#externalname).\n-
+        For exposing the service through an ingress resource, create an Ingress resource
+        in the namespace of your APIMatic CR and set owned APIMatic service created
+        by the operator as a backed service. More information can be found [here](https://kubernetes.io/docs/concepts/services-networking/ingress/).\n-
+        Manual horizontal scaling of pods.\n  ```sh\n  kubectl scale apm apimatic-sample--replicas=2\n
+        \ ```\n\n## Running the Sample \n\n### Prerequisites\n\nPlease contact APIMatic
+        at [support@apimatic.io](mailto:support@apimatic.io) to register with the
+        APIMatic CodeGen Docker Hub registry and acquire a valid license to run the
+        APIMatic CodeGen API.\n\nFurther prerequisites for running the sample include:\n\n-
+        [go](https://golang.org/) v1.16.*\n- [git](https://git-scm.com/)\n- [make](https://www.gnu.org/software/make/)\n-
+        [Operator SDK](https://sdk.operatorframework.io/docs/overview/)\n- A running
+        Kubernetes cluster with [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)
+        on client. For testing purposes, you can use [Minikube](https://minikube.sigs.k8s.io/docs/)
+        or [kind](https://kind.sigs.k8s.io/)\n- For checking the service created by
+        the APIMatic operator on-prem, you can use [MetalLB](https://metallb.org/)\n\n###
+        Steps for Direct Deployment\n\nTo run the sample for checking the APIMatic
+        operator:\n\n- Clone the APIMatic repository into your working directory using
+        the following command:\n  ```sh\n  git clone https://github.com/apimatic/apimatic-kubernetes-operator.git\n
+        \ ```\n- Run `make deploy` to set up the APIMatic operator resources. This
+        will deploy the '`apimatic-system`' namespace as well as the CRD and the RBAC
+        manifests.\n\n- Create a secret named '`apimaticimagesecret`' to allow pulling
+        the APIMatic CodeGen image using the Docker Hub username registered with APIMatic.
+        If you have not done so, please contact support@apimatic.io for the steps
+        required.\n  ```sh\n  kubectl create secret docker-registry apimaticimagesecret
+        --docker-server=https://index.docker.io/v1/ --docker-username=<your-name>
+        --docker-password=<your-pword> --docker-email=<your-email>\n  ```\n- Create
+        a [configmap](https://kubernetes.io/docs/concepts/configuration/configmap/)
+        resource named '`apimaticlicense`' that will serve as the volume storing the
+        APIMatic license. An example of this is given below which will create the
+        ConfigMap using the *License.lic* file located at */usr/local/apimatic/license/*\n
+        \ ```sh\n  kubectl create configmap apimaticlicense --from-file /usr/local/apimatic/license/License.lic\n
+        \ ```\n- This will deploy a ConfigMap resource with the following definition:\n
+        \ ```sh\n  apiVersion: v1\n  data:\n    License.lic: \\\"<License file contents
+        here>\\\"\n  kind: ConfigMap\n  metadata:\n    name: apimaticlicense\n    namespace:
+        default\n  ```\n- Now run the sample using the following command:\n  ```sh\n
+        \ kubectl apply -f config/samples/apicodegen_v1beta1_apimatic.yaml\n  ```\n-
+        You will now see a new [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+        with replica count of 3 and [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+        of type `NodePort` created, both named ***apimatic-sample***. Accessing http://localhost:32000
+        from your browser (or using curl from within the Minikube or Kind cluster,
+        if using that) should now show the APIMatic Titan page.\n- You can now use
+        the exposed APIMatic CodeGen API to generate API SDKs and Docs using [curl](https://curl.se/),
+        [Postman](https://www.postman.com/) or your own custom Web application that
+        consumes the APIMatic CodeGen API service.\n\n- Once done, you can remove
+        the APIMatic resources using the following command:\n  ```sh\n  make undeploy\n
+        \ ```\n\n### Steps for OLM Deployment\n\nThe following steps can be used to
+        utilize [Operator LifeCycle Manager (OLM)](https://olm.operatorframework.io/docs/)
+        to deploy the operator and run the sample. The steps are as follows:\n\n-
+        If not already done so, clone the APIMatic repository into your working directory:\n
+        \ ```sh\n  git clone https://github.com/apimatic/apimatic-kubernetes-operator.git\n
+        \ ``` \n- [Install OLM in your Kubernetes cluster](https://olm.operatorframework.io/docs/getting-started/#installing-olm-in-your-cluster).\n\n-
+        Run the following script to install the resources required by OLM to deploy
+        the APIMatic operator in the Kubernetes cluster within the `apimatic-system`
+        namespace. Information about the different resources required can be found
+        using the steps given [here](https://olm.operatorframework.io/docs/tasks/).\n
+        \ ```sh\n  kubectl apply -f olm/manifests.yaml\n  ```\n\n- This should spin
+        up the `ClusterServiceVersion` of the operator in the `apimatic-system` namespace,
+        following which the operator pod will spin up. To ensure the that the operator
+        installed successfully, check for the `ClusterServiceVersion` and the operator
+        deployment in the namespace it was installed in.\n  ```sh\n  kubectl get csv
+        -n apimatic-system\n  \n  kubectl get deployment -n apimatic-system\n  ```\n\n
+        \ - Create a secret named `apimaticimagesecret` to allow pulling the APIMatic
+        CodeGen image using the Docker Hub username registered with APIMatic. If you
+        have not done so, please contact support@apimatic.io for the steps required.\n
+        \ ```sh\n  kubectl create secret docker-registry apimaticimagesecret --docker-server=https://index.docker.io/v1/
+        --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>\n
+        \ ```\n- Create a [configmap](https://kubernetes.io/docs/concepts/configuration/configmap/)
+        resource named `apimaticlicense` that will serve as the volume storing the
+        APIMatic license. An example of this is given below which will create the
+        ConfigMap using the *License.lic* file located at */usr/local/apimatic/license/*\n
+        \ ```sh\n  kubectl create configmap apimaticlicense --from-file /usr/local/apimatic/license/License.lic\n
+        \ ```\n- This will deploy a ConfigMap resource with the following definition:\n
+        \ ```sh\n  apiVersion: v1\n  data:\n    License.lic: \\\"<License file contents
+        here>\\\"\n  kind: ConfigMap\n  metadata:\n    name: apimaticlicense\n    namespace:
+        default\n  ```\n- Now run the sample using the following command:\n  ```sh\n
+        \ kubectl apply -f config/samples/apicodegen_v1beta1_apimatic.yaml\n  ```\n\n-
+        You will now see a new [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+        with replica count of 3 and [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+        of type `NodePort` created, both named ***apimatic-sample***. Accessing http://localhost:32000
+        from your browser (or using curl from within the Minikube or Kind cluster,
+        if using that) should now show the APIMatic Titan page.\n- You can now use
+        the exposed APIMatic CodeGen API to generate API SDKs and Docs using [curl](https://curl.se/),
+        [Postman](https://www.postman.com/) or your own custom Web application that
+        consumes the APIMatic CodeGen API service.\n- Once done, you can remove the
+        APIMatic operator resources using the follow script:\n  ```sh\n  kubectl delete
+        -f olm/manifests.yaml\n  ```\n\n## Technical Support\n\n- To request additional
+        features in the future, or if you notice any discrepancy regarding this document,
+        please drop an email to [support@apimatic.io](mailto:support@apimatic.io).\n\n###
+        Copyrights\n\n&copy; 2021 APIMatic.io\n"
+      displayName: APIMatic Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Rest APIs
+      - API SDK Generator
+      - API Docs Generator
+      - API Developer Portal
+      - APIMatic
+      - Developer Tools
+      links:
+      - name: Overview
+        url: https://www.apimatic.io/
+      - name: Developer Experience Portal
+        url: https://www.apimatic.io/developer-experience-portal
+      - name: Code-Gen as a Service
+        url: https://www.apimatic.io/continuous-code-generation
+      - name: API Transformer
+        url: https://www.apimatic.io/transformer
+      - name: Contact
+        url: https://www.apimatic.io/contact
+      - name: Documentation
+        url: https://docs.apimatic.io/
+      - name: Blogs
+        url: https://www.apimatic.io/blog/
+      maintainers:
+      - email: support@apimatic.io
+        name: Support
+      maturity: alpha
+      provider:
+        name: APIMatic.io
+        url: https://www.apimatic.io/
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - docker.io/apimaticio/apimatic-kubernetes-operator:v0.0.1
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: apimatic-kubernetes-operator
+  provider:
+    name: APIMatic.io
+    url: https://www.apimatic.io/

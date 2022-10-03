@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: attachdetach-controller-dockercfg-sszkb
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:04Z"
+  name: attachdetach-controller
+  namespace: kube-system
+  resourceVersion: "1224"
+  uid: 619f2599-a440-4dca-84d2-f37bb5044bd9
+secrets:
+- name: attachdetach-controller-token-tsdjd
+- name: attachdetach-controller-dockercfg-sszkb

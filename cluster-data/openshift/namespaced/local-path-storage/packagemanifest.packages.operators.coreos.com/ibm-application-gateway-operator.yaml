@@ -1,0 +1,182 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: https://www.ibm.com
+  name: ibm-application-gateway-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ibm-application-gateway-operator.v22.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "ibm.com/v1",
+              "kind": "IBMApplicationGateway",
+              "metadata": {
+                "name": "iag-instance"
+              },
+              "spec": {
+                "configuration": [
+                  {
+                    "dataKey": "config",
+                    "name": "test-config",
+                    "type": "configmap"
+                  },
+                  {
+                    "discoveryEndpoint": "https://isam.mmfa.ibm.com/mga/sps/oauth/oauth20/metadata/test",
+                    "postData": [
+                      {
+                        "name": "redirect_uris",
+                        "values": [
+                          "https://isam.mmfa.ibm.com/pkmsoidc"
+                        ]
+                      },
+                      {
+                        "name": "client_name",
+                        "value": "OperatorTest"
+                      },
+                      {
+                        "name": "enforce_pkce",
+                        "value": "false"
+                      },
+                      {
+                        "name": "all_users_entitled",
+                        "value": "true"
+                      },
+                      {
+                        "name": "consent_action",
+                        "value": "never_prompt"
+                      }
+                    ],
+                    "secret": "oidc-client",
+                    "type": "oidc_registration"
+                  },
+                  {
+                    "headers": [
+                      {
+                        "name": "Authorization",
+                        "secretKey": "value",
+                        "type": "secret",
+                        "value": "githubsecret"
+                      }
+                    ],
+                    "type": "web",
+                    "url": "https://raw.github.com/ibm-security/iag-config/master/test/sample1.yaml"
+                  },
+                  {
+                    "type": "literal",
+                    "value": "version: \"21.12\"\n\nserver:\n  local_applications:\n    cred_viewer:\n      path_segment: creds\n      enable_html: true\n\nidentity:\n  oidc:\n    discovery_endpoint: \"https://iag-dev.ibmcloudsecurity.com/oidc/endpoint/default/.well-known/openid-configuration\"\n    client_id: 1cbfe647-9e5f-4d99-8e05-8ed1c862eb47\n    client_secret: uPP8rM7N0e\n"
+                  }
+                ],
+                "deployment": {
+                  "image": "ibmcom/ibm-application-gateway:21.12",
+                  "imagePullPolicy": "Always",
+                  "imagePullSecrets": [
+                    {
+                      "name": "regcred"
+                    }
+                  ],
+                  "lang": "C",
+                  "livenessProbe": {
+                    "failureThreshold": 6,
+                    "initialDelaySeconds": 8,
+                    "periodSeconds": 9,
+                    "successThreshold": 7,
+                    "timeoutSeconds": 1
+                  },
+                  "readinessProbe": {
+                    "failureThreshold": 2,
+                    "initialDelaySeconds": 7,
+                    "periodSeconds": 8,
+                    "successThreshold": 4,
+                    "timeoutSeconds": 5
+                  },
+                  "serviceAccountName": "iag"
+                },
+                "replicas": 1
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Security
+        certified: "false"
+        containerImage: ibmcom/ibm-application-gateway-operator:22.3.0
+        createdAt: Tue Mar 29 21:58:30 UTC 2022
+        description: The IBM Application Gateway operator manages the lifecycle of
+          IBM Application Gateway containers.
+        olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.9"}]'
+        operators.operatorframework.io/builder: operator-sdk-v1.18.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/IBM-Security/ibm-application-gateway-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: IBMApplicationGateway is the Schema for the ibmapplicationgateways
+            API
+          displayName: IBMApplication Gateway
+          kind: IBMApplicationGateway
+          name: ibmapplicationgateways.ibm.com
+          version: v1
+      description: "The [IBM Application Gateway (IAG)](https://ibm.biz/ibm-app-gateway)
+        image provides a containerized secure Web Reverse proxy which is designed
+        to sit in front of your application, seamlessly adding authentication and
+        authorization protection to your application.\n\nAn IAG instance deployed
+        on Kubernetes can be a complex deployment.  In particular the configuration
+        can be defined externally in one or more locations, and changes to this configuration
+        may require all instances to be reloaded for the changes to take effect. \n\nThe
+        internal Kubernetes deployment controller does not have any knowledge of how
+        an IBM Application Gateway instance should behave when the configuration changes.
+        As such this IBM Application Gateway specific Kubernetes operator is available
+        to be deployed. Once deployed the operator can manage the lifecycle of the
+        IBM Application Gateway instances.\n\nSee the project [Readme](https://github.com/IBM-Security/ibm-application-gateway-operator/blob/master/README.md)
+        for further information and details.\n\n"
+      displayName: IBM Application Gateway Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - Security
+      - Identity and Access
+      links:
+      - name: IBM Application Gateway product documentation
+        url: https://ibm.biz/ibm-app-gateway
+      maintainers:
+      - email: isamdev@au1.ibm.com
+        name: IBM Application Gateway Development Team
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: IBM
+        url: https://www.ibm.com
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - ibmcom/ibm-application-gateway-operator:22.3.0
+      version: 22.3.0
+    name: stable
+  defaultChannel: stable
+  packageName: ibm-application-gateway-operator
+  provider:
+    name: IBM
+    url: https://www.ibm.com

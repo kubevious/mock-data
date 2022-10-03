@@ -1,0 +1,90 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: https://www.redhat.com/en/products/edge/validated-patterns
+  name: patterns-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: patterns-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "gitops.hybrid-cloud-patterns.io/v1alpha1",
+              "kind": "Pattern",
+              "metadata": {
+                "name": "pattern-sample"
+              },
+              "spec": {
+                "clusterGroupName": "hub",
+                "gitSpec": {
+                  "targetRepo": "https://github.com/hybrid-cloud-patterns/multicloud-gitops"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/hybridcloudpatterns/patterns-operator:0.0.1
+        description: An operator to deploy and manage architecture patterns from https://hybrid-cloud-patterns.io
+        operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/hybrid-cloud-patterns/patterns-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Pattern is the Schema for the patterns API
+          displayName: Pattern
+          kind: Pattern
+          name: patterns.gitops.hybrid-cloud-patterns.io
+          version: v1alpha1
+      description: Deploys and manages architecture patterns from https://hybrid-cloud-patterns.io
+      displayName: Validated Patterns Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Validated
+      - Pattern
+      - Blueprint
+      - Architecture
+      links:
+      - name: Hybrid Cloud Patterns
+        url: https://hybrid-cloud-patterns.io
+      maintainers:
+      - email: hybrid-cloud-patterns@googlegroups.com
+        name: patterns-team
+      maturity: alpha
+      provider:
+        name: Red Hat
+        url: https://www.redhat.com/en/products/edge/validated-patterns
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/hybridcloudpatterns/patterns-operator:0.0.1
+      version: 0.0.1
+    name: fast
+  defaultChannel: fast
+  packageName: patterns-operator
+  provider:
+    name: Red Hat
+    url: https://www.redhat.com/en/products/edge/validated-patterns

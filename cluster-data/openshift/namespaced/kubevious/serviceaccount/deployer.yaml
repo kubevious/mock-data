@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: deployer-dockercfg-7z7gx
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:57:56Z"
+  name: deployer
+  namespace: kubevious
+  resourceVersion: "18899"
+  uid: 265cd724-a4ae-4ef9-abc5-217d7dd3c6e5
+secrets:
+- name: deployer-token-tg4bq
+- name: deployer-dockercfg-7z7gx

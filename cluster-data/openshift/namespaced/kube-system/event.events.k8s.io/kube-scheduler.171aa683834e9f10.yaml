@@ -1,0 +1,24 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 1
+deprecatedFirstTimestamp: "2022-10-03T19:41:36Z"
+deprecatedLastTimestamp: "2022-10-03T19:41:36Z"
+deprecatedSource:
+  component: default-scheduler
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:41:36Z"
+  name: kube-scheduler.171aa683834e9f10
+  namespace: kube-system
+  resourceVersion: "39824"
+  uid: 7d154ece-410b-4c11-bbb0-b9db182060ee
+note: kind-control-plane_d13bed73-c148-4d57-9526-36898e385374 became leader
+reason: LeaderElection
+regarding:
+  apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  name: kube-scheduler
+  namespace: kube-system
+  resourceVersion: "39822"
+  uid: 188e908c-e003-49b4-a638-bddf9f5b31db
+type: Normal

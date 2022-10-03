@@ -1,0 +1,121 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-prometheusservice-controller
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-prometheusservice-controller.v0.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "prometheusservice.services.k8s.aws/v1alpha1",
+              "kind": "RuleGroupsNamespace",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "prometheusservice.services.k8s.aws/v1alpha1",
+              "kind": "Workspace",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/prometheusservice-controller:v0.1.1
+        createdAt: "2022-09-12 17:04:38"
+        description: AWS Prometheus controller is a service controller for managing
+          Prometheus resources in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: AlertManagerDefinition represents the state of an AWS prometheusservice
+            AlertManagerDefinition resource.
+          displayName: AlertManagerDefinition
+          kind: AlertManagerDefinition
+          name: alertmanagerdefinitions.prometheusservice.services.k8s.aws
+          version: v1alpha1
+        - description: RuleGroupsNamespace represents the state of an AWS prometheusservice
+            RuleGroupsNamespace resource.
+          displayName: RuleGroupsNamespace
+          kind: RuleGroupsNamespace
+          name: rulegroupsnamespaces.prometheusservice.services.k8s.aws
+          version: v1alpha1
+        - description: Workspace represents the state of an AWS prometheusservice
+            Workspace resource.
+          displayName: Workspace
+          kind: Workspace
+          name: workspaces.prometheusservice.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Prometheus resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon Managed Service for Prometheus**
+
+        Amazon Managed Service for Prometheus is a serverless, Prometheus-compatible monitoring service for container metrics that makes it easier to securely monitor container environments at scale. With Amazon Managed Service for Prometheus, you can use the same open-source Prometheus data model and query language that you use today to monitor the performance of your containerized workloads, and also enjoy improved scalability, availability, and security without having to manage the underlying infrastructure.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon Prometheus
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - prometheusservice
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon Prometheus Developer Resources
+        url: https://aws.amazon.com/prometheus/resources
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: prometheus maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/prometheusservice-controller:v0.1.1
+      version: 0.1.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-prometheusservice-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

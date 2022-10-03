@@ -1,0 +1,223 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: StreamNative
+    provider-url: https://streamnative.io
+  name: zookeeper-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: zookeeper-operator.v0.12.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "zookeeper.streamnative.io/v1alpha1",
+              "kind": "ZooKeeperCluster",
+              "metadata": {
+                "name": "zookeepercluster-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: quay.io/streamnativeio/zookeeper-operator:v0.12.3
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The ZooKeeper Operator manages ZooKeeper clusters deployed to
+          Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ZooKeeperCluster is the Schema for the zookeeperclusters API
+          displayName: Zoo Keeper Cluster
+          kind: ZooKeeperCluster
+          name: zookeeperclusters.zookeeper.streamnative.io
+          version: v1alpha1
+      description: |
+        The ZooKeeper Operator manages ZooKeeper clusters deployed to Kubernetes and automates tasks related to operating a ZooKeeper cluster. It provides a full management life-cycle for ZooKeeper, including deployment, upgrades, scaling, and configuration changes. You can manage ZooKeeper clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool.
+      displayName: ZooKeeper Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - zookeeper
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/zk-operator/tutorial/deploy-zk
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/zookeeper-operator:v0.12.3
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      version: 0.12.3
+    name: beta
+  - currentCSV: zookeeper-operator.v0.12.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "zookeeper.streamnative.io/v1alpha1",
+              "kind": "ZooKeeperCluster",
+              "metadata": {
+                "name": "zookeepercluster-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: quay.io/streamnativeio/zookeeper-operator:v0.12.3
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The ZooKeeper Operator manages ZooKeeper clusters deployed to
+          Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ZooKeeperCluster is the Schema for the zookeeperclusters API
+          displayName: Zoo Keeper Cluster
+          kind: ZooKeeperCluster
+          name: zookeeperclusters.zookeeper.streamnative.io
+          version: v1alpha1
+      description: |
+        The ZooKeeper Operator manages ZooKeeper clusters deployed to Kubernetes and automates tasks related to operating a ZooKeeper cluster. It provides a full management life-cycle for ZooKeeper, including deployment, upgrades, scaling, and configuration changes. You can manage ZooKeeper clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool.
+      displayName: ZooKeeper Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - zookeeper
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/zk-operator/tutorial/deploy-zk
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/zookeeper-operator:v0.12.3
+      version: 0.12.3
+    name: stable
+  - currentCSV: zookeeper-operator.v0.12.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "zookeeper.streamnative.io/v1alpha1",
+              "kind": "ZooKeeperCluster",
+              "metadata": {
+                "name": "zookeepercluster-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: quay.io/streamnativeio/zookeeper-operator:v0.12.3
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The ZooKeeper Operator manages ZooKeeper clusters deployed to
+          Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ZooKeeperCluster is the Schema for the zookeeperclusters API
+          displayName: Zoo Keeper Cluster
+          kind: ZooKeeperCluster
+          name: zookeeperclusters.zookeeper.streamnative.io
+          version: v1alpha1
+      description: |
+        The ZooKeeper Operator manages ZooKeeper clusters deployed to Kubernetes and automates tasks related to operating a ZooKeeper cluster. It provides a full management life-cycle for ZooKeeper, including deployment, upgrades, scaling, and configuration changes. You can manage ZooKeeper clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool.
+      displayName: ZooKeeper Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - zookeeper
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/zk-operator/tutorial/deploy-zk
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/zookeeper-operator:v0.12.3
+      version: 0.12.3
+    name: alpha
+  defaultChannel: stable
+  packageName: zookeeper-operator
+  provider:
+    name: StreamNative
+    url: https://streamnative.io

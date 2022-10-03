@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: ephemeral-volume-controller-dockercfg-4mpdt
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:16Z"
+  name: ephemeral-volume-controller
+  namespace: kube-system
+  resourceVersion: "1834"
+  uid: cf5150d4-4147-4aba-86f8-98a0cc8006e5
+secrets:
+- name: ephemeral-volume-controller-token-4gddb
+- name: ephemeral-volume-controller-dockercfg-4mpdt

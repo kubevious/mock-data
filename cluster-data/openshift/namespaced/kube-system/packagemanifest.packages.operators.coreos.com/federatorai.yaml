@@ -1,0 +1,149 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: ProphetStor Data Services, Inc.
+    provider-url: ""
+  name: federatorai
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: federatorai.v4.3.958
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "federatorai.containers.ai/v1alpha1",
+              "kind": "AlamedaService",
+              "metadata": {
+                "name": "my-alamedaservice"
+              },
+              "spec": {
+                "keycode": {
+                  "codeNumber": "GRV7J-LA4TX-KPPIT-S6GRS-NK4EB-ILFRQ"
+                },
+                "selfDriving": false,
+                "enableExecution": false,
+                "version": "v4.3.958",
+                "storages": [
+                  {
+                    "usage": "log",
+                    "type": "ephemeral"
+                  },
+                  {
+                    "usage": "data",
+                    "type":"ephemeral"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: AI/Machine Learning, OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/prophetstor/federatorai-operator-ubi:v4.3.958
+        createdAt: "2020-09-18T13:00:00Z"
+        description: Federator.ai Operator provides easy configuration and management
+          of AI-based Kubernetes resource orchestrator
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://quay.io/repository/prophetstor/federatorai-operator-ubi
+        support: ProphetStor Data Services, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: An instance of Alameda.
+          displayName: AlamedaService
+          kind: AlamedaService
+          name: alamedaservices.federatorai.containers.ai
+          version: v1alpha1
+      description: "**Federator.ai**, ProphetStor's Artificial Intelligence for IT
+        Operations (AIOps) platform, provides intelligence to orchestrate container
+        resources on top of VMs (virtual machines) or bare metal, allowing users to
+        operate applications without the need to manage the underlying computing resources.
+        It aims to provide optimal resource planning recommendations that will help
+        enterprises make better decisions. The benefits of **Federator.ai** include:\n-
+        Up to 70% resource savings\n- Increased operational efficiency\n- Reduced
+        manual configuration time with digital intelligence\n\nAfter **Federator.ai**
+        is deployed in any Kubernetes environment, it learns application resource
+        usage patterns and predicts the needed resources on a per namespace level
+        down to the container level. **Federator.ai** also provides a dashboard that
+        displays the per-application workload and resource recommendations. **Federator.ai**
+        for Kubernetes delivers the following key features:\n- **AI-based workload
+        prediction:** **Federator.ai** applies multiple analytics tools, such as machine
+        learning and signal processing, to predict containerized application and node
+        resource usage as the basis for pod resource recommendations. **Federator.ai**
+        supports both physical and virtual CPUs and memories.\n- **Application-aware
+        recommendation execution:** The application resource demand determines the
+        number and size of pods. **Federator.ai** utilizes resource usage prediction
+        based on workload patterns to recommend the right pod sizes.\n- **Policy-driven
+        planning of CPU and memory:** **Federator.ai** provides cluster-wide CPU and
+        memory allocation for different types of applications according to the policy
+        specified by users.\n- **Enterprise-ready:** **Federator.ai** is designed
+        to work with any Kubernetes environment. **Federator.ai** provides application
+        lifecycle management based on the Operator Framework and works seamlessly
+        with standard Kubernetes.\n- **Easy installation:** Installing **Federator.ai**
+        is easy as it works as an Operator on Kubernetes. \n- **Continuous recommendations
+        for optimal resource planning:** **Federator.ai** continuously generates recommendations
+        and learns with more accurate prediction when more metrics data is collected.\n\nFor
+        more information, visit our [website](https://www.prophetstor.com/federator-ai/federator-ai-for-openshift/)
+        and [github](https://github.com/containers-ai/federatorai-operator).\n\n###
+        Prerequisite\n**Federator.ai** requires a Prometheus datasource to get historical
+        metrics of Kubernetes and application resources. When launching **Federator.ai**
+        components, Prometheus connection settings need to be provided.\n\n### Common
+        Configurations\n    apiVersion: federatorai.containers.ai/v1alpha1\n    kind:
+        AlamedaService\n    metadata:\n      name: my-alamedaservice\n    spec:\n
+        \     keycode:\n        codeNumber: D3JXN-LIFTQ-KQEZ3-WZBNI-DA3WZ-A7HKQ\n
+        \     selfDriving: false\n      enableExecution: false\n      version: v4.3.958
+        \              ## for Alameda components\n      # storages is optional. Omit
+        this field if not needed.\n      storages:                     ## see following
+        details for where it is used in each component\n        - usage: log                ##
+        storage setting for log\n          type: ephemeral           ## ephemeral
+        means emptyDir{}\n        - usage: data\n          type: ephemeral\n    #
+        \   - usage: data               ## storage setting for data\n    #      type:
+        pvc                 ## pvc means PersistentVolumeClaim\n    #      size: 10Gi
+        \               ## mandatory when type=pvc\n    #      class: \"normal\"           ##
+        mandatory when type=pvc"
+      displayName: Federator.ai
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - AI
+      - Resource Orchestration
+      - NoOps
+      links:
+      - name: Website
+        url: https://www.prophetstor.com/federator-ai/federator-ai-for-openshift/
+      - name: Quickstart guide
+        url: https://github.com/containers-ai/federatorai-operator/blob/master/docs/quickstart.md
+      maintainers:
+      - email: support@prophetstor.com
+        name: ProphetStor Data Services, Inc.
+      maturity: stable
+      provider:
+        name: ProphetStor Data Services, Inc.
+      relatedImages:
+      - quay.io/prophetstor/federatorai-operator-ubi:v4.3.958
+      version: 4.3.958
+    name: stable
+  defaultChannel: stable
+  packageName: federatorai
+  provider:
+    name: ProphetStor Data Services, Inc.

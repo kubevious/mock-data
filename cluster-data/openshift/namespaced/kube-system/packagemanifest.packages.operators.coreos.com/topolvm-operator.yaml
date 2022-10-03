@@ -1,0 +1,142 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: alauda
+    provider-url: ""
+  name: topolvm-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: topolvm-operator.v2.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+              {
+                "apiVersion": "topolvm.cybozu.com/v2",
+                "kind": "TopolvmCluster",
+                "metadata": {
+                  "name": "topolvm",
+                  "namespace": "operators"
+                },
+                "spec": {
+                  "topolvmVersion": "docker.io/alaudapublic/topolvm:2.0.0",
+                  "storage": {
+                    "useAllNodes": false,
+                    "useAllDevices": false,
+                    "useLoop": false,
+                    "deviceClasses": [
+                      {
+                        "nodeName": "192.168.16.98",
+                        "classes": [
+                          {
+                            "className": "hdd",
+                            "volumeGroup": "hdd",
+                            "default": true,
+                            "devices": [
+                              {
+                                "name": "/dev/sdb",
+                                "type": "disk"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "apiVersion": "topolvm.cybozu.com/v1",
+                "kind": "LogicalVolume",
+                "metadata": {
+                  "name": "example-logicalvolume"
+                },
+                "spec": {}
+              }
+          ]
+        capabilities: Basic Install
+        categories: Storage
+        certified: "false"
+        containerImage: docker.io/alaudapublic/topolvm-operator:2.1.0
+        createdAt: 2021-05-12T10-00-00Z
+        description: TopoLVM is a CSI plugin using LVM for Kubernetes. The Topolvm
+          operator manages full lifecycle of using topolvm in Kubernetes-enabled cloud
+          environment.
+        repository: https://github.com/alauda/topolvm-operator
+        support: alauda
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: TopolvmCluster
+          displayName: TopolvmCluster
+          kind: TopolvmCluster
+          name: topolvmclusters.topolvm.cybozu.com
+          version: v2
+        - description: LogicalVolume
+          displayName: LogicalVolume
+          kind: LogicalVolume
+          name: logicalvolumes.topolvm.cybozu.com
+          version: v1
+      description: |2+
+
+        [TopoLVM](https://github.com/topolvm/topolvm) provide kubernetes local storage which is light weight and high performance.
+        [Topolvm Operator](https://github.com/alauda/topolvm-operator) manages full lifecycle of using topolvm in Kubernetes-enabled cloud environment.
+        ### Supported Features
+        * **Dynamic provisioning** - Volumes are created dynamically when PersistentVolumeClaim objects are created.
+        * **Raw block volume** - Volumes are available as block devices inside containers.
+        * **Ephemeral inline volume** - Volumes can be directly embedded in the Pod specification.
+        * **Volume Expansion** - Volumes can be expanded by editing PersistentVolumeClaim objects.
+        * **Volume group Expansion** - Volume group can be expanded by updating Custom Resource.
+        * **Topology Perception** - Pod and PVC can be scheduled to node which has free storage.
+        * **Volume capacity limit** - The volume capacity can be limited.
+        * **Auto device discover** - auto discover available devices on each node.
+        * **Stripe** - Use stripe to improve performance.
+        * **Metric and Alarm** - prometheus metric and alarm.
+
+      displayName: Topolvm Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - LocalStorage
+      - Kubernetes
+      - Topolvm
+      - Storage
+      links:
+      - name: Topolvm
+        url: https://github.com/alauda/topolvm
+      - name: Topolvm-operator
+        url: https://github.com/alauda/topolvm-operator
+      maintainers:
+      - email: xrluo@alauda.io
+        name: xiaorenluo
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: alauda
+      relatedImages:
+      - docker.io/alaudapublic/topolvm-operator:2.1.0
+      version: 2.0.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: topolvm-operator
+  provider:
+    name: alauda

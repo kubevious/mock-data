@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"openshift-oauth-apiserver","namespace":"default"},"spec":{"ports":[{"name":"https","port":443}]}}
+  creationTimestamp: "2022-10-03T18:25:53Z"
+  name: openshift-oauth-apiserver
+  namespace: default
+  resourceVersion: "444"
+  uid: 1417a920-4dc6-4c53-9922-6e9cc2a375be
+spec:
+  clusterIP: 172.21.144.108
+  clusterIPs:
+  - 172.21.144.108
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 443
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,157 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Xrootd community
+    provider-url: ""
+  name: xrootd-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: xrootd-operator.v0.2.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "catalog.xrootd.org/v1alpha1",
+              "kind": "XrootdVersion",
+              "metadata": {
+                "name": "xrootdversion-sample"
+              },
+              "spec": {
+                "image": "qserv/xrootd:latest",
+                "version": "latest"
+              }
+            },
+            {
+              "apiVersion": "xrootd.xrootd.org/v1alpha1",
+              "kind": "XrootdCluster",
+              "metadata": {
+                "name": "xrootdcluster-sample"
+              },
+              "spec": {
+                "redirector": {
+                  "replicas": 2
+                },
+                "version": "xrootdversion-sample",
+                "worker": {
+                  "replicas": 3,
+                  "storage": {
+                    "capacity": "1Gi"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Application Runtime
+        certified: "true"
+        containerImage: qserv/xrootd-operator:0.2.1
+        createdAt: "2020-08-30 17:20:00"
+        description: Create and maintain highly-available xrootd clusters on Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.0.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/xrootd/xrootd-k8s-operator
+        support: Xrootd Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: XrootdCluster is the Schema for the xrootdclusters API. This
+            denotes a single Xrootd cluster configured with requested version, xrd
+            config and other relevant configurable options.
+          displayName: Xrootd Cluster
+          kind: XrootdCluster
+          name: xrootdclusters.xrootd.xrootd.org
+          version: v1alpha1
+        - description: XrootdVersion is the Schema for the xrootdversions API. Before
+            deploying Xrootd Cluster, required Xrootd protocol version and its docker
+            image must be provided using this CRD in the cluster's target namespace.
+          displayName: Xrootd Version
+          kind: XrootdVersion
+          name: xrootdversions.catalog.xrootd.org
+          version: v1alpha1
+      description: |
+        ## Overview
+
+        Xrootd Operator manages the full lifecycle of [Xrootd](https://github.com/xrootd/xrootd) at scale,
+        in order to ease and fully automate deployment and management of XRootD clusters.
+
+        The operator aims to provide the following:
+
+        - **Basic Install** and **Seamless upgrades** to Xrootd components.
+        - Out-of-box Intra-Cluster discovery support.
+
+        Mind you, this is still a work-in-progress implementation.
+
+        ## Usage
+        - First ensure the desired xrootd version is deployed by creating a new `XrootdVersion` resource in the target namespace:
+        ```
+        apiVersion: catalog.xrootd.org/v1alpha1
+        kind: XrootdVersion
+        metadata:
+          name: xrootdversion-4.1.2
+        spec:
+          version: "v4.1.2"
+          image: "qserv/xrootd:4.1.2"
+        ```
+        - Deploy a basic Xrootd cluster by creating a new `XrootdCluster` resource in the namespace where the operator is installed.
+        ```
+        apiVersion: xrootd.xrootd.org/v1alpha1
+        kind: XrootdCluster
+        metadata:
+          name: example-xrootd
+        spec:
+          version: "xrootdversion-4.1.2"
+          redirector:
+            replicas: 1
+          worker:
+            replicas: 2
+            storage:
+              class: "standard"
+              capacity: "1Gi"
+        ```
+
+        See the examples on [github](https://github.com/xrootd/xrootd-k8s-operator/tree/master/manifests) for more information.
+      displayName: XrootD operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Xrootd
+      links:
+      - name: Xrootd Operator
+        url: https://github.com/xrootd/xrootd-k8s-operator
+      - name: Xrootd
+        url: https://xrootd.slac.stanford.edu/index.html
+      maintainers:
+      - email: shivanshs9@gmail.com
+        name: Shivansh Saini
+      maturity: alpha
+      provider:
+        name: Xrootd community
+      relatedImages:
+      - qserv/xrootd-operator:0.2.1@sha256:aa43ed3bf444caec349158321757aca68c70de08e2f26166c67f9c45d9cedd54
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      version: 0.2.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: xrootd-operator
+  provider:
+    name: Xrootd community

@@ -1,0 +1,211 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: WSO2
+    provider-url: ""
+  name: wso2am-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: wso2am-operator.v1.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apim.wso2.com/v1alpha1",
+              "kind": "APIManager",
+              "metadata": {
+                "name": "custom-pattern-1"
+              },
+              "spec": {
+                "pattern": "Pattern-X",
+                "service": {
+                  "type": "NodePort"
+                },
+                "useMysql": "false",
+                "profiles": [
+                  {
+                    "name": "all-in-one-api-manager",
+                    "type": "api-manager",
+                    "service": {
+                      "name": "wso2apim"
+                    },
+                    "deployment": {
+                      "configMaps": {
+                        "deploymentConfigMap": "apim-conf"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools, Integration & Delivery, Cloud Provider
+        certified: "false"
+        containerImage: wso2/k8s-wso2am-operator:1.1.0
+        createdAt: "2020-09-07T03:00:00.000Z"
+        description: Deploying WSO2 API Manager Patterns and custom patterns in Kubernetes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/wso2/k8s-wso2am-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: API Manager
+          displayName: APIManager
+          kind: APIManager
+          name: apimanagers.apim.wso2.com
+          version: v1alpha1
+      description: |
+        ## Introduction
+
+        WSO2 API Manager is an open source enterprise-class solution that supports
+        API publishing, lifecycle management, application development, access
+        control, rate limiting and analytics in one cleanly integrated system.It can
+        be deployed on-prem, on a private cloud, is available as a service on cloud
+        or deployed in a hybrid fashion where its components can be distributed and
+        deployed across multiple cloud and on-prem infrastructures.
+
+
+        It comprises of a cloud native API gateway and provides a Kubernetes
+        operator for easily converting raw microservices into managed APIs. API
+        Manager integrates with service meshes and provides a full fledged
+        management plane and control plane for managing, monitoring and monetizing
+        APIs and API products.
+
+        ## About this Operator
+
+        With WSO2 API Manager Operator, it makes easy to deploy WSO2 API Manager in Kubernetes through a simple command. Also it supports deploying recommended deployment patterns in Kubernetes. Introducing a new Custom Resource Definition called APIManager to efficiently and easily deploy patterns, and the custom pattern in Kubernetes.
+
+        ## Prerequisites
+
+        * [Kubernetes cluster](https://kubernetes.io/docs/setup/) and client v1.14 or above
+            * Minimum CPU : **4 vCPU**
+            * Minimum Memory : **6 GB** <br>
+
+            **Note:** This is for running scenario-1.
+
+        * Download [k8s-wso2am-operator-1.1.0.zip](https://github.com/wso2/k8s-wso2am-operator/releases/download/v1.1.0/k8s-wso2am-operator-1.1.0.zip) and extract it.
+
+          This zip contains the artifacts that required to deploy in Kubernetes.
+
+          **Note:** You need to run all commands from within the k8s-wso2am-operator-1.1.0 directory.
+
+        ## Step 1: Deploy WSO2 API Manager Operator
+
+        - Creates a namespace called wso2-system and deploy the controller artifacts.
+
+            ```
+            >> kubectl apply -f artifacts/operatorhub-controller-configs/ -R
+
+            Output:
+            namespace/wso2-system created
+            configmap/wso2am-operator-controller-config created
+            ...
+            configmap/wso2am-p1-mysql-dbscripts created
+            configmap/pvc-config created
+            ```
+
+        ## Step 2: Deploy scenario 1 - Single node API Manager
+
+        - Deploys a single node API Manager.
+
+            ```
+            >> kubectl apply -f scenarios/scenario-1/
+
+            Output:
+            configmap/apim-conf created
+            apimanager.apim.wso2.com/custom-pattern-1 created
+            ```
+
+        - You can check the status of the API Manager pod and service by using the following commands.
+
+            ```
+            >> kubectl get pods
+
+            Output:
+            NAME                                     READY   STATUS    RESTARTS   AGE
+            all-in-one-api-manager-d66d6c574-bnwps   0/1     Running   0          2m43s
+
+            >> kubectl get svc
+
+            Output:
+            NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                                                       AGE
+            kubernetes   ClusterIP   10.0.32.1     <none>        443/TCP                                                       6h28m
+            wso2apim     NodePort    10.0.36.136   <none>        8280:32004/TCP,8243:32003/TCP,9763:32002/TCP,9443:32001/TCP   4m32s
+            ```
+
+        ## Step 3: Access API Manager
+
+        - To access the API Manager, add a host mapping entry to the /etc/hosts file. As we have exposed the API portal service in Node Port type, you can use the IP address of any Kubernetes node.
+
+            ```
+            <IP_OF_ANY_NODE>  wso2apim
+            ```
+
+        - For Docker for Mac use `"127.0.0.1"` for the K8s node IP
+        - For Minikube, use minikube ip command to get the K8s node IP
+        - For GKE
+            ```
+            (kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address }')
+            ```
+            - This will give the external IPs of the nodes available in the cluster. Pick any IP to include in /etc/hosts file.
+
+        - Access URLs
+            - **API Publisher** : [https://wso2apim:32001/publisher](https://wso2apim:32001/publisher)
+            - **API Devportal** : [https://wso2apim:32001/devportal](https://wso2apim:32001/devportal)
+      displayName: WSO2 API Manager Operator for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - API
+      - ManagedAPI
+      - APIManagement
+      - Analytics
+      links:
+      - name: Documentation
+        url: https://github.com/wso2/k8s-wso2am-operator/tree/v1.1.0/docs
+      - name: Quick Start Guide
+        url: https://github.com/wso2/k8s-wso2am-operator/tree/v1.1.0/README.md#quick-start-guide
+      - name: Web Page
+        url: https://wso2.com/api-management/
+      - name: Slack channel
+        url: https://apim-slack.wso2.com
+      maintainers:
+      - email: dev@wso2.org
+        name: Developer Mailing List
+      - email: architecture@wso2.org
+        name: Architecture of WSO2 products
+      - email: announce@wso2.org
+        name: WSO2 product releases
+      maturity: stable
+      provider:
+        name: WSO2
+      relatedImages:
+      - wso2/k8s-wso2am-operator:1.1.0
+      version: 1.1.0
+    name: stable
+  defaultChannel: stable
+  packageName: wso2am-operator
+  provider:
+    name: WSO2

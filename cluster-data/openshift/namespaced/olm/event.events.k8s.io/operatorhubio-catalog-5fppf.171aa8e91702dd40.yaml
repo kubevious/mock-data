@@ -1,0 +1,26 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 2
+deprecatedFirstTimestamp: "2022-10-03T20:25:31Z"
+deprecatedLastTimestamp: "2022-10-03T20:25:41Z"
+deprecatedSource:
+  component: kubelet
+  host: kind-control-plane
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T20:25:31Z"
+  name: operatorhubio-catalog-5fppf.171aa8e91702dd40
+  namespace: olm
+  resourceVersion: "45737"
+  uid: 05bbc233-3bb4-48a7-91c6-2ff7bad85dcb
+note: 'Startup probe failed: command "grpc_health_probe -addr=:50051" timed out'
+reason: Unhealthy
+regarding:
+  apiVersion: v1
+  fieldPath: spec.containers{registry-server}
+  kind: Pod
+  name: operatorhubio-catalog-5fppf
+  namespace: olm
+  resourceVersion: "45677"
+  uid: 9accc780-c35b-47b8-a49f-d22c39184eed
+type: Warning

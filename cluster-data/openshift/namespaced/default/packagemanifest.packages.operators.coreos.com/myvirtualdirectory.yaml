@@ -1,0 +1,168 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Tremolo Security, Inc.
+    provider-url: ""
+  name: myvirtualdirectory
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: myvirtualdirectory.1.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "myvirtualdirectory.tremolo.io/v1",
+              "kind": "MyVirtualDirectory",
+              "metadata": {
+                "name":"myvirtualdirectory"
+              },
+              "spec": {
+                "image": "docker.io/tremolosecurity/myvirtualdirectory:latest",
+                "replicas": 1,
+                "dest_secret": "myvd-secret",
+                "dest_cfg_map": "myvd-configmap",
+                "source_secret": "myvd-secrets-source",
+                "secret_data": [
+                  "MYVD_TLS_KEY_PASSWORD"
+                ],
+                "non_secret_data": [
+                  {
+                    "name": "ROOT",
+                    "value": "o=Tremolo"
+                  }
+                ],
+                "myvd_props": "#Global AuthMechConfig\nserver.globalChain=accesslog,attrCleaner\nserver.globalChain.accesslog.className=com.tremolosecurity.proxy.myvd.log.AccessLog\nserver.globalChain.attrCleaner.className=net.sourceforge.myvd.inserts.mapping.AttributeCleaner\nserver.globalChain.attrCleaner.config.clearAttributes=true\nserver.globalChain.dump.className=net.sourceforge.myvd.inserts.DumpTransaction\nserver.globalChain.dump.config.logLevel=info\nserver.globalChain.dump.config.label=global\n\nserver.nameSpaces=rootdse,myvdroot\nserver.rootdse.chain=dse\nserver.rootdse.nameSpace=\nserver.rootdse.weight=0\nserver.rootdse.dse.className=net.sourceforge.myvd.inserts.RootDSE\nserver.rootdse.dse.config.namingContexts=#[ROOT]\nserver.myvdroot.chain=root\nserver.myvdroot.nameSpace=#[ROOT]\nserver.myvdroot.weight=0\nserver.myvdroot.root.className=net.sourceforge.myvd.inserts.RootObject",
+                "myvd_log4j2_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!--\n    Copyright 2018 Tremolo Security, Inc.\n    \n    Licensed under the Apache License, Version 2.0 (the \"License\");\n    you may not use this file except in compliance with the License.\n    You may obtain a copy of the License at\n    \n        http://www.apache.org/licenses/LICENSE-2.0\n    \n    Unless required by applicable law or agreed to in writing, software\n    distributed under the License is distributed on an \"AS IS\" BASIS,\n    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n    See the License for the specific language governing permissions and\n    limitations under the License.\n-->\n\n<Configuration>\n    <Appenders>\n    <Console name=\"STDOUT\" target=\"SYSTEM_OUT\">\n        <PatternLayout pattern=\"[%d][%t] %-5p %c{1} - %m%n\"/>\n    </Console>\n    </Appenders>\n    <Loggers>\n    \n    <Root level=\"info\">\n        <AppenderRef ref=\"STDOUT\"/>\n    </Root>\n    </Loggers>\n</Configuration>",
+                "myvd_network_configuration": {
+                  "open_port": 10389,
+                  "secure_port": 10636,
+                  "secure_key_alias": "myvd-tls",
+                  "client_auth": "none",
+                  "allowed_client_names": [],
+                  "ciphers": [
+                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+                    "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+                    "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+                    "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+                    "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
+                    "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+                  ],
+                  "path_to_deployment": "/etc/myvd-config",
+                  "path_to_env_file": "/etc/myvd"
+                },
+                "key_store": {
+                  "static_keys": [],
+                  "trusted_certificates": [],
+                  "key_pairs": {
+                    "create_keypair_template": [
+                      {
+                        "name": "ou",
+                        "value": "k8s"
+                      },
+                      {
+                        "name": "o",
+                        "value": "Tremolo Security"
+                      },
+                      {
+                        "name": "l",
+                        "value": "Alexandria"
+                      },
+                      {
+                        "name": "st",
+                        "value": "Virginia"
+                      },
+                      {
+                        "name": "c",
+                        "value": "US"
+                      }
+                    ],
+                    "keys": [
+                      {
+                        "name": "myvd-tls",
+                        "tls_secret_name": "myvd-tls-secret",
+                        "import_into_ks": "keypair",
+                        "create_data": {
+                          "sign_by_k8s_ca" : false,
+                          "server_name": "${k8s_obj.metadata.name + '.' + k8s_namespace + '.svc.cluster.local'}","subject_alternative_names": [],
+                          "key_size": 2048,
+                          "ca_cert": false
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Security
+        certified: "false"
+        containerImage: docker.io/tremolosecurity/myvd-k8s-operator
+        createdAt: "2019-04-15"
+        description: MyVirtualDirectory Operator to provide LDAP virtual directory
+          services and LDAP proxy services
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/TremoloSecurity/
+        support: https://github.com/TremoloSecurity/myvd-k8s-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A running MyVirtualDirectory instance
+          displayName: MyVirtualDirectory
+          kind: MyVirtualDirectory
+          name: myvirtualdirectories.myvirtualdirectory.tremolo.io
+          version: v1
+      description: "Before you can deploy MyVirtualDirectory you'll need to create
+        a source secret with information that shouldn't be stored in the `MyVirtualDirectory`
+        custom resource, referenced by the `source_secret` attribute.  The minimal
+        data in this secret should be at least `MYVD_TLS_KEY_PASSWORD`, the password
+        for the keystore the operator creates.  An example of creating a secret used
+        by the example configuration is:\n  \n```\n$ mkdir secret\n$ cd secret\n$
+        echo 'my_secret_password' | base64 > MYVD_TLS_KEY_PASSWORD\n$ oc create secret
+        generic myvd-secrets-source --from-file=.\n```\n  \nThe default configuration
+        will generate a self signed certificate for TLS."
+      displayName: MyVirtualDirectory
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - ldap
+      - virtualdirectory
+      - myvirtualdirectory
+      - myvd
+      links:
+      - name: Documentation
+        url: https://www.tremolosecurity.com/documentation/
+      maintainers:
+      - email: docker@tremolosecurity.com
+        name: Tremolo Security, Inc.
+      maturity: beta
+      provider:
+        name: Tremolo Security, Inc.
+      relatedImages:
+      - docker.io/tremolosecurity/myvd-k8s-operator
+      version: 1.0.0
+    name: beta
+  defaultChannel: beta
+  packageName: myvirtualdirectory
+  provider:
+    name: Tremolo Security, Inc.

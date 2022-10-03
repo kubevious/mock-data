@@ -1,0 +1,26 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 3
+deprecatedFirstTimestamp: "2022-10-03T19:44:50Z"
+deprecatedLastTimestamp: "2022-10-03T19:44:56Z"
+deprecatedSource:
+  component: kubelet
+  host: kind-control-plane
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:44:50Z"
+  name: kubevious-operator-controller-manager-7b95db69fb-sqpfs.171aa6b0acae39c4
+  namespace: kubevious
+  resourceVersion: "40241"
+  uid: 8c1d5923-041c-4b4a-a9ec-e90f5d8eee4c
+note: Back-off restarting failed container
+reason: BackOff
+regarding:
+  apiVersion: v1
+  fieldPath: spec.containers{manager}
+  kind: Pod
+  name: kubevious-operator-controller-manager-7b95db69fb-sqpfs
+  namespace: kubevious
+  resourceVersion: "30602"
+  uid: 89e4022f-712e-4128-895c-4854110e6ea7
+type: Warning

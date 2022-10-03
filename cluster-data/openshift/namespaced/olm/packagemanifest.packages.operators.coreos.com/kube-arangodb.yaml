@@ -1,0 +1,107 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: ArangoDB GmbH
+    provider-url: ""
+  name: kube-arangodb
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kube-arangodb.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"database.arangodb.com/v1","kind":"ArangoDeployment","metadata":{"name":"arangodb"},"spec":{"image":"arangodb/arangodb:3.6.2"},"status":{}}]'
+        capabilities: Full Lifecycle
+        categories: Database, Application Runtime
+        certified: "true"
+        containerImage: arangodb/kube-arangodb:1.0.2
+        createdAt: "2019-11-30 22:40:00"
+        description: ArangoDB Kubernetes Operator
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/arangodb/kube-arangodb
+        support: redhat@arangodb.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Deployment of ArangoDB
+          displayName: ArangoDeployment
+          kind: ArangoDeployment
+          name: arangodeployments.database.arangodb.com
+          version: v1
+        - description: Arango Backup Policy
+          displayName: ArangoBackupPolicy
+          kind: ArangoBackupPolicy
+          name: arangobackuppolicies.backup.arangodb.com
+          version: v1
+        - description: Arango Backup
+          displayName: ArangoBackup
+          kind: ArangoBackup
+          name: arangobackups.backup.arangodb.com
+          version: v1
+        - description: Arango Deployment Replication
+          displayName: ArangoDeploymentReplication
+          kind: ArangoDeploymentReplication
+          name: arangodeploymentreplications.replication.database.arangodb.com
+          version: v1
+      description: |+
+        **ArangoDB**
+
+        Three major data models along with a full-text search and ranking engine in one open-source core.
+
+        **One engine. One query language. Multiple models.**
+
+        When you’re building your application, ultimately what matters most is having the right data model available for the task at hand.
+
+        By uniting graph, document, and key/value in a single core with the same query language, along with a full-text search and ranking engine, ArangoDB provides the flexibility to easily apply the data models you need.
+
+        **A query language that feels like coding**
+
+        As a declarative query language, those coming from SQL will feel right at home with AQL.
+
+        With AQL, you can use JOINs, traversals, filters, geo-spatial operations, and aggregations & combine them in a single query.
+
+
+
+      displayName: ArangoDB
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Main Page
+        url: https://www.arangodb.com/
+      - name: Operator
+        url: https://github.com/arangodb/kube-arangodb
+      - name: Operator Resource DOC
+        url: https://www.arangodb.com/docs/stable/deployment-kubernetes.html
+      maintainers:
+      - email: redhat@arangodb.com
+        name: Owner
+      maturity: alpha
+      minKubeVersion: 1.14.0
+      provider:
+        name: ArangoDB GmbH
+      relatedImages:
+      - arangodb/kube-arangodb:1.0.2
+      version: 1.0.2
+    name: stable
+  defaultChannel: stable
+  packageName: kube-arangodb
+  provider:
+    name: ArangoDB GmbH

@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: resourcequota-controller-dockercfg-dx422
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:16Z"
+  name: resourcequota-controller
+  namespace: kube-system
+  resourceVersion: "1842"
+  uid: 2470701f-24cf-45c0-9e64-37344a4038c6
+secrets:
+- name: resourcequota-controller-dockercfg-dx422
+- name: resourcequota-controller-token-k9xbd

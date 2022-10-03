@@ -1,0 +1,101 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Instaclustr
+    provider-url: ""
+  name: cassandra-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cassandra-operator.v2.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"cassandraoperator.instaclustr.com/v1alpha1","kind":"CassandraBackup","metadata":{"name":"example-cassandrabackup"},"spec":{"cdc":"test-dc-cassandra","storageLocation":"s3://stefan-cassandra-testdc-bucket",
+          "snapshotTag":"mySnapshotTag"}},{"apiVersion":"cassandraoperator.instaclustr.com/v1alpha1","kind":"CassandraCluster","metadata":{"name":"test-dc-cassandra"},"spec":{"size":3}},{"apiVersion":"cassandraoperator.instaclustr.com/v1alpha1","kind":"CassandraDataCenter","metadata":{"name":"test-dc-cassandra"},"spec":{"size":3}}]'
+        capabilities: Basic Install
+        categories: Database
+        certified: "false"
+        containerImage: gcr.io/cassandra-operator/cassandra-operator:v2.0.0
+        createdAt: "2019-09-04 12:00:00"
+        description: Manage the full lifecycle of the Cassandra clusters.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/instaclustr/cassandra-operator
+        support: Alex Lourie
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Cassandra Data Center
+          displayName: CassandraDataCenter
+          kind: CassandraDataCenter
+          name: cassandradatacenters.cassandraoperator.instaclustr.com
+          version: v1alpha1
+        - description: Represents a Cassandra Cluster
+          displayName: CassandraCluster
+          kind: CassandraCluster
+          name: cassandraclusters.cassandraoperator.instaclustr.com
+          version: v1alpha1
+        - description: Represents a Cassandra Backup
+          displayName: CassandraBackup
+          kind: CassandraBackup
+          name: cassandrabackups.cassandraoperator.instaclustr.com
+          version: v1alpha1
+      description: |
+        Cassandra operator built by Instaclustr to allow creating and managing Cassandra clusters.
+        ## About this Operator
+        This operator supports custom configuration, handling scale up and down, supports monitoring autodiscovery, and provides backup capabilities.
+
+        ## Core capabilities
+        * **StatefulSet** - Sets up a dynamically scalable, rack-aware Cassandra cluster using Kubernetes StatefulSets (1 per rack)
+        * **Scaling** - Supports scaling up and down by simply editing your CRD object
+        * **Monitoring setup** - Installs the Prometheus ServiceMonitor for metrics auto-discovery.
+
+        ## Using the cluster
+        Refer to the project documentation [here](https://github.com/instaclustr/cassandra-operator/blob/master/README.md) to run the operator and the clusters
+      displayName: Cassandra
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      links:
+      - name: Instaclustr
+        url: https://www.instaclustr.com
+      - name: Cassandra
+        url: https://cassandra.apache.org
+      - name: Operator Documentation
+        url: https://github.com/instaclustr/cassandra-operator/blob/master/README.md
+      maintainers:
+      - email: alex@instaclustr.com
+        name: Alex Lourie
+      - email: stefan.miklosovic@instaclustr.com
+        name: Stefan Miklosovic
+      - email: adam@instaclustr.com
+        name: Adam Zegelin
+      - email: ben@instaclustr.com
+        name: Ben Bromhead
+      maturity: alpha
+      provider:
+        name: Instaclustr
+      relatedImages:
+      - gcr.io/cassandra-operator/cassandra-operator:latest
+      version: 2.0.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: cassandra-operator
+  provider:
+    name: Instaclustr

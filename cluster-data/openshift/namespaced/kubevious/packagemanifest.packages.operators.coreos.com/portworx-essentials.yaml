@@ -1,0 +1,209 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Portworx
+    provider-url: ""
+  name: portworx-essentials
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: portworx-essentials.v1.3.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "core.libopenstorage.org/v1alpha1",
+              "kind": "StorageCluster",
+              "metadata": {
+                "name": "portworx",
+                "namespace": "test-operator"
+              }
+            },
+            {
+              "apiVersion": "core.libopenstorage.org/v1alpha1",
+              "kind": "StorageNode",
+              "metadata": {
+                "name": "example",
+                "namespace": "test-operator"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Storage
+        certified: "false"
+        containerImage: portworx/px-operator:1.3.3
+        createdAt: "2020-08-04T08:00:00Z"
+        description: Free forever cloud native storage solution
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/libopenstorage/operator
+        support: Portworx, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Storage Cluster installs Portworx in the cluster. It has all
+            the necessary configurations to setup and update a Portworx cluster.
+          displayName: Storage Cluster
+          kind: StorageCluster
+          name: storageclusters.core.libopenstorage.org
+          version: v1alpha1
+        - description: DO NOT CREATE Storage Node as it is internally created by the
+            operator. It represents the status of a Portworx node.
+          displayName: Storage Node
+          kind: StorageNode
+          name: storagenodes.core.libopenstorage.org
+          version: v1alpha1
+      description: |2
+
+        [Portworx Essentials](https://docs.portworx.com/concepts/portworx-essentials/)
+        is a free Portworx license with limited functionality that allows you to
+        run small production or proof-of-concept workloads. Essentials limits capacity
+        and advanced features, but otherwise functions the same way as the
+        fully-featured PX-Enterprise version of Portworx such as
+
+        *  Run containerized stateful applications that are highly-available (HA) across multiple nodes,
+          cloud instances, regions, data centers or even clouds
+        *  Migrate workflows between multiple clusters running across same or hybrid clouds
+        *  Run hyperconverged workloads where the data resides on the same host as the applications
+        *  Have programmatic control on your storage resources
+
+        ### Full Features
+
+        * Free forever
+        * 5 nodes
+        * 500 volumes
+        * Cloud Drive provisioning
+        * Failures across nodes/racks/AZ
+
+        ### Limited features
+
+        * Application consistent Snapshots (5 per volume)
+        * Cloud Snapshots (1 per volume per day)
+        * BYOK Encryption (cluster key only)
+        * Single user cluster management UI (single user, single cluster)
+
+        To learn more about the platform features, please visit our
+        [product features page](https://portworx.com/products/features)
+
+        The Portworx Essentials license requires that your clusters be connected
+        to the internet and send usage data to PX-Central. Portworx Essentials
+        clusters connect with PX-Central once per hour to renew license leases.
+        Lease periods last for 24 hours, ensuring that any temporary interruptions
+        to your connectivity do not impact your cluster.
+
+        ### How to install StorageCluster
+
+        To customize your cluster's configuration (specification), use the
+        [Spec Generator](https://central.portworx.com/) from PX-Central.
+
+        ### Prerequisite
+
+        * Ensure ports 17001-17020 on worker nodes are reachable from master and other worker nodes.
+
+        * Create the following secret with your [Essential Entitlement ID](https://central.portworx.com/profile)
+        ```
+        kubectl -n kube-system create secret generic px-essential \
+          --from-literal=px-essen-user-id=YOUR_ESSENTIAL_ENTITLEMENT_ID \
+          --from-literal=px-osb-endpoint='https://pxessentials.portworx.com/osb/billing/v1/register'
+        ```
+
+        ### Tutorials
+
+        * [Stateful applications on Kubernetes](https://docs.portworx.com/portworx-install-with-kubernetes/application-install-with-kubernetes)
+
+        * [Portworx Enterprise on Kubernetes](https://docs.portworx.com/portworx-install-with-kubernetes)
+
+        * [Kafka on Kubernetes](https://portworx.com/kafka-kubernetes)
+
+        * [Elastisearch on Kubernetes](https://portworx.com/elasticsearch-kubernetes)
+
+        * [PostgreSQL on Kubernetes](https://portworx.com/postgres-kubernetes/)
+
+        * [MongoDB on Kubernetes](https://portworx.com/mongodb-kubernetes/)
+
+        * [Cassandra on Kubernetes](https://portworx.com/cassandra-kubernetes/)
+
+        * [Kubernetes backup and recovery](https://portworx.com/kubernetes-backup/)
+
+        * [Disaster Recovery for Kubernetes](https://portworx.com/kubernetes-disaster-recovery/)
+
+        ### Uninstall
+
+        Deleting the StorageCluster object for Portworx cluster does not stop Portworx
+        service running on the nodes, to avoid application downtime.
+
+        To uninstall Portworx completely without wiping the data, you should add the
+        following delete strategy to the StorageCluster spec:
+        ```
+        spec:
+          deleteStrategy:
+            type: Uninstall
+        ```
+        **Caution:** To uninstall Portworx and **wipe all the data**, you should use the following
+        delete strategy:
+        ```
+        spec:
+          deleteStrategy:
+            type: UninstallAndWipe
+        ```
+
+        ### About Portworx
+
+        Portworx is the solution for running stateful containers in production,
+        designed with DevOps in mind. With Portworx, users can manage any database
+        or stateful service on any infrastructure using any container scheduler,
+        including Kubernetes, Mesosphere DC/OS, and Docker Swarm. Portworx solves
+        the five most common problems DevOps teams encounter when running stateful
+        services in production: persistence, high availability, data automation,
+        security, and support for multiple data stores and infrastructure.
+      displayName: Portworx Essentials
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - portworx
+      - persistent storage
+      - storage
+      - cloud native
+      - open source
+      links:
+      - name: Product Features
+        url: https://portworx.com/products/features
+      - name: Documentation
+        url: https://docs.portworx.com
+      - name: Support
+        url: https://docs.portworx.com/support
+      - name: Source Code
+        url: https://github.com/libopenstorage/operator
+      maintainers:
+      - email: support@portworx.com
+        name: Portworx
+      maturity: stable
+      minKubeVersion: 1.12.0
+      provider:
+        name: Portworx
+      relatedImages:
+      - portworx/px-operator:1.3.3
+      version: 1.3.3
+    name: stable
+  defaultChannel: stable
+  packageName: portworx-essentials
+  provider:
+    name: Portworx

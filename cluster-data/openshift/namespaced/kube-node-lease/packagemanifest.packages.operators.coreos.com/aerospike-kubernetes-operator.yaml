@@ -1,0 +1,147 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Aerospike
+    provider-url: ""
+  name: aerospike-kubernetes-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: aerospike-kubernetes-operator.v2.2.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "asdb.aerospike.com/v1beta1",
+              "kind": "AerospikeCluster",
+              "metadata": {
+                "name": "aerocluster",
+                "namespace": "aerospike"
+              },
+              "spec": {
+                "aerospikeConfig": {
+                  "namespaces": [
+                    {
+                      "memory-size": 3000000000,
+                      "name": "test",
+                      "replication-factor": 2,
+                      "storage-engine": {
+                        "type": "memory"
+                      }
+                    }
+                  ],
+                  "network": {
+                    "fabric": {
+                      "port": 3001
+                    },
+                    "heartbeat": {
+                      "port": 3002
+                    },
+                    "service": {
+                      "port": 3000
+                    }
+                  },
+                  "service": {
+                    "feature-key-file": "/etc/aerospike/secret/features.conf"
+                  }
+                },
+                "image": "aerospike/aerospike-server-enterprise:6.1.0.1",
+                "podSpec": {
+                  "multiPodPerHost": true
+                },
+                "size": 2,
+                "storage": {
+                  "volumes": [
+                    {
+                      "aerospike": {
+                        "path": "/etc/aerospike/secret"
+                      },
+                      "name": "aerospike-config-secret",
+                      "source": {
+                        "secret": {
+                          "secretName": "aerospike-secret"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "validationPolicy": {
+                  "skipWorkDirValidate": true,
+                  "skipXdrDlogFileValidate": true
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Database
+        containerImage: docker.io/aerospike/aerospike-kubernetes-operator:2.2.1
+        createdAt: 2022-09-29T13:24:41UTC
+        description: The Aerospike Kubernetes Operator automates the deployment and
+          management of Aerospike enterprise clusters on Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.10.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/aerospike/aerospike-kubernetes-operator/
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: AerospikeCluster is the schema for the AerospikeCluster API
+          displayName: Aerospike Cluster
+          kind: AerospikeCluster
+          name: aerospikeclusters.asdb.aerospike.com
+          version: v1beta1
+      description: |
+        The Aerospike Kubernetes Operator automates the deployment and management of Aerospike enterprise clusters on Kubernetes. The operator allows you to deploy multi-node Aerospike clusters, recover automatically from node failures, scale up or down automatically as load changes, ensure nodes are evenly split across racks or zones, automatically update to new versions of Aerospike and manage configuration changes in your clusters.
+
+        ### Capabilities:
+
+         -   Deploy Aerospike clusters
+         -   Scale up and down existing Aerospike clusters
+         -   Version upgrade and downgrade
+         -   Configure persistent storage and resource allocation
+         -   Standardize and validate configurations
+         -   Cluster security management
+      displayName: Aerospike Kubernetes Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Aerospike
+      links:
+      - name: Documentation
+        url: https://docs.aerospike.com/cloud/kubernetes/operator
+      - name: Aerospike
+        url: https://aerospike.com
+      maintainers:
+      - email: developers@aerospike.com
+        name: Aerospike, Inc.
+      maturity: beta
+      minKubeVersion: 1.16.0
+      provider:
+        name: Aerospike
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+      - docker.io/aerospike/aerospike-kubernetes-operator:2.2.1
+      version: 2.2.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: aerospike-kubernetes-operator
+  provider:
+    name: Aerospike

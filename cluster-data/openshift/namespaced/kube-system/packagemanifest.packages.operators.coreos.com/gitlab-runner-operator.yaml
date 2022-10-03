@@ -1,0 +1,164 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/os.linux: supported
+    provider: GitLab, Inc.
+    provider-url: ""
+  name: gitlab-runner-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: gitlab-runner-operator.v1.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.gitlab.com/v1beta2",
+              "kind": "Runner",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "gitlabUrl": "https://gitlab.com",
+                "imagePullPolicy": "Always",
+                "tags": "openshift, test",
+                "token": "gitlab-dev-runner-secret"
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Integration & Delivery, Developer Tools
+        certified: "false"
+        containerImage: registry.gitlab.com/gitlab-org/gl-openshift/gitlab-runner-operator/gitlab-runner-operator:v1.10.0
+        createdAt: "2022-08-08T15:09:07Z"
+        description: GitLab Runner operator manages lifecycle of GitLab Runner instances
+        operators.openshift.io/infrastructure-features: '["Disconnected"]'
+        operators.operatorframework.io/builder: operator-sdk-v1.11.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://gitlab.com/gitlab-org/gl-openshift/gitlab-runner-operator
+        support: GitLab, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Runner is the open source project used to run your jobs and
+            send the results back to GitLab
+          displayName: GitLab Runner
+          kind: Runner
+          name: runners.apps.gitlab.com
+          version: v1beta2
+      description: |
+        GitLab Runner is the lightweight, highly-scalable agent that runs your build jobs and sends the results back to a GitLab instance. GitLab Runner works in conjunction with GitLab CI/CD, the open-source continuous integration service included with GitLab.
+
+        The GitLab Runner operator manages the lifecycle of GitLab Runner in Kubernetes or Openshift clusters. The operator aims to automate the tasks needed to run your CI/CD jobs in your container orchestration platform.
+
+        ## Prerequisites
+
+          Install cert-manager:
+
+          ```shell
+          kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+          ```
+
+        ## GitLab Runner version
+
+        This version of **GitLab Runner Operator** ships with **GitLab Runner v15.2.1**.
+
+        To use a different version of **GitLab Runner** change the [`runnerImage` and `helperImage` properties](https://docs.gitlab.com/runner/configuration/configuring_runner_operator.html#operator-properties).
+
+        ## Usage
+
+         To link a GitLab Runner instance to a self-hosted GitLab instance or the hosted [GitLab](https://gitlab.com), you first need to:
+
+         1. Create a secret containing the `runner-registration-token` from your GitLab project.
+
+           ```
+          cat > gitlab-runner-secret.yml << EOF
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: gitlab-runner-secret
+          type: Opaque
+          stringData:
+            runner-registration-token: REPLACE_ME # your project runner secret
+          EOF
+          ```
+
+          ```
+          oc apply -f gitlab-runner-secret.yml
+          ```
+
+         2. Create the Custom Resource Definition (CRD) file and include the following information. The tags value must be openshift for the job to run.
+
+           ```
+           cat > gitlab-runner.yml << EOF
+           apiVersion: apps.gitlab.com/v1beta2
+           kind: Runner
+           metadata:
+             name: gitlab-runner
+           spec:
+             gitlabUrl: https://gitlab.example.com
+             buildImage: alpine
+             token: gitlab-runner-secret
+             tags: openshift
+           EOF
+           ```
+
+          ```
+          oc apply -f gitlab-runner.yml
+          ```
+
+        ## Full documentation
+
+        Visit [Install GitLab Runner Operator](https://docs.gitlab.com/runner/install/operator.html)
+      displayName: GitLab Runner
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - GitLab
+      - CI/CD
+      - DevOps
+      - SAST
+      - DAST
+      links:
+      - name: Gitlab Runner Operator
+        url: https://gitlab.com/gitlab-org/gl-openshift/gitlab-runner-operator
+      - name: GitLab Docs
+        url: https://docs.gitlab.com
+      - name: GitLab Runner
+        url: https://docs.gitlab.com/runner/
+      - name: GitLab CI/CD
+        url: https://docs.gitlab.com/ee/ci/quick_start/
+      maintainers:
+      - email: support@gitlab.com
+        name: Georgi N. Georgiev
+      maturity: stable
+      provider:
+        name: GitLab, Inc.
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - registry.gitlab.com/gitlab-org/gl-openshift/gitlab-runner-operator/gitlab-runner-operator:v1.10.0
+      version: 1.10.0
+    name: stable
+  defaultChannel: stable
+  packageName: gitlab-runner-operator
+  provider:
+    name: GitLab, Inc.

@@ -1,0 +1,379 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: multicluster-operators-subscription
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: multicluster-operators-subscription.v0.1.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.open-cluster-management.io/v1",
+              "kind": "Channel",
+              "metadata": {
+                "name": "dev-helmrepo"
+              },
+              "spec": {
+                "type": "HelmRepo",
+                "pathname": "http://kubernetes-charts.storage.googleapis.com/"
+              },
+              "status": {
+                "state": "N/A"
+              }
+            },
+            {
+              "apiVersion": "apps.open-cluster-management.io/v1",
+              "kind": "Subscription",
+              "metadata": {
+                "name": "sub-nginx"
+              },
+              "spec": {
+                "channel": "ns-ch/predev-ch",
+                "name": "nginx-ingress",
+                "packageFilter": {
+                  "version": "=1.26.1"
+                },
+                "packageOverrides": [
+                  {
+                    "packageAlias": "nginx-ingress",
+                    "packageName": "nginx-ingress",
+                    "packageOverrides": [
+                      {
+                        "path": "spec",
+                        "value": {
+                          "defaultBackend": {
+                            "replicaCount": 3
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "placement": {
+                  "local": true
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery,OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/open-cluster-management/multicluster-operators-subscription:community-1.0.0
+        createdAt: "2020-03-24T17:00:00Z"
+        description: An operator to subscribe resources from a channel
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/open-cluster-management/multicloud-operators-subscription
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Subscribe resources from a channel according to its package
+            filters
+          displayName: Subscription
+          kind: Subscription
+          name: subscriptions.apps.open-cluster-management.io
+          version: v1
+        - description: Represent a helm chart repository
+          displayName: Channel
+          kind: Channel
+          name: channels.apps.open-cluster-management.io
+          version: v1
+        - description: Represent a helm chart selected by the subscription, for internal
+            use only.
+          displayName: Helm Release
+          kind: HelmRelease
+          name: helmreleases.apps.open-cluster-management.io
+          version: v1
+        - description: Contain a k8s resource template for deployment, for internal
+            use only.
+          displayName: Deployable
+          kind: Deployable
+          name: deployables.apps.open-cluster-management.io
+          version: v1
+        - description: Placement Rules to determine which mangaged clusters will be
+            deployed by multicluster applications.
+          displayName: Placement Rule
+          kind: PlacementRule
+          name: placementrules.apps.open-cluster-management.io
+          version: v1
+        - description: Application selectors to determine which subscriptions and
+            deployables are bundled into the application
+          displayName: Application
+          kind: Application
+          name: applications.app.k8s.io
+          version: v1beta1
+      description: "A multicluster subscription operator subscribes resources from
+        a Channel and get them deployed to kubernetes clusters\n## Prerequisites\n-
+        Operator Lifecycle Manager (OLM) needs to be installed.\n\nOLM installation
+        can be checked by running the command:\n  ```\n  $ kubectl get pods --all-namespaces
+        | grep olm\n  olm        catalog-operator-7f54797f5f-z9l9n         1/1     Running
+        \           0          46s\n  olm        olm-operator-65874bdb76-vs6gf             1/1
+        \    Running            0          46s\n  olm        operatorhubio-catalog-8wp2d
+        \              1/1     Running            0          36s\n  olm        packageserver-7fb4588767-8mxv4
+        \           1/1     Running            0          34s\n  olm        packageserver-7fb4588767-d6h8j
+        \           1/1     Running            0          25s\n  ```\n\n## How to
+        Install\n- Install `Multicluster Subscription Operator` by following instructions
+        in top right button `Install`.\n\nThree new pods are created in `openshift-operators`
+        namespace\n\n```\n$ kubectl get pods -n openshift-operators\nNAME                                                            READY
+        \  STATUS    RESTARTS   AGE\nmulticluster-operators-application-5ccbbc878d-98fdp
+        \              4/4     Running   0          49s\nmulticluster-operators-hub-subscription-65f7d689d6-6vpr5
+        \         1/1     Running   0          49s\nmulticluster-operators-standalone-subscription-86df85d4bf-m4bd9
+        \  1/1     Running   0          49s\n```\n\nThe operator is now providing
+        new Custom Resources Definitions: `subscriptions.apps.open-cluster-management.io`,
+        `channels.apps.open-cluster-management.io`\n\n## Using the Multicluster Subscription
+        Operator\nHere is an example to demonstrate how to create one Multicluster
+        Subscription CR to subscribe the helm chart nginx-ingress v1.26.1\n\n-  Create
+        a channel `dev-helmrepo` in namespace `dev` to point to a helm repo `kubernetes-charts.storage.googleapis.com`\n\n```\napiVersion:
+        v1\nkind: Namespace\nmetadata:\n  name: dev\n---\napiVersion: apps.open-cluster-management.io/v1\nkind:
+        Channel\nmetadata:\n  name: dev-helmrepo\n  namespace: dev\nspec:\n    type:
+        HelmRepo\n    pathname: http://kubernetes-charts.storage.googleapis.com/\n
+        \   configRef: \n      name: skip-cert-verify\n      apiVersion: v1\n      kind:
+        ConfigMap\n---\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: skip-cert-verify\n
+        \ namespace: dev\ndata:\n  insecureSkipVerify: \"true\"\n```\n\n-  Create
+        a subscription `simple` in the `default` namespace to subscribe the nginx-ingress
+        v1.26.1 package. The subscription is disabled by default.\n\n```\napiVersion:
+        apps.open-cluster-management.io/v1\nkind: Subscription\nmetadata:\n  name:
+        simple\nspec:\n  channel: dev/dev-helmrepo\n  name: nginx-ingress\n  placement:\n
+        \   local: false\n  packageFilter:\n    version: =1.26.1\n  packageOverrides:\n
+        \   - packageName: nginx-ingress\n      packageAlias: nginx-ingress\n      packageOverrides:\n
+        \     - path: spec\n        value:\n          defaultBackend:\n            replicaCount:
+        3\n```\n\n- Deploy the nginx-ingress v1.26.1 package by setting the subscription
+        `spec.placement.local` to `true`\n\n```\nkubectl patch subscriptions.apps.open-cluster-management.io
+        simple --type='json' -p='[{\"op\": \"replace\", \"path\": \"/spec/placement/local\",
+        \"value\": true}]'\n```\n\n- Make sure the subscribed nginx-ingress package
+        being deployed to the default namespace\n\n```\n$ kubectl get pods -n default
+        |grep nginx\nnginx-ingress-controller-775b4967cb-8nx9m        1/1     Running
+        \  0          118s\nnginx-ingress-default-backend-659bd647bd-bfkn8   1/1     Running
+        \  0          118s\nnginx-ingress-default-backend-659bd647bd-fpcnp   1/1     Running
+        \  0          118s\nnginx-ingress-default-backend-659bd647bd-v4nbf   1/1     Running
+        \  0          118s\n```\n"
+      displayName: Multicluster Subscription Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Red Hat
+      - multicluster
+      - subscription
+      - channel
+      links:
+      - name: Multicluster Subscription Operator Project
+        url: https://github.com/open-cluster-management/multicloud-operators-subscription
+      maintainers:
+      - email: xiangli@redhat.com
+        name: Xiangjing Li
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/open-cluster-management/multicluster-operators-subscription:community-1.0.0
+      - quay.io/open-cluster-management/multicluster-operators-placementrule:community-1.0.0
+      - quay.io/open-cluster-management/multicluster-operators-deployable:community-1.0.0
+      - quay.io/open-cluster-management/multicluster-operators-channel:community-1.0.0
+      - quay.io/open-cluster-management/multicluster-operators-application:community-1.0.0
+      version: 0.1.2
+    name: alpha
+  - currentCSV: multicluster-operators-subscription.v0.2.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.open-cluster-management.io/v1",
+              "kind": "Channel",
+              "metadata": {
+                "name": "dev-helmrepo"
+              },
+              "spec": {
+                "type": "HelmRepo",
+                "pathname": "http://kubernetes-charts.storage.googleapis.com/"
+              },
+              "status": {
+                "state": "N/A"
+              }
+            },
+            {
+              "apiVersion": "apps.open-cluster-management.io/v1",
+              "kind": "Subscription",
+              "metadata": {
+                "name": "sub-nginx"
+              },
+              "spec": {
+                "channel": "ns-ch/predev-ch",
+                "name": "nginx-ingress",
+                "packageFilter": {
+                  "version": "=1.26.1"
+                },
+                "packageOverrides": [
+                  {
+                    "packageAlias": "nginx-ingress",
+                    "packageName": "nginx-ingress",
+                    "packageOverrides": [
+                      {
+                        "path": "spec",
+                        "value": {
+                          "defaultBackend": {
+                            "replicaCount": 3
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "placement": {
+                  "local": true
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery,OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/open-cluster-management/multicluster-operators-subscription:2.3.0
+        createdAt: "2021-04-28T18:00:00Z"
+        description: An operator to subscribe resources from nameSpace, objectBucket,
+          helm and github types of channels
+        olm.skipRange: <0.1.4
+        repository: https://github.com/open-cluster-management/multicloud-operators-subscription
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Subscribe resources from a channel according to its package
+            filters
+          displayName: App Subscription
+          kind: Subscription
+          name: subscriptions.apps.open-cluster-management.io
+          version: v1
+        - description: Represent a helm chart repository
+          displayName: Channel
+          kind: Channel
+          name: channels.apps.open-cluster-management.io
+          version: v1
+        - description: Represent a helm chart selected by the subscription, for internal
+            use only.
+          displayName: Helm Release
+          kind: HelmRelease
+          name: helmreleases.apps.open-cluster-management.io
+          version: v1
+        - description: Contain a k8s resource template for deployment, for internal
+            use only.
+          displayName: Deployable
+          kind: Deployable
+          name: deployables.apps.open-cluster-management.io
+          version: v1
+        - description: Placement Rules to determine which mangaged clusters will be
+            deployed by multicluster applications.
+          displayName: Placement Rule
+          kind: PlacementRule
+          name: placementrules.apps.open-cluster-management.io
+          version: v1
+        - description: Application selectors to determine which subscriptions and
+            deployables are bundled into the application
+          displayName: Application
+          kind: Application
+          name: applications.app.k8s.io
+          version: v1beta1
+      description: "A multicluster subscription operator subscribes resources from
+        a Channel and get them deployed to kubernetes clusters\n## Prerequisites\n-
+        Operator Lifecycle Manager (OLM) needs to be installed.\n\nOLM installation
+        can be checked by running the command:\n  ```\n  $ kubectl get pods --all-namespaces
+        | grep olm\n  olm        catalog-operator-7f54797f5f-z9l9n         1/1     Running
+        \           0          46s\n  olm        olm-operator-65874bdb76-vs6gf             1/1
+        \    Running            0          46s\n  olm        operatorhubio-catalog-8wp2d
+        \              1/1     Running            0          36s\n  olm        packageserver-7fb4588767-8mxv4
+        \           1/1     Running            0          34s\n  olm        packageserver-7fb4588767-d6h8j
+        \           1/1     Running            0          25s\n  ```\n\n## How to
+        Install\n- Install `Multicluster Subscription Operator` by following instructions
+        in top right button `Install`.\n\nThree new pods are created in `openshift-operators`
+        namespace\n\n```\n$ kubectl get pods -n openshift-operators\nNAME                                                            READY
+        \  STATUS    RESTARTS   AGE\nmulticluster-operators-application-5ccbbc878d-98fdp
+        \              4/4     Running   0          49s\nmulticluster-operators-hub-subscription-65f7d689d6-6vpr5
+        \         1/1     Running   0          49s\nmulticluster-operators-standalone-subscription-86df85d4bf-m4bd9
+        \  1/1     Running   0          49s\n```\n\nThe operator is now providing
+        new Custom Resources Definitions: `subscriptions.apps.open-cluster-management.io`,
+        `channels.apps.open-cluster-management.io`\n\n## Using the Multicluster Subscription
+        Operator\nHere is an example to demonstrate how to create one Multicluster
+        Subscription CR to subscribe the helm chart nginx-ingress v1.26.1\n\n-  Create
+        a channel `dev-helmrepo` in namespace `dev` to point to a helm repo `kubernetes-charts.storage.googleapis.com`\n\n```\napiVersion:
+        v1\nkind: Namespace\nmetadata:\n  name: dev\n---\napiVersion: apps.open-cluster-management.io/v1\nkind:
+        Channel\nmetadata:\n  name: dev-helmrepo\n  namespace: dev\nspec:\n    type:
+        HelmRepo\n    pathname: http://kubernetes-charts.storage.googleapis.com/\n
+        \   configRef: \n      name: skip-cert-verify\n      apiVersion: v1\n      kind:
+        ConfigMap\n---\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: skip-cert-verify\n
+        \ namespace: dev\ndata:\n  insecureSkipVerify: \"true\"\n```\n\n-  Create
+        a subscription `simple` in the `default` namespace to subscribe the nginx-ingress
+        v1.26.1 package. The subscription is disabled by default.\n\n```\napiVersion:
+        apps.open-cluster-management.io/v1\nkind: Subscription\nmetadata:\n  name:
+        simple\nspec:\n  channel: dev/dev-helmrepo\n  name: nginx-ingress\n  placement:\n
+        \   local: false\n  packageFilter:\n    version: =1.26.1\n  packageOverrides:\n
+        \   - packageName: nginx-ingress\n      packageAlias: nginx-ingress\n      packageOverrides:\n
+        \     - path: spec\n        value:\n          defaultBackend:\n            replicaCount:
+        3\n```\n\n- Deploy the nginx-ingress v1.26.1 package by setting the subscription
+        `spec.placement.local` to `true`\n\n```\nkubectl patch subscriptions.apps.open-cluster-management.io
+        simple --type='json' -p='[{\"op\": \"replace\", \"path\": \"/spec/placement/local\",
+        \"value\": true}]'\n```\n\n- Make sure the subscribed nginx-ingress package
+        being deployed to the default namespace\n\n```\n$ kubectl get pods -n default
+        |grep nginx\nnginx-ingress-controller-775b4967cb-8nx9m        1/1     Running
+        \  0          118s\nnginx-ingress-default-backend-659bd647bd-bfkn8   1/1     Running
+        \  0          118s\nnginx-ingress-default-backend-659bd647bd-fpcnp   1/1     Running
+        \  0          118s\nnginx-ingress-default-backend-659bd647bd-v4nbf   1/1     Running
+        \  0          118s\n```\n"
+      displayName: Multicluster Subscription Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Red Hat
+      - multicluster
+      - subscription
+      - channel
+      links:
+      - name: Multicluster Subscription Operator Project
+        url: https://github.com/open-cluster-management/multicloud-operators-subscription
+      maintainers:
+      - email: ocm-dev@open-cluster-management.io
+        name: Open Cluster Management Project team
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/open-cluster-management/multicluster-operators-placementrule:2.3.0
+      - quay.io/open-cluster-management/multicluster-operators-deployable:2.3.0
+      - quay.io/open-cluster-management/multicluster-operators-application:2.3.0
+      - quay.io/open-cluster-management/multicluster-operators-channel:2.3.0
+      - quay.io/open-cluster-management/multicluster-operators-subscription:2.3.0
+      version: 0.2.8
+    name: release-2.3
+  defaultChannel: release-2.3
+  packageName: multicluster-operators-subscription
+  provider:
+    name: Red Hat

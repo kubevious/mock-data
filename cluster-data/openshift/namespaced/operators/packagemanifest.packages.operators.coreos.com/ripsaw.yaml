@@ -1,0 +1,83 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:50:20Z"
+  labels:
+    catalog: community-operators
+    catalog-namespace: openshift-marketplace
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: cloud-bulldozer
+    provider-url: ""
+  name: ripsaw
+  namespace: operators
+spec: {}
+status:
+  catalogSource: community-operators
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: openshift-marketplace
+  catalogSourcePublisher: Red Hat
+  channels:
+  - currentCSV: ripsaw.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[]'
+        capabilities: Basic Install
+        categories: Developer Tools, Integration & Delivery, Cloud Provider
+        containerImage: quay.io/cloud-bulldozer/benchmark-operator:latest
+        description: '[Benchmark-operator](https://github.com/cloud-bulldozer/ripsaw/)
+          is a benchmarking tool to benchmark your kubernetes cluster. The intent
+          of this Operator is to deploy common workloads to establish a performance
+          baseline of Kubernetes cluster'
+        operators.operatorframework.io/builder: operator-sdk-v1.8.0+git
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+        repository: https://github.com/cloud-bulldozer/benchmark-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - kind: Benchmark
+          name: benchmarks.ripsaw.cloudbulldozer.io
+          version: v1alpha1
+      description: '[Benchmark-operator](https://github.com/cloud-bulldozer/benchmark-operator/)
+        is a benchmarking tool to benchmark your kubernetes cluster. The intent of
+        this Operator is to deploy common workloads to establish a performance baseline
+        of Kubernetes cluster'
+      displayName: benchmark-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - performance
+      - benchmark
+      links:
+      - name: Site
+        url: https://github.com/cloud-bulldozer/benchmark-operator
+      - name: Documentation
+        url: https://github.com/cloud-bulldozer/benchmark-operator/tree/master/docs
+      maintainers:
+      - email: rsevilla@redhat.com
+        name: rsevilla87
+      - email: jtaleric@redhat.com
+        name: jtaleric
+      - email: rzaleski@redhat.com
+        name: dry939
+      - email: kwhitley@redhat.com
+        name: whitleykeith
+      maturity: alpha
+      provider:
+        name: cloud-bulldozer
+      relatedImages:
+      - quay.io/cloud-bulldozer/benchmark-operator:latest
+      - k8s.gcr.io/redis:v1
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: ripsaw
+  provider:
+    name: cloud-bulldozer

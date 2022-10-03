@@ -1,0 +1,400 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: open-liberty
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: open-liberty-0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+             {
+                "apiVersion":"openliberty.io/v1alpha1",
+                "kind":"OpenLiberty",
+                "metadata":{
+                   "name":"demo3-openliberty"
+                },
+                "spec":{
+                   "image":{
+                      "extraEnvs":[],
+                      "extraVolumeMounts":[],
+                      "lifecycle":{},
+                      "livenessProbe":{},
+                      "pullPolicy":"IfNotPresent",
+                      "pullSecret":"",
+                      "readinessProbe":{},
+                      "repository":"open-liberty",
+                      "security":{},
+                      "serverOverridesConfigMapName":"",
+                      "tag":"javaee8"
+                   },
+                   "resourceNameOverride":"",
+                   "deployment":{
+                      "annotations":{},
+                      "labels":{}
+                   },
+                   "pod":{
+                      "annotations":{},
+                      "extraContainers":[],
+                      "extraInitContainers":[],
+                      "extraVolumes":[],
+                      "labels":{},
+                      "security":{}
+                   },
+                   "service":{
+                      "annotations":{},
+                      "enabled":true,
+                      "extraPorts":[],
+                      "extraSelectors":{},
+                      "labels":{},
+                      "name":"",
+                      "port":9443,
+                      "targetPort":9443,
+                      "type":"NodePort"
+                   },
+                   "jmsService":{
+                      "enabled":false,
+                      "port":7286,
+                      "targetPort":7286,
+                      "type":"NodePort"
+                   },
+                   "iiopService":{
+                      "enabled":false,
+                      "nonSecurePort":2809,
+                      "nonSecureTargetPort":2809,
+                      "securePort":9402,
+                      "secureTargetPort":9402,
+                      "type":"NodePort"
+                   },
+                   "ssl":{
+                      "createClusterSSLConfiguration":false,
+                      "enabled":true,
+                      "useClusterSSLConfiguration":false
+                   },
+                   "ingress":{
+                      "annotations":{},
+                      "enabled":false,
+                      "host":"",
+                      "labels":{},
+                      "path":"/",
+                      "rewriteTarget":"/",
+                      "secretName":""
+                   },
+                   "persistence":{
+                      "fsGroupGid":null,
+                      "name":"liberty-pvc",
+                      "selector":{
+                         "label":"",
+                         "value":""
+                      },
+                      "size":"1Gi",
+                      "storageClassName":"",
+                      "useDynamicProvisioning":true
+                   },
+                   "logs":{
+                      "consoleFormat":"json",
+                      "consoleLogLevel":"info",
+                      "consoleSource":"message,trace,accessLog,ffdc",
+                      "persistLogs":false,
+                      "persistTransactionLogs":false
+                   },
+                   "microprofile":{
+                      "health":{
+                         "enabled":false
+                      }
+                   },
+                   "monitoring":{
+                      "enabled":false
+                   },
+                   "replicaCount":1,
+                   "autoscaling":{
+                      "enabled":false,
+                      "maxReplicas":10,
+                      "minReplicas":1,
+                      "targetCPUUtilizationPercentage":50
+                   },
+                   "resources":{
+                      "constraints":{
+                         "enabled":false
+                      },
+                      "limits":{
+                         "cpu":"500m",
+                         "memory":"512Mi"
+                      },
+                      "requests":{
+                         "cpu":"500m",
+                         "memory":"512Mi"
+                      }
+                   },
+                   "arch":{
+                      "amd64":"2 - No preference",
+                      "ppc64le":"2 - No preference",
+                      "s390x":"2 - No preference"
+                   },
+                   "env":{
+                    "jvmArgs":""
+                   },
+                   "rbac":{
+                      "install":true
+                   }
+                }
+             }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Application Runtime
+        certified: "false"
+        containerImage: openliberty/operator:0.0.1
+        createdAt: 2019-05-16T12:00:00.000-0500
+        description: Installs a Jakarta EE / MicroProfile / Spring application running
+          on Open Liberty.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/OpenLiberty/open-liberty-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Open Liberty Application
+          displayName: Open Liberty
+          kind: OpenLiberty
+          name: openliberties.openliberty.io
+          version: v1alpha1
+      description: "Installs a Jakarta EE / MicroProfile / Spring application running
+        on Open Liberty.  \nThis is an alpha version and is not intended to be used
+        in production. \n\n## Building an Application Image\n  \n  The first step
+        is to build an application image that contains your application and Open Liberty
+        configuration.\n  \n  See our [Open Liberty official GitHub repository](https://github.com/OpenLiberty/ci.docker#building-an-application-image)
+        for details on how to build an application image with Open Liberty as the
+        base layer.\n\n## Configuration\n\n  For a complete list of configuration
+        items please see [this table](https://github.com/IBM/charts/blob/master/stable/ibm-open-liberty/README.md#configuration).\n\n
+        \ When running on an OpenShift environment, define your Security Context Constraints
+        (SCC) following the instructions under the install security section [here](https://github.com/OpenLiberty/open-liberty-operator).\n"
+      displayName: Open Liberty Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Open Liberty
+      - MicroProfile
+      - Jakarta EE
+      - Java
+      - Application Server
+      - Runtime
+      - Spring
+      links:
+      - name: Open Liberty Operator Guide
+        url: https://github.com/OpenLiberty/open-liberty-operator/blob/master/README.md
+      maintainers:
+      - email: arthurdm@ca.ibm.com
+        name: Arthur De Magalhaes
+      - email: kaczynsk@us.ibm.com
+        name: Tim Kaczynski
+      - email: mezarina@us.ibm.com
+        name: Ed Mezarina
+      - email: spewak@us.ibm.com
+        name: Tim Spewak
+      - email: ginnick@us.ibm.com
+        name: Mike Ginnick
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: IBM
+      relatedImages:
+      - openliberty/operator:0.0.1
+      version: 0.0.1
+    name: alpha
+  - currentCSV: open-liberty-operator.v0.7.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"openliberty.io/v1beta1","kind":"OpenLibertyApplication","metadata":{"name":"demo-app"},"spec":{"replicas":1,"applicationImage":"openliberty/open-liberty:full-java8-openj9-ubi","expose":true}},{"apiVersion":
+          "openliberty.io/v1beta1","kind": "OpenLibertyDump","metadata": {"name":
+          "example-dump"},"spec": {"podName": "Specify_Pod_Name_Here","include": ["heap","thread"]}},{"apiVersion":
+          "openliberty.io/v1beta1","kind": "OpenLibertyTrace","metadata": {"name":
+          "example-trace"},"spec": {"podName": "Specify_Pod_Name_Here","traceSpecification":
+          "*=info:com.ibm.ws.webcontainer*=all"}}]'
+        capabilities: Auto Pilot
+        categories: Application Runtime
+        certified: "true"
+        containerImage: openliberty/operator:0.7.0
+        createdAt: "2020-07-22 09:00:00"
+        description: Deploy and manage applications running on Open Liberty
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        owned.crd.extensions: |-
+          - name: openlibertyapplications.openliberty.io
+            operations:
+              - openlibertytraces.openliberty.io
+              - openlibertydumps.openliberty.io
+          - name: openlibertytraces.openliberty.io
+            actionName: Liberty Trace
+            targetKinds:
+              - Deployment
+              - Pod
+            specDescriptors:
+              - path: podName
+                v-descriptors:
+                - urn:alm:descriptor:io.operations.value:target-resource:kind=Pod:metadata.name
+                - urn:alm:descriptor:io.operations.value:target-resource:kind=Deployment:PodList
+                x-descriptors:
+                - urn:alm:descriptor:com.tectonic.ui:MultiSelectList:target-resource:kind=Deployment
+              - path: disable
+                displayName: Disable tracing
+              - path: maxFileSize
+                displayName: Maximum file size
+              - path: maxFiles
+                displayName: Maximum number of files
+              - path: traceSpecification
+                displayName: Trace specification string
+          - name: openlibertydumps.openliberty.io
+            actionName: Liberty Dump
+            targetKinds:
+              - Deployment
+              - Pod
+            specDescriptors:
+              - path: podName
+                v-descriptors:
+                - urn:alm:descriptor:io.operations.value:target-resource:kind=Pod:metadata.name
+                - urn:alm:descriptor:io.operations.value:target-resource:kind=Deployment:PodList
+                x-descriptors:
+                - urn:alm:descriptor:com.tectonic.ui:MultiSelectList:target-resource:kind=Deployment
+              - path: include
+                displayName: Dump types
+                x-descriptors:
+                - urn:alm:descriptor:com.tectonic.ui:MultiSelectList:target-resource:kind=Deployment
+        repository: https://github.com/OpenLiberty/open-liberty-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Configuration for the deployment of an Open Liberty application
+          displayName: Open Liberty Application
+          kind: OpenLibertyApplication
+          name: openlibertyapplications.openliberty.io
+          version: v1beta1
+        - description: Day-2 operation for gathering server traces
+          displayName: Open Liberty Trace
+          kind: OpenLibertyTrace
+          name: openlibertytraces.openliberty.io
+          version: v1beta1
+        - description: Day-2 operation for generating server dumps
+          displayName: Open Liberty Dump
+          kind: OpenLibertyDump
+          name: openlibertydumps.openliberty.io
+          version: v1beta1
+      description: |-
+        This advanced Operator can be used to deploy and manage Open Liberty applications with consistent, production-grade QoS. This operator is based on the [Runtime Component Operator](https://github.com/application-stacks/runtime-component-operator) and provides all of its capabilities in addition to Open Liberty specific features such as gathering traces and dumps (Day-2 operations) and easily configuring and managing the single sign-on information for your Open Liberty applications.
+        Open Liberty Operator enables enterprise architects to govern the way their applications get deployed & managed in the cluster, while dramatically reducing the learning curve for developers to deploy into Kubernetes - allowing them to focus on writing the code!
+        Here are some key features:
+        #### Application Lifecyle
+        You can deploy your Open Liberty application container by either pointing to a container image, or an OpenShift ImageStream. When using an ImageStream the Operator will watch for any updates and will re-deploy the modified image.
+
+        #### Custom RBAC
+        This Operator is capable of using a custom ServiceAccount from the caller, allowing it to follow RBAC restrictions. By default it creates a ServiceAccount if one is not specified, which can also be bound with specific roles.
+
+        #### Environment Configuration
+        You can configured a variety of artifacts with your deployment, such as: labels, annotations, and environment variables from a ConfigMap, a Secret or a value.
+
+        #### Routing
+        Expose your application to external users via a single toggle to create a Route on OpenShift or an Ingress on other Kubernetes environments. Advanced configuration, such as TLS settings, are also easily enabled.  Expiring Route certificates are re-issued.
+
+        #### High Availability via Horizontal Pod Autoscaling
+        Run multiple instances of your application for high availability. Either specify a static number of replicas or easily configure horizontal auto scaling to create (and delete) instances based on resource consumption.
+
+        #### Persistence and advanced storage
+        Enable persistence for your application by specifying simple requirements: just tell us the size of the storage and where you would like it to be mounted and We will create and manage that storage for you.
+        This toggles a StatefulSet resource instead of a Deployment resource, so your container can recover transactions and state upon a pod restart.
+        We offer an advanced mode where the user specifies a built-in PersistentVolumeClaim, allowing them to configure many details of the persistent volume, such as its storage class and access mode.
+        You can also easily configure and use a single storage for serviceability related Day-2 operations, such as gatherig server traces and dumps.
+
+        #### Service Binding
+        Easily bind to available services in your cluster.  Your runtime components can expose and consume other services by simply specifying the target endpoinds: we take care of the heavy lifting such as creating k8s Secrets, injecting them into your container and watching for any changes in configuration!  This way your applications can dynamically reconnect to its required services without any intervention or interruption.
+
+        #### Single Sign-On (SSO)
+        Open Liberty provides capabilities to delegate authentication to external providers. Your application users can log in using their existing social media credentials from providers such as Google, Facebook, LinkedIn, Twitter, GitHub, and any OpenID Connect (OIDC) or OAuth 2.0 clients.
+        Open Liberty Operator allows to easily configure and manage the single sign-on information for your applications.
+        #### Exposing metrics to Prometheus
+        The Open Liberty Operator exposes the runtime container's metrics via the [Prometheus Operator](https://operatorhub.io/operator/prometheus).
+        Users can pick between a basic mode, where they simply specify the label that Prometheus is watching to scrape the metrics from the container, or they can specify the full `ServiceMonitor` spec embedded into the OpenLibertyApplication's `spec.monitoring` key controlling things like the poll internal and security credentials.
+        #### Easily mount logs and transaction directories
+        If you need to mount the logs and transaction data from your application to an external volume such as NFS (or any storage supported in your cluster), simply add the following (customizing the folder location and size) to your OpenLibertyApplication CR:
+        ``` storage: size: 2Gi mountPath: "/logs" ```
+
+        #### Integration with OpenShift's Certificate Manager
+        The Open Liberty Operator takes advantage of the [cert-manager tool](https://cert-manager.io/), if it is installed on the cluster. This allows the operator to automatically provision TLS certificates for pods as well as routes.
+        When creating certificates via the OpenLibertyApplication CR the user can specify a particular issuer name and toggle the scopes between ClusterIssuer (cluster scoped) and Issuer (namespace scoped). If not specified, these values are retrieved from a ConfigMap, with a default value of `self-signed` and `ClusterIssuer`.
+        The certificate is mounted into the container via a Secret so that it is automatically refreshed once the certificate is updated.
+        #### Integration with OpenShift Serverless
+        Deploy your serverless runtime component using a single toggle.  The Operator will convert all of its generated resources into [Knative](https://knative.dev) resources, allowing your pod to automatically scale to 0 when it is idle.
+
+        #### Integration with Kubernetes Application Navigator (kAppNav) and OpenShift's Topology UI
+        Automatically configures the Kubernetes resources for integration with [kAppNav](https://kappnav.io/), allowing your runtime component to compose an umbrella [Application](https://github.com/kubernetes-sigs/application).  This integration allows users to monitor all constituents resources of the application and receive alerts when the health status of a component changes.  From an integrated panel users can also launch day-2-operations, such as viewing the Kibana / Grafana dashboards, and enabling trace for a component.
+        During this integration we also set the corresponding labels to support OpenShift's Developer Topology UI,which allows you to visualize your entire set of deployments and how they are connected.
+        See our [**documentation**](https://github.com/OpenLiberty/open-liberty-operator/tree/master/doc/) for more information.
+      displayName: Open Liberty Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Open Liberty
+      - MicroProfile
+      - Jakarta EE
+      - Java
+      - Application Server
+      - Application Runtime
+      - Runtime
+      - Spring
+      - Application
+      - Open Source
+      - OpenLiberty
+      links:
+      - name: Documentation
+        url: https://github.com/OpenLiberty/open-liberty-operator/tree/master/doc
+      - name: Open Liberty
+        url: https://openliberty.io/
+      - name: Open Liberty Images
+        url: https://github.com/OpenLiberty/ci.docker
+      maintainers:
+      - email: dzmitry@ca.ibm.com
+        name: Artur Dzmitryieu
+      - email: navidst@ca.ibm.com
+        name: Navid Shakibapour Tabrizi
+      - email: leojc@ca.ibm.com
+        name: Leo Christy Jesuraj
+      - email: arthurdm@ca.ibm.com
+        name: Arthur De Magalhaes
+      maturity: beta
+      provider:
+        name: IBM
+      relatedImages:
+      - openliberty/operator:0.7.0
+      version: 0.7.0
+    name: beta
+  defaultChannel: beta
+  packageName: open-liberty
+  provider:
+    name: IBM

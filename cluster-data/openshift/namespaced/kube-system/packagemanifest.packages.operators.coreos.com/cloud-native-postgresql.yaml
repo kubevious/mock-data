@@ -1,0 +1,787 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    provider: EnterpriseDB Corporation
+    provider-url: ""
+  name: cloud-native-postgresql
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cloud-native-postgresql.v1.17.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "backup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "cluster-sample"
+              },
+              "spec": {
+                "instances": 3,
+                "logLevel": "info",
+                "primaryUpdateStrategy": "unsupervised",
+                "storage": {
+                  "size": "1Gi"
+                },
+                "walStorage": {
+                  "size": "1Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Pooler",
+              "metadata": {
+                "name": "pooler-sample-rw"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "instances": 1,
+                "pgbouncer": {
+                  "poolMode": "session"
+                },
+                "type": "rw"
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "ScheduledBackup",
+              "metadata": {
+                "name": "scheduledbackup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "schedule": "0 0 0 * * *"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/enterprisedb/cloud-native-postgresql@sha256:625d127b7692639a05a6961817692c6eb1008a5b90b57023845eafd7c9cbc2bd
+        createdAt: "2022-09-08T17:29:47+00:00"
+        description: Operator to manage Postgres high availability clusters with a
+          primary/standby architecture.
+        olm.skipRange: '>=1.15.3 < 1.17.0'
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: EnterpriseDB Corporation
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PostgreSQL backup manager
+          displayName: Backups
+          kind: Backup
+          name: backups.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL cluster manager
+          displayName: Cluster
+          kind: Cluster
+          name: clusters.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PgBouncer Pooler Manager
+          displayName: Pooler
+          kind: Pooler
+          name: poolers.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL backups schedule
+          displayName: Scheduled Backups
+          kind: ScheduledBackup
+          name: scheduledbackups.postgresql.k8s.enterprisedb.io
+          version: v1
+      description: "EDB Postgres for Kubernetes is an operator designed, developed,
+        and supported by EDB that covers the full \nlifecycle of a highly available
+        Postgres database clusters with a primary/standby architecture, using native\nstreaming
+        replication. It is based on the open source CloudNativePG operator, and provides
+        additional value\nsuch as compatibility with Oracle using EDB Postgres Advanced
+        Server and additional supported platforms such\nas IBM Power and OpenShift.\n\nKey
+        features available include:\n\n* Kubernetes API integration for high availability\n*
+        Self-healing through failover and automated recreation of replicas\n* Capacity
+        management with scale up/down capabilities\n* Planned switchovers for scheduled
+        maintenance\n* Read-only and read-write Kubernetes services definitions\n*
+        Rolling updates for Postgres minor versions and operator upgrades\n* Continuous
+        backup and point-in-time recovery\n* Connection Pooling with PgBouncer\n*
+        Integrated metrics exporter out of the box\n* PostgreSQL replication across
+        multiple Kubernetes clusters\n* Red Hat certified operator for OpenShift\n\nThe
+        operator has been renamed from Cloud Native PostgreSQL. Existing users of
+        Cloud Native PostgreSQL will not\nexperience any change, as the underlying
+        components and resources have not changed.\n"
+      displayName: EDB Postgres for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - postgres
+      - database
+      - sql
+      - cloud
+      - native
+      - edb
+      - enterprisedb
+      - cnp
+      links:
+      - name: EDB Postgres for Kubernetes
+        url: https://www.enterprisedb.com/products/postgresql-on-kubernetes-ha-clusters-k8s-containers-scalable
+      - name: Documentation
+        url: https://www.enterprisedb.com/docs/postgres_for_kubernetes/latest/
+      maintainers:
+      - email: sales@enterprisedb.com
+        name: Sales
+      - email: support@enterprisedb.com
+        name: Support
+      maturity: stable
+      provider:
+        name: EnterpriseDB Corporation
+      relatedImages:
+      - quay.io/enterprisedb/cloud-native-postgresql@sha256:625d127b7692639a05a6961817692c6eb1008a5b90b57023845eafd7c9cbc2bd
+      version: 1.17.0
+    name: fast
+  - currentCSV: cloud-native-postgresql.v1.16.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "backup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "cluster-sample"
+              },
+              "spec": {
+                "instances": 3,
+                "logLevel": "info",
+                "primaryUpdateStrategy": "unsupervised",
+                "storage": {
+                  "size": "1Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Pooler",
+              "metadata": {
+                "name": "pooler-sample-rw"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "instances": 1,
+                "pgbouncer": {
+                  "poolMode": "session"
+                },
+                "type": "rw"
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "ScheduledBackup",
+              "metadata": {
+                "name": "scheduledbackup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "schedule": "0 0 0 * * *"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/enterprisedb/cloud-native-postgresql@sha256:fc031fc001d857f5ba22c2bf776521318c1bfee07f9928f8767829c7d0877b2f
+        createdAt: "2022-09-08T13:32:18+00:00"
+        description: Operator to manage Postgres high availability clusters with a
+          primary/standby architecture.
+        olm.skipRange: '>=1.15.3 < 1.16.2'
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: EnterpriseDB Corporation
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PostgreSQL backup manager
+          displayName: Backups
+          kind: Backup
+          name: backups.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL cluster manager
+          displayName: Cluster
+          kind: Cluster
+          name: clusters.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PgBouncer Pooler Manager
+          displayName: Pooler
+          kind: Pooler
+          name: poolers.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL backups schedule
+          displayName: Scheduled Backups
+          kind: ScheduledBackup
+          name: scheduledbackups.postgresql.k8s.enterprisedb.io
+          version: v1
+      description: "EDB Postgres for Kubernetes is an operator designed, developed,
+        and supported by EDB that covers the full \nlifecycle of a highly available
+        Postgres database clusters with a primary/standby architecture, using native\nstreaming
+        replication. It is based on the open source CloudNativePG operator, and provides
+        additional value\nsuch as compatibility with Oracle using EDB Postgres Advanced
+        Server and additional supported platforms such\nas IBM Power and OpenShift.\n\nKey
+        features available include:\n\n* Kubernetes API integration for high availability\n*
+        Self-healing through failover and automated recreation of replicas\n* Capacity
+        management with scale up/down capabilities\n* Planned switchovers for scheduled
+        maintenance\n* Read-only and read-write Kubernetes services definitions\n*
+        Rolling updates for Postgres minor versions and operator upgrades\n* Continuous
+        backup and point-in-time recovery\n* Connection Pooling with PgBouncer\n*
+        Integrated metrics exporter out of the box\n* PostgreSQL replication across
+        multiple Kubernetes clusters\n* Red Hat certified operator for OpenShift\n\nThe
+        operator has been renamed from Cloud Native PostgreSQL. Existing users of
+        Cloud Native PostgreSQL will not\nexperience any change, as the underlying
+        components and resources have not changed.\n"
+      displayName: EDB Postgres for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - postgres
+      - database
+      - sql
+      - cloud
+      - native
+      - edb
+      - enterprisedb
+      - cnp
+      links:
+      - name: EDB Postgres for Kubernetes
+        url: https://www.enterprisedb.com/products/postgresql-on-kubernetes-ha-clusters-k8s-containers-scalable
+      - name: Documentation
+        url: https://www.enterprisedb.com/docs/postgres_for_kubernetes/latest/
+      maintainers:
+      - email: sales@enterprisedb.com
+        name: Sales
+      - email: support@enterprisedb.com
+        name: Support
+      maturity: stable
+      provider:
+        name: EnterpriseDB Corporation
+      relatedImages:
+      - quay.io/enterprisedb/cloud-native-postgresql@sha256:fc031fc001d857f5ba22c2bf776521318c1bfee07f9928f8767829c7d0877b2f
+      version: 1.16.2
+    name: stable
+  - currentCSV: cloud-native-postgresql.v1.15.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "backup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "cluster-sample"
+              },
+              "spec": {
+                "instances": 3,
+                "logLevel": "info",
+                "primaryUpdateStrategy": "unsupervised",
+                "storage": {
+                  "size": "1Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Pooler",
+              "metadata": {
+                "name": "pooler-sample-rw"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "instances": 1,
+                "pgbouncer": {
+                  "poolMode": "session"
+                },
+                "type": "rw"
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "ScheduledBackup",
+              "metadata": {
+                "name": "scheduledbackup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "schedule": "0 0 0 * * *"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/enterprisedb/cloud-native-postgresql@sha256:170ba9ca43b758ff1f8107f8fcdbf51c5c3d3739a0da08391d448ab3137868c4
+        createdAt: "2022-09-06T18:15:56+00:00"
+        description: Operator to manage Postgres high availability clusters with a
+          primary/standby architecture.
+        olm.skipRange: '>=1.15.3 < 1.15.4'
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: EnterpriseDB Corporation
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PostgreSQL backup manager
+          displayName: Backups
+          kind: Backup
+          name: backups.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL cluster manager
+          displayName: Cluster
+          kind: Cluster
+          name: clusters.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PgBouncer Pooler Manager
+          displayName: Pooler
+          kind: Pooler
+          name: poolers.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL backups schedule
+          displayName: Scheduled Backups
+          kind: ScheduledBackup
+          name: scheduledbackups.postgresql.k8s.enterprisedb.io
+          version: v1
+      description: "EDB Postgres for Kubernetes is an operator designed, developed,
+        and supported by EDB that covers the full \nlifecycle of a highly available
+        Postgres database clusters with a primary/standby architecture, using native\nstreaming
+        replication. It is based on the open source CloudNativePG operator, and provides
+        additional value\nsuch as compatibility with Oracle using EDB Postgres Advanced
+        Server and additional supported platforms such\nas IBM Power and OpenShift.\n\nKey
+        features available include:\n\n* Kubernetes API integration for high availability\n*
+        Self-healing through failover and automated recreation of replicas\n* Capacity
+        management with scale up/down capabilities\n* Planned switchovers for scheduled
+        maintenance\n* Read-only and read-write Kubernetes services definitions\n*
+        Rolling updates for Postgres minor versions and operator upgrades\n* Continuous
+        backup and point-in-time recovery\n* Connection Pooling with PgBouncer\n*
+        Integrated metrics exporter out of the box\n* PostgreSQL replication across
+        multiple Kubernetes clusters\n* Red Hat certified operator for OpenShift\n\nThe
+        operator has been renamed from Cloud Native PostgreSQL. Existing users of
+        Cloud Native PostgreSQL will not\nexperience any change, as the underlying
+        components and resources have not changed.\n"
+      displayName: EDB Postgres for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - postgres
+      - database
+      - sql
+      - cloud
+      - native
+      - edb
+      - enterprisedb
+      - cnp
+      links:
+      - name: EDB Postgres for Kubernetes
+        url: https://www.enterprisedb.com/products/postgresql-on-kubernetes-ha-clusters-k8s-containers-scalable
+      - name: Documentation
+        url: https://www.enterprisedb.com/docs/postgres_for_kubernetes/latest/
+      maintainers:
+      - email: sales@enterprisedb.com
+        name: Sales
+      - email: support@enterprisedb.com
+        name: Support
+      maturity: stable
+      provider:
+        name: EnterpriseDB Corporation
+      relatedImages:
+      - quay.io/enterprisedb/cloud-native-postgresql@sha256:170ba9ca43b758ff1f8107f8fcdbf51c5c3d3739a0da08391d448ab3137868c4
+      version: 1.15.4
+    name: stable-v1.15
+  - currentCSV: cloud-native-postgresql.v1.16.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "backup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "cluster-sample"
+              },
+              "spec": {
+                "instances": 3,
+                "logLevel": "info",
+                "primaryUpdateStrategy": "unsupervised",
+                "storage": {
+                  "size": "1Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Pooler",
+              "metadata": {
+                "name": "pooler-sample-rw"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "instances": 1,
+                "pgbouncer": {
+                  "poolMode": "session"
+                },
+                "type": "rw"
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "ScheduledBackup",
+              "metadata": {
+                "name": "scheduledbackup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "schedule": "0 0 0 * * *"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/enterprisedb/cloud-native-postgresql@sha256:fc031fc001d857f5ba22c2bf776521318c1bfee07f9928f8767829c7d0877b2f
+        createdAt: "2022-09-08T13:32:18+00:00"
+        description: Operator to manage Postgres high availability clusters with a
+          primary/standby architecture.
+        olm.skipRange: '>=1.15.3 < 1.16.2'
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: EnterpriseDB Corporation
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PostgreSQL backup manager
+          displayName: Backups
+          kind: Backup
+          name: backups.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL cluster manager
+          displayName: Cluster
+          kind: Cluster
+          name: clusters.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PgBouncer Pooler Manager
+          displayName: Pooler
+          kind: Pooler
+          name: poolers.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL backups schedule
+          displayName: Scheduled Backups
+          kind: ScheduledBackup
+          name: scheduledbackups.postgresql.k8s.enterprisedb.io
+          version: v1
+      description: "EDB Postgres for Kubernetes is an operator designed, developed,
+        and supported by EDB that covers the full \nlifecycle of a highly available
+        Postgres database clusters with a primary/standby architecture, using native\nstreaming
+        replication. It is based on the open source CloudNativePG operator, and provides
+        additional value\nsuch as compatibility with Oracle using EDB Postgres Advanced
+        Server and additional supported platforms such\nas IBM Power and OpenShift.\n\nKey
+        features available include:\n\n* Kubernetes API integration for high availability\n*
+        Self-healing through failover and automated recreation of replicas\n* Capacity
+        management with scale up/down capabilities\n* Planned switchovers for scheduled
+        maintenance\n* Read-only and read-write Kubernetes services definitions\n*
+        Rolling updates for Postgres minor versions and operator upgrades\n* Continuous
+        backup and point-in-time recovery\n* Connection Pooling with PgBouncer\n*
+        Integrated metrics exporter out of the box\n* PostgreSQL replication across
+        multiple Kubernetes clusters\n* Red Hat certified operator for OpenShift\n\nThe
+        operator has been renamed from Cloud Native PostgreSQL. Existing users of
+        Cloud Native PostgreSQL will not\nexperience any change, as the underlying
+        components and resources have not changed.\n"
+      displayName: EDB Postgres for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - postgres
+      - database
+      - sql
+      - cloud
+      - native
+      - edb
+      - enterprisedb
+      - cnp
+      links:
+      - name: EDB Postgres for Kubernetes
+        url: https://www.enterprisedb.com/products/postgresql-on-kubernetes-ha-clusters-k8s-containers-scalable
+      - name: Documentation
+        url: https://www.enterprisedb.com/docs/postgres_for_kubernetes/latest/
+      maintainers:
+      - email: sales@enterprisedb.com
+        name: Sales
+      - email: support@enterprisedb.com
+        name: Support
+      maturity: stable
+      provider:
+        name: EnterpriseDB Corporation
+      relatedImages:
+      - quay.io/enterprisedb/cloud-native-postgresql@sha256:fc031fc001d857f5ba22c2bf776521318c1bfee07f9928f8767829c7d0877b2f
+      version: 1.16.2
+    name: stable-v1.16
+  - currentCSV: cloud-native-postgresql.v1.17.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "backup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "cluster-sample"
+              },
+              "spec": {
+                "instances": 3,
+                "logLevel": "info",
+                "primaryUpdateStrategy": "unsupervised",
+                "storage": {
+                  "size": "1Gi"
+                },
+                "walStorage": {
+                  "size": "1Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "Pooler",
+              "metadata": {
+                "name": "pooler-sample-rw"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "instances": 1,
+                "pgbouncer": {
+                  "poolMode": "session"
+                },
+                "type": "rw"
+              }
+            },
+            {
+              "apiVersion": "postgresql.k8s.enterprisedb.io/v1",
+              "kind": "ScheduledBackup",
+              "metadata": {
+                "name": "scheduledbackup-sample"
+              },
+              "spec": {
+                "cluster": {
+                  "name": "cluster-sample"
+                },
+                "schedule": "0 0 0 * * *"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/enterprisedb/cloud-native-postgresql@sha256:625d127b7692639a05a6961817692c6eb1008a5b90b57023845eafd7c9cbc2bd
+        createdAt: "2022-09-08T17:29:47+00:00"
+        description: Operator to manage Postgres high availability clusters with a
+          primary/standby architecture.
+        olm.skipRange: '>=1.15.3 < 1.17.0'
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: EnterpriseDB Corporation
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: PostgreSQL backup manager
+          displayName: Backups
+          kind: Backup
+          name: backups.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL cluster manager
+          displayName: Cluster
+          kind: Cluster
+          name: clusters.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PgBouncer Pooler Manager
+          displayName: Pooler
+          kind: Pooler
+          name: poolers.postgresql.k8s.enterprisedb.io
+          version: v1
+        - description: PostgreSQL backups schedule
+          displayName: Scheduled Backups
+          kind: ScheduledBackup
+          name: scheduledbackups.postgresql.k8s.enterprisedb.io
+          version: v1
+      description: "EDB Postgres for Kubernetes is an operator designed, developed,
+        and supported by EDB that covers the full \nlifecycle of a highly available
+        Postgres database clusters with a primary/standby architecture, using native\nstreaming
+        replication. It is based on the open source CloudNativePG operator, and provides
+        additional value\nsuch as compatibility with Oracle using EDB Postgres Advanced
+        Server and additional supported platforms such\nas IBM Power and OpenShift.\n\nKey
+        features available include:\n\n* Kubernetes API integration for high availability\n*
+        Self-healing through failover and automated recreation of replicas\n* Capacity
+        management with scale up/down capabilities\n* Planned switchovers for scheduled
+        maintenance\n* Read-only and read-write Kubernetes services definitions\n*
+        Rolling updates for Postgres minor versions and operator upgrades\n* Continuous
+        backup and point-in-time recovery\n* Connection Pooling with PgBouncer\n*
+        Integrated metrics exporter out of the box\n* PostgreSQL replication across
+        multiple Kubernetes clusters\n* Red Hat certified operator for OpenShift\n\nThe
+        operator has been renamed from Cloud Native PostgreSQL. Existing users of
+        Cloud Native PostgreSQL will not\nexperience any change, as the underlying
+        components and resources have not changed.\n"
+      displayName: EDB Postgres for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - postgres
+      - database
+      - sql
+      - cloud
+      - native
+      - edb
+      - enterprisedb
+      - cnp
+      links:
+      - name: EDB Postgres for Kubernetes
+        url: https://www.enterprisedb.com/products/postgresql-on-kubernetes-ha-clusters-k8s-containers-scalable
+      - name: Documentation
+        url: https://www.enterprisedb.com/docs/postgres_for_kubernetes/latest/
+      maintainers:
+      - email: sales@enterprisedb.com
+        name: Sales
+      - email: support@enterprisedb.com
+        name: Support
+      maturity: stable
+      provider:
+        name: EnterpriseDB Corporation
+      relatedImages:
+      - quay.io/enterprisedb/cloud-native-postgresql@sha256:625d127b7692639a05a6961817692c6eb1008a5b90b57023845eafd7c9cbc2bd
+      version: 1.17.0
+    name: stable-v1.17
+  defaultChannel: stable-v1.16
+  packageName: cloud-native-postgresql
+  provider:
+    name: EnterpriseDB Corporation

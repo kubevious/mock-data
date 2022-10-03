@@ -1,0 +1,291 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: GitLab Inc
+    provider-url: https://about.gitlab.com/
+  name: gitlab-operator-kubernetes
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: gitlab-operator-kubernetes.v0.12.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.gitlab.com/v1beta1",
+              "kind": "GitLab",
+              "metadata": {
+                "name": "gitlab",
+                "namespace": "gitlab-system"
+              },
+              "spec": {
+                "chart": {
+                  "values": {
+                    "certmanager": {
+                      "install": false
+                    },
+                    "global": {
+                      "hosts": {
+                        "domain": "example.com",
+                        "hostSuffix": null
+                      },
+                      "ingress": {
+                        "configureCertmanager": false,
+                        "tls": {
+                          "secretName": null
+                        }
+                      }
+                    }
+                  },
+                  "version": "6.4.0"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery, Developer Tools
+        certified: "true"
+        containerImage: registry.gitlab.com/gitlab-org/cloud-native/gitlab-operator:0.12.0
+        createdAt: "2020-03-11T13:29:00Z"
+        description: The GitLab operator is responsible for managing the full lifecycle
+          of GitLab instances in your Kubernetes or Openshift container platforms.
+        operatorframework.io/suggested-namespace: gitlab-system
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://gitlab.com/gitlab-org/cloud-native/gitlab-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: GitLab is a complete DevOps platform, delivered in a single
+            application
+          displayName: GitLab
+          kind: GitLab
+          name: gitlabs.apps.gitlab.com
+          version: v1beta1
+      description: |
+        # Overview
+
+        The GitLab operator is responsible for managing the full lifecycle of GitLab instances in your Kubernetes or Openshift container platforms.
+
+        [Documentation](https://docs.gitlab.com/charts/installation/operator.html)
+
+        The operator, while new and still actively being developed, aims to:
+        - ease installation and configuration of GitLab instances
+        - offer seamless upgrades from version to version
+
+        ## GitLab
+
+        GitLab is a complete open-source DevOps platform, delivered as a single application, fundamentally changing the way Development, Security, and Ops teams collaborate and build software. From idea to production, GitLab helps teams improve cycle time from weeks to minutes, reduce development process costs and decrease time to market while increasing developer productivity.
+
+        Built on Open Source, GitLab delivers new innovations and features on the same day of every month by leveraging contributions from a passionate, global community of thousands of developers and millions of users. Over 100,000 of the world’s most demanding organizations trust GitLab to deliver great software at new speeds.
+
+        If you would like to enable advanced DevOps capabilities and activate enterprise features such as security, risk, and compliance capabilities, please contact our sales team to purchase an enterprise license.
+
+        # Prerequisites
+
+        Please visit [Prerequisites](https://docs.gitlab.com/charts/installation/operator.html#prerequisites) section of GitLab Operator Documentation.
+
+        ## IngressClass
+
+        Cluster-wide `IngressClass` should be created prior to Operator setup, as OLM does not currently support this object type:
+
+        ```yaml
+        apiVersion: networking.k8s.io/v1
+        kind: IngressClass
+        metadata:
+          # Ensure this value matches `spec.chart.values.global.ingress.class`
+          # in the GitLab CR on the next step.
+          name: gitlab-nginx
+        spec:
+          controller: k8s.io/ingress-nginx
+        ```
+      displayName: GitLab
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - GitLab
+      - DevOps
+      - CI/CD
+      - DAST
+      - SAST
+      links:
+      - name: GitLab Docs
+        url: https://docs.gitlab.com/
+      - name: GitLab Operator Documentation
+        url: https://docs.gitlab.com/charts/installation/operator.html
+      - name: GitLab and Kubernetes
+        url: https://about.gitlab.com/solutions/kubernetes/
+      - name: Gitlab Reference Architecture
+        url: https://docs.gitlab.com/ee/administration/reference_architectures/
+      - name: GitLab Contact Sales
+        url: https://about.gitlab.com/sales/
+      maintainers:
+      - email: distribution@gitlab.com
+        name: GitLab Distribution Team
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: GitLab Inc
+        url: https://about.gitlab.com/
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - registry.gitlab.com/gitlab-org/cloud-native/gitlab-operator:0.12.0
+      version: 0.12.0
+    name: stable
+  - currentCSV: gitlab-operator-kubernetes.v0.12.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.gitlab.com/v1beta1",
+              "kind": "GitLab",
+              "metadata": {
+                "name": "gitlab",
+                "namespace": "gitlab-system"
+              },
+              "spec": {
+                "chart": {
+                  "values": {
+                    "certmanager": {
+                      "install": false
+                    },
+                    "global": {
+                      "hosts": {
+                        "domain": "example.com",
+                        "hostSuffix": null
+                      },
+                      "ingress": {
+                        "configureCertmanager": false,
+                        "tls": {
+                          "secretName": null
+                        }
+                      }
+                    }
+                  },
+                  "version": "6.4.0"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery, Developer Tools
+        certified: "true"
+        containerImage: registry.gitlab.com/gitlab-org/cloud-native/gitlab-operator:0.12.0
+        createdAt: "2020-03-11T13:29:00Z"
+        description: The GitLab operator is responsible for managing the full lifecycle
+          of GitLab instances in your Kubernetes or Openshift container platforms.
+        operatorframework.io/suggested-namespace: gitlab-system
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://gitlab.com/gitlab-org/cloud-native/gitlab-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: GitLab is a complete DevOps platform, delivered in a single
+            application
+          displayName: GitLab
+          kind: GitLab
+          name: gitlabs.apps.gitlab.com
+          version: v1beta1
+      description: |
+        # Overview
+
+        The GitLab operator is responsible for managing the full lifecycle of GitLab instances in your Kubernetes or Openshift container platforms.
+
+        [Documentation](https://docs.gitlab.com/charts/installation/operator.html)
+
+        The operator, while new and still actively being developed, aims to:
+        - ease installation and configuration of GitLab instances
+        - offer seamless upgrades from version to version
+
+        ## GitLab
+
+        GitLab is a complete open-source DevOps platform, delivered as a single application, fundamentally changing the way Development, Security, and Ops teams collaborate and build software. From idea to production, GitLab helps teams improve cycle time from weeks to minutes, reduce development process costs and decrease time to market while increasing developer productivity.
+
+        Built on Open Source, GitLab delivers new innovations and features on the same day of every month by leveraging contributions from a passionate, global community of thousands of developers and millions of users. Over 100,000 of the world’s most demanding organizations trust GitLab to deliver great software at new speeds.
+
+        If you would like to enable advanced DevOps capabilities and activate enterprise features such as security, risk, and compliance capabilities, please contact our sales team to purchase an enterprise license.
+
+        # Prerequisites
+
+        Please visit [Prerequisites](https://docs.gitlab.com/charts/installation/operator.html#prerequisites) section of GitLab Operator Documentation.
+
+        ## IngressClass
+
+        Cluster-wide `IngressClass` should be created prior to Operator setup, as OLM does not currently support this object type:
+
+        ```yaml
+        apiVersion: networking.k8s.io/v1
+        kind: IngressClass
+        metadata:
+          # Ensure this value matches `spec.chart.values.global.ingress.class`
+          # in the GitLab CR on the next step.
+          name: gitlab-nginx
+        spec:
+          controller: k8s.io/ingress-nginx
+        ```
+      displayName: GitLab
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - GitLab
+      - DevOps
+      - CI/CD
+      - DAST
+      - SAST
+      links:
+      - name: GitLab Docs
+        url: https://docs.gitlab.com/
+      - name: GitLab Operator Documentation
+        url: https://docs.gitlab.com/charts/installation/operator.html
+      - name: GitLab and Kubernetes
+        url: https://about.gitlab.com/solutions/kubernetes/
+      - name: Gitlab Reference Architecture
+        url: https://docs.gitlab.com/ee/administration/reference_architectures/
+      - name: GitLab Contact Sales
+        url: https://about.gitlab.com/sales/
+      maintainers:
+      - email: distribution@gitlab.com
+        name: GitLab Distribution Team
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: GitLab Inc
+        url: https://about.gitlab.com/
+      relatedImages:
+      - registry.gitlab.com/gitlab-org/cloud-native/gitlab-operator:0.12.0
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      version: 0.12.0
+    name: unstable
+  defaultChannel: stable
+  packageName: gitlab-operator-kubernetes
+  provider:
+    name: GitLab Inc
+    url: https://about.gitlab.com/

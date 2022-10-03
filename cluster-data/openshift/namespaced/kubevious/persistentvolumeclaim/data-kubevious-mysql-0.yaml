@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    ibm.io/provisioning-status: complete
+    pv.kubernetes.io/bind-completed: "yes"
+    pv.kubernetes.io/bound-by-controller: "yes"
+    volume.beta.kubernetes.io/storage-provisioner: ibm.io/ibmc-block
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app.kubernetes.io/component: kubevious-mysql
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    region: us-south
+    zone: sjc03
+  name: data-kubevious-mysql-0
+  namespace: kubevious
+  resourceVersion: "21864"
+  uid: 4074c0b2-ab24-43aa-98b2-3f2da0165ef3
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ibmc-block-gold
+  volumeMode: Filesystem
+  volumeName: pvc-4074c0b2-ab24-43aa-98b2-3f2da0165ef3
+status:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  phase: Bound

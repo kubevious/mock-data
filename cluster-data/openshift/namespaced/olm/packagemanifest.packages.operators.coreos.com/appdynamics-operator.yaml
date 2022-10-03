@@ -1,0 +1,261 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: AppDynamics LLC
+    provider-url: ""
+  name: appdynamics-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: appdynamics-operator.v0.6.10
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdynamics.com/v1alpha1",
+              "kind": "Adam",
+              "metadata": {
+                "name": "example-adam",
+                "namespace": "appdynamics"
+              },
+              "spec": {
+              "controllerUrl": "https://saas.appdynamics.com"
+              }
+            },
+            {
+              "apiVersion": "appdynamics.com/v1alpha1",
+              "kind": "Clusteragent",
+              "metadata": {
+                "name": "k8s-cluster-agent",
+                "namespace": "appdynamics"
+              },
+              "spec": {
+                "account": "customer1",
+                "appName": "Cluster1",
+                "controllerUrl": "https://saas.appdynamics.com",
+                "stdoutLogging": "true"
+              }
+            },
+            {
+              "apiVersion": "appdynamics.com/v1alpha1",
+              "kind": "InfraViz",
+              "metadata": {
+                "name": "appd-infraviz",
+                "namespace": "appdynamics"
+              },
+              "spec": {
+                "account": "customer1",
+                "controllerUrl": "https://saas.appdynamics.com",
+                "enableDockerViz": "false",
+                "enableMasters": true,
+                "globalAccount": "customer1_12345",
+                "netVizPort": 3892,
+                "stdoutLogging": true
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/appdynamics/cluster-agent-operator
+        createdAt: "2019-11-30 12:00:00"
+        description: End to end monitoring of applications on Kubernetes and OpenShift
+          clusters with AppDynamics.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/Appdynamics/appdynamics-operator
+        support: support@appdynamics.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Instrumentation automation (Internal)
+          displayName: Instrumentation
+          kind: Adam
+          name: adams.appdynamics.com
+          version: v1alpha1
+        - description: Clustercollector is the Schema for the clustercollectors API
+          displayName: Cluster Collector
+          kind: Clustercollector
+          name: clustercollectors.appdynamics.com
+          version: v1alpha1
+        - description: Agent for monitoring Kubernetes and OpenShift clusters.
+          displayName: Cluster Agent
+          kind: Clusteragent
+          name: clusteragents.appdynamics.com
+          version: v1alpha1
+        - description: Agent for monitoring server and network infrastructure.
+          displayName: Infrastructure Visibility
+          kind: InfraViz
+          name: infravizs.appdynamics.com
+          version: v1alpha1
+      description: AppDynamics Operator simplifies the configuration and lifecycle
+        management of the AppDynamics ClusterAgent and the AppDynamics Machine Agent
+        on different Kubernetes distributions and OpenShift. The Operator encapsulates
+        key operational knowledge on how to configure and upgrade the ClusterAgent
+        and the Machine Agent. The custom resources managed by the Operator require
+        a secret with the AppDynamics controller access key to be in place prior to
+        the deployment. Refer to [this installation guide](https://github.com/Appdynamics/appdynamics-operator#operator-deployment)
+        for details.
+      displayName: Appdynamics Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - appdynamics
+      - monitoring
+      - e2e visibility
+      - aiops
+      links:
+      - name: AppDynamics Cluster Agent Overview
+        url: https://docs.appdynamics.com/display/PRO45/Monitoring+Kubernetes+with+the+Cluster+Agent
+      - name: AppDynamics Kubernetes Monitoring Overview
+        url: https://www.appdynamics.com/cloud-monitoring/kubernetes-monitoring/
+      - name: Operator Deployment Guide
+        url: https://github.com/Appdynamics/appdynamics-operator
+      maintainers:
+      - email: support@appdynamics.com
+        name: AppDynamics
+      maturity: alpha
+      provider:
+        name: AppDynamics LLC
+      relatedImages:
+      - docker.io/appdynamics/cluster-agent-operator:0.6.10
+      version: 0.6.10
+    name: alpha
+  - currentCSV: appdynamics-operator.v0.4.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "appdynamics.com/v1alpha1",
+              "kind": "Adam",
+              "metadata": {
+                "name": "example-adam",
+                "namespace": "appdynamics"
+              },
+              "spec": {
+              "controllerUrl": "https://saas.appdynamics.com"
+              }
+            },
+            {
+              "apiVersion": "appdynamics.com/v1alpha1",
+              "kind": "Clusteragent",
+              "metadata": {
+                "name": "k8s-cluster-agent",
+                "namespace": "appdynamics"
+              },
+              "spec": {
+                "account": "customer1",
+                "appName": "Cluster1",
+                "controllerUrl": "https://saas.appdynamics.com",
+                "stdoutLogging": "true"
+              }
+            },
+            {
+              "apiVersion": "appdynamics.com/v1alpha1",
+              "kind": "InfraViz",
+              "metadata": {
+                "name": "appd-infraviz",
+                "namespace": "appdynamics"
+              },
+              "spec": {
+                "account": "customer1",
+                "controllerUrl": "https://saas.appdynamics.com",
+                "enableDockerViz": "false",
+                "enableMasters": true,
+                "globalAccount": "customer1_12345",
+                "netVizPort": 3892,
+                "stdoutLogging": true
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/appdynamics/cluster-agent-operator
+        createdAt: "2019-11-30 12:00:00"
+        description: End to end monitoring of applications on Kubernetes and OpenShift
+          clusters with AppDynamics.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/Appdynamics/appdynamics-operator
+        support: support@appdynamics.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Instrumentation automation (Internal)
+          displayName: Instrumentation
+          kind: Adam
+          name: adams.appdynamics.com
+          version: v1alpha1
+        - description: Agent for monitoring Kubernetes and OpenShift clusters.
+          displayName: Cluster Agent
+          kind: Clusteragent
+          name: clusteragents.appdynamics.com
+          version: v1alpha1
+        - description: Agent for monitoring server and network infrastructure.
+          displayName: Infrastructure Visibility
+          kind: InfraViz
+          name: infravizs.appdynamics.com
+          version: v1alpha1
+      description: AppDynamics Operator simplifies the configuration and lifecycle
+        management of the AppDynamics ClusterAgent and the AppDynamics Machine Agent
+        on different Kubernetes distributions and OpenShift. The Operator encapsulates
+        key operational knowledge on how to configure and upgrade the ClusterAgent
+        and the Machine Agent. The custom resources managed by the Operator require
+        a secret with the AppDynamics controller access key to be in place prior to
+        the deployment. Refer to [this installation guide](https://github.com/Appdynamics/appdynamics-operator#operator-deployment)
+        for details.
+      displayName: Appdynamics Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - appdynamics
+      - monitoring
+      - e2e visibility
+      - aiops
+      links:
+      - name: AppDynamics Cluster Agent Overview
+        url: https://docs.appdynamics.com/display/PRO45/Monitoring+Kubernetes+with+the+Cluster+Agent
+      - name: AppDynamics Kubernetes Monitoring Overview
+        url: https://www.appdynamics.com/cloud-monitoring/kubernetes-monitoring/
+      - name: Operator Deployment Guide
+        url: https://github.com/Appdynamics/appdynamics-operator
+      maintainers:
+      - email: support@appdynamics.com
+        name: AppDynamics
+      maturity: alpha
+      provider:
+        name: AppDynamics LLC
+      relatedImages:
+      - docker.io/appdynamics/cluster-agent-operator:0.4.0
+      version: 0.4.1
+    name: deprecated
+  defaultChannel: alpha
+  packageName: appdynamics-operator
+  provider:
+    name: AppDynamics LLC

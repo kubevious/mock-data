@@ -1,0 +1,139 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Routernetes
+    provider-url: routernetes.net
+  name: routernetes-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: routernetes-operator.v0.0.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "routernetes.net/v1alpha1",
+              "kind": "Router",
+              "metadata": {
+                "name": "my-router",
+                "namespace": "routernetes"
+              },
+              "spec": {
+                "dhcp": {
+                  "dnsServer": "192.168.64.1",
+                  "domain": "network.lan",
+                  "endIP": "192.168.64.150",
+                  "gateway": "192.168.64.1",
+                  "leaseTime": "12h",
+                  "mask": "255.255.255.0",
+                  "startIP": "192.168.64.50"
+                },
+                "dns": {
+                  "listenInterface": "enp0s20u1",
+                  "upstreamServers": [
+                    "8.8.8.8",
+                    "8.8.4.4"
+                  ]
+                },
+                "firewall": {
+                  "outside": {
+                    "services": []
+                  }
+                },
+                "interfaces": [
+                  {
+                    "ipv4": {
+                      "method": "auto"
+                    },
+                    "name": "eno1",
+                    "type": "ethernet",
+                    "zone": "outside"
+                  },
+                  {
+                    "ipv4": {
+                      "address": "192.168.64.1/24",
+                      "method": "manual"
+                    },
+                    "name": "enp0s20u1",
+                    "type": "ethernet"
+                  }
+                ],
+                "osUpdates": {
+                  "day": "Sun",
+                  "enabled": true,
+                  "time": "04:00",
+                  "timezone": "America/New_York"
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Networking
+        containerImage: quay.io/routernetes/routernetes-operator:0.0.6
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+        repository: https://github.com/routernetes/routernetes-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A Router defines the configuration for an all-in-one home router
+          displayName: Router
+          kind: Router
+          name: routers.routernetes.net
+          version: v1alpha1
+      description: |
+        Routernetes uses the Kubernetes API to create a customizable and auto-updating home router
+        ## INSTALLATION
+        Please note that this operator is designed to be used on a specifically configured single-node Kubernetes cluster.
+
+        **Please visit [https://routernetes.net](https://routernetes.net) for installation instructions**
+      displayName: Routernetes
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - router
+      - home
+      - firewall
+      - raspberry
+      - pi
+      - rpi
+      links:
+      - name: Routernetes
+        url: https://routernetes.net
+      maintainers:
+      - email: logan@bacoosta.com
+        name: Logan McNaughton
+      maturity: alpha
+      minKubeVersion: 1.22.0
+      provider:
+        name: Routernetes
+        url: routernetes.net
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+      - quay.io/routernetes/routernetes-operator:0.0.6
+      version: 0.0.6
+    name: alpha
+  defaultChannel: alpha
+  packageName: routernetes-operator
+  provider:
+    name: Routernetes
+    url: routernetes.net

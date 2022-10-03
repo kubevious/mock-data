@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    armada-service: ibm-storage-metrics-agent
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "1"
+    razee.io/build-url: https://travis.ibm.com/alchemy-containers/ibm-storage-metrics-agent/builds/75909049
+    razee.io/source-url: https://github.ibm.com/alchemy-containers/ibm-storage-metrics-agent/tree/v1.28.0
+    version: 614b9aaac8feaf2260c28ec919df3beb767ec399
+  creationTimestamp: "2022-10-03T18:39:37Z"
+  generation: 1
+  labels:
+    name: ibm-storage-metrics-agent
+    pod-template-hash: 6f44664f5
+  name: ibm-storage-metrics-agent-6f44664f5
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: ibm-storage-metrics-agent
+    uid: 6505f1f9-0ca4-4b72-9742-d7988fdf4073
+  resourceVersion: "13729"
+  uid: 3588b212-3cb5-4e91-8344-52dc4591428a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ibm-storage-metrics-agent
+      pod-template-hash: 6f44664f5
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: ibm-storage-metrics-agent
+        pod-template-hash: 6f44664f5
+    spec:
+      containers:
+      - env:
+        - name: JOB_IMAGE
+          value: icr.io/obs/ibm-storage-metrics-agent:614b9aaac8feaf2260c28ec919df3beb767ec399
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        envFrom:
+        - configMapRef:
+            name: ibm-storage-metrics-agent
+        image: icr.io/obs/ibm-storage-metrics-agent:614b9aaac8feaf2260c28ec919df3beb767ec399
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /liveness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 2100
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: ibm-storage-metrics-agent
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/storage_ibmc/cluster_info
+          name: cluster-info
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      priorityClassName: system-cluster-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccount: ibm-storage-metrics-agent
+      serviceAccountName: ibm-storage-metrics-agent
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: cluster-info
+        name: cluster-info
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

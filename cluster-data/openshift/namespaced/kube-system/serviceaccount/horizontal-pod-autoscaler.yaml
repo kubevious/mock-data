@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: horizontal-pod-autoscaler-dockercfg-g9pd4
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:16Z"
+  name: horizontal-pod-autoscaler
+  namespace: kube-system
+  resourceVersion: "1863"
+  uid: 3a687942-bda4-43b0-ba1a-6a04bc224559
+secrets:
+- name: horizontal-pod-autoscaler-token-cfq9t
+- name: horizontal-pod-autoscaler-dockercfg-g9pd4

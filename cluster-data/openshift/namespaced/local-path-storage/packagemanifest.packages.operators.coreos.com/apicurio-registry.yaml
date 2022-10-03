@@ -1,0 +1,262 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Apicurio
+    provider-url: ""
+  name: apicurio-registry
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: apicurio-registry.v0.0.4-v1.3.2.final
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apicur.io/v1alpha1",
+              "kind": "ApicurioRegistry",
+              "metadata": {
+                "name": "example-apicurioregistry"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: docker.io/apicurio/apicurio-registry-operator:0.0.4
+        createdAt: "2020-11-18"
+        description: Deploy and manage Apicurio Registry on Kubernetes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/Apicurio/apicurio-registry-operator
+        support: Apicurio
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ApicurioRegistry is the Schema for the apicurioregistries API
+          kind: ApicurioRegistry
+          name: apicurioregistries.apicur.io
+          version: v1alpha1
+      description: |
+        ## Apicurio Registry
+
+        Apicurio Registry stores and retrieves API designs and event schemas,
+        and gives you control of their evolution.
+
+        **Features**
+        - Supports: Apache Avro, AsyncAPI, GraphQL, JSON Schema, Kafka Connect Schema, OpenAPI, Protobuf
+        - Provides a REST API to manage the artifacts and artifact meta-data
+        - Includes Serializers and Deserializers for Kafka client integration
+        - Configurable rules to control schema validity and evolution (compatibility)
+        - Storage options: Kafka Streams, Kafka, PostgreSQL, in-memory
+        - Compatible with Confluent and IBM APIs
+        - Runs on a lightweight Quarkus platform
+        - Includes Maven plugin to integrate with Maven based builds
+
+        ## Apicurio Registry Operator
+
+        Provides a quick and easy way to deploy and manage an Apicurio Registry on Kubernetes.
+
+        **Features**
+        - Supports basic Install and configuration of the Registry
+        - Can optionally create an Ingress to access the API and UI  on HTTP port 80
+        - Manual horizontal scaling
+        - Easily perform a rolling upgrade of the Registry
+
+        ## Prerequisites
+
+        This operator does not deploy storage for the Registry. Therefore, some storage options require that the chosen persistence service is already set up. You can do this using an operator for the specified service, such as Strimzi for Kafka Streams.
+      displayName: Apicurio Registry Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - integration
+      - streaming
+      - messaging
+      - api
+      - schemas
+      - registry
+      - apicurio
+      - apicurio-registry
+      links:
+      - name: Website
+        url: https://www.apicur.io/
+      - name: GitHub
+        url: https://github.com/Apicurio/apicurio-registry/
+      - name: Issues
+        url: https://github.com/Apicurio/apicurio-registry/issues
+      - name: Twitter
+        url: https://twitter.com/Apicurio
+      maintainers:
+      - email: apicurio@lists.jboss.org
+        name: Apicurio
+      maturity: alpha
+      provider:
+        name: Apicurio
+      relatedImages:
+      - docker.io/apicurio/apicurio-registry-operator@sha256:d9477c73b855f9821f4a8aca491407e065d34b5bdc795e3ad49a0537fd6ceeaa
+      - docker.io/apicurio/apicurio-registry-mem@sha256:9e3e35e16a72c6c065b4be6c1fabcb2e9f7ed73b36600e05b1e46b4cc394413f
+      - docker.io/apicurio/apicurio-registry-kafka@sha256:cdac38135c67f3da808e55b16beaa4fc3cc67b846af1e64f491417d4107d60aa
+      - docker.io/apicurio/apicurio-registry-streams@sha256:d3bfb0d13498dedd563d7b45dfa2461e560bf0fbf08ff3767254bb8a198f4845
+      - docker.io/apicurio/apicurio-registry-jpa@sha256:44eeddd3562ca3ac3f5fb440e5f68880ab9b4d6caa0b34541a9178c4a039b1f4
+      - docker.io/apicurio/apicurio-registry-infinispan@sha256:4dfe0cba302f8243c5c2312df845eed6690381e8d44072c5f5ab96241b5d2dde
+      version: 0.0.4-v1.3.2.final
+    name: alpha
+  - currentCSV: apicurio-registry-operator.v1.0.0-v2.0.0.final
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "registry.apicur.io/v1",
+              "kind": "ApicurioRegistry",
+              "metadata": {
+                "name": "example-apicurioregistry-kafkasql"
+              },
+              "spec": {
+                "configuration": {
+                  "kafkasql": {
+                    "bootstrapServers": "\u003cservice name\u003e.\u003cnamespace\u003e.svc:9092"
+                  },
+                  "persistence": "kafkasql"
+                }
+              }
+            },
+            {
+              "apiVersion": "registry.apicur.io/v1",
+              "kind": "ApicurioRegistry",
+              "metadata": {
+                "name": "example-apicurioregistry-mem"
+              },
+              "spec": {
+                "configuration": {
+                  "persistence": "mem"
+                }
+              }
+            },
+            {
+              "apiVersion": "registry.apicur.io/v1",
+              "kind": "ApicurioRegistry",
+              "metadata": {
+                "name": "example-apicurioregistry-sql"
+              },
+              "spec": {
+                "configuration": {
+                  "persistence": "sql",
+                  "sql": {
+                    "dataSource": {
+                      "password": "\u003cpassword\u003e",
+                      "url": "jdbc:postgresql://\u003cservice name\u003e.\u003cnamespace\u003e.svc:5432/\u003cdatabase name\u003e",
+                      "userName": "postgres"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: quay.io/apicurio/apicurio-registry-operator:1.0.0
+        createdAt: "2021-05-19"
+        description: Deploy and manage Apicurio Registry on Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.4.2
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Apicurio/apicurio-registry-operator
+        support: Apicurio
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ApicurioRegistry represents an Apicurio Registry instance
+          displayName: Apicurio Registry
+          kind: ApicurioRegistry
+          name: apicurioregistries.registry.apicur.io
+          version: v1
+      description: |
+        ## Apicurio Registry
+
+        Apicurio Registry stores and retrieves API designs and event schemas,
+        and gives you control of their evolution.
+
+        **Features**
+        - Supports: Apache Avro, AsyncAPI, GraphQL, JSON Schema, Kafka Connect Schema, OpenAPI, Protobuf
+        - Provides a REST API to manage the artifacts and artifact meta-data
+        - Includes Serializers and Deserializers for Kafka client integration
+        - Configurable rules to control schema validity and evolution (compatibility)
+        - Storage options: Kafka Streams, PostgreSQL, in-memory
+        - Compatible with Confluent and IBM APIs
+        - Runs on a lightweight Quarkus platform
+        - Includes Maven plugin to integrate with Maven based builds
+
+        ## Apicurio Registry Operator
+
+        Provides a quick and easy way to deploy and manage an Apicurio Registry on Kubernetes.
+
+        **Features**
+        - Supports basic Install and configuration of the Registry
+        - Can optionally create an Ingress to access the API and UI  on HTTP port 80
+        - Manual horizontal scaling
+        - Easily perform a rolling upgrade of the Registry
+
+        ## Prerequisites
+
+        This operator does not deploy storage for the Registry. Therefore, some storage options require that the chosen persistence service is already set up. You can do this using an operator for the specified service, such as Strimzi for Kafka Streams.
+      displayName: Apicurio Registry Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - integration
+      - streaming
+      - messaging
+      - api
+      - schemas
+      - registry
+      - apicurio
+      - apicurio-registry
+      links:
+      - name: Website
+        url: https://www.apicur.io/
+      - name: GitHub
+        url: https://github.com/Apicurio/apicurio-registry/
+      - name: Issues
+        url: https://github.com/Apicurio/apicurio-registry/issues
+      - name: Twitter
+        url: https://twitter.com/Apicurio
+      maintainers:
+      - email: apicurio@lists.jboss.org
+        name: Apicurio
+      maturity: alpha
+      provider:
+        name: Apicurio
+      relatedImages:
+      - quay.io/apicurio/apicurio-registry-operator:1.0.0
+      version: 1.0.0-v2.0.0.final
+    name: 2.x
+  defaultChannel: 2.x
+  packageName: apicurio-registry
+  provider:
+    name: Apicurio

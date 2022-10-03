@@ -1,0 +1,188 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: YugabyteDB
+    provider-url: ""
+  name: yugabyte-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: yugabyte-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "yugabyte.com/v1alpha1",
+              "kind": "YBCluster",
+              "metadata": {
+                "name": "example-ybcluster",
+                "namespace": "yb-operator"
+              },
+              "spec": {
+                "image": {
+                  "pullPolicy": "IfNotPresent",
+                  "repository": "yugabytedb/yugabyte",
+                  "tag": "1.3.2.0-b19"
+                },
+                "master": {
+                  "enableLoadBalancer": true,
+                  "gflags": [
+                    {
+                      "key": "default_memory_limit_to_ram_ratio",
+                      "value": "0.85"
+                    },
+                    {
+                      "key": "use_node_to_node_encryption",
+                      "value": "true"
+                    }
+                  ],
+                  "masterRPCPort": 7100,
+                  "masterUIPort": 7000,
+                  "podManagementPolicy": "Parallel",
+                  "replicas": 3,
+                  "resources": {
+                    "limits": {
+                      "cpu": 0.5,
+                      "memory": "512Mi"
+                    },
+                    "requests": {
+                      "cpu": 0.2,
+                      "memory": "256Mi"
+                    }
+                  },
+                  "storage": {
+                    "count": 1,
+                    "size": "1Gi",
+                    "storageClass": "standard"
+                  }
+                },
+                "replicationFactor": 3,
+                "tls": {
+                  "enabled": true,
+                  "rootCA": {
+                    "cert": "<cert>",
+                    "key": "<key>"
+                  }
+                },
+                "tserver": {
+                  "enableLoadBalancer": true,
+                  "gflags": [
+                    {
+                      "key": "default_memory_limit_to_ram_ratio",
+                      "value": "0.85"
+                    },
+                    {
+                      "key": "use_node_to_node_encryption",
+                      "value": "true"
+                    }
+                  ],
+                  "podManagementPolicy": "Parallel",
+                  "replicas": 3,
+                  "resources": {
+                    "limits": {
+                      "cpu": 0.5,
+                      "memory": "512Mi"
+                    },
+                    "requests": {
+                      "cpu": 0.2,
+                      "memory": "256Mi"
+                    }
+                  },
+                  "storage": {
+                    "count": 1,
+                    "size": "1Gi",
+                    "storageClass": "standard"
+                  },
+                  "tserverRPCPort": 9100,
+                  "tserverUIPort": 9000,
+                  "ycqlPort": 9042,
+                  "yedisPort": 6379,
+                  "ysqlPort": 5433
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Database
+        containerImage: quay.io/yugabyte/yugabytedb-operator
+        description: This operator installs and manages a YugabyteDB cluster.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/yugabyte/yugabyte-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a YugabyteDB cluster
+          displayName: YugabyteDB Cluster
+          kind: YBCluster
+          name: ybclusters.yugabyte.com
+          version: v1alpha1
+      description: |-
+        YugaByteDB is a high-performance, ACID compliant, distributed SQL database.
+
+        ## About this Operator
+        This operator installs and manages a YugabyteDB cluster. YugabyteDB architecture contains two important components viz. YB-Master & YB-TServer. Operator creates services & statefulsets with required number of pods for the two components along with any secrets, as required. You can also scale the cluster nodes up or down, using the operator, after it is up & running.
+
+
+        ## Core capabilities
+        * **StatefulSet** - Installs YugabyteDB cluster using StatefulSets.
+        * **Dynamic Scaling** - Scale your cluster up/down using YBCluster custom resources.
+        * **Dashboard** - Access YugabyteDB UI to monitor your cluster, along with user data.
+
+        Review all of the [confiuguration options](https://docs.yugabyte.com/latest/deploy/kubernetes/yugabyte-operator/#configuration-options).
+        ## Using the cluster
+        You can access YugabyteDB Master UI by navigating `http://<Master_UI_service_external_IP>:7000/` . Get the external IP of master UI service with command:
+        ```
+        kubectl -n yb-operator get service
+        NAME           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                               AGE
+        yb-master-ui   LoadBalancer   10.111.34.175   35.102.91.38  7000:31418/TCP                        1m
+        yb-masters     ClusterIP      None            <none>        7100/TCP,7000/TCP                     1m
+        yb-tservers    ClusterIP      None            <none>        7100/TCP,9000/TCP,6379/TCP,9042/TCP   1m
+        ```
+        For more information on YugabyteDB, its client APIs & other stuff check out [YugabyteDB Documentation](https://docs.yugabyte.com)
+      displayName: Yugabyte Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      links:
+      - name: YugabyteDB Home Page
+        url: https://www.yugabyte.com/
+      - name: YugabyteDB Documentation
+        url: https://docs.yugabyte.com/
+      - name: Configuration Options
+        url: https://docs.yugabyte.com/latest/deploy/kubernetes/yugabyte-operator/#configuration-options
+      - name: YugabyteDB Source
+        url: https://github.com/yugabyte/yugabyte-db
+      maintainers:
+      - email: ram@yugabyte.com
+        name: Ram Vaidyanathan
+      - email: sanketh@yugabyte.com
+        name: Sanketh
+      maturity: alpha
+      provider:
+        name: YugabyteDB
+      relatedImages:
+      - quay.io/yugabyte/yugabytedb-operator
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: yugabyte-operator
+  provider:
+    name: YugabyteDB

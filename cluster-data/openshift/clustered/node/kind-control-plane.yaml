@@ -1,0 +1,205 @@
+apiVersion: v1
+kind: Node
+metadata:
+  annotations:
+    kubeadm.alpha.kubernetes.io/cri-socket: unix:///run/containerd/containerd.sock
+    node.alpha.kubernetes.io/ttl: "0"
+    volumes.kubernetes.io/controller-managed-attach-detach: "true"
+  creationTimestamp: "2022-09-30T19:14:45Z"
+  labels:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/os: linux
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: kind-control-plane
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/control-plane: ""
+    node.kubernetes.io/exclude-from-external-load-balancers: ""
+  name: kind-control-plane
+  resourceVersion: "47318"
+  uid: 376779aa-2546-4834-9367-fad4b512b9c6
+spec:
+  podCIDR: 10.244.0.0/24
+  podCIDRs:
+  - 10.244.0.0/24
+  providerID: kind://docker/kind/kind-control-plane
+status:
+  addresses:
+  - address: 172.18.0.2
+    type: InternalIP
+  - address: kind-control-plane
+    type: Hostname
+  allocatable:
+    cpu: "6"
+    ephemeral-storage: 123591232Ki
+    hugepages-1Gi: "0"
+    hugepages-2Mi: "0"
+    memory: 8152780Ki
+    pods: "110"
+  capacity:
+    cpu: "6"
+    ephemeral-storage: 123591232Ki
+    hugepages-1Gi: "0"
+    hugepages-2Mi: "0"
+    memory: 8152780Ki
+    pods: "110"
+  conditions:
+  - lastHeartbeatTime: "2022-10-03T20:37:23Z"
+    lastTransitionTime: "2022-09-30T19:14:38Z"
+    message: kubelet has sufficient memory available
+    reason: KubeletHasSufficientMemory
+    status: "False"
+    type: MemoryPressure
+  - lastHeartbeatTime: "2022-10-03T20:37:23Z"
+    lastTransitionTime: "2022-09-30T19:14:38Z"
+    message: kubelet has no disk pressure
+    reason: KubeletHasNoDiskPressure
+    status: "False"
+    type: DiskPressure
+  - lastHeartbeatTime: "2022-10-03T20:37:23Z"
+    lastTransitionTime: "2022-09-30T19:14:38Z"
+    message: kubelet has sufficient PID available
+    reason: KubeletHasSufficientPID
+    status: "False"
+    type: PIDPressure
+  - lastHeartbeatTime: "2022-10-03T20:37:23Z"
+    lastTransitionTime: "2022-09-30T19:15:10Z"
+    message: kubelet is posting ready status
+    reason: KubeletReady
+    status: "True"
+    type: Ready
+  daemonEndpoints:
+    kubeletEndpoint:
+      Port: 10250
+  images:
+  - names:
+    - registry.access.redhat.com/rhscl/mysql-80-rhel7@sha256:87b7e9d7cbf2041718b98db858f45e84652b1bb41691b5421786517a1f11757d
+    - registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+    sizeBytes: 164532600
+  - names:
+    - docker.io/library/mysql@sha256:b9532b1edea72b6cee12d9f5a78547bd3812ea5db842566e17f8b33291ed2921
+    - docker.io/library/mysql:8.0.30
+    sizeBytes: 133902063
+  - names:
+    - docker.io/redislabs/redisearch@sha256:33561794c5c86b99adc0fba4798b3297a415a09846c684ab0232a804e1d5607a
+    - docker.io/redislabs/redisearch:2.4.14
+    sizeBytes: 130352527
+  - names:
+    - docker.io/kubevious/ui-ubi@sha256:af54e0152e07f68dfd294d751dcfe0173607f199c1bca399f61668181f360208
+    - docker.io/kubevious/ui-ubi:1.0.13
+    sizeBytes: 124431238
+  - names:
+    - docker.io/kubevious/redisearch-ubi@sha256:49abb53fc7b5ef73b41915ea1900514af8b94406735baa406a2eff4aae9b8fcd
+    - docker.io/kubevious/redisearch-ubi:v1.1
+    sizeBytes: 114144064
+  - names:
+    - quay.io/operator-framework/olm@sha256:2b4fee73c05069d9d2c537c7d3072241097914748abfb938b5b08c969b2f544b
+    sizeBytes: 113210432
+  - names:
+    - docker.io/library/import-2022-05-19@sha256:654122cbd980cb4a8417347b8c84ecdbc81a735d3d01409bec6f37ef293511ca
+    - k8s.gcr.io/kube-proxy:v1.24.0
+    sizeBytes: 111847276
+  - names:
+    - k8s.gcr.io/etcd:3.5.3-0
+    sizeBytes: 102143581
+  - names:
+    - docker.io/kubevious/collector-ubi@sha256:7e181f44fd673bdf876d870547e03ff2b762fad9eabb2572b3a689b69a5c75a0
+    - docker.io/kubevious/collector-ubi:1.0.15
+    sizeBytes: 101349636
+  - names:
+    - docker.io/kubevious/guard-ubi@sha256:f705b9e96668bfa8e7574eb04db61f713168d87f2ec2cf8bc72dc772fd505d79
+    - docker.io/kubevious/guard-ubi:1.0.7
+    sizeBytes: 100427278
+  - names:
+    - docker.io/kubevious/backend-ubi@sha256:80bcf25b975a10ba13489feca7e77848bf3cc3ee99a3559fd16909d708695572
+    - docker.io/kubevious/backend-ubi:1.0.18
+    sizeBytes: 99370381
+  - names:
+    - docker.io/kubevious/parser-ubi@sha256:ac1d361a605fd74df93914234339195465656e1f0f8d427f6e3861ba53f2d841
+    - docker.io/kubevious/parser-ubi:1.0.14
+    sizeBytes: 98417541
+  - names:
+    - docker.io/library/import-2022-05-19@sha256:5611470386fb81d6d169bb37667ae1f9fa884631b265b54d8d9601d9338aad18
+    - k8s.gcr.io/kube-apiserver:v1.24.0
+    sizeBytes: 77273570
+  - names:
+    - docker.io/kubevious/collector@sha256:80ebcc73cf129da5832f6e820ccf6adc5445f938973dfba698a9fb4195c330ec
+    - docker.io/kubevious/collector:1.0.13
+    sizeBytes: 70821214
+  - names:
+    - docker.io/kubevious/guard@sha256:e4a3a1bd58bebe644836e592d65a117eee8681eafba32efee85f505a08ba12d2
+    - docker.io/kubevious/guard:1.0.6
+    sizeBytes: 70766969
+  - names:
+    - docker.io/kubevious/backend@sha256:9a07a3595cc11e68eb6d6a0818089562060ff473ce1aff7113728bbc52eabc05
+    - docker.io/kubevious/backend:1.0.12
+    sizeBytes: 69710678
+  - names:
+    - docker.io/kubevious/parser@sha256:0355ca82d3c1595edbb81f811362503c47fbed4dec67c9c59efb40c3a0319e1c
+    - docker.io/kubevious/parser:1.0.11
+    sizeBytes: 68756912
+  - names:
+    - docker.io/kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+    - docker.io/kubevious/operator:v0.0.38
+    sizeBytes: 68568685
+  - names:
+    - docker.io/library/import-2022-05-19@sha256:948ca7c1da4b6108193f4dae34f2e94cfdaa901ab8876ba4009cc024673d2af4
+    - k8s.gcr.io/kube-controller-manager:v1.24.0
+    sizeBytes: 65554548
+  - names:
+    - docker.io/redislabs/redisearch@sha256:57250c0f91e51384cb6db2ac98bb7427731b7996000ef612f482f1dc9ad850c6
+    - docker.io/redislabs/redisearch:2.0.9
+    sizeBytes: 63021576
+  - names:
+    - docker.io/library/import-2022-05-19@sha256:289df0671b753c90e6b717b92ada9af9bcb48678d59affc8cc27eef4f01e9251
+    - k8s.gcr.io/kube-scheduler:v1.24.0
+    sizeBytes: 52332660
+  - names:
+    - quay.io/operatorhubio/catalog@sha256:84c82a37ff7c905f02d020a59d7ea8efac130a96b1cdbc87805eb5d445c5af79
+    - quay.io/operatorhubio/catalog:latest
+    sizeBytes: 47019890
+  - names:
+    - docker.io/kindest/kindnetd:v20220510-4929dd75
+    sizeBytes: 45239873
+  - names:
+    - quay.io/operator-framework/upstream-opm-builder@sha256:6513adcaa33b2bad467f491faa21953fe3491fa4fc1e2360db7b708d4579e5f2
+    - quay.io/operator-framework/upstream-opm-builder:latest
+    sizeBytes: 26521527
+  - names:
+    - gcr.io/kubebuilder/kube-rbac-proxy@sha256:d99a8d144816b951a67648c12c0b988936ccd25cf3754f3cd85ab8c01592248f
+    - gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+    sizeBytes: 25405613
+  - names:
+    - quay.io/operator-framework/opm@sha256:c10dc48ce2fc044ff52ec984f4d7bec3fc6c8d40783d26b9c07ba510e847405d
+    - quay.io/operator-framework/opm:latest
+    sizeBytes: 21363978
+  - names:
+    - docker.io/kubevious/ui@sha256:81b816fdccea279e6f8cc828f0de45c213c2d2579f281bfb0bef6dfc712f9fa3
+    - docker.io/kubevious/ui:1.0.9
+    sizeBytes: 20151588
+  - names:
+    - docker.io/kindest/local-path-provisioner:v0.0.22-kind.0
+    sizeBytes: 17375346
+  - names:
+    - k8s.gcr.io/coredns/coredns:v1.8.6
+    sizeBytes: 13585107
+  - names:
+    - docker.io/kindest/local-path-helper:v20220512-507ff70b
+    sizeBytes: 2859518
+  - names:
+    - k8s.gcr.io/pause:3.6
+    sizeBytes: 301773
+  - names:
+    - docker.io/kubevious/operator-bundle@sha256:5d521297ab2cae68dd377ea12a8ff74d28e2c7d93a62d99367eefb5db0916d73
+    - docker.io/kubevious/operator-bundle:v0.0.38
+    sizeBytes: 23746
+  nodeInfo:
+    architecture: amd64
+    bootID: b0e04764-1005-4551-bcc7-3922d620e4ff
+    containerRuntimeVersion: containerd://1.6.4
+    kernelVersion: 5.4.39-linuxkit
+    kubeProxyVersion: v1.24.0
+    kubeletVersion: v1.24.0
+    machineID: 837b12a6773347ad96ee58b3aa416044
+    operatingSystem: linux
+    osImage: Ubuntu 21.10
+    systemUUID: 5e5eb630-3e66-45e8-a8ef-7ccb63638792

@@ -1,0 +1,24 @@
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      olm.opgroup.permissions/aggregate-to-4bca9f23e412d79d-view: "true"
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  labels:
+    olm.owner: olm-operators
+    olm.owner.kind: OperatorGroup
+    olm.owner.namespace: olm
+  name: olm-operators-view
+  resourceVersion: "29291"
+  uid: 4a1f6ae5-fa84-4dcb-a06e-48e987581e9d
+rules:
+- apiGroups:
+  - packages.operators.coreos.com
+  resources:
+  - packagemanifests
+  verbs:
+  - get
+  - list
+  - watch

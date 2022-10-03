@@ -1,0 +1,364 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Upbound Inc.
+    provider-url: https://upbound.io
+  name: universal-crossplane
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: universal-crossplane.1.5.1-up.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion":"pkg.crossplane.io/v1",
+              "kind":"Configuration",
+              "metadata":{
+                "name":"xp-getting-started-with-aws"
+              },
+              "spec":{
+                "package":"registry.upbound.io/xp/getting-started-with-aws:v1.2.2"
+              }
+            },
+            {
+              "apiVersion":"apiextensions.crossplane.io/v1",
+              "kind":"CompositeResourceDefinition",
+              "metadata":{
+                "name":"compositepostgresqlinstances.database.example.org"
+              },
+              "spec":{
+                "group":"database.example.org",
+                "names":{
+                  "kind":"CompositePostgreSQLInstance",
+                  "plural":"compositepostgresqlinstances"
+                },
+                "claimNames":{
+                  "kind":"PostgreSQLInstance",
+                  "plural":"postgresqlinstances"
+                },
+                "connectionSecretKeys":[
+                    "username",
+                    "password",
+                    "endpoint",
+                    "port"
+                ],
+                "versions":[
+                  {
+                    "name":"v1alpha1",
+                    "served":true,
+                    "referenceable":true,
+                    "schema":{
+                      "openAPIV3Schema":{
+                        "type":"object",
+                        "properties":{
+                          "spec":{
+                            "type":"object",
+                            "properties":{
+                              "parameters":{
+                                "type":"object",
+                                "properties":{
+                                  "storageGB":{
+                                    "type":"integer"
+                                  }
+                                },
+                                "required":[
+                                    "storageGB"
+                                ]
+                              }
+                            },
+                            "required":[
+                                "parameters"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion":"apiextensions.crossplane.io/v1",
+              "kind":"Composition",
+              "metadata":{
+                "name":"compositepostgresqlinstances.aws.database.example.org",
+                "labels":{
+                  "provider":"aws",
+                  "guide":"quickstart",
+                  "vpc":"default"
+                }
+              },
+              "spec":{
+                "writeConnectionSecretsToNamespace":"crossplane-system",
+                "compositeTypeRef":{
+                  "apiVersion":"database.example.org/v1alpha1",
+                  "kind":"CompositePostgreSQLInstance"
+                },
+                "resources":[
+                  {
+                    "name":"rdsinstance",
+                    "base":{
+                      "apiVersion":"database.aws.crossplane.io/v1beta1",
+                      "kind":"RDSInstance",
+                      "spec":{
+                        "forProvider":{
+                          "region":"us-east-1",
+                          "dbInstanceClass":"db.t2.small",
+                          "masterUsername":"masteruser",
+                          "engine":"postgres",
+                          "engineVersion":"9.6",
+                          "skipFinalSnapshotBeforeDeletion":true,
+                          "publiclyAccessible":true
+                        },
+                        "writeConnectionSecretToRef":{
+                          "namespace":"crossplane-system"
+                        }
+                      }
+                    },
+                    "patches":[
+                      {
+                        "fromFieldPath":"metadata.uid",
+                        "toFieldPath":"spec.writeConnectionSecretToRef.name",
+                        "transforms":[
+                          {
+                            "type":"string",
+                            "string":{
+                              "fmt":"%s-postgresql"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "fromFieldPath":"spec.parameters.storageGB",
+                        "toFieldPath":"spec.forProvider.allocatedStorage"
+                      }
+                    ],
+                    "connectionDetails":[
+                      {
+                        "fromConnectionSecretKey":"username"
+                      },
+                      {
+                        "fromConnectionSecretKey":"password"
+                      },
+                      {
+                        "fromConnectionSecretKey":"endpoint"
+                      },
+                      {
+                        "fromConnectionSecretKey":"port"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion":"pkg.crossplane.io/v1",
+              "kind":"Provider",
+              "metadata":{
+                "name":"provider-aws"
+              },
+              "spec":{
+                "package":"crossplane/provider-aws:master"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Application Runtime, Cloud Provider, Database, Integration & Delivery,
+          Networking, Storage
+        com.redhat.component: universal-crossplane
+        com.redhat.delivery.backport: "false"
+        com.redhat.delivery.operator.bundle: "true"
+        com.redhat.openshift.versions: v4.6
+        containerImage: upbound/uxp-bootstrapper
+        createdAt: 2021-05-18T00:00:00+0000
+        description: Upbound Universal Crossplane (UXP) is Upbound's official enterprise-grade
+          distribution of Crossplane.
+        io.k8s.display-name: universal-crossplane
+        io.openshift.tags: uxp,crossplane,upbound
+        maintainer: Upbound Inc. <info@upbound.io>
+        name: universal-crossplane
+        ocs.tags: v4.6
+        operatorframework.io/initialization-resource: |
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: upbound-control-plane-token
+            namespace: upbound-system
+          type: Opaque
+          data:
+            token: "Output of `up cloud controlplane attach | base64` command"
+        operatorframework.io/suggested-namespace: upbound-system
+        operators.operatorframework.io.bundle.channel.default.v1: stable
+        operators.operatorframework.io.bundle.channels.v1: stable
+        operators.operatorframework.io.bundle.manifests.v1: manifests/
+        operators.operatorframework.io.bundle.mediatype.v1: registry+v1
+        operators.operatorframework.io.bundle.metadata.v1: metadata/
+        operators.operatorframework.io.bundle.package.v1: universal-crossplane
+        operators.operatorframework.io/internal-objects: '["locks.pkg.crossplane.io"]'
+        repository: https://github.com/upbound/universal-crossplane
+        summary: Upbound Universal Crossplane (UXP) is Upbound's official enterprise-grade
+          distribution of Crossplane.
+        support: Upbound Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - displayName: CompositeResourceDefinition
+          kind: CompositeResourceDefinition
+          name: compositeresourcedefinitions.apiextensions.crossplane.io
+          version: v1
+        - displayName: CompositionRevision
+          kind: CompositionRevision
+          name: compositionrevisions.apiextensions.crossplane.io
+          version: v1alpha1
+        - displayName: Composition
+          kind: Composition
+          name: compositions.apiextensions.crossplane.io
+          version: v1
+        - displayName: ConfigurationRevision
+          kind: ConfigurationRevision
+          name: configurationrevisions.pkg.crossplane.io
+          version: v1
+        - displayName: Configuration
+          kind: Configuration
+          name: configurations.pkg.crossplane.io
+          version: v1
+        - displayName: ControllerConfig
+          kind: ControllerConfig
+          name: controllerconfigs.pkg.crossplane.io
+          version: v1alpha1
+        - displayName: Lock
+          kind: Lock
+          name: locks.pkg.crossplane.io
+          version: v1alpha1
+        - displayName: ProviderRevision
+          kind: ProviderRevision
+          name: providerrevisions.pkg.crossplane.io
+          version: v1
+        - displayName: Provider
+          kind: Provider
+          name: providers.pkg.crossplane.io
+          version: v1
+      description: |
+        ## Overview
+
+        Upbound Universal Crossplane (UXP) is [Upbound's][upbound] official
+        enterprise-grade distribution of [Crossplane][crossplane]. It's fully compatible
+        with upstream Crossplane, open source, capable of connecting to Upbound Cloud
+        for real-time dashboard visibility, and maintained by Upbound. It's the easiest
+        way for both individual community members and enterprises to build their
+        production control planes.
+
+        ## Quick Start
+
+        1. Install the [Upbound CLI][upbound-cli].
+            ```console
+            curl -sL https://cli.upbound.io | sh
+            # Install with Homebrew
+            brew install upbound/tap/up
+            ```
+
+        2. [Create an Upbound account][create-account] for a free dashboard for UXP.
+
+        3. Connect UXP to Upbound Cloud.
+            ```console
+            # The name of your new UXP control plane.
+            UXP_NAME=mycrossplane
+
+            up cloud login
+            up cloud controlplane attach ${UXP_NAME} | up uxp connect -
+            ```
+
+        4. Manage your UXP control plane by [signing in][login] to your Upbound account.
+
+        ## Additional Resources
+
+        - The [UXP Documentation][uxp-documentation] provides additional information
+          about UXP and resources for developers, like examples.
+        - The [developer guide][developer-guide] describes how to build and run UXP
+          locally from source.
+        - [UXP Slack][uxp-slack] is where you can go to get all of your UXP questions
+          answered.
+
+        [upbound]: https://upbound.io
+        [crossplane]: https://crossplane.io/
+        [upbound-cli]: https://github.com/upbound/up
+        [create-account]: https://cloud.upbound.io/register
+        [login]: https://cloud.upbound.io/login
+        [uxp-documentation]: https://cloud.upbound.io/docs/uxp
+        [developer-guide]: https://github.com/upbound/universal-crossplane/blob/main/docs/developer-guide.md
+        [uxp-slack]: https://crossplane.slack.com/archives/upbound
+      displayName: Upbound Universal Crossplane (UXP)
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - cloud
+      - infrastructure
+      - services
+      - application
+      - database
+      - cache
+      - bucket
+      - infra
+      - app
+      - ops
+      - oam
+      - gcp
+      - azure
+      - aws
+      - alibaba
+      - cloudsql
+      - rds
+      - s3
+      - azuredatabase
+      - asparadb
+      - gke
+      - aks
+      - eks
+      links:
+      - name: GitHub
+        url: https://github.com/upbound/universal-crossplane
+      - name: Website
+        url: https://upbound.io
+      - name: Twitter
+        url: https://twitter.com/upbound_io
+      - name: Slack
+        url: https://slack.crossplane.io/
+      maintainers:
+      - email: info@upbound.io
+        name: Upbound Inc.
+      maturity: stable
+      minKubeVersion: 1.16.0
+      provider:
+        name: Upbound Inc.
+        url: https://upbound.io
+      relatedImages:
+      - upbound/crossplane:v1.5.1-up.1
+      - upbound/xgql:v0.1.5
+      - upbound/uxp-bootstrapper:v1.5.1-up.1
+      version: 1.5.1-up.1
+    name: stable
+  defaultChannel: stable
+  packageName: universal-crossplane
+  provider:
+    name: Upbound Inc.
+    url: https://upbound.io

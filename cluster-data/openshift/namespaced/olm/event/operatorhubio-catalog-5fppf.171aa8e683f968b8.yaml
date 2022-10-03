@@ -1,0 +1,25 @@
+action: Binding
+apiVersion: v1
+eventTime: "2022-10-03T20:25:20.276889Z"
+firstTimestamp: null
+involvedObject:
+  apiVersion: v1
+  kind: Pod
+  name: operatorhubio-catalog-5fppf
+  namespace: olm
+  resourceVersion: "45676"
+  uid: 9accc780-c35b-47b8-a49f-d22c39184eed
+kind: Event
+lastTimestamp: null
+message: Successfully assigned olm/operatorhubio-catalog-5fppf to kind-control-plane
+metadata:
+  creationTimestamp: "2022-10-03T20:25:20Z"
+  name: operatorhubio-catalog-5fppf.171aa8e683f968b8
+  namespace: olm
+  resourceVersion: "45679"
+  uid: 8cdccbc8-7749-4570-9bbd-aab5979f377c
+reason: Scheduled
+reportingComponent: default-scheduler
+reportingInstance: default-scheduler-kind-control-plane
+source: {}
+type: Normal

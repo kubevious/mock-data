@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"name":"ibm-rbac-sync-settings-getter","namespace":"kube-system"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"Role","name":"ibm-get-rbac-sync-settings"},"subjects":[{"kind":"User","name":"system:serviceaccount:kube-system:ibm-rbac-syncer"}]}'
+  creationTimestamp: "2022-10-03T18:37:16Z"
+  name: ibm-rbac-sync-settings-getter
+  namespace: kube-system
+  resourceVersion: "6213"
+  uid: 78eddb3f-520d-45c5-992d-8e190372e790
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ibm-get-rbac-sync-settings
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:serviceaccount:kube-system:ibm-rbac-syncer

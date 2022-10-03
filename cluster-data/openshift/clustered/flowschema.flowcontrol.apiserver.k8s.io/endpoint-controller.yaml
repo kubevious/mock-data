@@ -1,0 +1,48 @@
+apiVersion: flowcontrol.apiserver.k8s.io/v1beta2
+kind: FlowSchema
+metadata:
+  annotations:
+    apf.kubernetes.io/autoupdate-spec: "true"
+  creationTimestamp: "2022-09-30T19:14:45Z"
+  generation: 1
+  name: endpoint-controller
+  resourceVersion: "60"
+  uid: be7e2f6a-d745-4bd6-99fb-39678767d5a3
+spec:
+  distinguisherMethod:
+    type: ByUser
+  matchingPrecedence: 150
+  priorityLevelConfiguration:
+    name: workload-high
+  rules:
+  - resourceRules:
+    - apiGroups:
+      - ""
+      namespaces:
+      - '*'
+      resources:
+      - endpoints
+      verbs:
+      - get
+      - create
+      - update
+    subjects:
+    - kind: User
+      user:
+        name: system:kube-controller-manager
+    - kind: ServiceAccount
+      serviceAccount:
+        name: endpoint-controller
+        namespace: kube-system
+    - kind: ServiceAccount
+      serviceAccount:
+        name: endpointslicemirroring-controller
+        namespace: kube-system
+status:
+  conditions:
+  - lastTransitionTime: "2022-09-30T19:14:45Z"
+    message: This FlowSchema references the PriorityLevelConfiguration object named
+      "workload-high" and it exists
+    reason: Found
+    status: "False"
+    type: Dangling

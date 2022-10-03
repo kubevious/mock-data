@@ -1,0 +1,985 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Couchbase
+    provider-url: ""
+  name: couchbase-enterprise
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: couchbase-operator.v2.2.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseCluster",
+              "metadata": {
+                "name": "cb-example"
+              },
+              "spec": {
+                "image": "registry.hub.docker.com/couchbase/server:6.6.5",
+                "cluster": {
+                  "clusterName": "cb-example",
+                  "dataServiceMemoryQuota": "256Mi",
+                  "indexServiceMemoryQuota": "256Mi",
+                  "searchServiceMemoryQuota": "256Mi",
+                  "eventingServiceMemoryQuota": "256Mi",
+                  "analyticsServiceMemoryQuota": "1Gi",
+                  "indexStorageSetting": "memory_optimized",
+                  "autoFailoverTimeout": "120s",
+                  "autoFailoverMaxCount": 3,
+                  "autoFailoverOnDataDiskIssues": true,
+                  "autoFailoverOnDataDiskIssuesTimePeriod": "120s",
+                  "autoFailoverServerGroup": false,
+                  "autoCompaction": {
+                    "databaseFragmentationThreshold": {
+                      "percent": 30,
+                      "size": "1Gi"
+                    },
+                    "viewFragmentationThreshold": {
+                      "percent": 30,
+                      "size": "1Gi"
+                    },
+                    "parallelCompaction": false,
+                    "timeWindow": {
+                      "start": "02:00",
+                      "end": "06:00",
+                      "abortCompactionOutsideWindow": true
+                    },
+                    "tombstonePurgeInterval": "72h"
+                  }
+                },
+                "upgradeStrategy": "RollingUpgrade",
+                "hibernate": false,
+                "hibernationStrategy": "Immediate",
+                "recoveryPolicy": "PrioritizeDataIntegrity",
+                "security": {
+                  "adminSecret": "cb-example-auth",
+                  "rbac": {
+                    "managed": true,
+                    "selector": {
+                      "matchLabels": {
+                        "cluster": "cb-example"
+                      }
+                    }
+                  }
+                },
+                "xdcr": {
+                   "managed": false,
+                    "selector": {
+                      "matchLabels": {
+                        "cluster": "cb-example"
+                      }
+                    }
+                 },
+                "backup": {
+                  "image": "registry.hub.docker.com/couchbase/operator-backup:1.3.0",
+                  "managed": false,
+                  "serviceAccountName": "couchbase-backup",
+                  "selector": {
+                    "matchLabels": {
+                      "cluster": "cb-example"
+                    }
+                  }
+                },
+                "monitoring": {
+                  "prometheus": {
+                    "enabled": false,
+                    "image": "registry.hub.docker.com/couchbase/exporter:1.0.6"
+                  }
+                },
+                "networking": {
+                  "exposeAdminConsole": true,
+                  "adminConsoleServices": [
+                    "data"
+                  ],
+                  "exposedFeatures": [
+                    "xdcr"
+                  ],
+                  "exposedFeatureServiceType": "NodePort",
+                  "adminConsoleServiceType": "NodePort"
+                },
+                "buckets": {
+                  "managed": true,
+                  "selector": {
+                    "matchLabels": {
+                      "cluster": "cb-example"
+                    }
+                  }
+                },
+                "logRetentionTime": "604800s",
+                "logRetentionCount": 20,
+                "enablePreviewScaling": false,
+                "servers": [
+                  {
+                    "size": 3,
+                    "name": "all_services",
+                    "services": [
+                      "data",
+                      "index",
+                      "query",
+                      "search",
+                      "eventing",
+                      "analytics"
+                    ]
+                  }
+                ]
+              },
+              "status": {
+                "size": 0
+              }
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseBucket",
+              "metadata": {
+                "name": "default",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "memoryQuota": "100Mi",
+                "replicas": 2,
+                "ioPriority": "low",
+                "evictionPolicy": "valueOnly",
+                "conflictResolution": "lww",
+                "enableFlush": false,
+                "enableIndexReplica": true,
+                "compressionMode": "passive"
+              },
+              "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseEphemeralBucket",
+               "metadata": {
+                  "name": "ephemeral-bucket",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "memoryQuota": "100Mi",
+                  "replicas": 2,
+                  "ioPriority": "low",
+                  "evictionPolicy": "noEviction",
+                  "conflictResolution": "lww",
+                  "enableFlush": false,
+                  "compressionMode": "passive"
+               },
+               "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseMemcachedBucket",
+               "metadata": {
+                  "name": "memcached-bucket",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "memoryQuota": "100Mi",
+                  "enableFlush": false
+               },
+               "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseUser",
+              "metadata": {
+                "name": "my-user",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "fullName": "My User",
+                "authDomain": "local",
+                "authSecret": "cb-example-auth"
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseGroup",
+              "metadata": {
+                "name": "my-group",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "roles": [
+                  {
+                    "name": "bucket_admin",
+                    "bucket": "default"
+                  }
+                ]
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseRoleBinding",
+              "metadata": {
+                "name": "my-role-binding"
+              },
+              "spec": {
+                "subjects": [
+                  {
+                    "kind": "CouchbaseUser",
+                    "name": "my-user"
+                  }
+                ],
+                "roleRef": {
+                  "kind": "CouchbaseGroup",
+                  "name": "my-group"
+                }
+              },
+              "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseReplication",
+               "metadata": {
+                  "name": "my-replication",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "bucket": "default",
+                  "remoteBucket": "default",
+                  "compressionType": "Snappy",
+                  "filterExpression": "",
+                  "paused": false
+               },
+               "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseBackup",
+              "metadata": {
+                "name": "cb-backup",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "strategy": "full_incremental",
+                "full": {
+                  "schedule": "0 3 * * 6"
+                },
+                "incremental": {
+                  "schedule": "0 3 * * 1-6"
+                },
+                "successfulJobsHistoryLimit": 1,
+                "failedJobsHistoryLimit": 3,
+                "backOffLimit": 2,
+                "backupRetention": "24h",
+                "logRetention": "24h",
+                "size": "5Gi"
+              },
+              "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseBackupRestore",
+               "metadata": {
+                  "name": "cb-restore",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "backup": "cb-backup",
+                  "repo": "cb-example-2020-10-29T19_00_03",
+                  "start": {
+                     "int": 1
+                  },
+                  "end": {
+                     "int": 1
+                  },
+                  "backOffLimit": 2,
+                  "logRetention": "24h"
+               },
+               "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseAutoscaler",
+              "metadata": {
+                "name": "do.not.create.internal.only"
+              },
+              "spec": {
+                "servers": "internal",
+                "size": 2
+              },
+              "status": {
+                "labelSelector": "",
+                "size": 2
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: registry.hub.docker.com/couchbase/operator:2.2.4
+        createdAt: 2022/06/12
+        description: The Couchbase Autonomous Operator allows users to easily deploy,
+          manage, and maintain Couchbase deployments
+        operators.openshift.io/infrastructure-features: '["Disconnected"]'
+        support: Couchbase, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Manages Clusters
+          displayName: Couchbase Cluster
+          kind: CouchbaseCluster
+          name: couchbaseclusters.couchbase.com
+          version: v2
+        - description: Manages Buckets
+          displayName: Couchbase Bucket
+          kind: CouchbaseBucket
+          name: couchbasebuckets.couchbase.com
+          version: v2
+        - description: Manages Ephemeral Buckets
+          displayName: Couchbase Ephemeral Bucket
+          kind: CouchbaseEphemeralBucket
+          name: couchbaseephemeralbuckets.couchbase.com
+          version: v2
+        - description: Manages Memcached Buckets
+          displayName: Couchbase Memcached Bucket
+          kind: CouchbaseMemcachedBucket
+          name: couchbasememcachedbuckets.couchbase.com
+          version: v2
+        - description: Manages RBAC Users
+          displayName: Couchbase User
+          kind: CouchbaseUser
+          name: couchbaseusers.couchbase.com
+          version: v2
+        - description: Manages RBAC Groups
+          displayName: Couchbase Groups
+          kind: CouchbaseGroup
+          name: couchbasegroups.couchbase.com
+          version: v2
+        - description: Manages RBAC Binding
+          displayName: Couchbase Role Binding
+          kind: CouchbaseRoleBinding
+          name: couchbaserolebindings.couchbase.com
+          version: v2
+        - description: Manages Couchbase Replications
+          displayName: Couchbase Replications
+          kind: CouchbaseReplication
+          name: couchbasereplications.couchbase.com
+          version: v2
+        - description: Manages Backups
+          displayName: Couchbase Backup
+          kind: CouchbaseBackup
+          name: couchbasebackups.couchbase.com
+          version: v2
+        - description: Manages Backup Restores
+          displayName: Couchbase Backup Restore
+          kind: CouchbaseBackupRestore
+          name: couchbasebackuprestores.couchbase.com
+          version: v2
+        - description: Internal Autoscaling Management Resource
+          displayName: Couchbase Autoscaler
+          kind: CouchbaseAutoscaler
+          name: couchbaseautoscalers.couchbase.com
+          version: v2
+      description: |
+        The Couchbase Autonomous Operator allows users to easily deploy, manage, and maintain Couchbase deployments on OpenShift. By installing this integration you will be able to deply Couchbase Server clusters with a single command.
+
+        ## Supported Features
+
+        * **Automated cluster provisioning** - Deploying a Couchbase Cluster has never been easier. Fill out a Couchbase specific configuration and let the Couchbase Operator take care of provisioning nodes and setting up cluster to your exact specification.
+
+        * **On-demand scalability** - Automatically scale your cluster up or down by changing a simple configuration parameter and let the Couchbase Operator handle provisioning of new nodes and joining them into the cluster.
+
+        * **Auto-recovery** - Detect Couchbase node failures, rebalance out bad nodes, and bring the cluster back up to the desired capacity. Auto-recovery is completely automated so you can sleep easy through the night knowing that the Couchbase Operator will handle any failures.
+
+        * **Geo-distribution** - Replicate your data between datacenters to move data closer to the users who consume it and protect against disaster scenarios where an entire datacenter becomes unavailable.
+
+        * **Persistent storage** - Define persistent network-attached storage for each node in your cluster to allow pods to be recovered even if the node they were running on is no longer available.
+
+        * **Rack/zone awareness** - Tell the Couchbase Operator about availability zones in your datacenter and let the operator take care of ensuring that nodes in your cluster are deployed equally across each zone.
+
+        * **Supportability** - When things go wrong, use the cbopinfo tool provided with the Couchbase Operator to collect relevant data about your Couchbase deployment so that you can quickly address issues.
+
+        * **Centralized configuration management** - Manage your configuration centrally with OpenShift. Updates to the configuration are watched by the Couchbase Operator and actions are taken to make the target cluster match the desired configuration.
+        ## Required Parameters
+        * `authSecret` - provide the name of a secret that contains two keys for the `username` and `password` of the super user ([documentation](https://docs.couchbase.com/operator/1.2/couchbase-cluster-config.html))
+
+        ## About Couchbase Server
+
+        Built on the most powerful NoSQL technology, Couchbase Server delivers unparalleled performance at scale, in any cloud. With features like memory-first architecture, geo-distributed deployments, and workload isolation, Couchbase Server excels at supporting mission-critical applications at scale while maintaining submillisecond latencies and 99.999% availability. Plus, with the most comprehensive SQL-compatible query language (N1QL), migrating from RDBMS to Couchbase Server is easy with ANSI joins.
+      displayName: Couchbase Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - couchbase
+      - database
+      - key value
+      - nosql
+      - open source
+      links:
+      - name: Couchbase
+        url: https://www.couchbase.com
+      - name: Documentation
+        url: https://docs.couchbase.com/operator/current/overview.html
+      - name: Downloads
+        url: https://www.couchbase.com/downloads
+      maintainers:
+      - email: support@couchbase.com
+        name: Couchbase
+      maturity: stable
+      minKubeVersion: 1.17.0
+      provider:
+        name: Couchbase
+      relatedImages:
+      - registry.hub.docker.com/couchbase/operator:2.2.4
+      version: 2.2.4
+    name: 2.2.4
+  - currentCSV: couchbase-operator.v2.3.0-1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseCluster",
+              "metadata": {
+                "name": "cb-example"
+              },
+              "spec": {
+                "image": "registry.hub.docker.com/couchbase/server:6.6.0",
+                "cluster": {
+                  "clusterName": "cb-example",
+                  "dataServiceMemoryQuota": "256Mi",
+                  "indexServiceMemoryQuota": "256Mi",
+                  "searchServiceMemoryQuota": "256Mi",
+                  "eventingServiceMemoryQuota": "256Mi",
+                  "analyticsServiceMemoryQuota": "1Gi",
+                  "indexStorageSetting": "memory_optimized",
+                  "autoFailoverTimeout": "120s",
+                  "autoFailoverMaxCount": 3,
+                  "autoFailoverOnDataDiskIssues": true,
+                  "autoFailoverOnDataDiskIssuesTimePeriod": "120s",
+                  "autoFailoverServerGroup": false
+                },
+                "upgradeStrategy": "RollingUpgrade",
+                "hibernate": false,
+                "hibernationStrategy": "Immediate",
+                "recoveryPolicy": "PrioritizeDataIntegrity",
+                "security": {
+                  "adminSecret": "cb-example-auth",
+                  "rbac": {
+                    "managed": true,
+                    "selector": {
+                      "matchLabels": {
+                        "cluster": "cb-example"
+                      }
+                    }
+                  }
+                },
+                "xdcr": {
+                   "managed": false,
+                    "selector": {
+                      "matchLabels": {
+                        "cluster": "cb-example"
+                      }
+                    }
+                 },
+                "backup": {
+                  "image": "registry.hub.docker.com/couchbase/operator-backup:1.2.0",
+                  "managed": false,
+                  "serviceAccountName": "couchbase-backup",
+                  "selector": {
+                    "matchLabels": {
+                      "cluster": "cb-example"
+                    }
+                  }
+                },
+                "monitoring": {
+                  "prometheus": {
+                    "enabled": false,
+                    "image": "registry.hub.docker.com/couchbase/exporter:1.0.6"
+                  }
+                },
+                "networking": {
+                  "exposeAdminConsole": true,
+                  "adminConsoleServices": [
+                    "data"
+                  ],
+                  "exposedFeatures": [
+                    "xdcr"
+                  ],
+                  "exposedFeatureServiceType": "NodePort",
+                  "adminConsoleServiceType": "NodePort"
+                },
+                "buckets": {
+                  "managed": true,
+                  "selector": {
+                    "matchLabels": {
+                      "cluster": "cb-example"
+                    }
+                  }
+                },
+                "logRetentionTime": "604800s",
+                "logRetentionCount": 20,
+                "enablePreviewScaling": false,
+                "servers": [
+                  {
+                    "size": 3,
+                    "name": "all_services",
+                    "services": [
+                      "data",
+                      "index",
+                      "query",
+                      "search",
+                      "eventing",
+                      "analytics"
+                    ]
+                  }
+                ]
+              },
+              "status": {
+                "size": 0
+              }
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseBucket",
+              "metadata": {
+                "name": "default",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "memoryQuota": "100Mi",
+                "replicas": 2,
+                "ioPriority": "low",
+                "evictionPolicy": "valueOnly",
+                "conflictResolution": "lww",
+                "enableFlush": false,
+                "enableIndexReplica": true,
+                "compressionMode": "passive"
+              },
+              "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseEphemeralBucket",
+               "metadata": {
+                  "name": "ephemeral-bucket",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "memoryQuota": "100Mi",
+                  "replicas": 2,
+                  "ioPriority": "low",
+                  "evictionPolicy": "noEviction",
+                  "conflictResolution": "lww",
+                  "enableFlush": false,
+                  "compressionMode": "passive"
+               },
+               "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseMemcachedBucket",
+               "metadata": {
+                  "name": "memcached-bucket",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "memoryQuota": "100Mi",
+                  "enableFlush": false
+               },
+               "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseUser",
+              "metadata": {
+                "name": "my-user",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "fullName": "My User",
+                "authDomain": "local",
+                "authSecret": "cb-example-auth"
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseGroup",
+              "metadata": {
+                "name": "my-group",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "roles": [
+                  {
+                    "name": "bucket_admin",
+                    "bucket": "default"
+                  }
+                ]
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseRoleBinding",
+              "metadata": {
+                "name": "my-role-binding"
+              },
+              "spec": {
+                "subjects": [
+                  {
+                    "kind": "CouchbaseUser",
+                    "name": "my-user"
+                  }
+                ],
+                "roleRef": {
+                  "kind": "CouchbaseGroup",
+                  "name": "my-group"
+                }
+              },
+              "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseReplication",
+               "metadata": {
+                  "name": "my-replication",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "bucket": "default",
+                  "remoteBucket": "default",
+                  "compressionType": "Snappy",
+                  "filterExpression": "",
+                  "paused": false
+               },
+               "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseBackup",
+              "metadata": {
+                "name": "cb-backup",
+                "labels": {
+                  "cluster": "cb-example"
+                }
+              },
+              "spec": {
+                "strategy": "full_incremental",
+                "full": {
+                  "schedule": "0 3 * * 6"
+                },
+                "incremental": {
+                  "schedule": "0 3 * * 1-6"
+                },
+                "successfulJobsHistoryLimit": 1,
+                "failedJobsHistoryLimit": 3,
+                "backOffLimit": 2,
+                "backupRetention": "24h",
+                "logRetention": "24h",
+                "size": "5Gi"
+              },
+              "status": {}
+            },
+            {
+               "apiVersion": "couchbase.com/v2",
+               "kind": "CouchbaseBackupRestore",
+               "metadata": {
+                  "name": "cb-restore",
+                  "labels": {
+                     "cluster": "cb-example"
+                  }
+               },
+               "spec": {
+                  "backup": "cb-backup",
+                  "repo": "cb-example-2020-10-29T19_00_03",
+                  "start": {
+                     "int": 1
+                  },
+                  "end": {
+                     "int": 1
+                  },
+                  "backOffLimit": 2,
+                  "logRetention": "24h"
+               },
+               "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseCollectionGroup",
+              "metadata": {
+                "name": "my-collection-group"
+              },
+              "spec": {
+                "maxTTL": "",
+                "names": ["my-collection"]
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseCollection",
+              "metadata": {
+                "name": "my-collection"
+              },
+              "spec": {
+                "maxTTL": "",
+                "name": "my-collection"
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseScopeGroup",
+              "metadata": {
+                "name": "my-scope-group"
+              },
+              "spec": {
+                "collections": {},
+                "names": ["my-scope"]
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseScope",
+              "metadata": {
+                "name": "my-scope"
+              },
+              "spec": {
+                "collections": {},
+                "name": "my-scope"
+              },
+              "status": {}
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseMigrationReplication",
+              "metadata": {
+                "name": "default-migration"
+              },
+              "migrationMapping": {
+                "mappings": []
+              },
+              "spec": {
+                "bucket": "default",
+                "remoteBucket": "default"
+              }
+            },
+            {
+              "apiVersion": "couchbase.com/v2",
+              "kind": "CouchbaseAutoscaler",
+              "metadata": {
+                "name": "do.not.create.internal.only"
+              },
+              "spec": {
+                "servers": "internal",
+                "size": 2
+              },
+              "status": {
+                "labelSelector": "",
+                "size": 2
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        certified: "true"
+        containerImage: registry.hub.docker.com/couchbase/operator:2.3.0
+        createdAt: 2022/04/20
+        description: The Couchbase Autonomous Operator allows users to easily deploy,
+          manage, and maintain Couchbase deployments
+        operators.openshift.io/infrastructure-features: '["Disconnected"]'
+        support: Couchbase, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Manages Clusters
+          displayName: Couchbase Cluster
+          kind: CouchbaseCluster
+          name: couchbaseclusters.couchbase.com
+          version: v2
+        - description: Manages Buckets
+          displayName: Couchbase Bucket
+          kind: CouchbaseBucket
+          name: couchbasebuckets.couchbase.com
+          version: v2
+        - description: Manages Ephemeral Buckets
+          displayName: Couchbase Ephemeral Bucket
+          kind: CouchbaseEphemeralBucket
+          name: couchbaseephemeralbuckets.couchbase.com
+          version: v2
+        - description: Manages Memcached Buckets
+          displayName: Couchbase Memcached Bucket
+          kind: CouchbaseMemcachedBucket
+          name: couchbasememcachedbuckets.couchbase.com
+          version: v2
+        - description: Manages RBAC Users
+          displayName: Couchbase User
+          kind: CouchbaseUser
+          name: couchbaseusers.couchbase.com
+          version: v2
+        - description: Manages RBAC Groups
+          displayName: Couchbase Groups
+          kind: CouchbaseGroup
+          name: couchbasegroups.couchbase.com
+          version: v2
+        - description: Manages RBAC Binding
+          displayName: Couchbase Role Binding
+          kind: CouchbaseRoleBinding
+          name: couchbaserolebindings.couchbase.com
+          version: v2
+        - description: Manages Couchbase Replications
+          displayName: Couchbase Replications
+          kind: CouchbaseReplication
+          name: couchbasereplications.couchbase.com
+          version: v2
+        - description: Manages Backups
+          displayName: Couchbase Backup
+          kind: CouchbaseBackup
+          name: couchbasebackups.couchbase.com
+          version: v2
+        - description: Manages Backup Restores
+          displayName: Couchbase Backup Restore
+          kind: CouchbaseBackupRestore
+          name: couchbasebackuprestores.couchbase.com
+          version: v2
+        - description: Manages RBAC Collection Groups
+          displayName: Couchbase Collection Groups
+          kind: CouchbaseCollectionGroup
+          name: couchbasecollectiongroups.couchbase.com
+          version: v2
+        - description: Manages RBAC Collections
+          displayName: Couchbase Collection
+          kind: CouchbaseCollection
+          name: couchbasecollections.couchbase.com
+          version: v2
+        - description: Manages RBAC Scope Groups
+          displayName: Couchbase Scope Group
+          kind: CouchbaseScopeGroup
+          name: couchbasescopegroups.couchbase.com
+          version: v2
+        - description: Manages RBAC Scopes
+          displayName: Couchbase Scope
+          kind: CouchbaseScope
+          name: couchbasescopes.couchbase.com
+          version: v2
+        - description: Special migration mapping within XDCR to take a filtered list
+            from the default scope and collection of the source to target bucket.
+          displayName: Couchbase Migration Replication
+          kind: CouchbaseMigrationReplication
+          name: couchbasemigrationreplications.couchbase.com
+          version: v2
+        - description: Internal Autoscaling Management Resource
+          displayName: Couchbase Autoscaler
+          kind: CouchbaseAutoscaler
+          name: couchbaseautoscalers.couchbase.com
+          version: v2
+      description: |
+        The Couchbase Autonomous Operator allows users to easily deploy, manage, and maintain Couchbase deployments on OpenShift. By installing this integration you will be able to deply Couchbase Server clusters with a single command.
+
+        ## Supported Features
+
+        * **Automated cluster provisioning** - Deploying a Couchbase Cluster has never been easier. Fill out a Couchbase specific configuration and let the Couchbase Operator take care of provisioning nodes and setting up cluster to your exact specification.
+
+        * **On-demand scalability** - Automatically scale your cluster up or down by changing a simple configuration parameter and let the Couchbase Operator handle provisioning of new nodes and joining them into the cluster.
+
+        * **Auto-recovery** - Detect Couchbase node failures, rebalance out bad nodes, and bring the cluster back up to the desired capacity. Auto-recovery is completely automated so you can sleep easy through the night knowing that the Couchbase Operator will handle any failures.
+
+        * **Geo-distribution** - Replicate your data between datacenters to move data closer to the users who consume it and protect against disaster scenarios where an entire datacenter becomes unavailable.
+
+        * **Persistent storage** - Define persistent network-attached storage for each node in your cluster to allow pods to be recovered even if the node they were running on is no longer available.
+
+        * **Rack/zone awareness** - Tell the Couchbase Operator about availability zones in your datacenter and let the operator take care of ensuring that nodes in your cluster are deployed equally across each zone.
+
+        * **Supportability** - When things go wrong, use the cbopinfo tool provided with the Couchbase Operator to collect relevant data about your Couchbase deployment so that you can quickly address issues.
+
+        * **Centralized configuration management** - Manage your configuration centrally with OpenShift. Updates to the configuration are watched by the Couchbase Operator and actions are taken to make the target cluster match the desired configuration.
+        ## Required Parameters
+        * `authSecret` - provide the name of a secret that contains two keys for the `username` and `password` of the super user ([documentation](https://docs.couchbase.com/operator/1.2/couchbase-cluster-config.html))
+
+        ## About Couchbase Server
+
+        Built on the most powerful NoSQL technology, Couchbase Server delivers unparalleled performance at scale, in any cloud. With features like memory-first architecture, geo-distributed deployments, and workload isolation, Couchbase Server excels at supporting mission-critical applications at scale while maintaining submillisecond latencies and 99.999% availability. Plus, with the most comprehensive SQL-compatible query language (N1QL), migrating from RDBMS to Couchbase Server is easy with ANSI joins.
+      displayName: Couchbase Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - couchbase
+      - database
+      - key value
+      - nosql
+      - open source
+      links:
+      - name: Couchbase
+        url: https://www.couchbase.com
+      - name: Documentation
+        url: https://docs.couchbase.com/operator/current/overview.html
+      - name: Downloads
+        url: https://www.couchbase.com/downloads
+      maintainers:
+      - email: support@couchbase.com
+        name: Couchbase
+      maturity: stable
+      minKubeVersion: 1.17.0
+      provider:
+        name: Couchbase
+      relatedImages:
+      - registry.hub.docker.com/couchbase/operator:2.3.0
+      version: 2.3.0
+    name: stable
+  defaultChannel: stable
+  packageName: couchbase-enterprise
+  provider:
+    name: Couchbase

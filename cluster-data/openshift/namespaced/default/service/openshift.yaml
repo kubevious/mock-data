@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2022-10-03T18:50:02Z"
+  name: openshift
+  namespace: default
+  resourceVersion: "12296"
+  uid: bf129914-fc23-4100-b2c3-5f6c36e539cc
+spec:
+  externalName: kubernetes.default.svc.cluster.local
+  internalTrafficPolicy: Cluster
+  sessionAffinity: None
+  type: ExternalName
+status:
+  loadBalancer: {}

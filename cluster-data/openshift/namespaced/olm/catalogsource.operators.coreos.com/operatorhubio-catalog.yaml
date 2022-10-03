@@ -1,0 +1,29 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  generation: 1
+  name: operatorhubio-catalog
+  namespace: olm
+  resourceVersion: "45678"
+  uid: d2aada69-0d37-422d-b231-65c305dc5d86
+spec:
+  displayName: Community Operators
+  image: quay.io/operatorhubio/catalog:latest
+  publisher: OperatorHub.io
+  sourceType: grpc
+  updateStrategy:
+    registryPoll:
+      interval: 60m
+status:
+  connectionState:
+    address: operatorhubio-catalog.olm.svc:50051
+    lastConnect: "2022-10-03T18:39:12Z"
+    lastObservedState: READY
+  latestImageRegistryPoll: "2022-10-03T20:25:20Z"
+  registryService:
+    createdAt: "2022-10-03T18:25:22Z"
+    port: "50051"
+    protocol: grpc
+    serviceName: operatorhubio-catalog
+    serviceNamespace: olm

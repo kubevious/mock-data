@@ -1,0 +1,131 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: k8gb.io
+    provider-url: https://github.com/k8gb-io/k8gb
+  name: k8gb
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: k8gb.v0.9.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"k8gb.absa.oss/v1beta1","kind":"Gslb","metadata":{"name":"test-gslb-failover","namespace":"test-gslb"},"spec":{"ingress":{"rules":[{"host":"failover.test.k8gb.io","http":{"paths":[{"backend":{"service":{"name":"frontend-podinfo","port":{"name":"http"}}},"path":"/"}]}}]},"strategy":{"primaryGeoTag":"eu-west-1","type":"failover"}}}]'
+        capabilities: Seamless Upgrades
+        categories: Networking
+        certified: "false"
+        containerImage: absaoss/k8gb:v0.9.0
+        createdAt: "2021-09-24 12:00:00"
+        description: A cloud native Kubernetes Global Balancer
+        operatorframework.io/suggested-namespace: k8gb
+        operators.operatorframework.io.bundle.channels.v1: alpha
+        operators.operatorframework.io.bundle.manifests.v1: manifests/
+        operators.operatorframework.io.bundle.mediatype.v1: registry+v1
+        operators.operatorframework.io.bundle.metadata.v1: metadata/
+        operators.operatorframework.io.bundle.package.v1: k8gb
+        operators.operatorframework.io/builder: operator-sdk-v1.12.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/k8gb-io/k8gb
+        support: cncf-k8gb-maintainers@lists.cncf.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Gslb resource for global load balancing strategy configuration
+          displayName: Gslb
+          kind: Gslb
+          name: gslbs.k8gb.absa.oss
+          version: v1beta1
+        - description: Using ExternalDNS it synchronizes exposed Kubernetes Services
+            and Ingresses with DNS providers
+          displayName: DNSEndpoint
+          kind: DNSEndpoint
+          name: dnsendpoints.externaldns.k8s.io
+          version: v1alpha1
+      description: |
+        **A cloud native Kubernetes Global Balancer**
+
+        A Global Service Load Balancing solution with a focus on having cloud native qualities and work natively in a Kubernetes context.
+
+        Key Differentiators:
+         - Load balancing is based on timeproof DNS protocol which is perfect for global scope and extremely reliable
+         - No dedicated management cluster and no single point of failure
+         - Kubernetes native application health checks utilizing status of Liveness and Readiness probes for load balancing decisions
+         - Configuration with a single Kubernetes CRD of `Gslb` kind
+
+        Operator needs to be configured by setting couple of environment variables. This can be done by modifying
+        the subscription yaml in the web ui or via kubectl. Here is an example of changing the `EDGE_DNS_ZONE`:
+
+        ```yaml
+        kind: Subscription
+          ...
+        spec:
+          ...
+          config:
+            env:
+            - name: CLUSTER_GEO_TAG
+              value: us
+            - name: EDGE_DNS_ZONE
+              value: mycloud.example.com
+              ...
+         ```
+         For more deployment variables see [helm code](https://github.com/k8gb-io/k8gb/blob/v0.8.3/chart/k8gb/templates/operator.yaml#L53:L68).
+
+         For more information see [k8gb.io](https://k8gb.io).
+      displayName: k8gb
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - gslb
+      - dns-lb
+      - kuberneters-global-balancer
+      - kubernetes-operator
+      - balancer
+      links:
+      - name: Home
+        url: https://www.k8gb.io/
+      - name: Source
+        url: https://github.com/k8gb-io/k8gb
+      maintainers:
+      - email: dinar.valeev@absa.africa
+        name: Dinar Valeev
+      - email: jiri.kremser@gmail.com
+        name: Jiri Kremser
+      - email: kuritka@gmail.com
+        name: Michal Kuritka
+      - email: timofey.ilinykh@absa.africa
+        name: Timofey Ilinykh
+      - email: yury.tsarev@absa.africa
+        name: Yury Tsarev
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: k8gb.io
+        url: https://github.com/k8gb-io/k8gb
+      relatedImages:
+      - absaoss/k8s_crd:v0.0.8
+      - absaoss/k8gb:v0.9.0
+      version: 0.9.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: k8gb
+  provider:
+    name: k8gb.io
+    url: https://github.com/k8gb-io/k8gb

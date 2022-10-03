@@ -1,0 +1,139 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: https://www.ibm.com/
+  name: varnish-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: varnish-operator.v0.27.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "caching.ibm.com/v1alpha1",
+              "kind": "VarnishCluster",
+              "metadata": {
+                "name": "varnishcluster-sample"
+              },
+              "spec": {
+                "backend": {
+                  "port": "web",
+                  "selector": {
+                    "app": "nginx"
+                  }
+                },
+                "replicas": 1,
+                "service": {
+                  "port": 80
+                },
+                "varnish": {
+                  "args": [
+                    "-p",
+                    "default_ttl=3600",
+                    "-p",
+                    "default_grace=3600"
+                  ]
+                },
+                "vcl": {
+                  "configMapName": "vcl-files",
+                  "entrypointFileName": "entrypoint.vcl"
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Networking
+        certified: "false"
+        containerImage: ibmcom/varnish-operator:0.27.2
+        createdAt: 2021-02-15T11:15:31+0000
+        description: Run and manage Varnish clusters on Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/IBM/varnish-operator
+        support: https://ibm.github.io/varnish-operator/
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: VarnishCluster is the Schema for the varnishclusters API
+          displayName: Varnish Cluster
+          kind: VarnishCluster
+          name: varnishclusters.caching.ibm.com
+          version: v1alpha1
+      description: |
+        Run and manage Varnish clusters on Kubernetes
+
+        The operator manages the whole lifecycle of the cluster: creating, deleting and keeping the cluster configuration up to date.
+
+        The operator is responsible for building the VCL configuration using templates defined by the users and keeping the configuration up to date when relevant events occur (backend pod failure, scaling of the deployment, VCL configuration change).
+
+        Example of a simple `VarnishCluster`:
+
+        ```yaml
+        apiVersion: caching.ibm.com/v1alpha1
+        kind: VarnishCluster
+        metadata:
+          name: varnishcluster-sample
+          namespace: varnish-ns
+        spec:
+          vcl:
+            configMapName: vcl-files
+            entrypointFileName: entrypoint.vcl
+          replicas: 3
+          backend:
+            selector:
+              app: nginx
+          service:
+            port: 80
+        ```
+
+        Full documentation can be found [here](https://ibm.github.io/varnish-operator/)
+      displayName: Varnish Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - varnish
+      - cache
+      links:
+      - name: Varnish Operator Docs
+        url: https://ibm.github.io/varnish-operator
+      - name: Varnish Operator Source Code
+        url: https://github.com/IBM/varnish-operator
+      maintainers:
+      - email: tomash.sidei@ibm.com
+        name: Tomash Sidei
+      - email: cingram@us.ibm.com
+        name: Craig Ingram
+      maturity: alpha
+      provider:
+        name: IBM
+        url: https://www.ibm.com/
+      relatedImages:
+      - ibmcom/varnish-operator:0.27.2
+      version: 0.27.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: varnish-operator
+  provider:
+    name: IBM
+    url: https://www.ibm.com/

@@ -1,0 +1,226 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: StreamNative
+    provider-url: https://streamnative.io
+  name: bookkeeper-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: bookkeeper-operator.v0.12.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "bookkeeper.streamnative.io/v1alpha1",
+              "kind": "BookKeeperCluster",
+              "metadata": {
+                "name": "bookkeepercluster-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: quay.io/streamnativeio/bookkeeper-operator:v0.12.3
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The BookKeeper Operator manages BookKeeper clusters deployed
+          to Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: BookKeeperCluster is the Schema for the bookkeeperclusters
+            API
+          displayName: Book Keeper Cluster
+          kind: BookKeeperCluster
+          name: bookkeeperclusters.bookkeeper.streamnative.io
+          version: v1alpha1
+      description: |
+        The BookKeeper Operator manages BookKeeper clusters deployed to Kubernetes and automates tasks related to operating a Bookkeeper cluster. It provides a full management life-cycle for BookKeeper, including deployment, upgrades, scaling, and configuration changes. You can manage BookKeeper clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool
+      displayName: BookKeeper Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - bookkeeper
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/bk-operator/tutorial/deploy-bk
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/bookkeeper-operator:v0.12.3
+      version: 0.12.3
+    name: alpha
+  - currentCSV: bookkeeper-operator.v0.12.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "bookkeeper.streamnative.io/v1alpha1",
+              "kind": "BookKeeperCluster",
+              "metadata": {
+                "name": "bookkeepercluster-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: quay.io/streamnativeio/bookkeeper-operator:v0.12.3
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The BookKeeper Operator manages BookKeeper clusters deployed
+          to Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: BookKeeperCluster is the Schema for the bookkeeperclusters
+            API
+          displayName: Book Keeper Cluster
+          kind: BookKeeperCluster
+          name: bookkeeperclusters.bookkeeper.streamnative.io
+          version: v1alpha1
+      description: |
+        The BookKeeper Operator manages BookKeeper clusters deployed to Kubernetes and automates tasks related to operating a Bookkeeper cluster. It provides a full management life-cycle for BookKeeper, including deployment, upgrades, scaling, and configuration changes. You can manage BookKeeper clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool
+      displayName: BookKeeper Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - bookkeeper
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/bk-operator/tutorial/deploy-bk
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/bookkeeper-operator:v0.12.3
+      version: 0.12.3
+    name: beta
+  - currentCSV: bookkeeper-operator.v0.12.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "bookkeeper.streamnative.io/v1alpha1",
+              "kind": "BookKeeperCluster",
+              "metadata": {
+                "name": "bookkeepercluster-sample"
+              },
+              "spec": {
+                "foo": "bar"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: quay.io/streamnativeio/bookkeeper-operator:v0.12.3
+        createdAt: "2019-04-25T16:34:00Z"
+        description: The BookKeeper Operator manages BookKeeper clusters deployed
+          to Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: BookKeeperCluster is the Schema for the bookkeeperclusters
+            API
+          displayName: Book Keeper Cluster
+          kind: BookKeeperCluster
+          name: bookkeeperclusters.bookkeeper.streamnative.io
+          version: v1alpha1
+      description: |
+        The BookKeeper Operator manages BookKeeper clusters deployed to Kubernetes and automates tasks related to operating a Bookkeeper cluster. It provides a full management life-cycle for BookKeeper, including deployment, upgrades, scaling, and configuration changes. You can manage BookKeeper clusters using the Kubernetes Application Programming Interface (API) and the kubectl tool
+      displayName: BookKeeper Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - bookkeeper
+      - streamnative
+      links:
+      - name: Home Page
+        url: https://streamnative.io
+      - name: Documentation
+        url: https://docs.streamnative.io/operators/bk-operator/tutorial/deploy-bk
+      maintainers:
+      - email: cloud@streamnative.io
+        name: StreamNative Cloud
+      maturity: alpha
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - quay.io/streamnativeio/kube-rbac-proxy:v0.8.0
+      - quay.io/streamnativeio/bookkeeper-operator:v0.12.3
+      version: 0.12.3
+    name: stable
+  defaultChannel: stable
+  packageName: bookkeeper-operator
+  provider:
+    name: StreamNative
+    url: https://streamnative.io

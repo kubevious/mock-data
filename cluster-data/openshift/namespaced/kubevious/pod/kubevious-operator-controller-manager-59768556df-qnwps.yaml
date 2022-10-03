@@ -1,0 +1,262 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "installer.kubevious.io/v1alpha1",
+          "kind": "Kubevious",
+          "metadata": {
+            "name": "kubevious",
+            "namespace": "kubevious"
+          },
+          "spec": {}
+        }
+      ]
+    capabilities: Full Lifecycle
+    cni.projectcalico.org/containerID: 1465c8d25454271e83f2f980fbe1bb5a9bf0ce2e427a6ccc82c5f5f26a4ad28c
+    cni.projectcalico.org/podIP: 172.30.253.96/32
+    cni.projectcalico.org/podIPs: 172.30.253.96/32
+    containerImage: kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+    createdAt: 2022-09-30T21:36:56+0000
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.253.96"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.253.96"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    kubectl.kubernetes.io/default-container: manager
+    olm.operatorGroup: kubevious-dzkmn
+    olm.operatorNamespace: kubevious
+    olm.targetNamespaces: ""
+    openshift.io/scc: restricted
+    operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"installer.kubevious.io","kind":"Kubevious","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"kubevious-operator","version":"0.0.38"}}]}'
+    operatorframework.io/suggested-namespace: kubevious
+    operators.operatorframework.io/builder: operator-sdk-v1.23.0
+    operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+    repository: https://github.com/kubevious/operator
+    support: Kubevious
+  creationTimestamp: "2022-10-03T18:58:25Z"
+  generateName: kubevious-operator-controller-manager-59768556df-
+  labels:
+    control-plane: controller-manager
+    pod-template-hash: 59768556df
+  name: kubevious-operator-controller-manager-59768556df-qnwps
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: kubevious-operator-controller-manager-59768556df
+    uid: 96f1d3ec-a636-44ad-a0bb-90109769bf75
+  resourceVersion: "19674"
+  uid: 11ed5a69-cbd6-49b0-a522-639b371c91fc
+spec:
+  containers:
+  - args:
+    - --secure-listen-address=0.0.0.0:8443
+    - --upstream=http://127.0.0.1:8080/
+    - --logtostderr=true
+    - --v=0
+    env:
+    - name: OPERATOR_CONDITION_NAME
+      value: kubevious-operator.v0.0.38
+    image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d99a8d144816b951a67648c12c0b988936ccd25cf3754f3cd85ab8c01592248f
+    imagePullPolicy: IfNotPresent
+    name: kube-rbac-proxy
+    ports:
+    - containerPort: 8443
+      name: https
+      protocol: TCP
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 5m
+        memory: 64Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7ff87
+      readOnly: true
+  - args:
+    - --health-probe-bind-address=:8081
+    - --metrics-bind-address=127.0.0.1:8080
+    - --leader-elect
+    - --leader-election-id=kubevious-operator
+    env:
+    - name: OPERATOR_CONDITION_NAME
+      value: kubevious-operator.v0.0.38
+    image: docker.io/kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /healthz
+        port: 8081
+        scheme: HTTP
+      initialDelaySeconds: 15
+      periodSeconds: 20
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: manager
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /readyz
+        port: 8081
+        scheme: HTTP
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 10m
+        memory: 128Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-7ff87
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: kubevious-operator-controller-manager-dockercfg-9wq69
+  nodeName: 10.161.112.141
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1000620000
+    runAsNonRoot: true
+    seLinuxOptions:
+      level: s0:c25,c10
+  serviceAccount: kubevious-operator-controller-manager
+  serviceAccountName: kubevious-operator-controller-manager
+  terminationGracePeriodSeconds: 10
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - name: kube-api-access-7ff87
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:58:25Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:58:55Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:58:55Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:58:25Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://33e9c6a707d7533e039a0076bd47e3d8a4d78ee3b1f3602566879d7d7735594f
+    image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d99a8d144816b951a67648c12c0b988936ccd25cf3754f3cd85ab8c01592248f
+    imageID: gcr.io/kubebuilder/kube-rbac-proxy@sha256:a2523c532c0c3d51a5396a901d7ded23e402a9a1492c783aae27af6d0c1d2ec5
+    lastState: {}
+    name: kube-rbac-proxy
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:58:35Z"
+  - containerID: cri-o://0feba29e9802bddb491bdab64f43031359bd033c99d358977a3d88e7a5902f51
+    image: docker.io/kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+    imageID: docker.io/kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+    lastState: {}
+    name: manager
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:58:41Z"
+  hostIP: 10.161.112.141
+  phase: Running
+  podIP: 172.30.253.96
+  podIPs:
+  - ip: 172.30.253.96
+  qosClass: Burstable
+  startTime: "2022-10-03T18:58:25Z"

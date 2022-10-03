@@ -1,0 +1,141 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: prometheus-exporter-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: prometheus-exporter-operator.v0.2.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "monitoring.3scale.net/v1alpha1",
+              "kind": "PrometheusExporter",
+              "metadata": {
+                "name": "example-memcached"
+              },
+              "spec": {
+                "dbHost": "your-memcached-host",
+                "dbPort": 11211,
+                "grafanaDashboard": {
+                  "label": {
+                    "key": "autodiscovery",
+                    "value": "enabled"
+                  }
+                },
+                "type": "memcached"
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Monitoring
+        certified: "false"
+        containerImage: quay.io/3scale/prometheus-exporter-operator:v0.2.4
+        createdAt: "2020-06-08 00:00:00"
+        description: Operator to setup 3rd party prometheus exporters, with a collection
+          of grafana dashboards
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/3scale/prometheus-exporter-operator
+        support: Red Hat, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Configures a prometheus exporter to monitor a memcached instance
+          displayName: PrometheusExporter
+          kind: PrometheusExporter
+          name: prometheusexporters.monitoring.3scale.net
+          version: v1alpha1
+      description: |
+        A Kubernetes Operator based on the Operator SDK to centralize the setup of 3rd party prometheus exporters on **Kubernetes/OpenShift**, with a collection of grafana dashboards.
+
+        You can setup different prometheus exporters to monitor the **internals from different databases**, **HTTP/TCP endpoints** (availability, latency, SSL/TLS certificate expiration...), or even any available **cloudwatch metric from any AWS Service**, by just providing a few parameters like **dbHost** or **dbPort** (operator manages the container image, port, argument, command, volumes... and also prometheus **ServiceMonitor** and **GrafanaDashboard** k8s objects).
+
+        Current prometheus exporters types supported, managed by same prometheus-exporter-operator:
+        * memcached
+        * redis
+        * mysql
+        * postgresql
+        * sphinx
+        * es (elasticsearch)
+        * cloudwatch
+        * probe (blackbox)
+
+        The operator manages the lifecycle of the following objects:
+        * Deployment (one per CR)
+        * Service (one per CR)
+        * ServiceMonitor (optional, one per CR)
+        * GrafanaDashboard (optional, one per Namespace)
+
+        ### Documentation
+        Documentation can be found on our [website](https://github.com/3scale/prometheus-exporter-operator#documentation).
+
+        ### Getting help
+        If you encounter any issues while using operator, you can create an issue on our [website](https://github.com/3scale/prometheus-exporter-operator) for bugs, enhancements, or other requests.
+
+        ### Contributing
+        You can contribute by:
+        * Raising any issues you find using Prometheus Exporter Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/3scale/prometheus-exporter-operator/pulls)
+        * Submitting a patch or opening a PR
+        * Improving [documentation](https://github.com/3scale/prometheus-exporter-operator)
+        * Talking about Prometheus Exporter Operator
+        All bugs, tasks or enhancements are tracked as [GitHub issues](https://github.com/3scale/prometheus-exporter-operator/issues).
+
+        ### License
+        Prometheus Exporter Operator is licensed under the [Apache 2.0 license](https://github.com/3scale/prometheus-exporter-operator/blob/master/LICENSE)
+      displayName: Prometheus Exporter Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - monitoring
+      - metrics
+      - observability
+      - prometheus
+      - exporter
+      - grafana
+      - mysql
+      - postgresql
+      - memcached
+      - redis
+      - sphinx
+      - elasticsearch
+      - cloudwatch
+      links:
+      - name: GitHub
+        url: https://github.com/3scale/prometheus-exporter-operator
+      maintainers:
+      - email: 3scale-operations@redhat.com
+        name: 3scale Ops
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/3scale/prometheus-exporter-operator:v0.2.4
+      version: 0.2.4
+    name: alpha
+  defaultChannel: alpha
+  packageName: prometheus-exporter-operator
+  provider:
+    name: Red Hat

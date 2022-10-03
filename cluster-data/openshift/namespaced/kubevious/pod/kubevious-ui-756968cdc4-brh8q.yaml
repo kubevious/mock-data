@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 33fc6acf69193838345aaa8defb3995db3a5b577ff1738871b2cc4913b54c3ed
+    cni.projectcalico.org/podIP: 172.30.253.101/32
+    cni.projectcalico.org/podIPs: 172.30.253.101/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.253.101"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.253.101"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/scc: restricted
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  generateName: kubevious-ui-756968cdc4-
+  labels:
+    app.kubernetes.io/component: kubevious-ui
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+    pod-template-hash: 756968cdc4
+  name: kubevious-ui-756968cdc4-brh8q
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: kubevious-ui-756968cdc4
+    uid: 6022f4af-42e0-4ad9-a9cd-899e62e87c93
+  resourceVersion: "21844"
+  uid: 24e71661-6b98-410b-bda6-c0f137e0cf1a
+spec:
+  containers:
+  - env:
+    - name: NODE_ENV
+      value: production
+    - name: KUBEVIOUS_VERSION
+      value: 1.0.13
+    image: docker.io/kubevious/ui-ubi:1.0.13
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /
+        port: http
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: kubevious
+    ports:
+    - containerPort: 4000
+      name: http
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /
+        port: http
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources:
+      requests:
+        cpu: 25m
+        memory: 50Mi
+    securityContext:
+      capabilities:
+        drop:
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /etc/caddy/Caddyfile
+      name: caddy-config
+      subPath: Caddyfile
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-kq5dl
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: default-dockercfg-6qjmn
+  nodeName: 10.161.112.141
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1000620000
+    seLinuxOptions:
+      level: s0:c25,c10
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - configMap:
+      defaultMode: 420
+      name: kubevious-ui-caddy
+    name: caddy-config
+  - name: kube-api-access-kq5dl
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:02:46Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:25Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:25Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:02:46Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://966469328fc9fc108d2f20802cba193b9bfe25a0076dd063e908ef8b33a7bcdf
+    image: docker.io/kubevious/ui-ubi:1.0.13
+    imageID: docker.io/kubevious/ui-ubi@sha256:af54e0152e07f68dfd294d751dcfe0173607f199c1bca399f61668181f360208
+    lastState: {}
+    name: kubevious
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T19:03:25Z"
+  hostIP: 10.161.112.141
+  phase: Running
+  podIP: 172.30.253.101
+  podIPs:
+  - ip: 172.30.253.101
+  qosClass: Burstable
+  startTime: "2022-10-03T19:02:46Z"

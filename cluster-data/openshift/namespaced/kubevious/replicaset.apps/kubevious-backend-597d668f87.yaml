@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/component: kubevious-backend
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+    pod-template-hash: 597d668f87
+  name: kubevious-backend-597d668f87
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: kubevious-backend
+    uid: 6653a5c4-25df-40c3-bb52-e43f20714523
+  resourceVersion: "21616"
+  uid: 6031b27b-0618-4470-90a0-cc4ee9b5406b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: kubevious-backend
+      app.kubernetes.io/instance: kubevious
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kubevious
+      pod-template-hash: 597d668f87
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: kubevious-backend
+        app.kubernetes.io/instance: kubevious
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: kubevious
+        app.kubernetes.io/version: 1.0.13
+        helm.sh/chart: kubevious-1.0.13
+        pod-template-hash: 597d668f87
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: production
+        - name: LOG_LEVEL
+          value: info
+        - name: SERVER_PORT
+          value: "4001"
+        - name: COLLECTOR_BASE_URL
+          value: http://kubevious-collector-clusterip:4000
+        - name: PARSER_BASE_URL
+          value: http://kubevious-parser-clusterip:4000
+        - name: GUARD_BASE_URL
+          value: http://kubevious-guard-clusterip:4000
+        envFrom:
+        - configMapRef:
+            name: kubevious-mysql-config
+        - secretRef:
+            name: kubevious-mysql-secret
+        - configMapRef:
+            name: kubevious-redis-config
+        - secretRef:
+            name: kubevious-worldvious
+        - configMapRef:
+            name: kubevious-worldvious
+        image: docker.io/kubevious/backend-ubi:1.0.18
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: kubevious
+        ports:
+        - containerPort: 4001
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        securityContext: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: kubevious-backend
+      serviceAccountName: kubevious-backend
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

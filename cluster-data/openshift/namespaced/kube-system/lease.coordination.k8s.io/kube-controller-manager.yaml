@@ -1,0 +1,14 @@
+apiVersion: coordination.k8s.io/v1
+kind: Lease
+metadata:
+  creationTimestamp: "2022-09-30T19:14:47Z"
+  name: kube-controller-manager
+  namespace: kube-system
+  resourceVersion: "47929"
+  uid: 228c1aa4-a1f6-419b-ba99-3f2a78f61c79
+spec:
+  acquireTime: "2022-10-03T19:41:39.021050Z"
+  holderIdentity: kind-control-plane_37213eb4-c3b8-428c-b643-a028e9336c85
+  leaseDurationSeconds: 15
+  leaseTransitions: 3
+  renewTime: "2022-10-03T20:41:59.744859Z"

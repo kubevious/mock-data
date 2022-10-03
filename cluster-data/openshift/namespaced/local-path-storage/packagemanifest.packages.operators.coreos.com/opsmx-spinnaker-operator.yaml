@@ -1,0 +1,98 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: OpsMx
+    provider-url: ""
+  name: opsmx-spinnaker-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: opsmx-spinnaker-operator.v1.20.3
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1alpha1","kind":"OpsmxSpinnakerOperator","metadata":{"name":"op-spin"},"spec":{"halyard":{"spinnakerVersion":"1.20.3","image":{"repository":"opsmx11/operator-halyard","tag":"1.24.0"}},"dockerRegistries":[{"name":"dockerhub","address":"index.docker.io","repositories":["library/alpine","library/ubuntu","library/centos","library/nginx"]}],"spinnakerFeatureFlags":["artifacts","artifacts-rewrite","chaos","gremlin","infrastructure-stages","mine-canary","travis","wercker","pipeline-templates","managed-pipeline-templates-v2-ui"],"minio":{"enabled":true,"imageTag":"RELEASE.2018-06-09T02-18-09Z","serviceType":"ClusterIP","accessKey":"spinnakeradmin","secretKey":"spinnakeradmin","bucket":"spinnaker","nodeSelector":{},"persistence":{"enabled":false}},"rbac":{"create":false},"serviceAccount":{"create":false,"halyardName":"opsmx-spinnaker-operator","spinnakerName":null}}}]'
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/devopsmx/spinnaker-operator:1.20.3
+        createdAt: "2019-04-08 19:49:35"
+        description: Spinnaker is an open source, multi-cloud continuous delivery
+          platform to perform software releases with high velocity and confidence.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        support: OpsMx
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: OpsmxSpinnakerOperator
+          displayName: opsmxspinnakeroperator
+          kind: OpsmxSpinnakerOperator
+          name: opsmxspinnakeroperators.charts.helm.k8s.io
+          version: v1alpha1
+      description: "# Spinnaker as an Operator\n\nThis Operator allows users to spin
+        up Open Enterprise Spinnaker (OES) to manage deployments etc., using Openshift
+        CRD&#39;s. With the help of Spinnaker Services Operator, users will have the
+        convenience and confidence of simplified approach to execute CI/CD process
+        with high velocity and quality deployments in all environments. \n\n## What
+        is Spinnaker?\n\n* Spinnaker is an Open Source, multi-cloud Continuous delivery
+        platform to perform software releases with high velocity and confidence.\n*
+        Spinnaker helps user to create deployment pipelines that run integration and
+        system tests, spin up and down server groups, and monitor your rollouts.\n*
+        OES has enterprise value-adds as described at http://opsmx.com\n\n### List
+        of Features\n\n* Multi-Cloud Deployment - Deploy your VM or Containers or
+        functions across most public and private cloud including AWS EC2, ECS, EKS,
+        Lambda, Kubernetes, Google Compute Engine, Google Kubernetes Engine, Google
+        App Engine, Microsoft Azure, OpenStack, with Oracle Bare Metal and DC/OS.\n*
+        Automated Releases with Pipelines - Create deployment pipelines that run integration
+        and system tests, spin up and down server groups, and monitor your rollouts.
+        Trigger pipelines via git events, Jenkins, Travis CI, Docker, CRON, or other
+        Spinnaker pipelines\n* Pipeline-as-code - Manage the pipeline as code (JSON)
+        or interact with pipeline using API or UI.\n* Safe Deployment Strategies -
+        Deploy using Canary or Red/Black (Blue/Green) or Rolling update and enable
+        automated Canary analysis to ensure safety of the new updates before full-rollout
+        to production\n* 1-click Rollback - Rolling back new deployments is never
+        been easier with a 1-click rollback of images/configurations.\n* See more
+        spinnaker.io or docs.opsmx.com\n"
+      displayName: OpsMx Enterprise Operator for Spinnaker
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      links:
+      - name: Spinnaker
+        url: https://www.spinnaker.io/
+      - name: OpsMx
+        url: http://opsmx.com/
+      - name: Documentation
+        url: http://docs.opsmx.com/
+      - name: Blog
+        url: http://blog.opsmx.com/
+      maintainers:
+      - email: info@opsmx.com
+        name: OpsMx
+      maturity: alpha
+      provider:
+        name: OpsMx
+      relatedImages:
+      - docker.io/devopsmx/spinnaker-operator:1.20.3
+      version: 1.20.3
+    name: alpha
+  defaultChannel: alpha
+  packageName: opsmx-spinnaker-operator
+  provider:
+    name: OpsMx

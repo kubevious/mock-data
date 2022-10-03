@@ -1,0 +1,96 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Medik8s
+    provider-url: https://github.com/medik8s
+  name: node-maintenance-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: node-maintenance-operator.v0.13.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "nodemaintenance.medik8s.io/v1beta1",
+              "kind": "NodeMaintenance",
+              "metadata": {
+                "name": "nodemaintenance-sample"
+              },
+              "spec": {
+                "nodeName": "node02",
+                "reason": "Test node maintenance"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/medik8s/node-maintenance-operator:v0.13.1
+        createdAt: "2022-09-08 11:11:29"
+        description: Node Maintenance Operator for cordoning and draining nodes.
+        olm.skipRange: '>=0.12.0 <0.13.1'
+        operators.operatorframework.io/builder: operator-sdk-v1.22.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/medik8s/node-maintenance-operator
+        support: Medik8s
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: NodeMaintenance is the Schema for the nodemaintenances API
+          displayName: Node Maintenance
+          kind: NodeMaintenance
+          name: nodemaintenances.nodemaintenance.medik8s.io
+          version: v1beta1
+      description: |
+        Node Maintenance Operator (NMO)
+
+        This operator will keep nodes cordoned and drained while a matching NodeMaintenance (nm) custom resource exists.
+        This is useful when investigating problems with a machine, or performing an operation on the underlying machine that might result in node failure.
+      displayName: Node Maintenance Operator - Community Edition
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - medik8s
+      - Node-maintenance
+      - nmo
+      links:
+      - name: Node Maintenance Operator
+        url: https://medik8s.io
+      - name: Source Code
+        url: https://github.com/medik8s/node-maintenance-operator
+      maintainers:
+      - email: medik8s@googlegroups.com
+        name: Medik8s Team
+      maturity: beta
+      minKubeVersion: 1.23.0
+      provider:
+        name: Medik8s
+        url: https://github.com/medik8s
+      relatedImages:
+      - quay.io/medik8s/node-maintenance-operator:v0.13.1
+      version: 0.13.1
+    name: stable
+  defaultChannel: stable
+  packageName: node-maintenance-operator
+  provider:
+    name: Medik8s
+    url: https://github.com/medik8s

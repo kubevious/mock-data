@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: cronjob-controller-dockercfg-j8zhz
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:04Z"
+  name: cronjob-controller
+  namespace: kube-system
+  resourceVersion: "1234"
+  uid: 2c9a4c1b-a0db-49b3-a8d6-f0254ad82cae
+secrets:
+- name: cronjob-controller-token-5gqqb
+- name: cronjob-controller-dockercfg-j8zhz

@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: default-dockercfg-ttjfh
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:18Z"
+  name: default
+  namespace: kube-node-lease
+  resourceVersion: "2219"
+  uid: bcfc6650-bf83-4292-bf6a-0ab6560b9fbd
+secrets:
+- name: default-token-9htzc
+- name: default-dockercfg-ttjfh

@@ -1,0 +1,241 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Snowdrop Team
+    provider-url: ""
+  name: halkyon
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: halkyon.v0.1.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion" : "halkyon.io/v1beta1",
+              "kind" : "Capability",
+              "metadata" : {
+                "name" : "postgres-db"
+              },
+              "spec" : {
+                "category" : "database",
+                "kind" : "postgres",
+                "version" : "10",
+                "parameters" : [
+                  {
+                    "name" : "DB_USER",
+                    "value" : "admin"
+                  }, {
+                    "name" : "DB_PASSWORD",
+                    "value" : "admin"
+                  }, {
+                    "name" : "DB_NAME",
+                    "value" : "sample-db"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion" : "halkyon.io/v1beta1",
+              "kind" : "Component",
+              "metadata" : {
+                "labels" : {
+                  "app" : "fruit-backend-sb"
+                },
+                "name" : "fruit-backend-sb"
+              },
+              "spec" : {
+                "deploymentMode" : "build",
+                "runtime" : "spring-boot",
+                "version" : "2.1.6.RELEASE",
+                "exposeService" : true,
+                "buildConfig" : {
+                  "type" : "s2i",
+                  "url" : "https://github.com/halkyonio/operator.git",
+                  "ref" : "master",
+                  "contextPath" : "demo/",
+                  "moduleDirName" : "fruit-backend-sb"
+                },
+                "port" : 8080
+              }
+            },
+            {
+              "apiVersion" : "halkyon.io/v1beta1",
+              "kind" : "Link",
+              "metadata" : {
+                "name" : "link-to-database"
+              },
+              "spec" : {
+                "componentName" : "fruit-backend-sb",
+                "kind" : "Secret",
+                "ref" : "postgres-db-config"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        certified: "false"
+        containerImage: quay.io/halkyonio/operator:v0.1.8
+        createdAt: "2019-08-21"
+        description: 'Halkyon: To get back to the halcyon days of local development
+          in a modern kubernetes setting of microservices!'
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/halkyonio/operator
+        support: Halkyon community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A component describing your microservice
+          displayName: Component
+          kind: Component
+          name: components.halkyon.io
+          version: v1beta1
+        - description: A capability or service to be deployed
+          displayName: Capability
+          kind: Capability
+          name: capabilities.halkyon.io
+          version: v1beta1
+        - description: To link the microservices or access secrets
+          displayName: Link
+          kind: Link
+          name: links.halkyon.io
+          version: v1beta1
+      description: |-
+        ### Introduction
+
+        Deploying modern micro-services applications that comply with the [12-factor](https://12factor.net/) guidelines to Kubernetes is difficult, mainly due to the host
+        of different and complex Kubernetes Resources involved. In such scenarios developer experience becomes very important.
+
+        This projects aims to tackle said complexity and vastly **simplify** the process of deploying micro-service applications to Kubernetes and get back to
+        the halcyon days of local development! :sunglasses:
+
+        By providing several, easy-to-use Kubernetes [Custom Resources (CRs)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and
+        an [Operator](https://enterprisersproject.com/article/2019/2/kubernetes-operators-plain-english) to handle them, the Halkyon project provides the following features:
+        - Install micro-services (`components` in Halkyon's parlance) utilizing `runtimes` such as Spring Boot, Vert.x, Thorntail, Quarkus or Nodejs, serving as base building blocks for your application
+        - Manage the relations between the different components using `link` CR allowing one micro-service for example to consume a REST endpoint provided by another
+        - Deploy various infrastructure services like a database which are bound to a `component` via the `capability` CR.
+
+        The Halkyon Operator requires `Kubernetes >= 1.13` or `OpenShift >= 3.11`.
+
+        ### Prerequisite
+
+        In order to use the Halkyon Operator and the CRs, it is mandatory to install [Tekton Pipelines](https://tekton.dev/) and [KubeDB](http://kubedb.com) Operators
+        and their Custom Resources. Otherwise, it will fail to start or to be deployed from the Operatorhub UI screen of the console.
+        See [prerequisite](https://github.com/halkyonio/operator/blob/master/README.md#prerequisites) section of the Halkyon documentation.
+
+        ### How to use it
+
+        Deploy the operator as defined within the [Operator Doc](https://github.com/halkyonio/operator#installing-the-halkyon-operator)
+        or use the operator bundle promoted on [operatorhub.io](https://operatorhub.io/operator/halkyon).
+
+        First create a namespace:
+        ```
+        kubectl create ns demo
+        ```
+        Next, create a component yml file with the following information within your maven java project:
+        ```
+        apiVersion: halkyon.io/v1beta1
+        kind: Component
+        metadata:
+          name: spring-boot
+        spec:
+          runtime: spring-boot
+          version: 2.1.6.RELEASE
+          deploymentMode: dev
+        ```
+        Deploy it:
+        ```
+        kubectl apply -n demo -f my-component.yml
+        ```
+        Verify if the component has been deployed properly:
+        ```
+        kubectl get components -n demo
+        NAME          RUNTIME       VERSION           AGE     MODE   STATUS   MESSAGE   REVISION
+        spring-boot   spring-boot   2.1.6.RELEASE   2m19s      dev   Ready
+        ```
+
+        Package your Java Application "mvn package" and push the uber java file.
+        ```
+        kubectl cp target/my-component-1.0-SNAPSHOT.jar POD_NAME:/deployments/my-component-1.0-SNAPSHOT -n demo
+        ```
+
+        Start your application within the pod
+        ```
+        kubectl exec POD_NAME -n demo /var/lib/supervisord/bin/supervisord ctl start run-cmd
+        ```
+
+        Enrich your application with additional `Component`, `Link` them or deploy a `Capability` database using the supported CRs for your different microservices.
+
+        To simplify your life even more when developing Java applications, add [Dekorate]( https://dekorate.io) to your project to automatically generate the YAML resources for your favorite runtime !
+
+        ### A Real demo
+
+        To play with a more [real-world example](https://github.com/halkyonio/operator/#key-concepts) and discover the different features currently supported, use the following [demo](https://github.com/halkyonio/operator/tree/master/demo)
+        project. So jump there to see in action how Halkyon enhances the Developer Experience on Kubernetes ;-)
+
+        ### More info
+
+        [Custom Resources and their fields](https://github.com/halkyonio/api)
+
+        [Project documentation - https://github.com/halkyonio/operator](https://github.com/halkyonio/operator#how-to-play-with-it)
+
+        [Zulip Community](https://snowdrop.zulipchat.com/#narrow/stream/207165-halkyon)
+
+        Follow us on [https://twitter.com/halkyonio](https://twitter.com/halkyonio)
+
+        ### Contributing
+
+        If you've got some great features, use cases for the Halkyon operator and project, open a ticket on [GitHub](https://github.com/halkyonio/operator/issues) !
+
+        ### License
+
+        Halkyon is licensed under the [Apache License, Version 2.0](https://github.com/halkyonio/operator/blob/master/LICENSE) license.
+      displayName: Halkyon Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - component
+      - microservices
+      - composition
+      links:
+      - name: Documentation Home
+        url: https://github.com/halkyonio/operator/blob/master/README.md
+      - name: Halkyon Operator Source Code
+        url: https://github.com/halkyonio/operator
+      - name: Halkyon API
+        url: https://github.com/halkyonio/api
+      - name: Developer CLI Tool
+        url: https://github.com/halkyonio/kreate
+      maintainers:
+      - email: cmoulliard@redhat.com
+        name: Halkyon Owner
+      maturity: alpha
+      provider:
+        name: Snowdrop Team
+      relatedImages:
+      - quay.io/halkyonio/operator:v0.1.8
+      version: 0.1.8
+    name: alpha
+  defaultChannel: alpha
+  packageName: halkyon
+  provider:
+    name: Snowdrop Team

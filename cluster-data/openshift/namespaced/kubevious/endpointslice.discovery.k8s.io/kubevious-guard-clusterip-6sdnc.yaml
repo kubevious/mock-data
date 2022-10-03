@@ -1,0 +1,46 @@
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 10.244.0.27
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: kubevious-guard-5588cd57cc-ncdd7
+    namespace: kubevious
+    uid: 173bd174-99bb-4ca8-a271-b28848b38886
+kind: EndpointSlice
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:38:50Z"
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  generateName: kubevious-guard-clusterip-
+  generation: 3
+  labels:
+    app.kubernetes.io/component: kubevious-guard
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+    helm.sh/chart: kubevious-1.0.13
+    kubernetes.io/service-name: kubevious-guard-clusterip
+  name: kubevious-guard-clusterip-6sdnc
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: kubevious-guard-clusterip
+    uid: f33e7968-44bc-4e2c-9d07-94934e8862b4
+  resourceVersion: "31382"
+  uid: f59dc2a6-15e2-4b16-8d28-833834f5d69e
+ports:
+- name: http
+  port: 4004
+  protocol: TCP

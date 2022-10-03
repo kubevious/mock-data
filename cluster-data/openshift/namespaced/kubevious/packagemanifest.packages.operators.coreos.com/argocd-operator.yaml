@@ -1,0 +1,268 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Argo CD Community
+    provider-url: ""
+  name: argocd-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: argocd-operator.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "argoproj.io/v1alpha1",
+              "kind": "AppProject",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "argoproj.io/v1alpha1",
+              "kind": "Application",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "argoproj.io/v1alpha1",
+              "kind": "ApplicationSet",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "argoproj.io/v1alpha1",
+              "kind": "ArgoCD",
+              "metadata": {
+                "name": "argocd-sample"
+              },
+              "spec": {
+                "controller": {
+                  "resources": {
+                    "limits": {
+                      "cpu": "2000m",
+                      "memory": "2048Mi"
+                    },
+                    "requests": {
+                      "cpu": "250m",
+                      "memory": "1024Mi"
+                    }
+                  }
+                },
+                "ha": {
+                  "enabled": false,
+                  "resources": {
+                    "limits": {
+                      "cpu": "500m",
+                      "memory": "256Mi"
+                    },
+                    "requests": {
+                      "cpu": "250m",
+                      "memory": "128Mi"
+                    }
+                  }
+                },
+                "redis": {
+                  "resources": {
+                    "limits": {
+                      "cpu": "500m",
+                      "memory": "256Mi"
+                    },
+                    "requests": {
+                      "cpu": "250m",
+                      "memory": "128Mi"
+                    }
+                  }
+                },
+                "repo": {
+                  "resources": {
+                    "limits": {
+                      "cpu": "1000m",
+                      "memory": "512Mi"
+                    },
+                    "requests": {
+                      "cpu": "250m",
+                      "memory": "256Mi"
+                    }
+                  }
+                },
+                "server": {
+                  "resources": {
+                    "limits": {
+                      "cpu": "500m",
+                      "memory": "256Mi"
+                    },
+                    "requests": {
+                      "cpu": "125m",
+                      "memory": "128Mi"
+                    }
+                  },
+                  "route": {
+                    "enabled": true
+                  }
+                },
+                "sso": {
+                  "dex": {
+                    "resources": {
+                      "limits": {
+                        "cpu": "500m",
+                        "memory": "256Mi"
+                      },
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "128Mi"
+                      }
+                    }
+                  },
+                  "provider": "dex"
+                }
+              }
+            },
+            {
+              "apiVersion": "argoproj.io/v1alpha1",
+              "kind": "ArgoCDExport",
+              "metadata": {
+                "name": "argocdexport-sample"
+              },
+              "spec": {
+                "argocd": "argocd-sample"
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/argoprojlabs/argocd-operator@sha256:cf8faa9867899ec78c37a9e72000138c7f24861f47057152e95b6addb39aedcd
+        description: Argo CD is a declarative, GitOps continuous delivery tool for
+          Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.10.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/argoproj-labs/argocd-operator
+        support: Argo CD
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: An Application is a group of Kubernetes resources as defined
+            by a manifest.
+          displayName: Application
+          kind: Application
+          name: applications.argoproj.io
+          version: v1alpha1
+        - description: An ApplicationSet is a group or set of Application resources.
+          displayName: ApplicationSet
+          kind: ApplicationSet
+          name: applicationsets.argoproj.io
+          version: v1alpha1
+        - description: An AppProject is a logical grouping of Argo CD Applications.
+          displayName: AppProject
+          kind: AppProject
+          name: appprojects.argoproj.io
+          version: v1alpha1
+        - description: ArgoCDExport is the Schema for the argocdexports API
+          displayName: Argo CDExport
+          kind: ArgoCDExport
+          name: argocdexports.argoproj.io
+          version: v1alpha1
+        - description: ArgoCD is the Schema for the argocds API
+          displayName: Argo CD
+          kind: ArgoCD
+          name: argocds.argoproj.io
+          version: v1alpha1
+      description: |
+        ## Overview
+
+        The Argo CD Operator manages the full lifecycle for [Argo CD](https://argoproj.github.io/argo-cd/) and it's
+        components. The operator's goal is to automate the tasks required when operating an Argo CD cluster.
+
+        Beyond installation, the operator helps to automate the process of upgrading, backing up and restoring as needed and
+        remove the human as much as possible. In addition, the operator aims to provide deep insights into the Argo CD
+        environment by configuring Prometheus and Grafana to aggregate, visualize and expose the metrics already exported by
+        Argo CD.
+
+        The operator aims to provide the following, and is a work in progress.
+
+        * Easy configuration and installation of the Argo CD components with sane defaults to get up and running quickly.
+        * Provide seamless upgrades to the Argo CD components.
+        * Ability to back up and restore an Argo CD cluster from a point in time or on a recurring schedule.
+        * Aggregate and expose the metrics for Argo CD and the operator itself using Prometheus and Grafana.
+        * Autoscale the Argo CD components as necessary to handle variability in demand.
+
+        ## Usage
+
+        Deploy a basic Argo CD cluster by creating a new ArgoCD resource in the namespace where the operator is installed.
+
+        ```
+        apiVersion: argoproj.io/v1alpha1
+        kind: ArgoCD
+        metadata:
+          name: example-argocd
+        spec: {}
+        ```
+
+        ## Backup
+
+        Backup the cluster above by creating a new ArgoCDExport resource in the namespace where the operator is installed.
+
+        ```
+        apiVersion: argoproj.io/v1alpha1
+        kind: ArgoCDExport
+        metadata:
+          name: example-argocdexport
+        spec:
+          argocd: example-argocd
+        ```
+
+        See the [documentation](https://argocd-operator.readthedocs.io) and examples on
+        [github](https://github.com/argoproj-labs/argocd-operator) for more information.
+      displayName: Argo CD
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - gitops
+      - kubernetes
+      links:
+      - name: Argo CD Project
+        url: https://argoproj.github.io/argo-cd/
+      - name: Operator Documentation
+        url: https://argocd-operator.readthedocs.io
+      - name: Operator Source Code
+        url: https://github.com/argoproj-labs/argocd-operator
+      maintainers:
+      - email: jfischer@redhat.com
+        name: Jann Fischer
+      maturity: alpha
+      provider:
+        name: Argo CD Community
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/argoprojlabs/argocd-operator@sha256:cf8faa9867899ec78c37a9e72000138c7f24861f47057152e95b6addb39aedcd
+      version: 0.4.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: argocd-operator
+  provider:
+    name: Argo CD Community

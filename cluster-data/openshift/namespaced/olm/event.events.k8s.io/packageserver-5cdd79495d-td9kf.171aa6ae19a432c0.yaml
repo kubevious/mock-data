@@ -1,0 +1,27 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 1
+deprecatedFirstTimestamp: "2022-10-03T19:44:38Z"
+deprecatedLastTimestamp: "2022-10-03T19:44:38Z"
+deprecatedSource:
+  component: kubelet
+  host: kind-control-plane
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:44:43Z"
+  name: packageserver-5cdd79495d-td9kf.171aa6ae19a432c0
+  namespace: olm
+  resourceVersion: "40200"
+  uid: 998f763b-bd16-473e-a2e7-0e2f2e06835f
+note: 'Liveness probe failed: Get "https://10.244.0.15:5443/healthz": net/http: request
+  canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)'
+reason: Unhealthy
+regarding:
+  apiVersion: v1
+  fieldPath: spec.containers{packageserver}
+  kind: Pod
+  name: packageserver-5cdd79495d-td9kf
+  namespace: olm
+  resourceVersion: "29165"
+  uid: 31df5485-473a-4cd3-9eb1-5ea365dd66f8
+type: Warning

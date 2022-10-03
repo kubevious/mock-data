@@ -1,0 +1,26 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 1
+deprecatedFirstTimestamp: "2022-10-03T19:44:54Z"
+deprecatedLastTimestamp: "2022-10-03T19:44:54Z"
+deprecatedSource:
+  component: operator-lifecycle-manager
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:44:54Z"
+  name: kubevious-operator.v0.0.38.171aa6b1be733be0
+  namespace: kubevious
+  resourceVersion: "40224"
+  uid: f5cf99c7-4804-458a-8618-1de817d2b66d
+note: 'installing: waiting for deployment kubevious-operator-controller-manager to
+  become ready: deployment "kubevious-operator-controller-manager" not available:
+  Deployment does not have minimum availability.'
+reason: ComponentUnhealthy
+regarding:
+  apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  name: kubevious-operator.v0.0.38
+  namespace: kubevious
+  resourceVersion: "30676"
+  uid: c616343d-2dd0-4c01-be37-dc087d3bbc87
+type: Warning

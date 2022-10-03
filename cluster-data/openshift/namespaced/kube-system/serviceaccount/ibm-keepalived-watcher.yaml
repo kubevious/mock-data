@@ -1,0 +1,21 @@
+apiVersion: v1
+imagePullSecrets:
+- name: ibm-keepalived-watcher-dockercfg-bfvhq
+kind: ServiceAccount
+metadata:
+  annotations:
+    armada-service: cruiser-kube-addons
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{"armada-service":"cruiser-kube-addons","version":"4.9.48_1556_openshift"},"labels":{"addonmanager.kubernetes.io/mode":"Reconcile","kubernetes.io/cluster-service":"true"},"name":"ibm-keepalived-watcher","namespace":"kube-system"}}
+    version: 4.9.48_1556_openshift
+  creationTimestamp: "2022-10-03T18:35:04Z"
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+    kubernetes.io/cluster-service: "true"
+  name: ibm-keepalived-watcher
+  namespace: kube-system
+  resourceVersion: "6814"
+  uid: 5d9728d5-9568-4b51-9b79-9a4d1a7713f1
+secrets:
+- name: ibm-keepalived-watcher-token-s8tc6
+- name: ibm-keepalived-watcher-dockercfg-bfvhq

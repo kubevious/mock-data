@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: statefulset-controller-dockercfg-ft6qv
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:04Z"
+  name: statefulset-controller
+  namespace: kube-system
+  resourceVersion: "1222"
+  uid: d716a27f-5d71-4d10-ae88-844e7b658074
+secrets:
+- name: statefulset-controller-token-7ps2n
+- name: statefulset-controller-dockercfg-ft6qv

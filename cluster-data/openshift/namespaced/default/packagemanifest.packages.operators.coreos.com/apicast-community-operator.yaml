@@ -1,0 +1,238 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: apicast-community-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: apicast-community-operator.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.3scale.net/v1alpha1",
+              "kind": "APIcast",
+              "metadata": {
+                "name": "example-apicast"
+              },
+              "spec": {
+                "adminPortalCredentialsRef": {
+                  "name": "mysecretname"
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/3scale/apicast-operator:v0.6.0
+        createdAt: "2019-10-27T22:40:00Z"
+        description: APIcast is an API gateway built on top of NGINX. It is part of
+          the Red Hat 3scale API Management Platform
+        operators.openshift.io/infrastructure-features: '["Disconnected"]'
+        operators.operatorframework.io/builder: operator-sdk-v1.2.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/3scale/apicast-operator
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: APIcast is the Schema for the apicasts API.
+          displayName: APIcast
+          kind: APIcast
+          name: apicasts.apps.3scale.net
+          version: v1alpha1
+      description: |
+        The APIcast Operator creates and maintains the Red Hat 3scale API Gateway in several deployment configurations.
+
+        APIcast is an API gateway built on top of [NGINX](https://www.nginx.com/). It is part of the [Red Hat 3scale API Management Platform](https://www.redhat.com/en/technologies/jboss-middleware/3scale).
+
+        ### Supported Features
+        * **Installer** A way to install an APIcast gateway instance on Kubernetes
+        * **Upgrade** Upgrade from previously installed APIcast gateway instance
+        * **Reconcilliation** Tunable CRD parameters after the APIcast gateway is installed
+
+        ### Upgrading your installation
+        The APIcast Operator understands how to run and upgrade between a set of APIcast versions.
+        See [the upgrade guide](https://github.com/3scale/apicast-operator/blob/v0.6.0/doc/operator-user-guide.md#upgrading-APIcast) for more information.
+
+
+        ### Documentation
+        Documentation can be found on our [website](https://github.com/3scale/apicast-operator/tree/v0.6.0).
+
+        ### Getting help
+        If you encounter any issues while using operator, you can create an issue on our [website](https://github.com/3scale/apicast-operator) for bugs, enhancements, or other requests.
+
+        ### Contributing
+        You can contribute by:
+
+        * Raising any issues you find using APIcast Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/3scale/apicast-operator/pulls)
+        * Improving [documentation](https://github.com/3scale/apicast-operator)
+        * Talking about APIcast Operator
+
+        All bugs, tasks or enhancements are tracked as [GitHub issues](https://github.com/3scale/apicast-operator/issues).
+
+        ### License
+        APIcast Operator is licensed under the [Apache 2.0 license](https://github.com/3scale/apicast-operator/blob/master/LICENSE)
+      displayName: APIcast
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - 3scale
+      - API
+      - api
+      - APIcast
+      - apicast
+      - gateway
+      - api-gateway
+      - openresty
+      links:
+      - name: GitHub
+        url: https://github.com/3scale/apicast-operator
+      - name: Documentation
+        url: https://github.com/3scale/apicast-operator/tree/v0.6.0
+      maintainers:
+      - email: eastizle+apicastoperator@redhat.com
+        name: Eguzki Astiz
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/3scale/apicast-operator:v0.6.0
+      version: 0.6.0
+    name: alpha
+  - currentCSV: apicast-community-operator.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.3scale.net/v1alpha1",
+              "kind": "APIcast",
+              "metadata": {
+                "name": "example-apicast"
+              },
+              "spec": {
+                "adminPortalCredentialsRef": {
+                  "name": "mysecretname"
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/3scale/apicast-operator:v0.6.0
+        createdAt: "2019-10-27T22:40:00Z"
+        description: APIcast is an API gateway built on top of NGINX. It is part of
+          the Red Hat 3scale API Management Platform
+        operators.openshift.io/infrastructure-features: '["Disconnected"]'
+        operators.operatorframework.io/builder: operator-sdk-v1.2.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/3scale/apicast-operator
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: APIcast is the Schema for the apicasts API.
+          displayName: APIcast
+          kind: APIcast
+          name: apicasts.apps.3scale.net
+          version: v1alpha1
+      description: |
+        The APIcast Operator creates and maintains the Red Hat 3scale API Gateway in several deployment configurations.
+
+        APIcast is an API gateway built on top of [NGINX](https://www.nginx.com/). It is part of the [Red Hat 3scale API Management Platform](https://www.redhat.com/en/technologies/jboss-middleware/3scale).
+
+        ### Supported Features
+        * **Installer** A way to install an APIcast gateway instance on Kubernetes
+        * **Upgrade** Upgrade from previously installed APIcast gateway instance
+        * **Reconcilliation** Tunable CRD parameters after the APIcast gateway is installed
+
+        ### Upgrading your installation
+        The APIcast Operator understands how to run and upgrade between a set of APIcast versions.
+        See [the upgrade guide](https://github.com/3scale/apicast-operator/blob/v0.6.0/doc/operator-user-guide.md#upgrading-APIcast) for more information.
+
+
+        ### Documentation
+        Documentation can be found on our [website](https://github.com/3scale/apicast-operator/tree/v0.6.0).
+
+        ### Getting help
+        If you encounter any issues while using operator, you can create an issue on our [website](https://github.com/3scale/apicast-operator) for bugs, enhancements, or other requests.
+
+        ### Contributing
+        You can contribute by:
+
+        * Raising any issues you find using APIcast Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/3scale/apicast-operator/pulls)
+        * Improving [documentation](https://github.com/3scale/apicast-operator)
+        * Talking about APIcast Operator
+
+        All bugs, tasks or enhancements are tracked as [GitHub issues](https://github.com/3scale/apicast-operator/issues).
+
+        ### License
+        APIcast Operator is licensed under the [Apache 2.0 license](https://github.com/3scale/apicast-operator/blob/master/LICENSE)
+      displayName: APIcast
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - 3scale
+      - API
+      - api
+      - APIcast
+      - apicast
+      - gateway
+      - api-gateway
+      - openresty
+      links:
+      - name: GitHub
+        url: https://github.com/3scale/apicast-operator
+      - name: Documentation
+        url: https://github.com/3scale/apicast-operator/tree/v0.6.0
+      maintainers:
+      - email: eastizle+apicastoperator@redhat.com
+        name: Eguzki Astiz
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/3scale/apicast-operator:v0.6.0
+      version: 0.6.0
+    name: stable
+  defaultChannel: stable
+  packageName: apicast-community-operator
+  provider:
+    name: Red Hat

@@ -1,0 +1,209 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-10-03T18:44:52Z"
+  generateName: ibm-keepalived-watcher-
+  labels:
+    app: ibm-keepalived-watcher
+    controller-revision-hash: 648fdccc56
+    pod-template-generation: "1"
+  name: ibm-keepalived-watcher-x5vg2
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: DaemonSet
+    name: ibm-keepalived-watcher
+    uid: 53fbc8f6-7655-403f-8ed3-f9f7efef9633
+  resourceVersion: "11576"
+  uid: af86c1ff-c722-435e-80bc-1085bea26afa
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchFields:
+          - key: metadata.name
+            operator: In
+            values:
+            - 10.161.112.142
+  containers:
+  - image: registry.ng.bluemix.net/armada-master/keepalived-watcher:2110
+    imagePullPolicy: IfNotPresent
+    name: keepalived-watcher
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+      runAsGroup: 2000
+      runAsUser: 2000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /status
+      name: keepalived-status
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-qzfn4
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostNetwork: true
+  imagePullSecrets:
+  - name: ibm-keepalived-watcher-dockercfg-bfvhq
+  initContainers:
+  - env:
+    - name: CALICO_K8S_NODE_REF
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.nodeName
+    - name: DATASTORE_TYPE
+      value: kubernetes
+    - name: KDD_ENABLED
+      value: "true"
+    image: registry.ng.bluemix.net/armada-master/armada-calico-extension:1096
+    imagePullPolicy: IfNotPresent
+    name: calico-extension
+    resources:
+      requests:
+        cpu: 5m
+        memory: 5Mi
+    securityContext:
+      runAsUser: 2000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-qzfn4
+      readOnly: true
+  - command:
+    - /usr/local/bin/hostDirPerms
+    image: registry.ng.bluemix.net/armada-master/keepalived-watcher:2110
+    imagePullPolicy: IfNotPresent
+    name: keepalived-init
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /status
+      name: keepalived-status
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-qzfn4
+      readOnly: true
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000001000
+  priorityClassName: system-node-critical
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: ibm-keepalived-watcher
+  serviceAccountName: ibm-keepalived-watcher
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - operator: Exists
+  volumes:
+  - hostPath:
+      path: /tmp/keepalived
+      type: ""
+    name: keepalived-status
+  - name: kube-api-access-qzfn4
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:50Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:51Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:48:51Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:44:52Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://7706d82fd399c7c4299b5bc2782b9b491e3bf1c05e68c6a0e65578dbe16ed601
+    image: registry.ng.bluemix.net/armada-master/keepalived-watcher:2110
+    imageID: registry.ng.bluemix.net/armada-master/keepalived-watcher@sha256:d19deeb1b282648c1d129bce214a900434edbe18781a6ace1226cf16c6d4d7ac
+    lastState: {}
+    name: keepalived-watcher
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:48:50Z"
+  hostIP: 10.161.112.142
+  initContainerStatuses:
+  - containerID: cri-o://42526e7434a7fffc511ac0bb3490dd50d2de41967996c6e6c17a46abd1efa617
+    image: registry.ng.bluemix.net/armada-master/armada-calico-extension:1096
+    imageID: registry.ng.bluemix.net/armada-master/armada-calico-extension@sha256:2144d812eb637e901439ad27ec71f540ca3aba570d3b7a56bf667f7a8c7e22e8
+    lastState: {}
+    name: calico-extension
+    ready: true
+    restartCount: 4
+    state:
+      terminated:
+        containerID: cri-o://42526e7434a7fffc511ac0bb3490dd50d2de41967996c6e6c17a46abd1efa617
+        exitCode: 0
+        finishedAt: "2022-10-03T18:47:30Z"
+        reason: Completed
+        startedAt: "2022-10-03T18:47:29Z"
+  - containerID: cri-o://828a765a58ed2e11aff03116a12d9f024aee7411ef24b6011158692dcacdf2e7
+    image: registry.ng.bluemix.net/armada-master/keepalived-watcher:2110
+    imageID: registry.ng.bluemix.net/armada-master/keepalived-watcher@sha256:d19deeb1b282648c1d129bce214a900434edbe18781a6ace1226cf16c6d4d7ac
+    lastState: {}
+    name: keepalived-init
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: cri-o://828a765a58ed2e11aff03116a12d9f024aee7411ef24b6011158692dcacdf2e7
+        exitCode: 0
+        finishedAt: "2022-10-03T18:48:49Z"
+        reason: Completed
+        startedAt: "2022-10-03T18:48:49Z"
+  phase: Running
+  podIP: 10.161.112.142
+  podIPs:
+  - ip: 10.161.112.142
+  qosClass: Burstable
+  startTime: "2022-10-03T18:44:52Z"

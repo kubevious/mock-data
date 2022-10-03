@@ -1,0 +1,225 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Opstree Solutions
+    provider-url: ""
+  name: redis-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: redis-operator.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"redis.redis.opstreelabs.in/v1beta1","kind":"Redis","metadata":{"name":"redis"},"spec":{"mode":"cluster","size":3,"global":{"image":"quay.io/opstree/redis:v6.2","imagePullPolicy":"IfNotPresent","password":"Opstree@1234","resources":{"requests":{"cpu":"100m","memory":"128Mi"},"limits":{"cpu":"100m","memory":"128Mi"}}},"master":{"service":{"type":"ClusterIP"},"redisConfig":{}},"slave":{"service":{"type":"ClusterIP"},"redisConfig":{}},"service":{"type":"ClusterIP"},"redisConfig":{},"redisExporter":{"enabled":true,"image":"quay.io/opstree/redis-exporter:1.0","imagePullPolicy":"Always","resources":{"requests":{"cpu":"100m","memory":"128Mi"},"limits":{"cpu":"100m","memory":"128Mi"}}},"storage":{"volumeClaimTemplate":{"spec":{"storageClassName":"buildpiper-storage","accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}}}}}}]'
+        capabilities: Seamless Upgrades
+        categories: Database, Storage
+        certified: "false"
+        containerImage: quay.io/opstree/redis-operator:v0.4.0
+        createdAt: 06-02-2021
+        description: A Golang based redis operator that will make/oversee Redis standalone/cluster
+          mode setup on top of the Kubernetes.
+        repository: https://github.com/ot-container-kit/redis-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Redis
+          displayName: Redis
+          kind: Redis
+          name: redis.redis.redis.opstreelabs.in
+          version: v1beta1
+      description: |+
+        A Golang based redis operator that will make/oversee Redis standalone/cluster mode setup on top of the Kubernetes. It can create a redis cluster setup with best practices on Cloud as well as the Bare metal environment. Also, it provides an in-built monitoring capability using redis-exporter.
+
+        ### Supported Features
+
+        Here the features which are supported by this operator:-
+        - Redis cluster/standalone mode setup
+        - Inbuilt monitoring with prometheus exporter
+        - Dynamic storage provisioning with pvc template
+        - Resources restrictions with k8s requests and limits
+        - Password/Password-less setup
+        - Node selector and affinity
+        - Priority class to manage setup priority
+        - SecurityContext to manipulate kernel parameters
+        ### Documentation
+
+        [Documentation](https://docs.opstreelabs.in/redis-operator/)
+
+        ### Getting Help
+
+        This project is managed by OpsTree Solutions. If you have any queries or suggestions, mail us at opensource@opstree.com.
+
+        ### Contributing
+
+        You can contribute to this project by:-
+        - Raising Bugs and Feature Requests
+        - Fixing issue by opening a Pull Request
+        - Improving Documentation
+
+        ### License
+
+        Logging Operator is licensed under [Apache License, Version 2.0](https://github.com/OT-CONTAINER-KIT/redis-operator/blob/master/LICENSE)
+
+
+      displayName: Redis Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - DevOps
+      - Kubernetes
+      - Database
+      - Redis
+      - Opstree
+      - CRD
+      links:
+      - name: Blog
+        url: https://blog.opstree.com
+      - name: GitHub
+        url: https://github.com/opstree
+      - name: Opensource
+        url: https://opstree.github.io
+      - name: Documentation
+        url: https://docs.opstreelabs.in/redis-operator/
+      maintainers:
+      - email: abhishek.dubey@opstree.com
+        name: Abhishek Dubey
+      - email: sandeep@opstree.com
+        name: Sandeep Rawat
+      maturity: beta
+      minKubeVersion: 1.11.0
+      provider:
+        name: Opstree Solutions
+      relatedImages:
+      - quay.io/opstree/redis-operator:v0.4.0
+      version: 0.4.0
+    name: preview
+  - currentCSV: redis-operator.v0.11.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"redis.redis.opstreelabs.in/v1beta1","kind":"Redis","metadata":{"name":"redis-standalone"},"spec":{"kubernetesConfig":{"image":"quay.io/opstree/redis:v6.2.5","imagePullPolicy":"IfNotPresent","resources":{"requests":{"cpu":"101m","memory":"128Mi"},"limits":{"cpu":"101m","memory":"128Mi"}}},"storage":{"volumeClaimTemplate":{"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}}}},"redisExporter":{"enabled":true,"image":"quay.io/opstree/redis-exporter:1.0","imagePullPolicy":"Always","resources":{"requests":{"cpu":"100m","memory":"128Mi"},"limits":{"cpu":"100m","memory":"128Mi"}}}}},{"apiVersion":"redis.redis.opstreelabs.in/v1beta1","kind":"RedisCluster","metadata":{"name":"redis-cluster"},"spec":{"clusterSize":3,"kubernetesConfig":{"image":"quay.io/opstree/redis:v6.2.5","imagePullPolicy":"IfNotPresent","resources":{"requests":{"cpu":"101m","memory":"128Mi"},"limits":{"cpu":"101m","memory":"128Mi"}}},"redisExporter":{"enabled":true,"image":"quay.io/opstree/redis-exporter:1.0","imagePullPolicy":"Always","resources":{"requests":{"cpu":"100m","memory":"128Mi"},"limits":{"cpu":"100m","memory":"128Mi"}}},"storage":{"volumeClaimTemplate":{"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}}}}}}}]'
+        capabilities: Seamless Upgrades
+        categories: Database, Storage
+        certified: "false"
+        containerImage: quay.io/opstree/redis-operator:v0.11.0
+        createdAt: 05-07-2022
+        description: A Golang based redis operator that will make/oversee Redis standalone/cluster
+          mode setup on top of the Kubernetes.
+        repository: https://github.com/ot-container-kit/redis-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Redis Cluster
+          displayName: RedisCluster
+          kind: RedisCluster
+          name: redisclusters.redis.redis.opstreelabs.in
+          version: v1beta1
+        - description: Redis
+          displayName: Redis
+          kind: Redis
+          name: redis.redis.redis.opstreelabs.in
+          version: v1beta1
+      description: |
+        A Golang based redis operator that will make/oversee Redis
+        standalone/cluster mode setup on top of the Kubernetes. It can create a
+        redis cluster setup with best practices on Cloud as well as the Bare metal
+        environment. Also, it provides an in-built monitoring capability using
+        redis-exporter.
+
+        ### Supported Features
+
+        Here the features which are supported by this operator:-
+        - Redis cluster/standalone mode setup
+        - Redis cluster failover and recovery
+        - Inbuilt monitoring with prometheus exporter
+        - Dynamic storage provisioning with pvc template
+        - Resources restrictions with k8s requests and limits
+        - Password/Password-less setup
+        - External configuration support for leader and follower
+        - Node selector and affinity for follower and leader
+        - Priority class to manage setup priority
+        - SecurityContext to manipulate kernel parameters
+
+        ### Documentation
+
+        [Documentation](https://ot-container-kit.github.io/redis-operator/)
+
+        ### Getting Help
+        This project is managed by OpsTree Solutions. If you have any queries or
+        suggestions, mail us at opensource@opstree.com.
+
+        ### Contributing
+
+        You can contribute to this project by:-
+        - Raising Bugs and Feature Requests
+        - Fixing issue by opening a Pull Request
+        - Improving Documentation
+
+        ### License
+
+        Logging Operator is licensed under [Apache License, Version
+        2.0](https://github.com/OT-CONTAINER-KIT/redis-operator/blob/master/LICENSE)
+      displayName: Redis Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - DevOps
+      - Kubernetes
+      - Database
+      - Redis
+      - Opstree
+      - CRD
+      links:
+      - name: Blog
+        url: https://blog.opstree.com
+      - name: GitHub
+        url: https://github.com/opstree
+      - name: Opensource
+        url: https://opstree.github.io
+      - name: Documentation
+        url: https://ot-container-kit.github.io/redis-operator/
+      - name: Buildpiper
+        url: https://buildpiper.io
+      maintainers:
+      - email: abhishek.dubey@opstree.com
+        name: Abhishek Dubey
+      - email: sandeep@opstree.com
+        name: Sandeep Rawat
+      maturity: beta
+      minKubeVersion: 1.11.0
+      provider:
+        name: Opstree Solutions
+      relatedImages:
+      - quay.io/opstree/redis-operator:v0.11.0
+      version: 0.11.0
+    name: stable
+  defaultChannel: stable
+  packageName: redis-operator
+  provider:
+    name: Opstree Solutions

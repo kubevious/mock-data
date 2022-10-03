@@ -1,0 +1,236 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-ec2-controller
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-ec2-controller.v0.0.20
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "DHCPOptions",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "ElasticIPAddress",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "Instance",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "InternetGateway",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "NATGateway",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "RouteTable",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "SecurityGroup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "Subnet",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "TransitGateway",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "VPC",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "ec2.services.k8s.aws/v1alpha1",
+              "kind": "VPCEndpoint",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/ec2-controller:v0.0.20
+        createdAt: "2022-09-21 14:21:14"
+        description: AWS EC2 controller is a service controller for managing EC2 resources
+          in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: DHCPOptions represents the state of an AWS ec2 DHCPOptions
+            resource.
+          displayName: DHCPOptions
+          kind: DHCPOptions
+          name: dhcpoptions.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: ElasticIPAddress represents the state of an AWS ec2 ElasticIPAddress
+            resource.
+          displayName: ElasticIPAddress
+          kind: ElasticIPAddress
+          name: elasticipaddresses.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: Instance represents the state of an AWS ec2 Instance resource.
+          displayName: Instance
+          kind: Instance
+          name: instances.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: InternetGateway represents the state of an AWS ec2 InternetGateway
+            resource.
+          displayName: InternetGateway
+          kind: InternetGateway
+          name: internetgateways.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: NATGateway represents the state of an AWS ec2 NATGateway resource.
+          displayName: NATGateway
+          kind: NATGateway
+          name: natgateways.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: RouteTable represents the state of an AWS ec2 RouteTable resource.
+          displayName: RouteTable
+          kind: RouteTable
+          name: routetables.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: SecurityGroup represents the state of an AWS ec2 SecurityGroup
+            resource.
+          displayName: SecurityGroup
+          kind: SecurityGroup
+          name: securitygroups.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: Subnet represents the state of an AWS ec2 Subnet resource.
+          displayName: Subnet
+          kind: Subnet
+          name: subnets.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: TransitGateway represents the state of an AWS ec2 TransitGateway
+            resource.
+          displayName: TransitGateway
+          kind: TransitGateway
+          name: transitgateways.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: VPCEndpoint represents the state of an AWS ec2 VPCEndpoint
+            resource.
+          displayName: VPCEndpoint
+          kind: VPCEndpoint
+          name: vpcendpoints.ec2.services.k8s.aws
+          version: v1alpha1
+        - description: VPC represents the state of an AWS ec2 VPC resource.
+          displayName: VPC
+          kind: VPC
+          name: vpcs.ec2.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Elastic Compute Cloud (EC2) resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon EC2**
+
+        Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) Cloud. Using Amazon EC2 eliminates your need to invest in hardware up front, so you can develop and deploy applications faster. You can use Amazon EC2 to launch as many or as few virtual servers as you need, configure security and networking, and manage storage. Amazon EC2 enables you to scale up or down to handle changes in requirements or spikes in popularity, reducing your need to forecast traffic.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon EC2
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - ec2
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon EC2 Developer Resources
+        url: https://aws.amazon.com/ec2/resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: ec2 maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/ec2-controller:v0.0.20
+      version: 0.0.20
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-ec2-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

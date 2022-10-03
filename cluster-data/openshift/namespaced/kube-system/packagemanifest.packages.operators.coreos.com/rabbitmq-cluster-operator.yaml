@@ -1,0 +1,78 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: VMware Tanzu
+    provider-url: ""
+  name: rabbitmq-cluster-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: rabbitmq-cluster-operator.v2.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"rabbitmq.com/v1beta1","kind":"RabbitmqCluster","metadata":{"name":"hello-world"}}]'
+        capabilities: Deep Insights
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: docker.io/rabbitmqoperator/cluster-operator:2.0.0
+        createdAt: "2022-06-15T13:28:40+00:00"
+        description: "RabbitMQ Cluster Operator developed and maintained by the RabbitMQ
+          team automates the provisioning, management, of RabbitMQ clusters running
+          on Kubernetes. \n"
+        repository: https://github.com/rabbitmq/cluster-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Rabbitmq Cluster
+          displayName: RabbitmqCluster
+          kind: RabbitmqCluster
+          name: rabbitmqclusters.rabbitmq.com
+          version: v1beta1
+      description: |
+        ## About the managed application
+        RabbitMQ is an open-source message-broker software that originally implemented the Advanced Message Queuing Protocol and has since been extended with a plug-in architecture to support Streaming Text Oriented Messaging Protocol, MQ Telemetry Transport, and other protocols.
+        See rabbitmq.com for detailed informations
+        ## About this Operator
+        RabbitMQ Cluster Kubernetes Operator is developed and maintened by the VMware RabbitMQ team and provides a consistent and easy way to deploy RabbitMQ clusters to Kubernetes and run them, including "day two" (continuous) operations. RabbitMQ clusters deployed using the Operator can be used by applications running on Kubernetes or outside of Kubernetes.
+        See: https://www.rabbitmq.com/kubernetes/operator/operator-overview.html for detailed informations
+      displayName: RabbitMQ-cluster-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      links:
+      - name: Documentation
+        url: https://www.rabbitmq.com/kubernetes/operator/operator-overview.html
+      - name: GitHub
+        url: https://github.com/rabbitmq/cluster-operator
+      maintainers:
+      - email: rabbitmq-platform@groups.vmware.com
+        name: VMware Tanzu
+      maturity: mature
+      minKubeVersion: 1.19.0
+      provider:
+        name: VMware Tanzu
+      relatedImages:
+      - docker.io/rabbitmqoperator/cluster-operator:2.0.0
+      version: 2.0.0
+    name: stable
+  defaultChannel: stable
+  packageName: rabbitmq-cluster-operator
+  provider:
+    name: VMware Tanzu

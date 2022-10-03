@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1
+kind: Operator
+metadata:
+  creationTimestamp: "2022-10-03T18:32:22Z"
+  generation: 1
+  name: kubevious-operator.default
+  resourceVersion: "30330"
+  uid: de93a89a-9c25-49b6-b688-b35374b7a4ed
+spec: {}
+status:
+  components:
+    labelSelector:
+      matchExpressions:
+      - key: operators.coreos.com/kubevious-operator.default
+        operator: Exists

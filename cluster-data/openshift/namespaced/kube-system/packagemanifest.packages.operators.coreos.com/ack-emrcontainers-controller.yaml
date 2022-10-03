@@ -1,0 +1,107 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-emrcontainers-controller
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-emrcontainers-controller.v0.0.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "emrcontainers.services.k8s.aws/v1alpha1",
+              "kind": "VirtualCluster",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/emrcontainers-controller:v0.0.8
+        createdAt: "2022-09-13 14:13:51"
+        description: AWS EMR on EKS controller is a service controller for managing
+          EMR on EKS resources in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: JobRun represents the state of an AWS emrcontainers JobRun
+            resource.
+          displayName: JobRun
+          kind: JobRun
+          name: jobruns.emrcontainers.services.k8s.aws
+          version: v1alpha1
+        - description: VirtualCluster represents the state of an AWS emrcontainers
+            VirtualCluster resource.
+          displayName: VirtualCluster
+          kind: VirtualCluster
+          name: virtualclusters.emrcontainers.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Amazon EMR on EKS resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon EMR on EKS**
+
+        Amazon EMR on EKS provides a deployment option for Amazon EMR that allows you to run open-source big data frameworks on Amazon Elastic Kubernetes Service (Amazon EKS). With this deployment option, you can focus on running analytics workloads while Amazon EMR on EKS builds, configures, and manages containers for open-source applications.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon EMR on EKS
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - emrcontainers
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon EMR on EKS Developer Resources
+        url: https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: emr on eks maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/emrcontainers-controller:v0.0.8
+      version: 0.0.8
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-emrcontainers-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

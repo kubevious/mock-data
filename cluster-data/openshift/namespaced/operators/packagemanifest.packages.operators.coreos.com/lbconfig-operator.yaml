@@ -1,0 +1,290 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Carlos Eduardo de Paula
+    provider-url: ""
+  name: lbconfig-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: lbconfig-operator.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "lb.lbconfig.carlosedp.com/v1",
+              "kind": "ExternalLoadBalancer",
+              "metadata": {
+                "name": "externalloadbalancer-infra-sample",
+                "namespace": "lbconfig-operator-system"
+              },
+              "spec": {
+                "monitor": {
+                  "monitortype": "http",
+                  "path": "/healthz",
+                  "port": 1936
+                },
+                "ports": [
+                  80,
+                  443
+                ],
+                "provider": {
+                  "creds": "f5-creds",
+                  "host": "https://192.168.1.35",
+                  "partition": "Common",
+                  "port": 443,
+                  "validatecerts": false,
+                  "vendor": "F5_BigIP"
+                },
+                "type": "infra",
+                "vip": "192.168.1.45"
+              }
+            },
+            {
+              "apiVersion": "lb.lbconfig.carlosedp.com/v1",
+              "kind": "ExternalLoadBalancer",
+              "metadata": {
+                "name": "externalloadbalancer-infra-sample-shard",
+                "namespace": "lbconfig-operator-system"
+              },
+              "spec": {
+                "monitor": {
+                  "monitortype": "http",
+                  "path": "/healthz",
+                  "port": 1936
+                },
+                "nodelabels": {
+                  "kubernetes.io/region": "DC1",
+                  "node-role.kubernetes.io/infra": ""
+                },
+                "ports": [
+                  80,
+                  443
+                ],
+                "provider": {
+                  "creds": "f5-creds",
+                  "host": "https://192.168.1.35",
+                  "partition": "Common",
+                  "port": 443,
+                  "validatecerts": false,
+                  "vendor": "F5_BigIP"
+                },
+                "type": "infra",
+                "vip": "192.168.1.46"
+              }
+            },
+            {
+              "apiVersion": "lb.lbconfig.carlosedp.com/v1",
+              "kind": "ExternalLoadBalancer",
+              "metadata": {
+                "name": "externalloadbalancer-master-sample",
+                "namespace": "lbconfig-operator-system"
+              },
+              "spec": {
+                "monitor": {
+                  "monitortype": "https",
+                  "path": "/healthz",
+                  "port": 6443
+                },
+                "ports": [
+                  6443
+                ],
+                "provider": {
+                  "creds": "netscaler-creds",
+                  "host": "https://192.168.1.36",
+                  "port": 443,
+                  "validatecerts": false,
+                  "vendor": "Citrix_ADC"
+                },
+                "type": "master",
+                "vip": "192.168.1.40"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Networking
+        certified: "false"
+        containerImage: docker.io/carlosedp/lbconfig-operator:v0.4.0
+        createdAt: "2022-08-15T12:00:00Z"
+        description: The LBConfig Operator, manages the configuration of External
+          Load Balancer instances (on third-party equipment) and creates VIPs and
+          IP Pools dynamically via API.
+        k8sMaxVersion: ""
+        k8sMinVersion: ""
+        operators.operatorframework.io/builder: operator-sdk-v1.22.2
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/carlosedp/lbconfig-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ExternalLoadBalancer is the Schema for the externalloadbalancers
+            API
+          displayName: ExternalLoadBalancer Instance
+          kind: ExternalLoadBalancer
+          name: externalloadbalancers.lb.lbconfig.carlosedp.com
+          version: v1
+        required:
+        - description: ExternalLoadBalancer represents a configured instance of an
+            external Load-Balancer for a specific group of nodes of the cluster. The
+            Instance has a VIP and ports to be balanced to the cluster nodes based
+            on a set of node labels.
+          displayName: External Load-Balancer Configuration Instance
+          kind: ExternalLoadBalancer
+          name: externalloadbalancers.lb.lbconfig.carlosedp.com
+          version: v1
+      description: |
+        ## About the Operator
+
+        The LBConfig Operator, manages the configuration of External Load Balancer instances (on third-party equipment via it's API) and creates VIPs and IP Pools with Monitors for a set of OpenShift or Kubernetes nodes like Master-nodes (Control-Plane), Infra nodes (where the Routers or Ingress controllers are located) or based on it's roles and/or labels.
+
+        The operator dynamically handles creating, updating or deleting the IPs of the pools in the Load Balancer based on the Node IPs for each role or label. On every change of the operator configuration (CRDs) or addition/change/removal or cluster Nodes, the operator updates the Load Balancer properly.
+
+        ## Main Use Cases
+
+        The main users for this operator is enterprise deployments or clusters composed of multiple nodes having an external load-balancer providing the balancing and high-availability to access the cluster in both API and Application levels.
+
+        ### Create ExternalLoadBalancer Instances
+
+        Create the instances for each Load Balancer instance you need (for example one for Master Nodes and another for the Infra Nodes). **If installing on OpenShift or Kubernetes with OLM (or in a different namespace), adjust the sample YAMLs to match the created namespace**.
+
+        **The provider `vendor` field can be (case-insensitive):**
+
+        * **F5_BigIP** - Tested on F5 BigIP version 15
+        * **Citrix_ADC** - Tested on Citrix ADC (Netscaler) version 13
+        * **Dummy** - Dummy backend used for testing to only print log messages on operations
+
+        Create the secret holding the Load Balancer API user and password:
+
+        ```sh
+        oc create secret generic f5-creds --from-literal=username=admin --from-literal=password=admin123 --namespace lbconfig-operator-system
+        ```
+
+        #### Sample CRDs and Available Fields
+
+        Master Nodes using a Citrix ADC LB:
+
+        ```yaml
+        apiVersion: lb.lbconfig.carlosedp.com/v1
+        kind: ExternalLoadBalancer
+        metadata:
+          name: externalloadbalancer-master-sample
+          namespace: lbconfig-operator-system
+        spec:
+          vip: "192.168.1.40"
+          type: "master"
+          ports:
+            - 6443
+          monitor:
+            path: "/healthz"
+            port: 6443
+            monitortype: "https"
+          provider:
+            vendor: Citrix_ADC
+            host: "https://192.168.1.36"
+            port: 443
+            creds: netscaler-creds
+            validatecerts: false
+        ```
+
+        Infra Nodes using a F5 BigIP LB:
+
+        ```yaml
+        apiVersion: lb.lbconfig.carlosedp.com/v1
+        kind: ExternalLoadBalancer
+        metadata:
+          name: externalloadbalancer-infra-sample
+          namespace: lbconfig-operator-system
+        spec:
+          vip: "192.168.1.45"
+          type: "infra"
+          ports:
+            - 80
+            - 443
+          monitor:
+            path: "/healthz"
+            port: 1936
+            monitortype: http
+          provider:
+            vendor: F5_BigIP
+            host: "https://192.168.1.35"
+            port: 443
+            creds: f5-creds
+            partition: "Common"
+            validatecerts: false
+        ```
+
+        To choose the nodes which will be part of the server pool, you can set either `type` or `nodelabels` fields. The yaml field `type: "master"` or `type: "infra"` selects nodes with the role label `"node-role.kubernetes.io/master"` and `"node-role.kubernetes.io/infra"` respectively. If the field `nodelabels` array is used instead, the operator will use nodes which match all labels.
+
+        Clusters with sharded routers or using arbitrary labels to determine where the Ingress Controllers run can be configured like:
+
+        ```yaml
+        spec:
+          vip: "10.0.0.6"
+          ports:
+            - 80
+          nodelabels:
+            "node.kubernetes.io/ingress-controller": "production"
+            "kubernetes.io/region": "DC1"
+          ...
+        ```
+
+        ## Getting Help
+
+        This project fully open-source and is hosted at [GitHub](https://github.com/carlosedp/lbconfig-operator). Always check the project page and issues for the latest updates and/or solutions to problems encountered. If a problem is detected, please fill an issue. Feature request and improvement issues are welcome.
+
+        Some fields inside `providers` are optional and depend on the used backend. Check the [API docs](https://pkg.go.dev/github.com/carlosedp/lbconfig-operator/apis/externalloadbalancer/v1?utm_source=gopls#Provider) which fields are backend-specific.
+
+        ## Disclaimers
+
+        * The operator does not check if the requested configuration (names, IPs) already exists and/or conflicts with existing configuration in the Load Balancer. The user is responsible for these checks before deployment;
+        * I am not responsible if the operator changes/deletes existing configuration on the Load Balancer if existing names are already configured.
+        * The operator creates the entries(Pools, VIPs, Monitors) in the provided Load Balancer with the `name` of the instance configured in the CustomResource prefixed with the type. Eg. For a CR with name `externalloadbalancer-master-sample`, the operator creates a server pool named `Pool-externalloadbalancer-master-sample-6443` (suffixed with the port), a monitor named `Monitor-externalloadbalancer-master-sample` and a VIP named `VIP-externalloadbalancer-master-sample-6443` (suffixed with the port).
+      displayName: External Load-Balancer Configuration Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - 'load-balance '
+      - infrastructure
+      links:
+      - name: GitHub
+        url: https://github.com/carlosedp/lbconfig-operator
+      - name: Documentation
+        url: https://github.com/carlosedp/lbconfig-operator/docs
+      - name: Issues
+        url: https://github.com/carlosedp/lbconfig-operator/issues
+      maintainers:
+      - email: carlosedp@gmail.com
+        name: Carlos Eduardo de Paula
+      maturity: beta
+      minKubeVersion: 1.18.0
+      provider:
+        name: Carlos Eduardo de Paula
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+      - docker.io/carlosedp/lbconfig-operator:v0.4.0
+      version: 0.4.0
+    name: beta
+  defaultChannel: beta
+  packageName: lbconfig-operator
+  provider:
+    name: Carlos Eduardo de Paula

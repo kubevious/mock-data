@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2022-10-03T18:35:20Z"
+  labels:
+    olm.owner: kubevious-operator.v0.0.38
+    olm.owner.kind: ClusterServiceVersion
+    olm.owner.namespace: kubevious
+    operators.coreos.com/kubevious-operator.kubevious: ""
+  name: kubevious-operator.v0.0.38-754cf8767c
+  resourceVersion: "30580"
+  uid: 06d9fd6c-6a5e-4e29-9ade-cff58ce09d3e
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubevious-operator.v0.0.38-754cf8767c
+subjects:
+- kind: ServiceAccount
+  name: kubevious-operator-controller-manager
+  namespace: kubevious

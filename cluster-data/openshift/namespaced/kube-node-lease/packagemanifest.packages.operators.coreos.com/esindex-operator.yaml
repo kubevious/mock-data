@@ -1,0 +1,112 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: esindex-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: esindex-operator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"kind": "EsIndex", "apiVersion": "ibmcloud.ibm.com/v1alpha1",
+          "metadata": {"name": "myindex1"}, "spec": {"esURIComposed": {"secretKeyRef":
+          {"name": "mysecret", "key": "myes-composed-uri"}}, "numberOfShards": 2,
+          "numberOfReplicas": 1, "indexName": "myindex1"}}, {"kind": "EsIndex", "apiVersion":
+          "ibmcloud.ibm.com/v1alpha1", "metadata": {"name": "myindex2"}, "spec": {"bindingFrom":
+          {"name": "myes-binding"}, "numberOfShards": 2, "numberOfReplicas": 1, "indexName":
+          "myindex2"}}]'
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: cloudoperators/esindex-operator:0.1.0
+        createdAt: "2019-08-09T09:40:38Z"
+        description: An operator for managing indices on elasticsearch services
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/IBM/esindex-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an elasticsearch index
+          displayName: EsIndex
+          kind: EsIndex
+          name: esindices.ibmcloud.ibm.com
+          version: v1alpha1
+      description: "The elasticsearch index operator provides  a Kubernetes CRD-Based
+        API to manage the lifecycle of elasticsearch indices. It allows to  provision
+        elasticsearch indices from your Kubernetes cluster, using the EsIndex CRD.
+        \nThe elasticsearch access credentials can be specified in requests via a
+        referenced resource such as Secret, ConfigMap, or IBM Cloud Service Binding.\n
+        The elasticsearch Index operator is currently in preview. It will get updated
+        as we release new versions of the [upstream repository](https://github.com/IBM/esindex-operator).\n##
+        Features\n* **Creation and Deletion** - Creates, deletes, and monitors indices
+        on an elasticsearch service.\n* **Credential Source Options** - Refrence  to
+        a Secret, a ConfigMap, or an IBM Cloud Service Binding resource.\n## Requirements\nThe
+        operator can be installed on any OLM-enabled Kubernetes cluster with version
+        >= 1.11. \n## Using Elasticsearch Index Operator\nYou can create an instance
+        of an elasticsearch index using either of the following examples. For additional
+        configuration options, samples and information on using the operator, please
+        consult [the elasticsearch index operator documentation](https://github.com/IBM/esindex-operator).\n\n
+        \   apiVersion: ibmcloud.ibm.com/v1alpha1\n    kind: EsIndex\n    metadata:\n
+        \     name: myindex\n    spec:\n      esURIComposed:\n        secretKeyRef:
+        \n          name: <SECRET>\n          key: <KEY> \n      indexName: myindex\n
+        \     numberOfShards: 2\n      numberOfReplicas: 1\n\n where `<SECRET>` is
+        the name of a secret that holds the elasticesearch credentrials, `<KEY>` is
+        the key for the value of composed elasticsearch URI.\n \n    apiVersion: ibmcloud.ibm.com/v1alpha1\n
+        \   kind: EsIndex\n    metadata:\n      name: myindex\n    spec:\n      bindingFrom:
+        \n        name: <BINDING>\n      indexName: myindex\n      numberOfShards:
+        2\n      numberOfReplicas: 1\n\n where `<BINDING>` is the name of a binding
+        resource for an elasticsearch service created and bound with [IBM Cloud Operator](https://operatorhub.io/operator/ibmcloud-operator).\n\n"
+      displayName: Elasticsearch Index Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - Cloud
+      - Elasticsearch
+      - Index
+      links:
+      - name: Elasticsearch Index Operator
+        url: https://github.com/ibm/esindex-operator
+      maintainers:
+      - email: luan@us.ibm.com
+        name: Laura Zaihua Luan
+      - email: villard@us.ibm.com
+        name: Lionel Villard
+      - email: mvaziri@us.ibm.com
+        name: Mandana Vaziri
+      - email: dettori@us.ibm.com
+        name: Paolo Dettori
+      - email: yhliu@us.ibm.com
+        name: Yew Huey Liu
+      maturity: alpha
+      provider:
+        name: IBM
+      relatedImages:
+      - cloudoperators/esindex-operator:0.1.0
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: esindex-operator
+  provider:
+    name: IBM

@@ -1,0 +1,339 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Turbonomic, Inc.
+    provider-url: ""
+  name: t8c
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: t8c-operator.v42.9.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Xl","metadata":{"name":"xl-release"},"spec":{"global":{"tag":"8.5.1"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: turbonomic/t8c-operator:42.9
+        createdAt: "2019-07-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/t8c-install/tree/master/operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Turbonomic Platform Operator
+          kind: Xl
+          name: xls.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Realtime Decision Automation for Multicloud Applications
+        Turbonomic Workload Automation for Multicloud simultaneously optimizes performance, compliance, and cost in real-time. Workloads are precisely resourced, automatically, to perform while satisfying business constraints:
+        * Continuous placement of workload across multiple clouds both on-prem and public clouds providers.
+        * Continuous scaling for applications and the underlying infrastructure.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a public APIs already exposed by application and infrastructure instrumentation to discover and monitor your environment.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement and continuous scaling for applications and the underlying cluster.
+        Turbonomic leverages the built-on orchestration provided by the application and infrastructure deployment tools and automates the execution of these actions to continiously meet the respective service level objective of each application service.
+      displayName: Turbonomic Platform Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Turbonomic Platform Operator
+        url: https://github.com/turbonomic/t8c-install/tree/master/operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - turbonomic/t8c-operator:42.9
+      version: 42.9.0
+    name: v42.9.0
+  - currentCSV: t8c-operator.v42.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Xl","metadata":{"name":"xl-release"},"spec":{"global":{"tag":"8.5.3"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/turbonomic/t8c-operator:42.10
+        createdAt: "2019-07-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/t8c-install/tree/master/operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Turbonomic Platform Operator
+          kind: Xl
+          name: xls.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Realtime Decision Automation for Multicloud Applications
+        Turbonomic Workload Automation for Multicloud simultaneously optimizes performance, compliance, and cost in real-time. Workloads are precisely resourced, automatically, to perform while satisfying business constraints:
+        * Continuous placement of workload across multiple clouds both on-prem and public clouds providers.
+        * Continuous scaling for applications and the underlying infrastructure.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a public APIs already exposed by application and infrastructure instrumentation to discover and monitor your environment.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement and continuous scaling for applications and the underlying cluster.
+        Turbonomic leverages the built-on orchestration provided by the application and infrastructure deployment tools and automates the execution of these actions to continiously meet the respective service level objective of each application service.
+      displayName: Turbonomic Platform Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Turbonomic Platform Operator
+        url: https://github.com/turbonomic/t8c-install/tree/master/operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - docker.io/turbonomic/t8c-operator:42.10
+      version: 42.10.0
+    name: stable
+  - currentCSV: t8c-operator.v42.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Xl","metadata":{"name":"xl-release"},"spec":{"global":{"tag":"8.5.3"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/turbonomic/t8c-operator:42.10
+        createdAt: "2019-07-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/t8c-install/tree/master/operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Turbonomic Platform Operator
+          kind: Xl
+          name: xls.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Realtime Decision Automation for Multicloud Applications
+        Turbonomic Workload Automation for Multicloud simultaneously optimizes performance, compliance, and cost in real-time. Workloads are precisely resourced, automatically, to perform while satisfying business constraints:
+        * Continuous placement of workload across multiple clouds both on-prem and public clouds providers.
+        * Continuous scaling for applications and the underlying infrastructure.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a public APIs already exposed by application and infrastructure instrumentation to discover and monitor your environment.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement and continuous scaling for applications and the underlying cluster.
+        Turbonomic leverages the built-on orchestration provided by the application and infrastructure deployment tools and automates the execution of these actions to continiously meet the respective service level objective of each application service.
+      displayName: Turbonomic Platform Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Turbonomic Platform Operator
+        url: https://github.com/turbonomic/t8c-install/tree/master/operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - docker.io/turbonomic/t8c-operator:42.10
+      version: 42.10.0
+    name: v42.10.0
+  - currentCSV: t8c-operator.v42.7.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Xl","metadata":{"name":"xl-release"},"spec":{"global":{"tag":"8.4.6"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: turbonomic/t8c-operator:42.7
+        createdAt: "2019-07-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/t8c-install/tree/master/operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Turbonomic Platform Operator
+          kind: Xl
+          name: xls.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Realtime Decision Automation for Multicloud Applications
+        Turbonomic Workload Automation for Multicloud simultaneously optimizes performance, compliance, and cost in real-time. Workloads are precisely resourced, automatically, to perform while satisfying business constraints:
+        * Continuous placement of workload across multiple clouds both on-prem and public clouds providers.
+        * Continuous scaling for applications and the underlying infrastructure.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a public APIs already exposed by application and infrastructure instrumentation to discover and monitor your environment.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement and continuous scaling for applications and the underlying cluster.
+        Turbonomic leverages the built-on orchestration provided by the application and infrastructure deployment tools and automates the execution of these actions to continiously meet the respective service level objective of each application service.
+      displayName: Turbonomic Platform Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Turbonomic Platform Operator
+        url: https://github.com/turbonomic/t8c-install/tree/master/operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - turbonomic/t8c-operator:42.7
+      version: 42.7.0
+    name: v42.7.0
+  - currentCSV: t8c-operator.v42.8.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Xl","metadata":{"name":"xl-release"},"spec":{"global":{"tag":"8.5.0"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: turbonomic/t8c-operator:42.8
+        createdAt: "2019-07-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/t8c-install/tree/master/operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Turbonomic Platform Operator
+          kind: Xl
+          name: xls.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Realtime Decision Automation for Multicloud Applications
+        Turbonomic Workload Automation for Multicloud simultaneously optimizes performance, compliance, and cost in real-time. Workloads are precisely resourced, automatically, to perform while satisfying business constraints:
+        * Continuous placement of workload across multiple clouds both on-prem and public clouds providers.
+        * Continuous scaling for applications and the underlying infrastructure.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a public APIs already exposed by application and infrastructure instrumentation to discover and monitor your environment.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement and continuous scaling for applications and the underlying cluster.
+        Turbonomic leverages the built-on orchestration provided by the application and infrastructure deployment tools and automates the execution of these actions to continiously meet the respective service level objective of each application service.
+      displayName: Turbonomic Platform Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Turbonomic Platform Operator
+        url: https://github.com/turbonomic/t8c-install/tree/master/operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - turbonomic/t8c-operator:42.8
+      version: 42.8.0
+    name: v42.8.0
+  defaultChannel: stable
+  packageName: t8c
+  provider:
+    name: Turbonomic, Inc.

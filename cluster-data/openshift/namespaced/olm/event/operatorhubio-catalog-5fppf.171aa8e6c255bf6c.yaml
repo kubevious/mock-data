@@ -1,0 +1,28 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T20:25:21Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{registry-server}
+  kind: Pod
+  name: operatorhubio-catalog-5fppf
+  namespace: olm
+  resourceVersion: "45677"
+  uid: 9accc780-c35b-47b8-a49f-d22c39184eed
+kind: Event
+lastTimestamp: "2022-10-03T20:25:21Z"
+message: Created container registry-server
+metadata:
+  creationTimestamp: "2022-10-03T20:25:21Z"
+  name: operatorhubio-catalog-5fppf.171aa8e6c255bf6c
+  namespace: olm
+  resourceVersion: "45685"
+  uid: bd5ed79d-5ab3-483a-9f26-09631970d6f6
+reason: Created
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Normal

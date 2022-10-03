@@ -1,0 +1,273 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 39d1cf0d10cd7de0b64f3ea3a1372e2c2de09d9083b883a3e588fd0741bcbb85
+    cni.projectcalico.org/podIP: 172.30.142.176/32
+    cni.projectcalico.org/podIPs: 172.30.142.176/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.176"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.176"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/scc: restricted
+  creationTimestamp: "2022-10-03T19:02:47Z"
+  generateName: kubevious-mysql-
+  labels:
+    app.kubernetes.io/component: kubevious-mysql
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    controller-revision-hash: kubevious-mysql-bbbb48bb7
+    statefulset.kubernetes.io/pod-name: kubevious-mysql-0
+  name: kubevious-mysql-0
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: StatefulSet
+    name: kubevious-mysql
+    uid: ba7e5e73-1330-41fe-99ae-ceb2d8e0db03
+  resourceVersion: "22764"
+  uid: 7627bace-9257-48f4-84ff-6b7105d438bf
+spec:
+  containers:
+  - env:
+    - name: NODE_ENV
+      value: production
+    - name: MYSQL_DATABASE
+      value: kubevious
+    - name: MYSQL_USER
+      value: kubevious
+    - name: MYSQL_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: MYSQL_PASS
+          name: kubevious-mysql-secret
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: MYSQL_ROOT_PASSWORD
+          name: kubevious-mysql-secret-root
+    image: registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      exec:
+        command:
+        - mysqladmin
+        - ping
+        - -u$MYSQL_USER
+        - -p$MYSQL_PASSWORD
+      failureThreshold: 3
+      initialDelaySeconds: 120
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 5
+    name: mysql
+    ports:
+    - containerPort: 3306
+      name: mysql
+      protocol: TCP
+    readinessProbe:
+      exec:
+        command:
+        - bash
+        - -c
+        - |
+          mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h 127.0.0.1 -e 'SELECT 1'
+      failureThreshold: 3
+      initialDelaySeconds: 5
+      periodSeconds: 2
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1000Mi
+    securityContext:
+      capabilities:
+        drop:
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: data
+      subPath: mysql
+    - mountPath: /etc/mysql/conf.d
+      name: conf
+    - mountPath: /docker-entrypoint-initdb.d
+      name: init-script
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-58v28
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostname: kubevious-mysql-0
+  imagePullSecrets:
+  - name: default-dockercfg-6qjmn
+  initContainers:
+  - command:
+    - bash
+    - -c
+    - |
+      set -ex
+      echo "[mysqld]" > /mnt/conf.d/server-id.cnf
+      echo "server-id=1" >> /mnt/conf.d/server-id.cnf
+      echo "[mysqld]" > /mnt/conf.d/bin-logs.cnf
+      echo "binlog_expire_logs_seconds=259200" >> /mnt/conf.d/bin-logs.cnf
+      cp /mnt/config-map/master.cnf /mnt/conf.d/
+    image: registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+    imagePullPolicy: IfNotPresent
+    name: init-mysql
+    resources: {}
+    securityContext:
+      capabilities:
+        drop:
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /mnt/conf.d
+      name: conf
+    - mountPath: /mnt/config-map
+      name: config-map
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-58v28
+      readOnly: true
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1000620000
+    seLinuxOptions:
+      level: s0:c25,c10
+  serviceAccount: default
+  serviceAccountName: default
+  subdomain: kubevious-mysql
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: data-kubevious-mysql-0
+  - emptyDir: {}
+    name: conf
+  - configMap:
+      defaultMode: 420
+      name: kubevious-mysql-conf
+    name: config-map
+  - configMap:
+      defaultMode: 420
+      name: kubevious-mysql-init-script
+    name: init-script
+  - name: kube-api-access-58v28
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:04:42Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:05:25Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:05:25Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:31Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://9b8fc05dbd51c1efc7823492b7916b878c2465f99f4bf2a1ca4f5b86d47a2a82
+    image: registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+    imageID: registry.access.redhat.com/rhscl/mysql-80-rhel7@sha256:87b7e9d7cbf2041718b98db858f45e84652b1bb41691b5421786517a1f11757d
+    lastState: {}
+    name: mysql
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T19:04:42Z"
+  hostIP: 10.161.112.142
+  initContainerStatuses:
+  - containerID: cri-o://bd92137026bcd1d765e2da8ddad10f54786011500d3eb1a9ee02e8af81bb1d5b
+    image: registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+    imageID: registry.access.redhat.com/rhscl/mysql-80-rhel7@sha256:87b7e9d7cbf2041718b98db858f45e84652b1bb41691b5421786517a1f11757d
+    lastState: {}
+    name: init-mysql
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: cri-o://bd92137026bcd1d765e2da8ddad10f54786011500d3eb1a9ee02e8af81bb1d5b
+        exitCode: 0
+        finishedAt: "2022-10-03T19:04:41Z"
+        reason: Completed
+        startedAt: "2022-10-03T19:04:41Z"
+  phase: Running
+  podIP: 172.30.142.176
+  podIPs:
+  - ip: 172.30.142.176
+  qosClass: Burstable
+  startTime: "2022-10-03T19:03:31Z"

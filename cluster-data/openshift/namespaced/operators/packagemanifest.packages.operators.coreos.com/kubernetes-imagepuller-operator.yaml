@@ -1,0 +1,106 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: https://github.com/che-incubator/kubernetes-image-puller-operator
+  name: kubernetes-imagepuller-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kubernetes-imagepuller-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "che.eclipse.org/v1alpha1",
+              "kind": "KubernetesImagePuller",
+              "metadata": {
+                "name": "image-puller"
+              },
+              "spec": {
+                "daemonsetName": "k8s-image-puller",
+                "images": "java11-maven=quay.io/eclipse/che-java11-maven:next;che-theia=quay.io/eclipse/che-theia:next"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Developer Tools
+        certified: "false"
+        containerImage: quay.io/eclipse/kubernetes-image-puller-operator:1.0.2
+        createdAt: ""
+        description: Create and manage kubernetes-image-puller instances.
+        operators.operatorframework.io/builder: operator-sdk-v1.9.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/che-incubator/kubernetes-image-puller-operator
+        support: ""
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: KubernetesImagePuller is the Schema for the kubernetesimagepullers
+            API
+          displayName: Kubernetes Image Puller
+          kind: KubernetesImagePuller
+          name: kubernetesimagepullers.che.eclipse.org
+          version: v1alpha1
+      description: "## About the managed application\n\nCreate a `KubernetesImagePuller`
+        custom resource to automatically configure and run an instance of the [kubernetes-image-puller.](https://github.com/che-incubator/kubernetes-image-puller)\n##
+        About this Operator\n\nThe `KubernetesImagePuller` custom resource understands
+        the following fields in the `spec`:\n\n1. `configMapName` - The name of the
+        `ConfigMap` to create\t\n2. `daemonsetName` - The name of the `DaemonSet`
+        to be create.\n3. `deploymentName` - The name of the `kubernetes-image-puller`
+        `Deployment` to create.\n4. `images` - A list of key-value pairs separated
+        by semicolons of images to pull.  For example: `java=quay.io/eclipse/che-java8-maven:latest;theia=quay.io/eclipse/che-theia:next`\n5.
+        `cachingIntervalHours` - The amount of time, in hours, between `DaemonSet`
+        health checks.\n6. `cachingMemoryRequest` - The memory request for each cached
+        image when the puller is running.\n7. `cachingMemoryLimit` - The memory limit
+        for each cached image when the puller is running.\n8. `nodeSelector` - Node
+        selector applied to pods created by the `DaemonSet`.\n## Prerequisites for
+        enabling this Operator\n\nThe operator requires an existing namespace to be
+        installed in.\n"
+      displayName: Kubernetes Image Puller Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - che
+      - kubernetes-image-puller
+      links:
+      - name: Repository
+        url: https://github.com/che-incubator/kubernetes-image-puller-operator
+      maintainers:
+      - email: ibuziuk@redhat.com
+        name: Ilya Buziuk
+      - email: abazko@redhat.com
+        name: Anatolii Bazko
+      maturity: stable
+      provider:
+        name: Red Hat, Inc.
+        url: https://github.com/che-incubator/kubernetes-image-puller-operator
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/eclipse/kubernetes-image-puller-operator:1.0.2
+      version: 1.0.2
+    name: stable
+  defaultChannel: stable
+  packageName: kubernetes-imagepuller-operator
+  provider:
+    name: Red Hat, Inc.
+    url: https://github.com/che-incubator/kubernetes-image-puller-operator

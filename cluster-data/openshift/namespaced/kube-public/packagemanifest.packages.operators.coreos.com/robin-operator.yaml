@@ -1,0 +1,101 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Robin.io
+    provider-url: ""
+  name: robin-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: robin-operator.v5.3.2-59
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{ "apiVersion": "manage.robin.io/v1", "kind": "RobinCluster",
+          "metadata": { "name": "robin", "namespace": "placeholder" }, "spec": { "host_type":
+          "physical", "image_robin": "robinsys/robin-storage:5.3.2-59", "k8s_provider":
+          "openshift", "source": "operatorhub"}}]'
+        capabilities: Full Lifecycle
+        categories: Database,Big Data,Storage
+        certified: "true"
+        containerImage: robinsys/robin-operator:5.3.2-59
+        createdAt: 2020-11-12-T12:59:59Z
+        description: Robin Cloud Native Storage operator enables advanced data management
+          capabilities to Kubernetes apps like snapshot,clone,rollback,backup,restore,import,etc.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        support: https://robin.io/support/
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Robin Cloud Native Storage operator brings advanced data management
+            capabilities for all apps including helm charts.
+          displayName: Robin Cluster
+          kind: RobinCluster
+          name: robinclusters.manage.robin.io
+          version: v1
+      description: |-
+        Robin Cloud Native Storage (CNS) brings advanced data management capabilities to OpenShift. It is a Red Hat certified Operator that provides a block storage solution with bare-metal performance. Robin CNS seamlessly integrates with OpenShift through Operator Lifecycle Manager (OLM).
+
+        Developers and DevOps teams can add Robin CNS right from the OpenShift console. Robin Cloud Native Storage helps simplify data management operations such as backup/recovery, snapshots/rollback, and cloning of entire applications (data+metadata+config), providing enterprise-grade data protection. Robin also ensures stateful application portability across OpenShift running on any cloud.
+        ### Supported Features
+
+        * **Enterprise-class data services** - such as inline compression, thin provisioning and data-at-rest/at-motion encryption
+        * **Day 2 management capabilities** - such as point-in-time snapshots, backup & recovery, app cloning, & multi-cloud migration
+        * **Data protection** - Replicate Robin volumes synchronously up to 3 copies
+        * **Quality of service** - Set maximum IO bandwidth for each volume to address the “noisy neighbors” problem
+        * **Rapid volume failover** - Re-attach Robin volumes immediately when a pod is rescheduled to another node, irrespective of where the data is located within the cluster
+        * **Works with any infrastructure** - on-premises, VM, bare metal or cloud
+        * **Scale on demand** - Scale up or scale out storage based on application requirements
+
+
+        ### About Robin.io
+        Robin brings advanced storage and data management that extends the agility, efficiency and portability of Kubernetes to all stateful applications, even complex big data, databases, AI/ML and custom apps, on any infrastructure, on-premise, hybrid cloud or multi-cloud
+
+        Enterprise customers are realizing unparalleled agility and cost benefits by running stateful workloads such as Cloudera, Hortonworks, Spark, Mongo, Cassandra, Kafka, Postgres, MySQL, Elastic, ELK, Splunk, Oracle, Oracle RAC, SAP HANA, etc. on Kubernetes using Robin.
+      displayName: Robin Cloud Native Storage
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - storage
+      - big data
+      - csi
+      - databases
+      - postgresql
+      - cloudera
+      links:
+      - name: Robin
+        url: https://robin.io
+      - name: Installation Guide
+        url: https://docs.robin.io/storage/5.3.2/install.html
+      maintainers:
+      - email: support@robin.io
+        name: Robin
+      maturity: stable
+      minKubeVersion: 1.11.0
+      provider:
+        name: Robin.io
+      relatedImages:
+      - robinsys/robin-operator:5.3.2-59
+      version: 5.3.2-59
+    name: stable
+  defaultChannel: stable
+  packageName: robin-operator
+  provider:
+    name: Robin.io

@@ -1,0 +1,84 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: InfluxData
+    provider-url: ""
+  name: telegraf-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: telegraf-operator.v1.3.10
+    currentCSVDesc:
+      annotations:
+        capabilities: Seamless Upgrades
+        categories: Monitoring
+        containerImage: quay.io/influxdb/telegraf-operator:v1.3.10
+        createdAt: "2022-09-22"
+        description: |
+          Telegraf Operator is a solution designed to create and manage individual Telegraf instances in Kubernetes clusters.
+        imagePullPolicy: Always
+        repository: https://github.com/influxdata/telegraf-operator
+        support: https://github.com/influxdata/telegraf-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions: {}
+      description: |
+        Telegraf Operator is a solution designed to create and manage individual Telegraf instances in Kubernetes clusters.
+
+        Essentially, it functions as a control plane for managing the individual Telegraf instances deployed throughout your Kubernetes cluster.
+
+        The operator will inject telegraf sidecar container to all newly created pods that have the appropriate [pod-level annotations](https://github.com/influxdata/telegraf-operator#pod-level-annotations).
+
+        Telegraf-operator abstracts away how data gets stored and where it should be sent using classes, where each pod that will have its telegraf sidecar atted will also specify its application class, or it will use the `default` class if not provided.
+
+        After deploying telegraf-operator you should modify the `classes` secret in appropriate namespace to configure telegraf-operator classes referenced via annotations. Each application class should provide output or outputs where the data should be sent, optionally also adding transformations that Telegraf supports.
+
+        For more details on how to configure telegraf outputs, inputs and other sections, please refer to [Telegraf Documentation](https://docs.influxdata.com/telegraf/).
+      displayName: Telegraf Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - telegraf
+      - monitoring
+      - metrics
+      - scraping
+      links:
+      - name: GitHub
+        url: https://github.com/influxdata/telegraf-operator
+      - name: Issues
+        url: https://github.com/influxdata/telegraf-operator/issues
+      - name: Telegraf Documentation
+        url: https://docs.influxdata.com/telegraf/
+      - name: InfluxData Website
+        url: https://www.influxdata.com
+      maintainers:
+      - email: wkocjan@influxdata.com
+        name: Wojciech Kocjan
+      maturity: stable
+      provider:
+        name: InfluxData
+      relatedImages:
+      - quay.io/influxdb/telegraf-operator:v1.3.10
+      version: 1.3.10
+    name: stable
+  defaultChannel: stable
+  packageName: telegraf-operator
+  provider:
+    name: InfluxData

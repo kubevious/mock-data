@@ -1,0 +1,151 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: cos-bucket-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cos-bucket-operator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion": "ibmcloud.ibm.com/v1alpha1", "kind": "Bucket",
+          "metadata": {"name": "cos4seed-bucket-m2c711"}, "spec": {"apiKey": {"secretKeyRef":
+          {"name": "cos4seed-hmac", "key": "apikey"}}, "resourceInstanceID": {"secretKeyRef":
+          {"name": "cos4seed-hmac", "key": "resource_instance_id"}}, "endpoints":
+          {"configMapKeyRef": {"name": "cos4seed-hmac", "key": "endpoints"}}}}]'
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: cloudoperators/cosbucket-operator:0.1.0
+        createdAt: "2019-08-23T12:38:36Z"
+        description: The IBM Bucket Operator provides a Kubernetes CRD-Based API to
+          manage the lifecycle of IBM Cloud Object Storage Bucket.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/IBM/cos-bucket-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a bucket of a Cloud Object Storage bucket resource  on
+            IBM Cloud.
+          displayName: Bucket
+          kind: Bucket
+          name: buckets.ibmcloud.ibm.com
+          version: v1alpha1
+      description: "The IBM COS Bucket Operator provides a simple Kubernetes CRD-Based
+        API to provision and manage lifecycle of IBM COS Bucket on your Kubernetes
+        cluster. With this operator,  you can simply manage cos bucket as part of
+        your Kubernetes  application templates and let the operator reconciliation
+        logic ensure that the required COS bucket is automatically created and available
+        for your application.\nThe IBM Bucket Operator is currently in preview. It
+        will get updated as we release new versions of the [upstream repository](https://github.com/IBM/cos-bucket-operator).\n##
+        Features\n* **Bucket Provisioning** - supports provisioning for bucket for
+        existing IBM Cloud Object Storage service.\n* **Bucket Configuration** - supports
+        Retention and CORS policy for existing bucket.\n* **Bucket Encryption** -
+        supports using Key Protect key for bucket encryption, also support automatic
+        key rotation. Please reference the [Key Protect Setup](https://github.com/ibm/cos-bucket-operator#keyprotectSetup)
+        for detail.\n## Requirements\nThe operator can be installed on any OLM-enabled
+        Kubernetes cluster with version >= 1.11.  It requires [IBM Cloud Operators](https://operatorhub.io/operator/ibmcloud-operator)
+        if using the `bindingFrom` option in the definition spec. Otherwise, please
+        input your service credentials in either Kubernetes Secret or Configmap and
+        specify `apiKey`, `resourceInstanceID` and `endpoints` in spec.\n### Using
+        IBM COS Bucket Operators in stand-alone mode\nAfter the installation steps,
+        you need to manually create the service credentail in  your IBM Cloud COS
+        instance. and then create either Kubernetes Secret or ConfigMap to store these
+        credentials.\n* Login to IBM Cloud using ibmcloud login.\n* Create Credential
+        in Cloud Object Storage instance:\n\n    `ibmcloud resource service-key-create
+        <credential_name> Manager --instance-name <cos_instance_name>`\n\n    for
+        example: `ibmcloud resource service-key-create cos4operator Manager --instance-name
+        mycos`\n\n  * Option 1 - Stored in Secret.\n\n      1. Retrieve the Credential,
+        and generate the base64 encoded file (Note - credential_name is from step
+        1). After the command, you can check if the file `/tmp/mySecret.secrets` is
+        created:\n          \n        ```\n        ibmcloud resource service-key cos4operator
+        | \n        awk '/apikey/ {seen = 1} seen {print}' |  \n        awk '{system(\"bash
+        -c '\\''echo -n  \"$1\" | tr : = '\\''\"); printf(\"%s \\n\",$2)}' > /tmp/myCOSSecret.secrets\n
+        \       ```\n          \n      2. Create Secret:\n\n        ```  \n        kubectl
+        create secret generic <kubebete_secret_name> --type=Secret --from-env-file=/tmp/myCOSSecret.secrets\n
+        \       ```\n\n  * Option 2 - Stored in ConfigMap.\n\n      1. Create the
+        data file (Note - the attached command create base64 decoded values as ConfigMap
+        will not decode the value automatically):\n   \n          ```\n          ibmcloud
+        resource service-key cos4operator  | \n          awk '/apikey/ {seen = 1}
+        seen {print}' |  \n          awk '{system(\"bash -c '\\''echo -n  \"$1\" |
+        tr  : = '\\''\"); system(\"bash -c '\\''echo -n  \"$2\" |    base64 -i -'\\''\");
+        printf(\"\\n\")}' >    /tmp/myCOSSecret.secrets\n          ```\n\n      2.
+        Create ConfigMap:\n\n          ```\n          kubectl create configmap  <kubernete_configmap_name>
+        \ --from-env-file=/tmp/myCOSSecret.secrets\n          ```\n\n* Verify the
+        required info is in the Secret or ConfigMap:\n\n    ```\n    kubectl get secret
+        <kubernete_secret_name> -o yaml\n    ```\n    \n  For Example, the data field
+        should look like the following (should contains at least apiKey, endpoints
+        and resource_instance_id)\n    \n   ```\n   data:\n       apiKey: c29tZSByYW5kb20gYXBpa2V5IGdlbmVyYXRlZCBieSB5b3UK\n
+        \      endpoints: aHR0cHM6Ly9jb250cm9sLmNsb3VkLW9iamVjdC1zdG9yYWdlLmNsb3VkLmlibS5jb20vdjIvZW5kcG9pbnRz\n
+        \      ...\n       resource_instance_id: Y3JuOnYxOmJsdWVtaXg6cHVibGljOmNsb3VkLW9iamVjdC1zdG9yYWdlOmdsb2JhbDphLzg5YjdiOWU3OWJmNjFhMDc5MzE3OWYxMzIzMGZkMmJkOjQ5OTQ2M2QxLWUwZTYtNGMxYy04YmQzLTIzOTNhZTRjZTRkZTo6\n
+        \  ```           \n### Using IBM Cloud Operators\nAfter follow the installation
+        steps in the [IBM Cloud Operator](https://operatorhub.io/operator/ibmcloud-operator),
+        \ You can create an instance of an IBM public cloud service using the following
+        custom resource (change plan:standard to plan:lite if using lite plan):\n\n
+        \    \n    apiVersion: ibmcloud.ibm.com/v1alpha1\n    kind: Service\n    metadata:\n
+        \     name: cos4me\n    spec:\n      externalName: cos4me\n      serviceClass:
+        cloud-object-storage\n      plan: standard\n    \nAfter creating a service,
+        you can find its status with:\n\n    kubectl get services.ibmcloud \n    NAME
+        \          STATUS   AGE\n    cos4me         Online   12s\n\nYou can bind to
+        a service with name `cos4me` using the following custom resource:\n\n    \n
+        \   apiVersion: ibmcloud.ibm.com/v1alpha1\n    kind: Binding\n    metadata:\n
+        \     name: cos4me\n    spec:\n      serviceName: cos4me\n      role: Manager\n
+        \   \n\nTo find the status of your binding, you can run the command:\n\n    kubectl
+        get bindings.ibmcloud \n    NAME        STATUS   AGE\n    cos4me      Online
+        \  25s\n   \nThe `Binding` operator generates a secret with the same name
+        as the binding resource and \n    contains service credentials that can be
+        consumed by your application.\n\n    kubectl get secrets\n    NAME      TYPE
+        \    DATA   AGE                         \n    cos4me    Opaque   6      102s
+        \                         \n"
+      displayName: IBM COS Bucket Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - Cloud
+      links:
+      - name: IBM Cloud Object Storage Bucket Operator Project
+        url: https://github.com/ibm/cos-bucket-operator
+      maintainers:
+      - email: dettori@us.ibm.com
+        name: Paolo Dettori
+      - email: yhliu@us.ibm.com
+        name: Yew Huey Liu
+      - email: luan@us.ibm.com
+        name: Laura Zaihua Luan
+      - email: mvaziri@us.ibm.com
+        name: Mandana Vaziri
+      - email: villard@us.ibm.com
+        name: Lionel Villard
+      maturity: alpha
+      provider:
+        name: IBM
+      relatedImages:
+      - cloudoperators/cosbucket-operator:0.1.0
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: cos-bucket-operator
+  provider:
+    name: IBM

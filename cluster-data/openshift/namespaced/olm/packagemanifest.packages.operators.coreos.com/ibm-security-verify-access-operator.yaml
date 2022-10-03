@@ -1,0 +1,106 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: https://www.ibm.com
+  name: ibm-security-verify-access-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ibm-security-verify-access-operator.v21.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "ibm.com/v1",
+              "kind": "IBMSecurityVerifyAccess",
+              "metadata": {
+                "name": "isva-sample"
+              },
+              "spec": {
+                "image": "ibmcom/verify-access-wrp:10.0.2.0",
+                "instance": "default"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Security
+        certified: "false"
+        containerImage: ibmcom/verify-access-operator:21.10.0
+        createdAt: Wed Oct 13 02:58:44 UTC 2021
+        description: The IBM Security Verify Access Operator manages the lifecycle
+          of IBM Security Verify Access worker containers.
+        olm.properties: '[{"type": "olm.maxOpenShiftVersion", "value": "4.8"}]'
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/IBM-Security/verify-access-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: IBMSecurityVerifyAccess is the Schema for the ibmsecurityverifyaccesses
+            API.
+          displayName: IBMSecurity Verify Access
+          kind: IBMSecurityVerifyAccess
+          name: ibmsecurityverifyaccesses.ibm.com
+          version: v1
+      description: |+
+        In a world of highly fragmented access management environments, [IBM Security Verify Access](https://www.ibm.com/au-en/products/verify-access) helps you simplify your users' access while more securely adopting web, mobile and cloud technologies. This solution helps you strike a balance between usability and security through the use of risk-based access, single sign-on, integrated access management control, identity federation and its mobile multi-factor authentication capability, IBM Verify. Take back control of your access management with IBM Security Verify Access.
+
+        The IBM Security Verify Access operator provides lifecycle management of the lightweight containers which are used to protect an environment, namely:
+        * [Web Reverse Proxy](https://hub.docker.com/r/ibmcom/verify-access-wrp)
+        * [Runtime](https://hub.docker.com/r/ibmcom/verify-access-runtime)
+        * [Distributed Session Cache](https://hub.docker.com/r/ibmcom/verify-access-dsc)
+
+        The operator will manage the deployment of these lightweight IBM Security Verify Access worker containers, and also control the rolling restart of these containers when a configuration snapshot is updated.
+
+        See the project [Readme](https://github.com/IBM-Security/verify-access-operator/blob/master/README.md) for further information and details.
+
+      displayName: IBM Security Verify Access Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - identity and access
+      - security
+      links:
+      - name: Verify Access Product Information
+        url: https://www.ibm.com/au-en/products/verify-access
+      - name: Verify Access Documentation
+        url: https://www.ibm.com/docs/en/sva
+      maintainers:
+      - email: isamdev@au1.ibm.com
+        name: Verify Access Development Team
+      maturity: stable
+      minKubeVersion: 1.17.0
+      provider:
+        name: IBM
+        url: https://www.ibm.com
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - ibmcom/verify-access-operator:21.10.0
+      version: 21.10.0
+    name: stable
+  defaultChannel: stable
+  packageName: ibm-security-verify-access-operator
+  provider:
+    name: IBM
+    url: https://www.ibm.com

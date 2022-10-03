@@ -1,0 +1,308 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: keycloak-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: keycloak-operator.v19.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "keycloak.org/v1alpha1",
+              "kind": "Keycloak",
+              "metadata": {
+                "name": "example-keycloak",
+                "labels": {
+                  "app": "sso"
+                }
+              },
+              "spec": {
+                "instances": 1,
+                "externalAccess": {
+                  "enabled": true
+                }
+              }
+            },
+            {
+              "apiVersion": "keycloak.org/v1alpha1",
+              "kind": "KeycloakRealm",
+              "metadata": {
+                "name": "example-keycloakrealm",
+                "labels": {
+                  "app": "sso"
+                }
+              },
+              "spec": {
+                "realm": {
+                  "id": "basic",
+                  "realm": "basic",
+                  "enabled": true,
+                  "displayName": "Basic Realm"
+                },
+                "instanceSelector": {
+                  "matchLabels": {
+                    "app": "sso"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "keycloak.org/v1alpha1",
+              "kind": "KeycloakBackup",
+              "metadata": {
+                "name": "example-keycloakbackup"
+              },
+              "spec": {
+                "instanceSelector": {
+                  "matchLabels": {
+                    "app": "sso"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "keycloak.org/v1alpha1",
+              "kind": "KeycloakClient",
+              "metadata": {
+                "name": "client-secret",
+                "labels": {
+                  "app": "sso"
+                }
+              },
+              "spec": {
+                "realmSelector": {
+                  "matchLabels": {
+                    "app": "sso"
+                  }
+                },
+                "client": {
+                  "clientId": "client-secret",
+                  "secret": "client-secret",
+                  "clientAuthenticatorType": "client-secret"
+                }
+              }
+            },
+            {
+              "apiVersion": "keycloak.org/v1alpha1",
+              "kind": "KeycloakUser",
+              "metadata": {
+                "name": "example-realm-user",
+                "labels": {
+                  "app": "sso"
+                }
+              },
+              "spec": {
+                "user": {
+                  "username": "realm_user",
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "email": "user@example.com",
+                  "enabled": true,
+                  "emailVerified": false
+                },
+                "realmSelector": {
+                  "matchLabels": {
+                    "app": "sso"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Security
+        certified: "False"
+        containerImage: quay.io/keycloak/keycloak-operator:19.0.2-legacy
+        createdAt: "2022-09-15 17:00:00"
+        description: An Operator for installing and managing Keycloak
+        repository: https://github.com/keycloak/keycloak-operator
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Keycloak Instance
+          displayName: Keycloak
+          kind: Keycloak
+          name: keycloaks.keycloak.org
+          version: v1alpha1
+        - description: Represents a Keycloak Realm
+          displayName: KeycloakRealm
+          kind: KeycloakRealm
+          name: keycloakrealms.keycloak.org
+          version: v1alpha1
+        - description: Represents a Keycloak Backup
+          displayName: KeycloakBackup
+          kind: KeycloakBackup
+          name: keycloakbackups.keycloak.org
+          version: v1alpha1
+        - description: Represents a Keycloak Client
+          displayName: KeycloakClient
+          kind: KeycloakClient
+          name: keycloakclients.keycloak.org
+          version: v1alpha1
+        - description: Represents a Keycloak User
+          displayName: KeycloakUser
+          kind: KeycloakUser
+          name: keycloakusers.keycloak.org
+          version: v1alpha1
+      description: |
+        A Kubernetes Operator based on the Operator SDK for installing and managing Keycloak.
+
+        Keycloak lets you add authentication to applications and secure services with minimum fuss. No need to deal with storing users or authenticating users. It's all available out of the box.
+
+        The operator can deploy and manage Keycloak instances on Kubernetes and OpenShift.
+        The following features are supported:
+
+        * Install Keycloak to a namespace
+        * Import Keycloak Realms
+        * Import Keycloak Clients
+        * Import Keycloak Users
+        * Create scheduled backups of the database
+        * Install Extensions
+      displayName: Keycloak Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Keycloak
+      - Identity
+      - Access
+      links:
+      - name: Documentation
+        url: https://www.keycloak.org/docs/latest/server_installation/index.html#_operator
+      - name: Keycloak
+        url: https://www.keycloak.org/
+      - name: Keycloak Discourse
+        url: https://keycloak.discourse.group/
+      maintainers:
+      - email: keycloak-dev@lists.jboss.org
+        name: Keycloak DEV mailing list
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/keycloak/keycloak-operator:19.0.2-legacy
+      version: 19.0.2
+    name: alpha
+  - currentCSV: keycloak-operator.v20.0.0-alpha.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "k8s.keycloak.org/v2alpha1",
+              "kind": "Keycloak",
+              "metadata": {
+                "name": "example-keycloak",
+                "labels": {
+                  "app": "sso"
+                }
+              },
+              "spec": {
+                "instances": 1,
+                "hostname": "example.org",
+                "tlsSecret": "my-tls-secret"
+              }
+            },
+            {
+              "apiVersion": "k8s.keycloak.org/v2alpha1",
+              "kind": "KeycloakRealmImport",
+              "metadata": {
+                "name": "example-keycloak-realm-import",
+                "labels": {
+                  "app": "sso"
+                }
+              },
+              "spec": {
+                "keycloakCRName": "example-keycloak",
+                "realm": {}
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Security
+        certified: "False"
+        containerImage: quay.io/keycloak/keycloak-operator:19.0.2
+        createdAt: 09/15/22 17:00:00
+        description: An Operator for installing and managing Keycloak
+        repository: https://github.com/keycloak/keycloak
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Keycloak Instance
+          displayName: Keycloak
+          kind: Keycloak
+          name: keycloaks.k8s.keycloak.org
+          version: v2alpha1
+        - description: Represents a Keycloak Realm Import
+          displayName: KeycloakRealmImport
+          kind: KeycloakRealmImport
+          name: keycloakrealmimports.k8s.keycloak.org
+          version: v2alpha1
+      description: |
+        A Kubernetes Operator based on the Operator SDK for installing and managing Keycloak.
+
+        Keycloak lets you add authentication to applications and secure services with minimum fuss. No need to deal with storing users or authenticating users. It's all available out of the box.
+
+        The operator can deploy and manage Keycloak instances on Kubernetes and OpenShift.
+        The following features are supported:
+
+        * Install Keycloak to a namespace
+        * Import Keycloak Realms
+      displayName: Keycloak Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Keycloak
+      - Identity
+      - Access
+      links:
+      - name: Documentation
+        url: https://www.keycloak.org/docs/latest/server_installation/index.html#_operator
+      - name: Keycloak
+        url: https://www.keycloak.org/
+      - name: Keycloak Discourse
+        url: https://keycloak.discourse.group/
+      maintainers:
+      - email: keycloak-dev@lists.jboss.org
+        name: Keycloak DEV mailing list
+      maturity: alpha
+      provider:
+        name: Red Hat
+      relatedImages:
+      - quay.io/keycloak/keycloak-operator:19.0.2
+      version: 20.0.0-alpha.6
+    name: candidate
+  defaultChannel: alpha
+  packageName: keycloak-operator
+  provider:
+    name: Red Hat

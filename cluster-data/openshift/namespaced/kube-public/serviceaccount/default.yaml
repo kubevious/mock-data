@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: default-dockercfg-cx8w6
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:17Z"
+  name: default
+  namespace: kube-public
+  resourceVersion: "1987"
+  uid: 793abb1d-2c98-4899-b054-56bd17462039
+secrets:
+- name: default-token-dfk7d
+- name: default-dockercfg-cx8w6

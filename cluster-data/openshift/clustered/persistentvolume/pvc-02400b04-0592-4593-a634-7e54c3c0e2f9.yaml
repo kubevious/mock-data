@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: rancher.io/local-path
+  creationTimestamp: "2022-10-03T18:38:07Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pvc-02400b04-0592-4593-a634-7e54c3c0e2f9
+  resourceVersion: "31209"
+  uid: 44b6964b-4a31-4946-9c5d-5866730bb615
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: data-kubevious-mysql-0
+    namespace: kubevious
+    resourceVersion: "31172"
+    uid: 02400b04-0592-4593-a634-7e54c3c0e2f9
+  hostPath:
+    path: /var/local-path-provisioner/pvc-02400b04-0592-4593-a634-7e54c3c0e2f9_kubevious_data-kubevious-mysql-0
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kind-control-plane
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: standard
+  volumeMode: Filesystem
+status:
+  phase: Bound

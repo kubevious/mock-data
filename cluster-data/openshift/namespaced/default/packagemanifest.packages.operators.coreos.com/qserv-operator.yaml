@@ -1,0 +1,141 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Vera C. Rubin Observatory
+    provider-url: https://www.lsst.org/
+  name: qserv-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: qserv-operator.v2022.1.1-rc1
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[]'
+        alm-examples-metadata: '{"example-qserv":{"description":"Example Qserv cluster
+          CR"}}'
+        capabilities: Basic Install
+        categories: Database
+        containerImage: qserv/qserv-operator:2022.1.1-rc1
+        description: Create and maintain highly-available Qserv clusters on Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/lsst/qserv-operator
+        support: Qserv team
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Qserv is the Schema for the qservs API
+          displayName: Qserv
+          kind: Qserv
+          name: qservs.qserv.lsst.org
+          version: v1beta1
+      description: |
+        ## Overview
+
+        Qserv Operator manages the full lifecycle of [Qserv](https://github.com/lsst/qserv) at scale,
+        in order to ease and fully automate deployment and management of Qserv clusters.
+
+        The operator aims to provide the following:
+
+        - **Basic Install** to Qserv components.
+        - Out-of-box Intra-Cluster discovery support.
+
+        Mind you, this is still a work-in-progress implementation.
+
+        ## Usage
+        - Create Qserv secrets, using this example script:
+        ```
+        RELEASE="2022.1.1-rc1"
+        kubectl apply -k "https://github.com/lsst/qserv-operator/manifests/secrets?ref=$RELEASE"
+        ```
+        - Deploy a basic Qserv cluster by creating a new `Qserv` resource in the namespace where the operator is installed.
+        ```
+        RELEASE="2022.1.1-rc1"
+        cat <<EOF > qserv.yaml
+        apiVersion: qserv.lsst.org/v1alpha1
+        kind: Qserv
+        metadata:
+          name: qserv
+        spec:
+          czar:
+            image: qserv/qserv:$RELEASE
+            replicas: 1
+          dashboard:
+            image: qserv/dashboard:$RELEASE
+          imagePullPolicy: IfNotPresent
+          ingest:
+            dbImage: mariadb:10.2.16
+          replication:
+            dbImage: mariadb:10.2.16
+            image: qserv/qserv:$RELEASE
+          storage: 1Gi
+          storageClassName: standard
+          worker:
+            image: qserv/qserv:$RELEASE
+            replicas: 2
+          xrootd:
+            image: qserv/qserv:$RELEASE
+            replicas: 2
+        EOF
+        kubectl apply -f qserv.yaml
+        ```
+        - Additional examples of Qserv deployment, based on `kustomize`, are available in Qserv Github repository:
+        ```
+        git clone https://github.com/lsst/qserv-operator
+        cd /qserv-operator
+        # Deploy a Qserv cluster on Google Kubernetes Engine
+        kubectl apply -k manifests/gke-qserv-dev
+        ```
+      displayName: Qserv operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - qserv
+      - database
+      - sharded
+      - distributed
+      links:
+      - name: Qserv documentation
+        url: https://qserv.lsst.io/
+      - name: Qserv Operator documentation
+        url: https://qserv-operator.lsst.io
+      - name: Qserv Ingest documentation
+        url: https://qserv-ingest.lsst.io
+      - name: LSST data management
+        url: https://www.lsst.org/about/dm
+      maintainers:
+      - email: fabrice.jammes@clermont.in2p3.fr
+        name: Fabrice Jammes
+      maturity: alpha
+      minKubeVersion: 1.16.0
+      provider:
+        name: Vera C. Rubin Observatory
+        url: https://www.lsst.org/
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - qserv/qserv-operator:2022.1.1-rc1
+      version: 2022.1.1-rc1
+    name: alpha
+  defaultChannel: alpha
+  packageName: qserv-operator
+  provider:
+    name: Vera C. Rubin Observatory
+    url: https://www.lsst.org/

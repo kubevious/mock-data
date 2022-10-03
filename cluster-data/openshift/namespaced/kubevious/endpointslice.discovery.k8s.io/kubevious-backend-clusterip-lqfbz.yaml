@@ -1,0 +1,46 @@
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 10.244.0.25
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: kubevious-backend-5965867f89-2rxqd
+    namespace: kubevious
+    uid: 20d08af6-cafc-4910-93c0-1e35add249e2
+kind: EndpointSlice
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:38:32Z"
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  generateName: kubevious-backend-clusterip-
+  generation: 3
+  labels:
+    app.kubernetes.io/component: kubevious-backend
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+    helm.sh/chart: kubevious-1.0.13
+    kubernetes.io/service-name: kubevious-backend-clusterip
+  name: kubevious-backend-clusterip-lqfbz
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: kubevious-backend-clusterip
+    uid: 077ce3b6-a937-42d1-a97f-e1f18283f463
+  resourceVersion: "31309"
+  uid: eaca6b06-cca3-4a18-96ed-37100eff0a02
+ports:
+- name: http
+  port: 4001
+  protocol: TCP

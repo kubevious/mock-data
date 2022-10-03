@@ -1,0 +1,119 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Jiri Kremser
+    provider-url: https://github.com/jkremser/log2rbac-operator
+  name: log2rbac
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: log2rbac-operator.v0.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"kremser.dev/v1","kind":"RbacNegotiation","metadata":{"name":"for-prometheus-operator"},"spec":{"for":{"kind":"Deployment","name":"prometheus-operator","namespace":"monitoring"},"role":{"createIfNotExist":true,"isClusterRole":true,"name":"prometheus-operator-role"}}}]'
+        capabilities: Seamless Upgrades
+        categories: Developer Tools, Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/jkremser/log2rbac:v0.0.2
+        createdAt: "2022-03-14 15:09:26"
+        description: Kubernetes operator that helps you to set up your RBAC rules
+          correctly
+        operatorframework.io/suggested-namespace: log2rbac
+        operators.operatorframework.io.bundle.channels.v1: alpha
+        operators.operatorframework.io.bundle.manifests.v1: manifests/
+        operators.operatorframework.io.bundle.mediatype.v1: registry+v1
+        operators.operatorframework.io.bundle.metadata.v1: metadata/
+        operators.operatorframework.io.bundle.package.v1: log2rbac
+        operators.operatorframework.io/builder: operator-sdk-v1.12.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/jkremser/log2rbac-operator
+        support: jiri.kremser@gmail.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Requests the rbac negotiation process for given application
+          displayName: RbacNegotiation
+          kind: RbacNegotiation
+          name: rbacnegotiations.kremser.dev
+          version: v1
+      description: |
+        **Kubernetes operator that helps you to set up your RBAC rules correctly**
+
+        Kubernetes operator that helps you to set up the RBAC rules for your application. If requested, it scans the application's log files for authorization errors and adds them as exceptions/rights to the associated Role. User has to allow this process by creating a RbacNegotiation custom resource where they need to specify the app* and Role. Role can be either existing one or operator can create a new one for you and bind it to the service account that's configured with the deployment. Again if the service account is not there, it will be created by the operator.
+
+        App can be one of the following:
+        - Deployment
+        - StatefulSet
+        - DaemonSet
+        - Service
+        - ReplicaSet
+        - or key-value pair specifying the pod selector
+
+        ```bash
+        # create RbacNegotiation for k8gb
+        cat <<CustomResource | kubectl apply -f -
+        apiVersion: kremser.dev/v1
+        kind: RbacNegotiation
+        metadata:
+          name: for-k8gb
+        spec:
+          for:
+            kind: Deployment
+            name: k8gb
+            namespace: k8gb
+          role:
+            name: new-k8gb-role
+            isClusterRole: true
+            createIfNotExist: true
+        CustomResource
+        ```
+
+        For more information see [github repo](https://github.com/jkremser/log2rbac-operator).
+      displayName: log2rbac-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - rbac
+      - kubernetes
+      - operator
+      - kubernetes-operator
+      links:
+      - name: Home
+        url: https://jkremser.github.io/log2rbac-operator
+      - name: Source
+        url: https://github.com/jkremser/log2rbac-operator
+      maintainers:
+      - email: jiri.kremser@gmail.com
+        name: Jiri Kremser
+      maturity: alpha
+      minKubeVersion: 1.14.0
+      provider:
+        name: Jiri Kremser
+        url: https://github.com/jkremser/log2rbac-operator
+      relatedImages:
+      - docker.io/jkremser/log2rbac:v0.0.2
+      version: 0.0.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: log2rbac
+  provider:
+    name: Jiri Kremser
+    url: https://github.com/jkremser/log2rbac-operator

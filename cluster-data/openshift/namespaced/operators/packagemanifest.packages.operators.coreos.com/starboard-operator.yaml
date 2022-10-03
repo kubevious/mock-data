@@ -1,0 +1,128 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Aqua Security
+    provider-url: ""
+  name: starboard-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: starboard-operator.v0.15.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[]'
+        capabilities: Basic Install
+        categories: Security
+        certified: "false"
+        containerImage: docker.io/aquasec/starboard-operator:0.15.6
+        createdAt: "2022-06-01T18:11:12Z"
+        description: Keeps security report resources updated
+        repository: https://github.com/aquasecurity/starboard
+        support: Aqua Security
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents the result of scanning a container image for known
+            security vulnerabilities.
+          displayName: VulnerabilityReport
+          kind: VulnerabilityReport
+          name: vulnerabilityreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning a namespaced resource for
+            known configuration issues.
+          displayName: ConfigAuditReport
+          kind: ConfigAuditReport
+          name: configauditreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning a cluster-scoped resource
+            for known configuration issues.
+          displayName: ClusterConfigAuditReport
+          kind: ClusterConfigAuditReport
+          name: clusterconfigauditreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of running CIS Kubernetes Benchmark on
+            a Kubernetes node.
+          displayName: CISKubeBenchReport
+          kind: CISKubeBenchReport
+          name: ciskubebenchreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents cluster compliance report such as NSA/CISA Kubernetes
+            Hardening Guidance.
+          displayName: ClusterComplianceReport
+          kind: ClusterComplianceReport
+          name: clustercompliancereports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Holds cluster compliance report details.
+          displayName: ClusterComplianceDetailReport
+          kind: ClusterComplianceDetailReport
+          name: clustercompliancedetailreports.aquasecurity.github.io
+          version: v1alpha1
+      description: |-
+        This operator for Starboard automatically updates security report resources in response to workload and other
+        changes on a Kubernetes cluster - for example, initiating a vulnerability scan when a new Pod is started or
+        running CIS Benchmarks when a new Node is added.
+
+        Starboard provides:
+
+        - Automated vulnerability scanning for Kubernetes applications.
+        - Automated configuration audits for Kubernetes resources with predefined rules or custom Open Policy Agent (OPA) policies.
+        - Automated infrastructures scanning and compliance checks with CIS Benchmarks published by the Center for Internet Security (CIS).
+        - Automated compliance report - NSA, CISA Kubernetes Hardening Kubernetes Guidance v1.0
+
+        ## Documentation
+
+        Please see the [Documentation](https://aquasecurity.github.io/starboard) for more info about the Starboard project,
+        which manages a variety of security tools to make their reports accessible as Kubernetes custom resources.
+
+        ## Installation
+
+        Check this [Operator Lifecycle Manager](https://aquasecurity.github.io/starboard/v0.15.6/operator/installation/olm/)
+        guide to install the operator from [OperatorHub](https://operatorhub.io/) or [ArtifactHUB](https://artifacthub.io/).
+      displayName: Starboard Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - aqua-security
+      - scanning
+      - security
+      links:
+      - name: Starboard on GitHub
+        url: https://github.com/aquasecurity/starboard
+      - name: Starboard Documentation
+        url: https://aquasecurity.github.io/starboard
+      - name: Introduction to Starboard by Liz Rice
+        url: https://blog.aquasec.com/starboard-kubernetes-tools
+      maintainers:
+      - email: chen.keinan@aquasec.com
+        name: Chen Keinan
+      - email: daniel.pacak@aquasec.com
+        name: Daniel Pacak
+      maturity: alpha
+      provider:
+        name: Aqua Security
+      relatedImages:
+      - docker.io/aquasec/starboard-operator:0.15.6
+      version: 0.15.6
+    name: alpha
+  defaultChannel: alpha
+  packageName: starboard-operator
+  provider:
+    name: Aqua Security

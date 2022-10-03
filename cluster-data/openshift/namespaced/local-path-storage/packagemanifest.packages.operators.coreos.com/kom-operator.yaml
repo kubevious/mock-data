@@ -1,0 +1,107 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Kais OMRI
+    provider-url: ""
+  name: kom-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kom-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{ "apiVersion": "kom.kaiso.github.io/v1alpha1", "kind": "Microservice",
+          "metadata": { "name": "kom-nginx", "namespace": "default", "labels": { "deploymentName":
+          "kaiso-nginx" } }, "spec": { "container": { "image": "nginx:latest", "args":
+          [ "nginx-debug", "-g", "daemon off;" ], "routing": { "http": [ { "port":
+          { "containerPort": 8019, "name": "https" }, "rule": "PathPrefix(`/nginxhttps`)"
+          }, { "port": { "containerPort": 80, "name": "http" }, "rule": "PathPrefix(`/nginx`)"
+          } ] }, "volumeMounts": [ { "mountPath": "/var/log/", "name": "logvolume"
+          } ], "limits": { "memory": "512Mi" } }, "autoscaling": { "min": 1, "max":
+          5, "scaler": [ { "resource": "CPU", "type": "Utilization", "value": "75"
+          } ] }, "volumes": [ { "name": "logvolume", "hostPath": { "path": "/tmp/log",
+          "type": "DirectoryOrCreate" } } ] } }]'
+        capabilities: Auto Pilot
+        categories: Application Runtime
+        certified: "false"
+        containerImage: kaiso/kom-operator:v1.0.2
+        createdAt: "2018-01-15T12:59:00Z"
+        description: Operator for managing full LifeCycle of microservices including
+          auto scaling, load balancing and deployment.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/kaiso/kom-operator
+        support: Kais OMRI
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Microservice
+          displayName: Microservice
+          kind: Microservice
+          name: microservices.kom.kaiso.github.io
+          version: v1alpha1
+      description: "## Seamlessly manage your Microservices LifeCycle\nDeploy, monitor,
+        scale automatically and load balance your HTTP based microservices with no
+        effort\n## The KOM Operator\nThe Kubernetes Operator for Microservices aka
+        the KOM Operator manages the deployment lifeclycle, the load balancing and
+        the auto scaling of HTTP based microservices\nSimply grab a config for your
+        microservice like the following example\n\n```\n  apiVersion: kom.kaiso.github.io/v1alpha1\n
+        \ kind: Microservice\n  metadata:\n      name: kom-nginx\n      namespace:
+        default\n      labels:\n          deploymentName: kaiso-nginx\n  spec:\n    container:\n
+        \     image: nginx:latest\n      args:\n          - 'nginx-debug'\n          -
+        \ '-g'\n          - 'daemon off;'\n      routing:\n            http:\n              -
+        port: \n                  containerPort: 8019\n                  name: \"https\"\n
+        \               rule: \"PathPrefix(`/nginxhttps`)\"\n              - port:
+        \n                  containerPort: 80\n                  name: \"http\"\n
+        \               rule: \"PathPrefix(`/nginx`)\"\n      volumeMounts:\n              -
+        mountPath: /var/log/\n                name: logvolume\n      limits:\n            memory:
+        512Mi\n    autoscaling:\n        min: 1\n        max: 5\n        scaler:\n
+        \           - resource: CPU\n              type: Utilization\n              value:
+        \"75\"\n    volumes:\n        - name: logvolume\n          hostPath:\n              path:
+        /tmp/log\n              type: DirectoryOrCreate'\n```\n\n\n\n## Prerequisites
+        for enabling this Operator\n- The operator runs on the kube-system namespace
+        so user must have the required privilieges.\n- No prior configuration is necessary
+        to enable the KOM Operator\n"
+      displayName: KOM Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Autoscaling
+      - Loadbalancing
+      - Deployment
+      - Microservices
+      links:
+      - name: Github page
+        url: https://github.com/kaiso/kom-operator
+      maintainers:
+      - email: kais.omri.int@gmail.com
+        name: Kais OMRI
+      maturity: beta
+      minKubeVersion: 1.15.0
+      provider:
+        name: Kais OMRI
+      relatedImages:
+      - kaiso/kom-operator:v1.0.2
+      version: 1.0.2
+    name: beta
+  defaultChannel: beta
+  packageName: kom-operator
+  provider:
+    name: Kais OMRI

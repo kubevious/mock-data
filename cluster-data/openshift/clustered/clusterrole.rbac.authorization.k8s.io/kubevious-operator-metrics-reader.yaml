@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2022-10-03T18:32:40Z"
+  labels:
+    olm.owner: kubevious-operator.v0.0.38
+  name: kubevious-operator-metrics-reader
+  resourceVersion: "30554"
+  uid: f436373c-1881-4215-a704-da14392415b4
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get

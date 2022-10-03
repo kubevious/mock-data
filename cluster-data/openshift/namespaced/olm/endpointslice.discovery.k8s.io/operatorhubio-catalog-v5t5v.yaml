@@ -1,0 +1,41 @@
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 10.244.0.14
+  conditions:
+    ready: true
+    serving: true
+    terminating: false
+  nodeName: kind-control-plane
+  targetRef:
+    kind: Pod
+    name: operatorhubio-catalog-7vg8w
+    namespace: olm
+    uid: 1cd008c6-af82-4baa-ae99-29525e8c52d2
+kind: EndpointSlice
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:26:02Z"
+  creationTimestamp: "2022-10-03T18:25:22Z"
+  generateName: operatorhubio-catalog-
+  generation: 3
+  labels:
+    endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+    kubernetes.io/service-name: operatorhubio-catalog
+    olm.service-spec-hash: 7f9477b9df
+  name: operatorhubio-catalog-v5t5v
+  namespace: olm
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: operatorhubio-catalog
+    uid: 33d28941-eb15-49e5-b823-b11a749192f6
+  resourceVersion: "29347"
+  uid: ed320ea8-90e2-4734-bd20-879af2f6d362
+ports:
+- name: grpc
+  port: 50051
+  protocol: TCP

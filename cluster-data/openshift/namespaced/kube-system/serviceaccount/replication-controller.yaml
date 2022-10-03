@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: replication-controller-dockercfg-l9vvz
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:05Z"
+  name: replication-controller
+  namespace: kube-system
+  resourceVersion: "1243"
+  uid: f6ed3cb9-3e40-423e-a66b-24422b7b1917
+secrets:
+- name: replication-controller-token-sxk87
+- name: replication-controller-dockercfg-l9vvz

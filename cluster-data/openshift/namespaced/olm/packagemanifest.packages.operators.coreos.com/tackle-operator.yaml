@@ -1,0 +1,692 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Konveyor
+    provider-url: https://www.konveyor.io
+  name: tackle-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: tackle-operator.v1.2.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "tackle.io/v1alpha1",
+              "kind": "Tackle",
+              "metadata": {
+                "name": "tackle"
+              }
+            }
+          ]
+        alm-examples-metadata: '{"tackle-sample":{"description":"Example Tackle CR
+          to deploy Tackle application with all its components"}}'
+        capabilities: Basic Install
+        categories: Modernization & Migration
+        certified: "false"
+        containerImage: quay.io/konveyor/tackle-operator:1.2.0-native
+        createdAt: "2022-01-31"
+        description: Tackle contains tools that support the modernization and migration
+          of applications to Kubernetes
+        imagePullPolicy: Always
+        repository: https://github.com/konveyor/tackle-operator
+        support: https://github.com/konveyor/tackle-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: "Create an instance of the Tackle toolkit.  \n\nTo access the
+            Tackle toolkit from the \"Developer\" perspective, please go to the \"Topology\"
+            view and click on the \"Open URL\" icon on the Tackle UI pod.  \n\nAlternatively
+            from the \"Administrator\" perspective, please go to Networking->Routes
+            and click on the Location hyperlink.  \n\nIn order to connect with default
+            login credentials, please use \"tackle\" as username and \"password\"
+            as password.  "
+          displayName: Tackle Toolkit
+          kind: Tackle
+          name: tackles.tackle.io
+          version: v1alpha1
+      description: "Tackle is a collection of tools that supports large-scale application
+        modernization and migration projects to Kubernetes.  \n\nTackle allows users
+        to maintain their portfolio of applications with a full set of metadata and
+        to assess their suitability for modernization leveraging a questionnaire based
+        approach.\n\nTackle is a project within the [Konveyor community](https://www.konveyor.io/).\n\nFor
+        more information please refer to [Tackle documentation](https://tackle-docs.konveyor.io/).\n"
+      displayName: Tackle Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - migration
+      - modernization
+      - konveyor
+      - tackle
+      links:
+      - name: Website
+        url: https://www.konveyor.io/tackle
+      - name: GitHub
+        url: https://github.com/konveyor/tackle-operator
+      - name: Documentation
+        url: https://tackle-docs.konveyor.io/
+      maintainers:
+      - email: tackle-dev@googlegroups.com
+        name: Tackle by Konveyor community
+      maturity: stable
+      provider:
+        name: Konveyor
+      relatedImages:
+      - quay.io/konveyor/tackle-operator:1.2.0-native
+      version: 1.2.0
+    name: alpha
+  - currentCSV: tackle-operator.v1.2.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "tackle.io/v1alpha1",
+              "kind": "Tackle",
+              "metadata": {
+                "name": "tackle"
+              }
+            }
+          ]
+        alm-examples-metadata: '{"tackle-sample":{"description":"Example Tackle CR
+          to deploy Tackle application with all its components"}}'
+        capabilities: Basic Install
+        categories: Modernization & Migration
+        certified: "false"
+        containerImage: quay.io/konveyor/tackle-operator:1.2.0-native
+        createdAt: "2022-01-31"
+        description: Tackle contains tools that support the modernization and migration
+          of applications to Kubernetes
+        imagePullPolicy: Always
+        repository: https://github.com/konveyor/tackle-operator
+        support: https://github.com/konveyor/tackle-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: "Create an instance of the Tackle toolkit.  \n\nTo access the
+            Tackle toolkit from the \"Developer\" perspective, please go to the \"Topology\"
+            view and click on the \"Open URL\" icon on the Tackle UI pod.  \n\nAlternatively
+            from the \"Administrator\" perspective, please go to Networking->Routes
+            and click on the Location hyperlink.  \n\nIn order to connect with default
+            login credentials, please use \"tackle\" as username and \"password\"
+            as password.  "
+          displayName: Tackle Toolkit
+          kind: Tackle
+          name: tackles.tackle.io
+          version: v1alpha1
+      description: "Tackle is a collection of tools that supports large-scale application
+        modernization and migration projects to Kubernetes.  \n\nTackle allows users
+        to maintain their portfolio of applications with a full set of metadata and
+        to assess their suitability for modernization leveraging a questionnaire based
+        approach.\n\nTackle is a project within the [Konveyor community](https://www.konveyor.io/).\n\nFor
+        more information please refer to [Tackle documentation](https://tackle-docs.konveyor.io/).\n"
+      displayName: Tackle Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - migration
+      - modernization
+      - konveyor
+      - tackle
+      links:
+      - name: Website
+        url: https://www.konveyor.io/tackle
+      - name: GitHub
+        url: https://github.com/konveyor/tackle-operator
+      - name: Documentation
+        url: https://tackle-docs.konveyor.io/
+      maintainers:
+      - email: tackle-dev@googlegroups.com
+        name: Tackle by Konveyor community
+      maturity: stable
+      provider:
+        name: Konveyor
+      relatedImages:
+      - quay.io/konveyor/tackle-operator:1.2.0-native
+      version: 1.2.0
+    name: stable
+  - currentCSV: tackle-operator.v2.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Tackle",
+              "metadata": {
+                "name": "tackle",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Addon",
+              "metadata": {
+                "name": "move2kube-plan",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {
+                "image": "quay.io/konveyor/tackle-addon-move2kube-plan:latest"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Modernization & Migration
+        certified: "false"
+        containerImage: quay.io/konveyor/tackle2-operator:v2.0.0
+        createdAt: "2022-06-10T09:51:37Z"
+        description: Tackle contains tools that support the modernization and migration
+          of applications to Kubernetes and OpenShift
+        olm.skipRange: '>=0.0.0 <2.0.0'
+        operatorframework.io/initialization-resource: |-
+          {
+            "apiVersion": "tackle.konveyor.io/v1alpha1",
+            "kind": "Tackle",
+            "metadata": {
+              "name": "tackle",
+              "namespace": "konveyor-tackle"
+            },
+            "spec": {}
+          }
+        operatorframework.io/suggested-namespace: konveyor-tackle
+        repository: https://github.com/konveyor/tackle2-operator
+        support: https://github.com/konveyor/tackle2-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Tackle
+          displayName: Tackle
+          kind: Tackle
+          name: tackles.tackle.konveyor.io
+          version: v1alpha1
+        - description: Tackle Addon
+          displayName: Addon
+          kind: Addon
+          name: addons.tackle.konveyor.io
+          version: v1alpha1
+      description: |+
+        Tackle is a collection of tools that supports large-scale application modernization and migration projects to Kubernetes and OpenShift.
+
+
+        Tackle allows users to maintain their portfolio of applications with a full set of metadata and to assess their suitability for modernization leveraging a questionnaire based approach.
+
+
+        Tackle is a project within the [Konveyor community](https://www.konveyor.io/).
+
+
+        ### Install
+        Once you have successfully installed the Operator, proceed to deploy components by creating the required Tackle CR.
+
+        By default, the Operator installs the following components on a target cluster:
+
+        * Hub, to manage the application inventory and coordinate the migration process.
+        * UI, the web console to manage the application inventory and drive the migration waves.
+        * Pathfinder, a service to manage the assessment questionnaires.
+        * Keycloak, to manage authentication, including with 3rd-party providers.
+
+        ### Documentation
+        Documentation can be found on our [website](https://tackle-docs.konveyor.io).
+
+        ### Getting help
+        If you encounter any issues while using Tackle operator, you can create an issue on our [Github repo](https://github.com/konveyor/tackle2-operator/issues), for bugs, enhancements or other requests.
+
+        ### Contributing
+        You can contribute by:
+
+        * Raising any issues you find using Tackle Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/konveyor/tackle2-operator/pulls)
+        * Improving [documentation](https://github.com/konveyor/tackle-documentation)
+
+      displayName: Tackle Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - modernization
+      - konveyor
+      - tackle
+      links:
+      - name: Konveyor Tackle Documentation
+        url: https://tackle-docs.konveyor.io
+      - name: Konveyor Tackle Operator
+        url: https://github.com/konveyor/tackle2-operator
+      maintainers:
+      - email: tackle-dev@googlegroups.com
+        name: Tackle by Konveyor Community
+      maturity: beta
+      minKubeVersion: 1.22.0
+      provider:
+        name: Konveyor
+      relatedImages:
+      - quay.io/konveyor/tackle2-addon:v2.0.0
+      - quay.io/konveyor/tackle2-addon-windup:v2.0.0
+      - quay.io/konveyor/tackle-pathfinder:noauthentication
+      - quay.io/keycloak/keycloak:16.1.1
+      - quay.io/konveyor/tackle2-operator:v2.0.0
+      - quay.io/centos7/postgresql-12-centos7:latest
+      - quay.io/konveyor/tackle2-hub:v2.0.0
+      - quay.io/konveyor/tackle2-ui:v2.0.0
+      version: 2.0.0
+    name: stable-v2.0
+  - currentCSV: tackle-operator.v2.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Tackle",
+              "metadata": {
+                "name": "tackle",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Addon",
+              "metadata": {
+                "name": "move2kube-plan",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {
+                "image": "quay.io/konveyor/tackle-addon-move2kube-plan:latest"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Modernization & Migration
+        certified: "false"
+        containerImage: quay.io/konveyor/tackle2-operator:v2.1.0
+        createdAt: "2022-07-18T21:01:31Z"
+        description: Tackle contains tools that support the modernization and migration
+          of applications to Kubernetes and OpenShift
+        olm.skipRange: '>=0.0.0 <2.1.0'
+        operatorframework.io/initialization-resource: |-
+          {
+            "apiVersion": "tackle.konveyor.io/v1alpha1",
+            "kind": "Tackle",
+            "metadata": {
+              "name": "tackle",
+              "namespace": "konveyor-tackle"
+            },
+            "spec": {}
+          }
+        operatorframework.io/suggested-namespace: konveyor-tackle
+        repository: https://github.com/konveyor/tackle2-operator
+        support: https://github.com/konveyor/tackle2-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Tackle
+          displayName: Tackle
+          kind: Tackle
+          name: tackles.tackle.konveyor.io
+          version: v1alpha1
+        - description: Tackle Addon
+          displayName: Addon
+          kind: Addon
+          name: addons.tackle.konveyor.io
+          version: v1alpha1
+      description: |+
+        Tackle is a collection of tools that supports large-scale application modernization and migration projects to Kubernetes and OpenShift.
+
+
+        Tackle allows users to maintain their portfolio of applications with a full set of metadata and to assess their suitability for modernization leveraging a questionnaire based approach.
+
+
+        Tackle is a project within the [Konveyor community](https://www.konveyor.io/).
+
+
+        ### Install
+        Once you have successfully installed the Operator, proceed to deploy components by creating the required Tackle CR.
+
+        By default, the Operator installs the following components on a target cluster:
+
+        * Hub, to manage the application inventory and coordinate the migration process.
+        * UI, the web console to manage the application inventory and drive the migration waves.
+        * Pathfinder, a service to manage the assessment questionnaires.
+        * Keycloak, to manage authentication, including with 3rd-party providers.
+
+        ### Documentation
+        Documentation can be found on our [website](https://konveyor.github.io/tackle).
+
+        ### Getting help
+        If you encounter any issues while using Tackle operator, you can create an issue on our [Github repo](https://github.com/konveyor/tackle2-operator/issues), for bugs, enhancements or other requests.
+
+        ### Contributing
+        You can contribute by:
+
+        * Raising any issues you find using Tackle Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/konveyor/tackle2-operator/pulls)
+        * Improving [documentation](https://github.com/konveyor/tackle-documentation)
+
+      displayName: Tackle Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - modernization
+      - konveyor
+      - tackle
+      links:
+      - name: Tackle Documentation
+        url: https://konveyor.github.io/tackle
+      - name: Tackle Operator
+        url: https://github.com/konveyor/tackle2-operator
+      maintainers:
+      - email: tackle-dev@googlegroups.com
+        name: Tackle by Konveyor Community
+      maturity: beta
+      minKubeVersion: 1.22.0
+      provider:
+        name: Konveyor
+        url: https://www.konveyor.io
+      relatedImages:
+      - quay.io/konveyor/tackle2-hub:v2.1.0
+      - quay.io/konveyor/tackle2-ui:v2.1.0
+      - quay.io/konveyor/tackle2-addon:v2.1.0
+      - quay.io/konveyor/tackle2-addon-windup:v2.1.0
+      - quay.io/konveyor/tackle-pathfinder:1.3.0-native
+      - quay.io/keycloak/keycloak:16.1.1
+      - quay.io/centos7/postgresql-12-centos7:latest
+      - quay.io/konveyor/tackle2-operator:v2.1.0
+      version: 2.1.0
+    name: stable-v2.1
+  - currentCSV: tackle-operator.v2.0.0-beta.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Tackle",
+              "metadata": {
+                "name": "tackle",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Addon",
+              "metadata": {
+                "name": "move2kube-plan",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {
+                "image": "quay.io/konveyor/tackle-addon-move2kube-plan:latest"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Modernization & Migration
+        certified: "false"
+        containerImage: quay.io/konveyor/tackle2-operator:v2.0.0-beta.0
+        description: Tackle contains tools that support the modernization and migration
+          of applications to OpenShift and Kubernetes
+        olm.skipRange: '>=0.0.0 <2.0.0-beta.0'
+        operatorframework.io/initialization-resource: |-
+          {
+            "apiVersion": "tackle.io/v1alpha1",
+            "kind": "Tackle",
+            "metadata": {
+              "name": "tackle",
+              "namespace": "konveyor-tackle"
+            },
+            "spec": {}
+          }
+        operatorframework.io/suggested-namespace: konveyor-tackle
+        repository: https://github.com/konveyor/tackle2-operator
+        support: https://github.com/konveyor/tackle2-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Tackle
+          displayName: Tackle
+          kind: Tackle
+          name: tackles.tackle.konveyor.io
+          version: v1alpha1
+        - description: Tackle Addon
+          displayName: Addon
+          kind: Addon
+          name: addons.tackle.konveyor.io
+          version: v1alpha1
+      description: |+
+        The Tackle Operator fully manages the deployment and life cycle of Tackle on Openshift and Kubernetes.
+
+        ### Install
+        Once you have successfully installed the Operator, proceed to deploy components by creating the required Tackle CR.
+
+        By default, the Operator installs the following components on a target cluster:
+
+        * Hub, to manage the application inventory and coordinate the migration process.
+        * UI, the web console to manage the application inventory and drive the migration waves.
+        * Pathfinder, a service to manage the assessment questionnaires.
+        * Keycloak, to manage authentication, including with 3rd-party providers.
+
+        ### Documentation
+        Documentation can be found on our [website](https://tackle-docs.konveyor.io).
+
+        ### Getting help
+        If you encounter any issues while using Tackle operator, you can create an issue on our [Github repo](https://github.com/konveyor/tackle2-operator/issues), for bugs, enhancements or other requests.
+
+        ### Contributing
+        You can contribute by:
+
+        * Raising any issues you find using Tackle Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/konveyor/tackle2-operator/pulls)
+        * Improving [documentation](https://github.com/konveyor/tackle-documentation)
+
+      displayName: Tackle Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - modernization
+      - konveyor
+      - tackle
+      links:
+      - name: Konveyor Tackle Documentation
+        url: https://tackle-docs.konveyor.io
+      - name: Konveyor Tackle Operator
+        url: https://github.com/konveyor/tackle2-operator
+      maintainers:
+      - email: openshift-operators@redhat.com
+        name: Red Hat
+      maturity: beta
+      minKubeVersion: 1.20.0
+      provider:
+        name: Konveyor
+      relatedImages:
+      - quay.io/centos7/postgresql-12-centos7:latest
+      - quay.io/konveyor/tackle2-hub:v2.0.0-beta.0
+      - quay.io/konveyor/tackle2-ui:v2.0.0-beta.0
+      - quay.io/konveyor/tackle2-addon:v2.0.0-beta.0
+      - quay.io/konveyor/tackle2-addon-windup:v2.0.0-beta.0
+      - quay.io/konveyor/tackle-pathfinder:noauthentication
+      - quay.io/keycloak/keycloak:16.1.1
+      - quay.io/konveyor/tackle2-operator:v2.0.0-beta.0
+      version: 2.0.0-beta.0
+    name: v2.0.0-beta
+  - currentCSV: tackle-operator.v2.0.0-beta.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Tackle",
+              "metadata": {
+                "name": "tackle",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "tackle.konveyor.io/v1alpha1",
+              "kind": "Addon",
+              "metadata": {
+                "name": "move2kube-plan",
+                "namespace": "konveyor-tackle"
+              },
+              "spec": {
+                "image": "quay.io/konveyor/tackle-addon-move2kube-plan:latest"
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Modernization & Migration
+        certified: "false"
+        containerImage: quay.io/konveyor/tackle2-operator:v2.0.0-beta.1
+        createdAt: "2022-06-06T18:41:53Z"
+        description: Tackle contains tools that support the modernization and migration
+          of applications to Kubernetes and OpenShift
+        olm.skipRange: '>=0.0.0 <2.0.0-beta.1'
+        operatorframework.io/initialization-resource: |-
+          {
+            "apiVersion": "tackle.konveyor.io/v1alpha1",
+            "kind": "Tackle",
+            "metadata": {
+              "name": "tackle",
+              "namespace": "konveyor-tackle"
+            },
+            "spec": {}
+          }
+        operatorframework.io/suggested-namespace: konveyor-tackle
+        repository: https://github.com/konveyor/tackle2-operator
+        support: https://github.com/konveyor/tackle2-operator/issues
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Tackle
+          displayName: Tackle
+          kind: Tackle
+          name: tackles.tackle.konveyor.io
+          version: v1alpha1
+        - description: Tackle Addon
+          displayName: Addon
+          kind: Addon
+          name: addons.tackle.konveyor.io
+          version: v1alpha1
+      description: |+
+        Tackle is a collection of tools that supports large-scale application modernization and migration projects to Kubernetes and OpenShift.
+
+
+        Tackle allows users to maintain their portfolio of applications with a full set of metadata and to assess their suitability for modernization leveraging a questionnaire based approach.
+
+
+        Tackle is a project within the [Konveyor community](https://www.konveyor.io/).
+
+
+        ### Install
+        Once you have successfully installed the Operator, proceed to deploy components by creating the required Tackle CR.
+
+        By default, the Operator installs the following components on a target cluster:
+
+        * Hub, to manage the application inventory and coordinate the migration process.
+        * UI, the web console to manage the application inventory and drive the migration waves.
+        * Pathfinder, a service to manage the assessment questionnaires.
+        * Keycloak, to manage authentication, including with 3rd-party providers.
+
+        ### Documentation
+        Documentation can be found on our [website](https://tackle-docs.konveyor.io).
+
+        ### Getting help
+        If you encounter any issues while using Tackle operator, you can create an issue on our [Github repo](https://github.com/konveyor/tackle2-operator/issues), for bugs, enhancements or other requests.
+
+        ### Contributing
+        You can contribute by:
+
+        * Raising any issues you find using Tackle Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/konveyor/tackle2-operator/pulls)
+        * Improving [documentation](https://github.com/konveyor/tackle-documentation)
+
+      displayName: Tackle Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - modernization
+      - konveyor
+      - tackle
+      links:
+      - name: Konveyor Tackle Documentation
+        url: https://tackle-docs.konveyor.io
+      - name: Konveyor Tackle Operator
+        url: https://github.com/konveyor/tackle2-operator
+      maintainers:
+      - email: tackle-dev@googlegroups.com
+        name: Tackle by Konveyor community
+      maturity: beta
+      minKubeVersion: 1.22.0
+      provider:
+        name: Konveyor
+      relatedImages:
+      - quay.io/konveyor/tackle2-operator:v2.0.0-beta.1
+      - quay.io/konveyor/tackle2-hub:v2.0.0-beta.1
+      - quay.io/konveyor/tackle2-ui:v2.0.0-beta.1
+      - quay.io/konveyor/tackle2-addon:v2.0.0-beta.1
+      - quay.io/konveyor/tackle2-addon-windup:v2.0.0-beta.1
+      - quay.io/konveyor/tackle-pathfinder:noauthentication
+      - quay.io/keycloak/keycloak:16.1.1
+      - quay.io/centos7/postgresql-12-centos7:latest
+      version: 2.0.0-beta.1
+    name: v2.0.0-rc
+  defaultChannel: stable-v2.1
+  packageName: tackle-operator
+  provider:
+    name: Konveyor
+    url: https://www.konveyor.io

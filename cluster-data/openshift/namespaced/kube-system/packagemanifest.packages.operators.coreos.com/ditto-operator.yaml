@@ -1,0 +1,110 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Jens Reimann
+    provider-url: ""
+  name: ditto-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ditto-operator.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion":"iot.eclipse.org/v1alpha1",
+              "kind":"Ditto",
+              "metadata": {
+                "name":"example-ditto"
+              },
+              "spec": {
+                "mongoDb": {
+                  "host":"mongodb"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: ghcr.io/ctron/ditto-operator:0.4.0
+        createdAt: "2021-09-22T13:54:00Z"
+        description: Eclipse Ditto provides a Digital Twin platform. A digital twin
+          is a virtual, cloud based, representation of his real world counterpart.
+        repository: https://github.com/ctron/ditto-operator
+        support: Jens Reimann
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Eclipse Ditto™ is a Digital Twin platform
+          displayName: Eclipse Ditto
+          kind: Ditto
+          name: dittos.iot.eclipse.org
+          version: v1alpha1
+      description: |
+        The Ditto Operator creates and maintains an Eclipse Ditto™ instance.
+
+        [Eclipse Ditto](https://eclipse.org/ditto) is a "digital twin" platform.
+
+        ### Pre-requisites
+        * A MongoDB instance
+
+        ### Supported Features
+        * **Installation**: Deploy an instance of Eclipse Ditto.
+        * **Upgrade**: Upgrade to a newer version of Eclips Ditto.
+
+        ### Contributing
+        You can contribute by:
+        * Raising any issues you find using the Ditto Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/ctron/ditto-operator/pulls)
+        * Improving [documentation](https://github.com/ctron/ditto-operator)
+        * Talking about the Ditto Operator
+
+        All bugs, tasks or enhancements are tracked as [GitHub issues](https://github.com/ctron/ditto-operator/issues).
+        ### License
+        Ditto Operator is licensed under the [Eclipse Public License 2.0](https://github.com/ctron/ditto-operator/blob/master/LICENSE)
+      displayName: Eclipse Ditto
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - IoT
+      - Digital Twin
+      links:
+      - name: GitHub
+        url: https://github.com/ctron/ditto-operator
+      - name: Eclipse Ditto™
+        url: https://github.com/eclipse/ditto
+      maintainers:
+      - email: ctron@dentrassi.de
+        name: Jens Reimann
+      maturity: alpha
+      minKubeVersion: 1.20.0
+      provider:
+        name: Jens Reimann
+      relatedImages:
+      - ghcr.io/ctron/ditto-operator:0.4.0
+      version: 0.4.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: ditto-operator
+  provider:
+    name: Jens Reimann

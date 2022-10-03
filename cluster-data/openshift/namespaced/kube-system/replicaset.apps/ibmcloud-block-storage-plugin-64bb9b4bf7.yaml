@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-10-03T18:35:49Z"
+  generation: 1
+  labels:
+    app: ibmcloud-block-storage-plugin
+    chart: ibmcloud-block-storage-plugin-1.7.1
+    heritage: Helm
+    pod-template-hash: 64bb9b4bf7
+    release: release-name
+  name: ibmcloud-block-storage-plugin-64bb9b4bf7
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: ibmcloud-block-storage-plugin
+    uid: 32c9aa43-71d9-47c7-b31a-0639e6ecf2f2
+  resourceVersion: "10743"
+  uid: 8f7803a4-384a-4b17-a821-e5ca42b65cba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibmcloud-block-storage-plugin
+      pod-template-hash: 64bb9b4bf7
+      release: release-name
+  template:
+    metadata:
+      annotations:
+        productID: ibmcloud-block-storage-plugin-1.7.1
+        productName: ibmcloud-block-storage-plugin
+        productVersion: 1.7.1
+      creationTimestamp: null
+      labels:
+        app: ibmcloud-block-storage-plugin
+        chart: ibmcloud-block-storage-plugin-1.7.1
+        heritage: Helm
+        pod-template-hash: 64bb9b4bf7
+        release: release-name
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: ibm-cloud.kubernetes.io/iaas-provider
+                operator: In
+                values:
+                - softlayer
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+      containers:
+      - args:
+        - --provisioner=ibm.io/ibmc-block
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: PLUGIN_IMAGE
+          value: registry.ng.bluemix.net/armada-master/ibmcloud-block-storage-plugin:v2.3.1
+        - name: DEBUG_TRACE
+          value: "false"
+        - name: STORAGE_CONFIG_PATH
+          value: /etc/storage_ibmc
+        - name: IBMC_FEATURE_GATES
+          value: KeyManagementBYOK=true
+        image: registry.ng.bluemix.net/armada-master/ibmcloud-block-storage-plugin:v2.3.1
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /etc/storage_ibmc
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: ibmcloud-block-storage-plugin-container
+        resources:
+          limits:
+            cpu: 300m
+            memory: 300Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsNonRoot: true
+          runAsUser: 2000
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/storage_ibmc
+          name: customer-auth
+      dnsPolicy: ClusterFirst
+      priorityClassName: system-cluster-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: ibmcloud-block-storage-plugin
+      serviceAccountName: ibmcloud-block-storage-plugin
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: customer-auth
+        secret:
+          defaultMode: 420
+          secretName: storage-secret-store
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

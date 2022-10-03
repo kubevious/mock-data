@@ -1,0 +1,25 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 2
+deprecatedFirstTimestamp: "2022-10-03T16:04:14Z"
+deprecatedLastTimestamp: "2022-10-03T19:41:20Z"
+deprecatedSource:
+  component: kubelet
+  host: kind-control-plane
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:41:20Z"
+  name: kube-controller-manager-kind-control-plane.171a9aa6f3149c20
+  namespace: kube-system
+  resourceVersion: "39815"
+  uid: d8a0d03a-7e4d-44c0-a34d-cb1c198f6ce4
+note: Started container kube-controller-manager
+reason: Started
+regarding:
+  apiVersion: v1
+  fieldPath: spec.containers{kube-controller-manager}
+  kind: Pod
+  name: kube-controller-manager-kind-control-plane
+  namespace: kube-system
+  uid: d068cb2f2a50ec5a8c4ab3d6e2488f95
+type: Normal

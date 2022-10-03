@@ -1,0 +1,233 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Rook Authors
+    provider-url: ""
+  name: rook-edgefs
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: rook-edgefs.v1.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "edgefs.rook.io/v1beta1",
+              "kind": "Cluster",
+              "metadata": {
+                "name": "my-rook-edgefs",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "edgefsImageName": "edgefs/edgefs:1.1.18",
+                "serviceAccount": "rook-edgefs-cluster",
+                "dataDirHostPath": "/var/lib/edgefs",
+                "storage": {
+                  "useAllDevices": false,
+                  "useAllNodes": true,
+                  "directories": [{"path": "/mnt/disks/disk1"}, {"path": "/mnt/disks/disk2"}, {"path": "/mnt/disks/disk3"}]
+                }
+              }
+            },
+            {
+              "apiVersion": "edgefs.rook.io/v1",
+              "kind": "ISCSI",
+              "metadata": {
+                "name": "iscsi01",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "annotations": null
+              }
+            },
+            {
+              "apiVersion": "edgefs.rook.io/v1",
+              "kind": "ISGW",
+              "metadata": {
+                "name": "isgw01",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "direction": "send+receive",
+                "remoteURL": "ccow://192.168.1.43:14000"
+              }
+            },
+            {
+              "apiVersion": "edgefs.rook.io/v1",
+              "kind": "NFS",
+              "metadata": {
+                "name": "nfs01",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "instances": 1
+              }
+            },
+            {
+              "apiVersion": "edgefs.rook.io/v1",
+              "kind": "S3",
+              "metadata": {
+                "name": "s301",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "instances": 1
+              }
+            },
+            {
+              "apiVersion": "edgefs.rook.io/v1",
+              "kind": "S3X",
+              "metadata": {
+                "name": "s3x01",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "instances": 1
+              }
+            },
+            {
+              "apiVersion": "edgefs.rook.io/v1",
+              "kind": "SWIFT",
+              "metadata": {
+                "name": "swift01",
+                "namespace": "my-rook-edgefs"
+              },
+              "spec": {
+                "instances": 1
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Storage
+        certified: "false"
+        containerImage: rook/edgefs:v1.0.1
+        createdAt: 2019-05-16T22-53-57Z
+        description: Install and maintain EdgeFS Storage cluster
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/rook/rook
+        support: https://slack.rook.io/
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a EdgeFS cluster.
+          displayName: EdgeFS Cluster
+          kind: Cluster
+          name: clusters.edgefs.rook.io
+          version: v1beta1
+        - description: Represents a EdgeFS NFS service.
+          displayName: EdgeFS NFS Service
+          kind: NFS
+          name: nfss.edgefs.rook.io
+          version: v1beta1
+        - description: Represents a EdgeFS ISCSI service.
+          displayName: EdgeFS ISCSI Service
+          kind: ISCSI
+          name: iscsis.edgefs.rook.io
+          version: v1beta1
+        - description: Represents a EdgeFS ISGW service.
+          displayName: EdgeFS ISGW Service
+          kind: ISGW
+          name: isgws.edgefs.rook.io
+          version: v1beta1
+        - description: Represents a EdgeFS S3 service.
+          displayName: EdgeFS S3 Service
+          kind: S3
+          name: s3s.edgefs.rook.io
+          version: v1beta1
+        - description: Represents a EdgeFS S3X service.
+          displayName: EdgeFS S3X Service
+          kind: S3X
+          name: s3xs.edgefs.rook.io
+          version: v1beta1
+        - description: Represents a EdgeFS SWIFT service.
+          displayName: EdgeFS SWIFT Service
+          kind: SWIFT
+          name: swifts.edgefs.rook.io
+          version: v1beta1
+      description: |2
+
+        The Rook-EdgeFS storage operator packages, deploys, manages, upgrades and scales EdgeFS storage for providing persistent storage to infrastructure services (Logging, Metrics, Registry) as well as stateful applications in Kubernetes clusters.
+
+        ## Rook-EdgeFS Storage Operator
+
+        Rook runs as a cloud-native service in Kubernetes clusters for optimal integration with applications in need of storage, and handles the heavy-lifting behind the scenes such as provisioning and management.
+        Rook orchestrates innovating, next generation clould-connecting storage solution EdgeFS.
+
+        EdgeFS is high-performance, low latency and fault-tolerant object storage system with Geo-Transparent data access to file, block or object.
+
+        EdgeFS is capable of spanning unlimited number of geographically distributed sites (Geo-site), connected with each other as one global name space data fabric running on top of Kubernetes platform, providing persistent, fault-tolerant and high-performance volumes for stateful Kubernetes Applications.
+
+        At each Geo-site, EdgeFS nodes deployed as containers (StatefulSet) on physical or virtual Kubernetes nodes, pooling available storage capacity and presenting it via compatible S3/NFS/iSCSI/etc storage emulated protocols for cloud-native applications running on the same or dedicated servers.
+
+        EdgeFS can utilize local node directories or raw block disks, and capable of running on top of existing SAN/NVMe Fabric.
+
+        ## Supported features
+        * **Geo-Scalable** - EdgeFS spans unlimited number of geographically distributed sites, connected as one global Geo-Transparent data layer.
+        * **Multi-Cloud Transparency** - EdgeFS can stitch AWS S3, GS, Azure Blob and on-prem clouds together, presenting synchronized S3 dataset in very cost effective way (cacheable dynamic data fetch).
+        * **Multi-Purpose** - Outstanding performance characteristics for variety of deployment use cases: HDD-only, SSD/HDD hybrid and SSD/NVMe only.
+        * **Multi-Protocol** - EdgeFS can expose your data through several storage interfaces, solving all the application use cases
+        * **High Performance** - EdgeFS enables high throughput and low latency access for stateful applications via standard storage protocols (NFS, S3 and iSCSI).
+        * **High Availability and Resiliency** - EdgeFS has no single point of failures (SPOF) and all its components work natively in a highly available fashion
+        * **Data Protection** - Data placement is replicated and offline erasure encoded. Fault-tolerant with built-in self healing and advanced snapshotting capabilities.
+        * **Consistent storage platform across hybrid cloud** - EdgeFS can be deployed anywhere (on-premise or bare metal) and thus offers a similar experience regardless
+        * **Scale out** - addition of storage is fully covered by the operator.
+        * **GUI and CRD Wizards** - The Operator deploys an easy of use GUI for monitoring your cluster and Service CRD Wizard Editor.
+
+        ## Before you start
+        https://rook.io/docs/rook/v1.0/edgefs-quickstart.html
+      displayName: Rook-EdgeFS
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - rook
+      - edgefs
+      - storage
+      - object storage
+      - open source
+      - block storage
+      - shared filesystem
+      - scale out
+      - NFS
+      - S3
+      - iSCSI
+      - multi cloud
+      links:
+      - name: Blog
+        url: https://medium.com/edgefs
+      - name: Documentation
+        url: https://rook.io/docs/rook/v1.0/edgefs-storage.html
+      maintainers:
+      - email: info@rook.io
+        name: The Rook Authors
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Rook Authors
+      relatedImages:
+      - rook/edgefs:v1.0.1
+      version: 1.0.1
+    name: beta
+  defaultChannel: beta
+  packageName: rook-edgefs
+  provider:
+    name: The Rook Authors

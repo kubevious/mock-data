@@ -1,0 +1,136 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Dev4Devs.com
+    provider-url: ""
+  name: postgresql-operator-dev4devs-com
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: postgresql-operator.v0.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "postgresql.dev4devs.com/v1alpha1",
+              "kind": "Database",
+              "metadata": {
+                "name": "database"
+              },
+              "spec": {
+                "databaseCpu": "30m",
+                "databaseCpuLimit": "60m",
+                "databaseMemoryLimit": "512Mi",
+                "databaseMemoryRequest": "128Mi",
+                "databaseName": "example",
+                "databaseNameKeyEnvVar": "POSTGRESQL_DATABASE",
+                "databasePassword": "postgres",
+                "databasePasswordKeyEnvVar": "POSTGRESQL_PASSWORD",
+                "databaseStorageRequest": "1Gi",
+                "databaseUser": "postgres",
+                "databaseUserKeyEnvVar": "POSTGRESQL_USER",
+                "image": "centos/postgresql-96-centos7",
+                "size": 1
+              }
+            },
+            {
+              "apiVersion": "postgresql.dev4devs.com/v1alpha1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "backup"
+              },
+              "spec": {
+                "awsAccessKeyId": "example-awsAccessKeyId",
+                "awsS3BucketName": "example-awsS3BucketName",
+                "awsSecretAccessKey": "example-awsSecretAccessKey",
+                "schedule": "0 0 * * *"
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Database
+        certified: "false"
+        containerImage: quay.io/dev4devs-com/postgresql-operator:0.1.1
+        createdAt: "2019-09-08T08:00:00Z"
+        description: Operator in Go developed using the Operator Framework to package,
+          install, configure and manage a PostgreSQL database. This project includes
+          backup feature.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/dev4devs-com/postgresql-operator
+        support: Dev4Devs, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Backup is the Schema for the backups API
+          displayName: Database Backup
+          kind: Backup
+          name: backups.postgresql.dev4devs.com
+          version: v1alpha1
+        - description: Database is the Schema for the the Database Database API
+          displayName: Database Database
+          kind: Database
+          name: databases.postgresql.dev4devs.com
+          version: v1alpha1
+      description: |-
+        A very flexible and customizable Operator in Go developed using the Operator Framework to package, install, configure and manage a PostgreSQL database. Also, the usage of this operator offers:
+        * Backup your data and sent it to a AWS Storage
+        * Usage of encryption to send the data
+        * Customization of the image and version of your PostgreSQL
+        * Customization of the enviroment variables keys and values which should be used with
+        * Allow you setup the operator to get the values required for its enviroment variables (user, password and database name) in an ConfigMap applied in the cluster already.
+        *NOTE: It is very useful to centralize and share this information accross the cluster for your solutions. Also, you are able to configure each configMap keys that contains each EnvVar* required for the PostgreSQL database image.
+        * To configure AWS Storage to sent the Backup data you are able to inform the data required or inform the secret which has this information and is applied in the cluster already
+        * To configure encryption feature in the Backup you are able to inform the data required or inform the secret which has this information and is applied in the cluster already
+        * Allow you customize the resources and their limmits (Memory, CPU and Storage)
+      displayName: PostgreSQL Operator by Dev4Ddevs.com
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - postgre
+      - database
+      - backup
+      - PostgreSQL
+      - dev4Devs-com
+      - backup
+      links:
+      - name: Documentation
+        url: https://github.com/dev4devs-com/postgresql-operator/blob/master/README.adoc
+      - name: Source
+        url: https://github.com/dev4devs-com/postgresql-operator
+      - name: https://www.dev4devs.com/
+        url: https://www.dev4devs.com/
+      maintainers:
+      - email: dev4devs.com@gmail.com
+        name: Dev4Devs.com
+      maturity: alpha
+      minKubeVersion: 1.11.3
+      provider:
+        name: Dev4Devs.com
+      relatedImages:
+      - quay.io/dev4devs-com/postgresql-operator:0.1.1
+      version: 0.1.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: postgresql-operator-dev4devs-com
+  provider:
+    name: Dev4Devs.com

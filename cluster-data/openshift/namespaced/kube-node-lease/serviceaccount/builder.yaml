@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: builder-dockercfg-mj5cw
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:25:56Z"
+  name: builder
+  namespace: kube-node-lease
+  resourceVersion: "1025"
+  uid: fbb96090-c502-4487-9a90-7f9b6154f936
+secrets:
+- name: builder-token-dq2s8
+- name: builder-dockercfg-mj5cw

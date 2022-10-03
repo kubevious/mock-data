@@ -1,0 +1,119 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: networkservicemesh.io
+    provider-url: ""
+  name: nsm-operator-registry
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: nsm-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"nsm.networkservicemesh.io/v1alpha1","kind":"NSM","metadata":{"name":"example-nsm","namespace":"nsm"},"spec":{"forwardingPlaneImage":"vppagent-forwarder","forwardingPlaneName":"vpp","insecure":true,"version":"v0.2.0"}}]'
+        capabilities: Basic Install
+        categories: Networking
+        certified: "false"
+        containerImage: quay.io/acmenezes/nsm-operator:v0.0.1
+        createdAt: "2020-01-28T10:45:31.000Z"
+        description: Installs and manages the full life cycle of network service meshes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/acmenezes/nsm-operator
+        support: Alexandre Menezes
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A running network service mesh object
+          displayName: Network Service Mesh
+          kind: NSM
+          name: nsms.nsm.networkservicemesh.io
+          version: v1alpha1
+        - description: A running network service offered by an specific NSM deployment
+          displayName: Network Service
+          kind: NetworkService
+          name: networkservices.networkservicemesh.io
+          version: v1alpha1
+        - description: A running network service manager
+          displayName: Network Service Manager
+          kind: NetworkServiceManager
+          name: networkservicemanagers.networkservicemesh.io
+          version: v1alpha1
+        - description: A running network service endpoint
+          displayName: Network Service Endpoint
+          kind: NetworkServiceEndpoint
+          name: networkserviceendpoints.networkservicemesh.io
+          version: v1alpha1
+      description: "Network Service Mesh (NSM) is a novel approach solving complicated
+        L2/L3 use cases in Kubernetes that are tricky to address with the existing
+        Kubernetes Network Model. Inspired by Istio, Network Service Mesh maps the
+        concept of a Service Mesh to L2/L3 payloads as part of an attempt to re-imagine
+        NFV in a Cloud-native way!\nThe Network Service Mesh Operator is a tool to
+        install and manage the Network Service Mesh application.\nwhich is a novel
+        approach solving complicated L2/L3 use cases in Kubernetes that are tricky
+        to address with the existing Kubernetes Network Model. Inspired by Istio,
+        Network Service Mesh maps the concept of a Service Mesh to L2/L3 payloads
+        as part of an attempt to re-imagine NFV in a Cloud-native way!\nTo  better
+        understand the network service meshes take a look at networkservicemesh.io.\nThe
+        operator is a single pod workload that automates operational human knowledge
+        behind the scenes to create the service mesh infrastructure components deploying
+        a webhook and daemonsets with the network service managers and forwarding
+        plane workloads taking the configuration from the Custom Resource manifest
+        created specifically to be used with the operator. It aims to be platform
+        independed and for such should run well in any kubernetes distribution.\nThe
+        only requirement is that you create the nsm namespace for it in your platform.
+        For manual installation check instructions on github.com/acmenezes/nsm-operator\nFor
+        now it has only the Basic Install feature.\nSome of the features intended
+        to be embedded with the operator in the future are\n* Installing, configuring
+        and making cleanups if needed\n* Upgrading, backing up and restoring any important
+        state information\n* Expose and aggregate metrics from all components through
+        prometheus/grafana\n* Operations analytics based on metrics exposed   \n*
+        Auto-pilot functions such as distributing NSM registry into multiple pods
+        according to the size of the cluster among other functions that may be addressed
+        as well via automation. \n\n"
+      displayName: Network Service Mesh Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - service mesh
+      - network service mesh
+      - VNF
+      - virtual network function
+      - NFV
+      - network function virtualization
+      links:
+      - name: Network Service Mesh
+        url: https://networkservicemesh.io
+      - name: NSM Operator
+        url: https://github.com/acmenezes/nsm-operator
+      maintainers:
+      - email: amenezes@redhat.com
+        name: Alexandre Menezes
+      maturity: alpha
+      provider:
+        name: networkservicemesh.io
+      relatedImages:
+      - quay.io/acmenezes/nsm-operator@sha256:341bad427f91ed300d221335b58c3dc8d3feb0445a63a4091ca010024e12d716
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: nsm-operator-registry
+  provider:
+    name: networkservicemesh.io

@@ -1,0 +1,29 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:44:38Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{olm-operator}
+  kind: Pod
+  name: olm-operator-5984b4c9d7-rw7tc
+  namespace: olm
+  resourceVersion: "29072"
+  uid: 3fb34d20-2bab-4081-8ec0-a656ba0e2f59
+kind: Event
+lastTimestamp: "2022-10-03T19:44:38Z"
+message: 'Liveness probe failed: Get "http://10.244.0.13:8080/healthz": context deadline
+  exceeded (Client.Timeout exceeded while awaiting headers)'
+metadata:
+  creationTimestamp: "2022-10-03T19:44:44Z"
+  name: olm-operator-5984b4c9d7-rw7tc.171aa6ae1b2842e4
+  namespace: olm
+  resourceVersion: "40204"
+  uid: 8695c5d8-db13-4c4b-913c-c5af0e27260a
+reason: Unhealthy
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Warning

@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: "2022-10-03T18:58:24Z"
+  name: kubevious-operator.v0.0.38
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: operators.coreos.com/v2
+    blockOwnerDeletion: false
+    controller: true
+    kind: OperatorCondition
+    name: kubevious-operator.v0.0.38
+    uid: d9303a53-2cd9-45e4-8fbc-69ea0fb1ac88
+  resourceVersion: "19204"
+  uid: 37b63766-115c-4741-92c8-c5de99b89a04
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kubevious-operator.v0.0.38
+subjects:
+- kind: ServiceAccount
+  name: kubevious-operator-controller-manager
+- kind: ServiceAccount
+  name: kubevious-operator-controller-manager

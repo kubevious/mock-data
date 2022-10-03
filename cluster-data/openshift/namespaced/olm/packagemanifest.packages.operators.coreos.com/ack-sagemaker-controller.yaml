@@ -1,0 +1,366 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-sagemaker-controller
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-sagemaker-controller.v0.4.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "App",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "DataQualityJobDefinition",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "Domain",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "Endpoint",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "EndpointConfig",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "FeatureGroup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "HyperParameterTuningJob",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "Model",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "ModelBiasJobDefinition",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "ModelExplainabilityJobDefinition",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "ModelPackage",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "ModelPackageGroup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "ModelQualityJobDefinition",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "MonitoringSchedule",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "NotebookInstance",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "NotebookInstanceLifecycleConfig",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "ProcessingJob",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "TrainingJob",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "TransformJob",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "sagemaker.services.k8s.aws/v1alpha1",
+              "kind": "UserProfile",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/sagemaker-controller:v0.4.4
+        createdAt: "2022-09-12 17:04:18"
+        description: ACK service controller for Amazon SageMaker manages SageMaker
+          resources in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: App represents the state of an AWS sagemaker App resource.
+          displayName: App
+          kind: App
+          name: apps.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: DataQualityJobDefinition represents the state of an AWS sagemaker
+            DataQualityJobDefinition resource.
+          displayName: DataQualityJobDefinition
+          kind: DataQualityJobDefinition
+          name: dataqualityjobdefinitions.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: Domain represents the state of an AWS sagemaker Domain resource.
+          displayName: Domain
+          kind: Domain
+          name: domains.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: EndpointConfig represents the state of an AWS sagemaker EndpointConfig
+            resource.
+          displayName: EndpointConfig
+          kind: EndpointConfig
+          name: endpointconfigs.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: Endpoint represents the state of an AWS sagemaker Endpoint
+            resource.
+          displayName: Endpoint
+          kind: Endpoint
+          name: endpoints.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: FeatureGroup represents the state of an AWS sagemaker FeatureGroup
+            resource.
+          displayName: FeatureGroup
+          kind: FeatureGroup
+          name: featuregroups.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: HyperParameterTuningJob represents the state of an AWS sagemaker
+            HyperParameterTuningJob resource.
+          displayName: HyperParameterTuningJob
+          kind: HyperParameterTuningJob
+          name: hyperparametertuningjobs.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: ModelBiasJobDefinition represents the state of an AWS sagemaker
+            ModelBiasJobDefinition resource.
+          displayName: ModelBiasJobDefinition
+          kind: ModelBiasJobDefinition
+          name: modelbiasjobdefinitions.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: ModelExplainabilityJobDefinition represents the state of an
+            AWS sagemaker ModelExplainabilityJobDefinition resource.
+          displayName: ModelExplainabilityJobDefinition
+          kind: ModelExplainabilityJobDefinition
+          name: modelexplainabilityjobdefinitions.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: ModelPackageGroup represents the state of an AWS sagemaker
+            ModelPackageGroup resource.
+          displayName: ModelPackageGroup
+          kind: ModelPackageGroup
+          name: modelpackagegroups.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: ModelPackage represents the state of an AWS sagemaker ModelPackage
+            resource.
+          displayName: ModelPackage
+          kind: ModelPackage
+          name: modelpackages.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: ModelQualityJobDefinition represents the state of an AWS sagemaker
+            ModelQualityJobDefinition resource.
+          displayName: ModelQualityJobDefinition
+          kind: ModelQualityJobDefinition
+          name: modelqualityjobdefinitions.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: Model represents the state of an AWS sagemaker Model resource.
+          displayName: Model
+          kind: Model
+          name: models.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: MonitoringSchedule represents the state of an AWS sagemaker
+            MonitoringSchedule resource.
+          displayName: MonitoringSchedule
+          kind: MonitoringSchedule
+          name: monitoringschedules.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: NotebookInstanceLifecycleConfig represents the state of an
+            AWS sagemaker NotebookInstanceLifecycleConfig resource.
+          displayName: NotebookInstanceLifecycleConfig
+          kind: NotebookInstanceLifecycleConfig
+          name: notebookinstancelifecycleconfigs.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: NotebookInstance represents the state of an AWS sagemaker NotebookInstance
+            resource.
+          displayName: NotebookInstance
+          kind: NotebookInstance
+          name: notebookinstances.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: ProcessingJob represents the state of an AWS sagemaker ProcessingJob
+            resource.
+          displayName: ProcessingJob
+          kind: ProcessingJob
+          name: processingjobs.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: TrainingJob represents the state of an AWS sagemaker TrainingJob
+            resource.
+          displayName: TrainingJob
+          kind: TrainingJob
+          name: trainingjobs.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: TransformJob represents the state of an AWS sagemaker TransformJob
+            resource.
+          displayName: TransformJob
+          kind: TransformJob
+          name: transformjobs.sagemaker.services.k8s.aws
+          version: v1alpha1
+        - description: UserProfile represents the state of an AWS sagemaker UserProfile
+            resource.
+          displayName: UserProfile
+          kind: UserProfile
+          name: userprofiles.sagemaker.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Amazon SageMaker resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon SageMaker**
+
+        Amazon SageMaker helps data scientists and developers to prepare, build, train, and deploy high-quality machine learning (ML) models quickly by bringing together a broad set of capabilities purpose-built for ML.
+
+        For more information on Amazon SageMaker, visit the [product page](https://aws.amazon.com/sagemaker/).
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon SageMaker
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - sagemaker
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon SageMaker Developer Resources
+        url: https://aws.amazon.com/sagemaker/developer-resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: sagemaker maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/sagemaker-controller:v0.4.4
+      version: 0.4.4
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-sagemaker-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

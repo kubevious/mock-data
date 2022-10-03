@@ -1,0 +1,295 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.arm64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    provider: Turbonomic, Inc.
+    provider-url: ""
+  name: kubeturbo
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kubeturbo-operator.v8.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Kubeturbo","metadata":{"name":"kubeturbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"},"targetConfig":{"targetName":"Cluster_Name"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/turbonomic/kubeturbo-operator:8.6
+        createdAt: "2019-05-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Kubeturbo Operator
+          kind: Kubeturbo
+          name: kubeturbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — KubeTurbo — that runs in your Kubernetes or Red Hat OpenShift cluster to discover and monitor your environment.
+        KubeTurbo runs together with the default scheduler and sends this data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Kubeturbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Kubeturbo Operator
+        url: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - docker.io/turbonomic/kubeturbo-operator:8.6
+      version: 8.6.0
+    name: stable
+  - currentCSV: kubeturbo-operator.v8.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Kubeturbo","metadata":{"name":"kubeturbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"},"targetConfig":{"targetName":"Cluster_Name"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: turbonomic/kubeturbo-operator:8.4
+        createdAt: "2019-05-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Kubeturbo Operator
+          kind: Kubeturbo
+          name: kubeturbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — KubeTurbo — that runs in your Kubernetes or Red Hat OpenShift cluster to discover and monitor your environment.
+        KubeTurbo runs together with the default scheduler and sends this data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Kubeturbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Kubeturbo Operator
+        url: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - turbonomic/kubeturbo-operator:8.4
+      version: 8.4.0
+    name: v8.4.0
+  - currentCSV: kubeturbo-operator.v8.5.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Kubeturbo","metadata":{"name":"kubeturbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"},"targetConfig":{"targetName":"Cluster_Name"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: turbonomic/kubeturbo-operator:8.5
+        createdAt: "2019-05-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Kubeturbo Operator
+          kind: Kubeturbo
+          name: kubeturbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — KubeTurbo — that runs in your Kubernetes or Red Hat OpenShift cluster to discover and monitor your environment.
+        KubeTurbo runs together with the default scheduler and sends this data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Kubeturbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Kubeturbo Operator
+        url: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - turbonomic/kubeturbo-operator:8.5
+      version: 8.5.0
+    name: v8.5.0
+  - currentCSV: kubeturbo-operator.v8.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1","kind":"Kubeturbo","metadata":{"name":"kubeturbo-release"},"spec":{"serverMeta":{"turboServer":"https://Turbo_server_URL"},"targetConfig":{"targetName":"Cluster_Name"}}}]'
+        capabilities: Basic Install
+        categories: Monitoring
+        certified: "false"
+        containerImage: docker.io/turbonomic/kubeturbo-operator:8.6
+        createdAt: "2019-05-01T00:00:00.000Z"
+        description: Turbonomic Workload Automation for Multicloud simultaneously
+          optimizes performance, compliance, and cost in real-time. Workloads are
+          precisely resourced, automatically, to perform while satisfying business
+          constraints.
+        repository: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+        support: Turbonomic, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Turbonomic Workload Automation for Multicloud simultaneously
+            optimizes performance, compliance, and cost in real-time. Workloads are
+            precisely resourced, automatically, to perform while satisfying business
+            constraints.
+          displayName: Kubeturbo Operator
+          kind: Kubeturbo
+          name: kubeturbos.charts.helm.k8s.io
+          version: v1
+      description: |-
+        ### Application Resource Management for Kubernetes
+        Turbonomic AI-powered Application Resource Management simultaneously optimizes performance, compliance, and cost in real time.
+        Software manages the complete application stack, automatically. Applications are continually resourced to perform while satisfying business constraints.
+
+        Turbonomic makes workloads smart — enabling them to self-manage and determines the specific actions that will drive continuous health:
+
+        * Continuous placement for Pods (rescheduling)
+        * Continuous scaling for applications and  the underlying cluster.
+
+        It assures application performance by giving workloads the resources they need when they need them.
+
+        ### How does it work?
+        Turbonomic uses a container — KubeTurbo — that runs in your Kubernetes or Red Hat OpenShift cluster to discover and monitor your environment.
+        KubeTurbo runs together with the default scheduler and sends this data back to the Turbonomic analytics engine.
+        Turbonomic determines the right actions that drive continuous health, including continuous placement for Pods and continuous scaling for applications and the underlying cluster.
+      displayName: Kubeturbo Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      links:
+      - name: Turbonomic, Inc.
+        url: https://www.turbonomic.com/
+      - name: Kubeturbo Operator
+        url: https://github.com/turbonomic/kubeturbo/tree/master/deploy/kubeturbo-operator
+      maintainers:
+      - email: endre.sara@turbonomic.com
+        name: Endre Sara
+      maturity: alpha
+      provider:
+        name: Turbonomic, Inc.
+      relatedImages:
+      - docker.io/turbonomic/kubeturbo-operator:8.6
+      version: 8.6.0
+    name: v8.6.0
+  defaultChannel: stable
+  packageName: kubeturbo
+  provider:
+    name: Turbonomic, Inc.

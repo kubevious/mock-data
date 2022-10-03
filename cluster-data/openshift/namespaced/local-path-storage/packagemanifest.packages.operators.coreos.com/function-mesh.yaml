@@ -1,0 +1,394 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: StreamNative
+    provider-url: https://streamnative.io
+  name: function-mesh
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: function-mesh.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "compute.functionmesh.io/v1alpha1",
+              "kind": "Function",
+              "metadata": {
+                "name": "java-function-sample",
+                "namespace": "default"
+              },
+              "spec": {
+                "autoAck": true,
+                "className": "org.apache.pulsar.functions.api.examples.ExclamationFunction",
+                "clusterName": "test-pulsar",
+                "forwardSourceMessageProperty": true,
+                "input": {
+                  "topics": [
+                    "persistent://public/default/java-function-input-topic"
+                  ],
+                  "typeClassName": "java.lang.String"
+                },
+                "java": {
+                  "extraDependenciesDir": "random-dir/",
+                  "jar": "pulsar-functions-api-examples.jar",
+                  "jarLocation": "public/default/nlu-test-java-function"
+                },
+                "logTopic": "persistent://public/default/logging-function-logs",
+                "maxPendingAsyncRequests": 1000,
+                "maxReplicas": 5,
+                "output": {
+                  "topic": "persistent://public/default/java-function-output-topic",
+                  "typeClassName": "java.lang.String"
+                },
+                "pod": {
+                  "annotations": {
+                    "managed-function": "true"
+                  },
+                  "env": [
+                    {
+                      "name": "EXAMPLE_VARIABLE",
+                      "value": "exampleValue"
+                    }
+                  ],
+                  "imagePullSecrets": [
+                    {
+                      "name": "regcred"
+                    }
+                  ],
+                  "initContainers": [
+                    {
+                      "command": [
+                        "sh",
+                        "-c",
+                        "echo The app is running! \u0026\u0026 sleep 30"
+                      ],
+                      "image": "busybox:1.28",
+                      "name": "init-function"
+                    }
+                  ],
+                  "labels": {
+                    "locaction": "mtv"
+                  },
+                  "sidecars": [
+                    {
+                      "command": [
+                        "sh",
+                        "-c",
+                        "echo The app is running! \u0026\u0026 sleep 30000"
+                      ],
+                      "image": "busybox:1.28",
+                      "name": "sidecar-function"
+                    }
+                  ],
+                  "volumes": [
+                    {
+                      "emptyDir": {},
+                      "name": "cache-volume"
+                    }
+                  ]
+                },
+                "pulsar": {
+                  "authSecret": "test-auth",
+                  "pulsarConfig": "test-pulsar",
+                  "tlsSecret": "test-tls"
+                },
+                "replicas": 1,
+                "resources": {
+                  "limits": {
+                    "cpu": "0.2",
+                    "memory": "1.1G"
+                  },
+                  "requests": {
+                    "cpu": "0.1",
+                    "memory": "1G"
+                  }
+                },
+                "secretsMap": {
+                  "name": {
+                    "key": "username",
+                    "path": "test-secret"
+                  },
+                  "pwd": {
+                    "key": "password",
+                    "path": "test-secret"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "mountPath": "/cache",
+                    "name": "cache-volume"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "compute.functionmesh.io/v1alpha1",
+              "kind": "FunctionMesh",
+              "metadata": {
+                "name": "functionmesh-sample"
+              },
+              "spec": {
+                "functions": [
+                  {
+                    "autoAck": true,
+                    "className": "org.apache.pulsar.functions.api.examples.ExclamationFunction",
+                    "clusterName": "test-pulsar",
+                    "forwardSourceMessageProperty": true,
+                    "input": {
+                      "topics": [
+                        "persistent://public/default/functionmesh-input-topic"
+                      ],
+                      "typeClassName": "java.lang.String"
+                    },
+                    "java": {
+                      "jar": "pulsar-functions-api-examples.jar",
+                      "jarLocation": "public/default/nlu-test-functionmesh-ex1"
+                    },
+                    "logTopic": "persistent://public/default/logging-function-log",
+                    "maxReplicas": 1,
+                    "name": "ex1",
+                    "output": {
+                      "topic": "persistent://public/default/mid-topic",
+                      "typeClassName": "java.lang.String"
+                    },
+                    "pulsar": {
+                      "pulsarConfig": "mesh-test-pulsar"
+                    },
+                    "replicas": 1,
+                    "resources": {
+                      "limits": {
+                        "cpu": "0.2",
+                        "memory": "1.1G"
+                      },
+                      "requests": {
+                        "cpu": "0.1",
+                        "memory": "1G"
+                      }
+                    }
+                  },
+                  {
+                    "autoAck": true,
+                    "className": "org.apache.pulsar.functions.api.examples.ExclamationFunction",
+                    "clusterName": "test-pulsar",
+                    "forwardSourceMessageProperty": true,
+                    "input": {
+                      "topics": [
+                        "persistent://public/default/mid-topic"
+                      ],
+                      "typeClassName": "java.lang.String"
+                    },
+                    "java": {
+                      "jar": "pulsar-functions-api-examples.jar",
+                      "jarLocation": "public/default/nlu-test-functionmesh-ex2"
+                    },
+                    "logTopic": "persistent://public/default/logging-function-logs",
+                    "maxReplicas": 1,
+                    "name": "ex2",
+                    "output": {
+                      "topic": "persistent://public/default/functionmesh-output-topic",
+                      "typeClassName": "java.lang.String"
+                    },
+                    "pulsar": {
+                      "pulsarConfig": "mesh-test-pulsar"
+                    },
+                    "replicas": 1,
+                    "resources": {
+                      "limits": {
+                        "cpu": "0.2",
+                        "memory": "1.1G"
+                      },
+                      "requests": {
+                        "cpu": "0.1",
+                        "memory": "1G"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "compute.functionmesh.io/v1alpha1",
+              "kind": "Sink",
+              "metadata": {
+                "name": "sink-sample"
+              },
+              "spec": {
+                "autoAck": true,
+                "className": "org.apache.pulsar.io.elasticsearch.ElasticSearchSink",
+                "clusterName": "test-pulsar",
+                "image": "streamnative/pulsar-io-elastic-search:2.10.0.0-rc10",
+                "input": {
+                  "topics": [
+                    "persistent://public/default/input"
+                  ],
+                  "typeClassName": "[B"
+                },
+                "java": {
+                  "jar": "connectors/pulsar-io-elastic-search-2.10.0.0-rc10.nar",
+                  "jarLocation": ""
+                },
+                "maxReplicas": 1,
+                "pulsar": {
+                  "pulsarConfig": "test-sink"
+                },
+                "replicas": 1,
+                "resources": {
+                  "limits": {
+                    "cpu": "0.2",
+                    "memory": "1.1G"
+                  },
+                  "requests": {
+                    "cpu": "0.1",
+                    "memory": "1G"
+                  }
+                },
+                "sinkConfig": {
+                  "elasticSearchUrl": "http://quickstart-es-http.default.svc.cluster.local:9200",
+                  "indexName": "my_index",
+                  "password": "wJ757TmoXEd941kXm07Z2GW3",
+                  "typeName": "doc",
+                  "username": "elastic"
+                }
+              }
+            },
+            {
+              "apiVersion": "compute.functionmesh.io/v1alpha1",
+              "kind": "Source",
+              "metadata": {
+                "name": "source-sample"
+              },
+              "spec": {
+                "className": "org.apache.pulsar.io.debezium.mongodb.DebeziumMongoDbSource",
+                "clusterName": "test-pulsar",
+                "forwardSourceMessageProperty": true,
+                "image": "streamnative/pulsar-io-debezium-mongodb:2.10.0.0-rc10",
+                "java": {
+                  "jar": "connectors/pulsar-io-debezium-mongodb-2.10.0.0-rc10.nar",
+                  "jarLocation": ""
+                },
+                "maxReplicas": 1,
+                "output": {
+                  "producerConf": {
+                    "maxPendingMessages": 1000,
+                    "maxPendingMessagesAcrossPartitions": 50000,
+                    "useThreadLocalProducers": true
+                  },
+                  "topic": "persistent://public/default/destination",
+                  "typeClassName": "org.apache.pulsar.common.schema.KeyValue"
+                },
+                "pulsar": {
+                  "pulsarConfig": "test-source"
+                },
+                "replicas": 1,
+                "resources": {
+                  "limits": {
+                    "cpu": "0.2",
+                    "memory": "1.1G"
+                  },
+                  "requests": {
+                    "cpu": "0.1",
+                    "memory": "1G"
+                  }
+                },
+                "sourceConfig": {
+                  "database.whitelist": "inventory",
+                  "mongodb.hosts": "rs0/mongo-dbz-0.mongo.default.svc.cluster.local:27017,rs0/mongo-dbz-1.mongo.default.svc.cluster.local:27017,rs0/mongo-dbz-2.mongo.default.svc.cluster.local:27017",
+                  "mongodb.name": "dbserver1",
+                  "mongodb.password": "dbz",
+                  "mongodb.task.id": "1",
+                  "mongodb.user": "debezium",
+                  "pulsar.service.url": "pulsar://test-pulsar-broker.default.svc.cluster.local:6650"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        containerImage: quay.io/streamnativeio/function-mesh@sha256:15ab33a8e2726416a05e034184a2253d33871aba40e6f41347511caf47e08d36
+        createdAt: "2022-09-23T08:54:56Z"
+        description: The Function Mesh Operator manages the Pulsar Functions and Connectors
+          deployed on a Kubernetes cluster.
+        olm.skipRange: <0.6.0
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/streamnative/function-mesh
+        support: StreamNative
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: FunctionMesh is the Schema for the functionmeshes API
+          displayName: Mesh
+          kind: FunctionMesh
+          name: functionmeshes.compute.functionmesh.io
+          version: v1alpha1
+        - description: Function is the Schema for the functions API
+          displayName: Function
+          kind: Function
+          name: functions.compute.functionmesh.io
+          version: v1alpha1
+        - description: Sink is the Schema for the sinks API
+          displayName: Sink
+          kind: Sink
+          name: sinks.compute.functionmesh.io
+          version: v1alpha1
+        - description: Source is the Schema for the sources API
+          displayName: Source
+          kind: Source
+          name: sources.compute.functionmesh.io
+          version: v1alpha1
+      description: |
+        [Function Mesh](https://functionmesh.io/) is a serverless framework purpose-built for stream processing applications. It brings powerful event-streaming capabilities to your applications by orchestrating multiple [Pulsar Functions](http://pulsar.apache.org/docs/en/next/functions-overview/) and [Pulsar IO connectors](http://pulsar.apache.org/docs/en/next/io-overview/) for complex stream processing jobs on Kubernetes.
+        Prerequisites:
+        - Install cert-manager operator first.
+      displayName: Function Mesh Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - pulsar
+      - function-mesh
+      - serverless
+      - pulsar-functions
+      - pulsar-io-connectors
+      - StreamNative
+      links:
+      - name: Function Mesh
+        url: https://function-mesh.io
+      maintainers:
+      - email: function-mesh@streamnative.io
+        name: Function Mesh
+      maturity: alpha
+      minKubeVersion: v1.17.0
+      provider:
+        name: StreamNative
+        url: https://streamnative.io
+      relatedImages:
+      - docker.cloudsmith.io/streamnative/mirrors/gcr.io/kubebuilder/kube-rbac-proxy@sha256:67ecb332573384515406ebd71816781366b70adb0eb66345e5980e92603373e1
+      - quay.io/streamnativeio/function-mesh@sha256:15ab33a8e2726416a05e034184a2253d33871aba40e6f41347511caf47e08d36
+      version: 0.6.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: function-mesh
+  provider:
+    name: StreamNative
+    url: https://streamnative.io

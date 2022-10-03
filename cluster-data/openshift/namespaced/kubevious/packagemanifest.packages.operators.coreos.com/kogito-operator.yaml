@@ -1,0 +1,313 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operator-kogitocloud: "true"
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat
+    provider-url: ""
+  name: kogito-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kogito-operator.v1.28.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoBuild",
+              "metadata": {
+                "name": "process-quarkus-example"
+              },
+              "spec": {
+                "gitSource": {
+                  "contextDir": "process-quarkus-example",
+                  "uri": "https://github.com/kiegroup/kogito-examples"
+                },
+                "type": "RemoteSource"
+              }
+            },
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoInfra",
+              "metadata": {
+                "name": "kogito-infinispan-infra"
+              },
+              "spec": {
+                "resource": {
+                  "apiVersion": "infinispan.org/v1",
+                  "kind": "Infinispan"
+                }
+              }
+            },
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoRuntime",
+              "metadata": {
+                "name": "process-quarkus-example"
+              },
+              "spec": {
+                "replicas": 1
+              }
+            },
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoSupportingService",
+              "metadata": {
+                "name": "kogito-jobs-service"
+              },
+              "spec": {
+                "replicas": 1,
+                "serviceType": "JobsService"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/kiegroup/kogito-operator:1.28.0
+        createdAt: "2019-08-22T13:12:22Z"
+        description: Kogito Operator for deployment and management of Kogito services.
+        operators.operatorframework.io/builder: operator-sdk-v1.21.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/kiegroup/kogito-operator
+        support: Red Hat
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: KogitoBuild handles how to build a custom Kogito service in
+            a Kubernetes/OpenShift cluster.
+          displayName: Kogito Build
+          kind: KogitoBuild
+          name: kogitobuilds.app.kiegroup.org
+          version: v1beta1
+        - description: "KogitoInfra is the resource to bind a Custom Resource (CR)
+            not managed by Kogito Operator to a given deployed Kogito service. \n
+            It holds the reference of a CR managed by another operator such as Strimzi.
+            For example: one can create a Kafka CR via Strimzi and link this resource
+            using KogitoInfra to a given Kogito service (custom or supporting, such
+            as Data Index). \n Please refer to the Kogito Operator documentation (https://docs.jboss.org/kogito/release/latest/html_single/)
+            for more information."
+          displayName: Kogito Infra
+          kind: KogitoInfra
+          name: kogitoinfras.app.kiegroup.org
+          version: v1beta1
+        - description: KogitoRuntime is a custom Kogito service.
+          displayName: Kogito Runtime
+          kind: KogitoRuntime
+          name: kogitoruntimes.app.kiegroup.org
+          version: v1beta1
+        - description: KogitoSupportingService deploys the Supporting service in the
+            given namespace.
+          displayName: Kogito Supporting Service
+          kind: KogitoSupportingService
+          name: kogitosupportingservices.app.kiegroup.org
+          version: v1beta1
+      description: |-
+        Kogito Operator is designed to deploy Kogito services from source (only on OpenShift) and every piece of infrastructure that the services might need:
+
+        * Creates two kinds of build configuration: Native or JVM. For more information refer to [Native build and deployment](https://docs.jboss.org/kogito/release/latest/html_single/#_native_build_and_deployment) section on our docs
+        * Builds a Kogito service from a remote git repository and creates a custom image for the given runtime: Quarkus or Springboot. [See more](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-deployment-options_kogito-deploying-on-openshift).
+        * Installs the [Kogito Data Index Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-data-index-service_kogito-deploying-on-openshift) to enable data index feature for Kogito services.
+        * Installs the [Kogito Jobs Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-jobs-service_kogito-deploying-on-openshift) to enable jobs scheduling.
+
+        For Kubernetes deployment of Kogito services, please refer to the section [Deploying Kogito services on Kubernetes](https://docs.jboss.org/kogito/release/latest/html_single/#proc-kogito-deploying-on-kubernetes_kogito-deploying-on-openshift) on our docs.
+
+        **IMPORTANT!** Kogito Operator might need Infinispan Operator and Strimzi to implement persistence and messaging use cases if you do not provide these services beforehand.
+        If you need these features to be automatically provisioned for you, bear in mind that those operators must be installed in the same namespace as the Kogito Operator.
+      displayName: Kogito
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - cloud
+      - kogito
+      - quarkus
+      - springboot
+      - operator
+      - native
+      - automation
+      links:
+      - name: Product Page
+        url: https://kogito.kie.org/
+      - name: Documentation
+        url: https://github.com/kiegroup/kogito-operator/blob/main/README.md
+      - name: Source
+        url: https://github.com/kiegroup/kogito-operator/
+      maintainers:
+      - email: bsig-cloud@redhat.com
+        name: Red Hat
+      maturity: beta
+      provider:
+        name: Red Hat
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
+      - quay.io/kiegroup/kogito-operator:1.28.0
+      version: 1.28.0
+    name: alpha
+  - currentCSV: kogito-operator.v1.28.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoBuild",
+              "metadata": {
+                "name": "process-quarkus-example"
+              },
+              "spec": {
+                "gitSource": {
+                  "contextDir": "process-quarkus-example",
+                  "uri": "https://github.com/kiegroup/kogito-examples"
+                },
+                "type": "RemoteSource"
+              }
+            },
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoInfra",
+              "metadata": {
+                "name": "kogito-infinispan-infra"
+              },
+              "spec": {
+                "resource": {
+                  "apiVersion": "infinispan.org/v1",
+                  "kind": "Infinispan"
+                }
+              }
+            },
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoRuntime",
+              "metadata": {
+                "name": "process-quarkus-example"
+              },
+              "spec": {
+                "replicas": 1
+              }
+            },
+            {
+              "apiVersion": "app.kiegroup.org/v1beta1",
+              "kind": "KogitoSupportingService",
+              "metadata": {
+                "name": "kogito-jobs-service"
+              },
+              "spec": {
+                "replicas": 1,
+                "serviceType": "JobsService"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/kiegroup/kogito-operator:1.28.0
+        createdAt: "2019-08-22T13:12:22Z"
+        description: Kogito Operator for deployment and management of Kogito services.
+        operators.operatorframework.io/builder: operator-sdk-v1.21.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/kiegroup/kogito-operator
+        support: Red Hat
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: KogitoBuild handles how to build a custom Kogito service in
+            a Kubernetes/OpenShift cluster.
+          displayName: Kogito Build
+          kind: KogitoBuild
+          name: kogitobuilds.app.kiegroup.org
+          version: v1beta1
+        - description: "KogitoInfra is the resource to bind a Custom Resource (CR)
+            not managed by Kogito Operator to a given deployed Kogito service. \n
+            It holds the reference of a CR managed by another operator such as Strimzi.
+            For example: one can create a Kafka CR via Strimzi and link this resource
+            using KogitoInfra to a given Kogito service (custom or supporting, such
+            as Data Index). \n Please refer to the Kogito Operator documentation (https://docs.jboss.org/kogito/release/latest/html_single/)
+            for more information."
+          displayName: Kogito Infra
+          kind: KogitoInfra
+          name: kogitoinfras.app.kiegroup.org
+          version: v1beta1
+        - description: KogitoRuntime is a custom Kogito service.
+          displayName: Kogito Runtime
+          kind: KogitoRuntime
+          name: kogitoruntimes.app.kiegroup.org
+          version: v1beta1
+        - description: KogitoSupportingService deploys the Supporting service in the
+            given namespace.
+          displayName: Kogito Supporting Service
+          kind: KogitoSupportingService
+          name: kogitosupportingservices.app.kiegroup.org
+          version: v1beta1
+      description: |-
+        Kogito Operator is designed to deploy Kogito services from source (only on OpenShift) and every piece of infrastructure that the services might need:
+
+        * Creates two kinds of build configuration: Native or JVM. For more information refer to [Native build and deployment](https://docs.jboss.org/kogito/release/latest/html_single/#_native_build_and_deployment) section on our docs
+        * Builds a Kogito service from a remote git repository and creates a custom image for the given runtime: Quarkus or Springboot. [See more](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-deployment-options_kogito-deploying-on-openshift).
+        * Installs the [Kogito Data Index Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-data-index-service_kogito-deploying-on-openshift) to enable data index feature for Kogito services.
+        * Installs the [Kogito Jobs Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-jobs-service_kogito-deploying-on-openshift) to enable jobs scheduling.
+
+        For Kubernetes deployment of Kogito services, please refer to the section [Deploying Kogito services on Kubernetes](https://docs.jboss.org/kogito/release/latest/html_single/#proc-kogito-deploying-on-kubernetes_kogito-deploying-on-openshift) on our docs.
+
+        **IMPORTANT!** Kogito Operator might need Infinispan Operator and Strimzi to implement persistence and messaging use cases if you do not provide these services beforehand.
+        If you need these features to be automatically provisioned for you, bear in mind that those operators must be installed in the same namespace as the Kogito Operator.
+      displayName: Kogito
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - cloud
+      - kogito
+      - quarkus
+      - springboot
+      - operator
+      - native
+      - automation
+      links:
+      - name: Product Page
+        url: https://kogito.kie.org/
+      - name: Documentation
+        url: https://github.com/kiegroup/kogito-operator/blob/main/README.md
+      - name: Source
+        url: https://github.com/kiegroup/kogito-operator/
+      maintainers:
+      - email: bsig-cloud@redhat.com
+        name: Red Hat
+      maturity: beta
+      provider:
+        name: Red Hat
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
+      - quay.io/kiegroup/kogito-operator:1.28.0
+      version: 1.28.0
+    name: 1.x
+  defaultChannel: 1.x
+  packageName: kogito-operator
+  provider:
+    name: Red Hat

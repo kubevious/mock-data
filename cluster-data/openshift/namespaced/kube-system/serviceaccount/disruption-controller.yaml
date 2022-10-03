@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: disruption-controller-dockercfg-947g7
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:04Z"
+  name: disruption-controller
+  namespace: kube-system
+  resourceVersion: "1236"
+  uid: 6783a1b1-81ef-4764-a2c2-6d47c7eb7e07
+secrets:
+- name: disruption-controller-token-586df
+- name: disruption-controller-dockercfg-947g7

@@ -1,0 +1,31 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  annotations:
+    operators.operatorframework.io/index-image: quay.io/operator-framework/opm:latest
+    operators.operatorframework.io/injected-bundles: '[{"imageTag":"docker.io/kubevious/operator-bundle:v0.0.38","mode":"semver"}]'
+    operators.operatorframework.io/registry-pod-name: docker-io-kubevious-operator-bundle-v0-0-38
+  creationTimestamp: "2022-10-03T18:35:06Z"
+  generation: 2
+  name: kubevious-operator-catalog
+  namespace: kubevious
+  resourceVersion: "30459"
+  uid: 6a2e6f81-bb9d-47a9-9e87-13bf294860df
+spec:
+  address: 10.244.0.21:50051
+  displayName: kubevious-operator
+  icon:
+    base64data: ""
+    mediatype: ""
+  publisher: operator-sdk
+  secrets:
+  - ""
+  sourceType: grpc
+status:
+  connectionState:
+    address: 10.244.0.21:50051
+    lastConnect: "2022-10-03T18:35:10Z"
+    lastObservedState: READY
+  registryService:
+    createdAt: "2022-10-03T18:35:09Z"
+    protocol: grpc

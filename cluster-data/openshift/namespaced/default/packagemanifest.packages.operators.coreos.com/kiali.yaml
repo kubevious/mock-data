@@ -1,0 +1,292 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Kiali
+    provider-url: ""
+  name: kiali
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kiali-operator.v1.56.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "kiali.io/v1alpha1",
+              "kind": "Kiali",
+              "metadata": {
+                "name": "kiali"
+              },
+              "spec": {
+                "installation_tag": "My Kiali",
+                "istio_namespace": "istio-system",
+                "deployment": {
+                  "namespace": "default",
+                  "view_only_mode": false
+                },
+                "server": {
+                  "web_root": "/mykiali"
+                }
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Monitoring,Logging & Tracing
+        certified: "false"
+        containerImage: quay.io/kiali/kiali-operator:v1.56.0
+        createdAt: "2022-09-05T07:34:07Z"
+        description: 'Kiali project provides answers to the questions: What microservices
+          are part of my Istio service mesh and how are they connected?'
+        olm.skipRange: '>=1.0.0 <1.56.0'
+        repository: https://github.com/kiali/kiali
+        support: Kiali
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A configuration file for a Kiali installation.
+          displayName: Kiali
+          kind: Kiali
+          name: kialis.kiali.io
+          version: v1alpha1
+      description: |-
+        ## About the managed application
+
+        A Microservice Architecture breaks up the monolith into many smaller pieces
+        that are composed together. Patterns to secure the communication between
+        services like fault tolerance (via timeout, retry, circuit breaking, etc.)
+        have come up as well as distributed tracing to be able to see where calls
+        are going.
+
+        A service mesh can now provide these services on a platform level and frees
+        the application writers from those tasks. Routing decisions are done at the
+        mesh level.
+
+        Kiali works with Istio, in OpenShift or Kubernetes, to visualize the service
+        mesh topology, to provide visibility into features like circuit breakers,
+        request rates and more. It offers insights about the mesh components at
+        different levels, from abstract Applications to Services and Workloads.
+
+        See [https://www.kiali.io](https://www.kiali.io) to read more.
+
+        ### Accessing the UI
+
+        The Kiali operator can expose the Kiali UI as a Route on OpenShift
+        or Ingress on Kubernetes.
+
+        On OpenShift, the default root context path is '/' and on Kubernetes it is
+        '/kiali' though you can change this by configuring the 'web_root' setting in
+        the Kiali CR.
+
+        ## About this Operator
+
+        ### Kiali Custom Resource Configuration Settings
+
+        For quick descriptions of all the settings you can configure in the Kiali
+        Custom Resource (CR), see
+        [the kiali.io docs](https://kiali.io/docs/configuration/kialis.kiali.io/).
+
+        Note that the Kiali operator can be told to restrict Kiali's access to
+        specific namespaces, or can provide to Kiali cluster-wide access to all
+        namespaces.
+
+        ## Prerequisites for enabling this Operator
+
+        Today Kiali works with Istio. So before you install Kiali, you must have
+        already installed Istio.
+        If you already have Kiali in your Istio environment and you want to
+        install Kiali via the Kiali Operator, uninstall the installed Kiali first.
+
+        When you install Kiali in a non-OpenShift Kubernetes environment, the
+        authentication strategy will default to `token`.
+
+        If you wish to use the `openid` authentication strategy, you must have an
+        OpenID Connect available and accessible to Kiali.
+      displayName: Kiali Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - service-mesh
+      - observability
+      - monitoring
+      - maistra
+      - istio
+      links:
+      - name: Installation Guide
+        url: https://www.kiali.io/docs/installation
+      - name: Features
+        url: https://www.kiali.io/docs/features
+      - name: Documentation Home
+        url: https://www.kiali.io
+      - name: Blogs and Articles
+        url: https://medium.com/kialiproject
+      - name: Server and UI Source Code
+        url: https://github.com/kiali/kiali
+      - name: Operator Source Code
+        url: https://github.com/kiali/kiali-operator
+      maintainers:
+      - email: kiali-dev@googlegroups.com
+        name: Kiali Developers Google Group
+      maturity: stable
+      provider:
+        name: Kiali
+      relatedImages:
+      - quay.io/kiali/kiali-operator:v1.56.0
+      version: 1.56.0
+    name: alpha
+  - currentCSV: kiali-operator.v1.56.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "kiali.io/v1alpha1",
+              "kind": "Kiali",
+              "metadata": {
+                "name": "kiali"
+              },
+              "spec": {
+                "installation_tag": "My Kiali",
+                "istio_namespace": "istio-system",
+                "deployment": {
+                  "namespace": "default",
+                  "view_only_mode": false
+                },
+                "server": {
+                  "web_root": "/mykiali"
+                }
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Monitoring,Logging & Tracing
+        certified: "false"
+        containerImage: quay.io/kiali/kiali-operator:v1.56.0
+        createdAt: "2022-09-05T07:34:07Z"
+        description: 'Kiali project provides answers to the questions: What microservices
+          are part of my Istio service mesh and how are they connected?'
+        olm.skipRange: '>=1.0.0 <1.56.0'
+        repository: https://github.com/kiali/kiali
+        support: Kiali
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A configuration file for a Kiali installation.
+          displayName: Kiali
+          kind: Kiali
+          name: kialis.kiali.io
+          version: v1alpha1
+      description: |-
+        ## About the managed application
+
+        A Microservice Architecture breaks up the monolith into many smaller pieces
+        that are composed together. Patterns to secure the communication between
+        services like fault tolerance (via timeout, retry, circuit breaking, etc.)
+        have come up as well as distributed tracing to be able to see where calls
+        are going.
+
+        A service mesh can now provide these services on a platform level and frees
+        the application writers from those tasks. Routing decisions are done at the
+        mesh level.
+
+        Kiali works with Istio, in OpenShift or Kubernetes, to visualize the service
+        mesh topology, to provide visibility into features like circuit breakers,
+        request rates and more. It offers insights about the mesh components at
+        different levels, from abstract Applications to Services and Workloads.
+
+        See [https://www.kiali.io](https://www.kiali.io) to read more.
+
+        ### Accessing the UI
+
+        The Kiali operator can expose the Kiali UI as a Route on OpenShift
+        or Ingress on Kubernetes.
+
+        On OpenShift, the default root context path is '/' and on Kubernetes it is
+        '/kiali' though you can change this by configuring the 'web_root' setting in
+        the Kiali CR.
+
+        ## About this Operator
+
+        ### Kiali Custom Resource Configuration Settings
+
+        For quick descriptions of all the settings you can configure in the Kiali
+        Custom Resource (CR), see
+        [the kiali.io docs](https://kiali.io/docs/configuration/kialis.kiali.io/).
+
+        Note that the Kiali operator can be told to restrict Kiali's access to
+        specific namespaces, or can provide to Kiali cluster-wide access to all
+        namespaces.
+
+        ## Prerequisites for enabling this Operator
+
+        Today Kiali works with Istio. So before you install Kiali, you must have
+        already installed Istio.
+        If you already have Kiali in your Istio environment and you want to
+        install Kiali via the Kiali Operator, uninstall the installed Kiali first.
+
+        When you install Kiali in a non-OpenShift Kubernetes environment, the
+        authentication strategy will default to `token`.
+
+        If you wish to use the `openid` authentication strategy, you must have an
+        OpenID Connect available and accessible to Kiali.
+      displayName: Kiali Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - service-mesh
+      - observability
+      - monitoring
+      - maistra
+      - istio
+      links:
+      - name: Installation Guide
+        url: https://www.kiali.io/docs/installation
+      - name: Features
+        url: https://www.kiali.io/docs/features
+      - name: Documentation Home
+        url: https://www.kiali.io
+      - name: Blogs and Articles
+        url: https://medium.com/kialiproject
+      - name: Server and UI Source Code
+        url: https://github.com/kiali/kiali
+      - name: Operator Source Code
+        url: https://github.com/kiali/kiali-operator
+      maintainers:
+      - email: kiali-dev@googlegroups.com
+        name: Kiali Developers Google Group
+      maturity: stable
+      provider:
+        name: Kiali
+      relatedImages:
+      - quay.io/kiali/kiali-operator:v1.56.0
+      version: 1.56.0
+    name: stable
+  defaultChannel: stable
+  packageName: kiali
+  provider:
+    name: Kiali

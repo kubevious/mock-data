@@ -1,0 +1,233 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    olm.operatorGroup: olm-operators
+    olm.operatorNamespace: olm
+    olm.targetNamespaces: olm
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  generation: 2
+  labels:
+    olm.version: v0.22.0
+  name: packageserver
+  namespace: olm
+  resourceVersion: "29277"
+  uid: 7c324ea9-1bf5-463d-8024-733382e205b6
+spec:
+  apiservicedefinitions:
+    owned:
+    - containerPort: 5443
+      deploymentName: packageserver
+      description: A PackageManifest is a resource generated from existing CatalogSources
+        and their ConfigMaps
+      displayName: PackageManifest
+      group: packages.operators.coreos.com
+      kind: PackageManifest
+      name: packagemanifests
+      version: v1
+  cleanup:
+    enabled: false
+  customresourcedefinitions: {}
+  description: Represents an Operator package that is available from a given CatalogSource
+    which will resolve to a ClusterServiceVersion.
+  displayName: Package Server
+  install:
+    spec:
+      clusterPermissions:
+      - rules:
+        - apiGroups:
+          - authorization.k8s.io
+          resources:
+          - subjectaccessreviews
+          verbs:
+          - create
+          - get
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          verbs:
+          - get
+          - list
+          - watch
+        - apiGroups:
+          - operators.coreos.com
+          resources:
+          - catalogsources
+          verbs:
+          - get
+          - list
+          - watch
+        - apiGroups:
+          - packages.operators.coreos.com
+          resources:
+          - packagemanifests
+          verbs:
+          - get
+          - list
+        serviceAccountName: olm-operator-serviceaccount
+      deployments:
+      - name: packageserver
+        spec:
+          replicas: 2
+          selector:
+            matchLabels:
+              app: packageserver
+          strategy:
+            rollingUpdate:
+              maxSurge: 1
+              maxUnavailable: 1
+            type: RollingUpdate
+          template:
+            metadata:
+              creationTimestamp: null
+              labels:
+                app: packageserver
+            spec:
+              containers:
+              - command:
+                - /bin/package-server
+                - -v=4
+                - --secure-port
+                - "5443"
+                - --global-namespace
+                - olm
+                image: quay.io/operator-framework/olm@sha256:2b4fee73c05069d9d2c537c7d3072241097914748abfb938b5b08c969b2f544b
+                imagePullPolicy: Always
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 5443
+                    scheme: HTTPS
+                name: packageserver
+                ports:
+                - containerPort: 5443
+                  protocol: TCP
+                readinessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 5443
+                    scheme: HTTPS
+                resources:
+                  requests:
+                    cpu: 10m
+                    memory: 50Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+                terminationMessagePolicy: FallbackToLogsOnError
+                volumeMounts:
+                - mountPath: /tmp
+                  name: tmpfs
+              nodeSelector:
+                kubernetes.io/os: linux
+              securityContext:
+                runAsNonRoot: true
+                seccompProfile:
+                  type: RuntimeDefault
+              serviceAccountName: olm-operator-serviceaccount
+              volumes:
+              - emptyDir: {}
+                name: tmpfs
+    strategy: deployment
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: true
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - packagemanifests
+  - olm
+  - packages
+  links:
+  - name: Package Server
+    url: https://github.com/operator-framework/operator-lifecycle-manager/tree/master/pkg/package-server
+  maintainers:
+  - email: openshift-operators@redhat.com
+    name: Red Hat
+  maturity: alpha
+  minKubeVersion: 1.11.0
+  provider:
+    name: Red Hat
+  version: 0.22.0
+status:
+  certsLastUpdated: "2022-10-03T18:25:23Z"
+  certsRotateAt: "2024-10-01T18:25:23Z"
+  cleanup: {}
+  conditions:
+  - lastTransitionTime: "2022-10-03T18:25:23Z"
+    lastUpdateTime: "2022-10-03T18:25:23Z"
+    message: requirements not yet checked
+    phase: Pending
+    reason: RequirementsUnknown
+  - lastTransitionTime: "2022-10-03T18:25:23Z"
+    lastUpdateTime: "2022-10-03T18:25:23Z"
+    message: all requirements found, attempting install
+    phase: InstallReady
+    reason: AllRequirementsMet
+  - lastTransitionTime: "2022-10-03T18:25:23Z"
+    lastUpdateTime: "2022-10-03T18:25:23Z"
+    message: waiting for install components to report healthy
+    phase: Installing
+    reason: InstallSucceeded
+  - lastTransitionTime: "2022-10-03T18:25:23Z"
+    lastUpdateTime: "2022-10-03T18:25:23Z"
+    message: apiServices not installed
+    phase: Installing
+    reason: InstallWaiting
+  - lastTransitionTime: "2022-10-03T18:25:32Z"
+    lastUpdateTime: "2022-10-03T18:25:32Z"
+    message: install strategy completed with no errors
+    phase: Succeeded
+    reason: InstallSucceeded
+  lastTransitionTime: "2022-10-03T18:25:32Z"
+  lastUpdateTime: "2022-10-03T18:25:32Z"
+  message: install strategy completed with no errors
+  phase: Succeeded
+  reason: InstallSucceeded
+  requirementStatus:
+  - group: operators.coreos.com
+    kind: ClusterServiceVersion
+    message: CSV minKubeVersion (1.11.0) less than server version (v1.24.0)
+    name: packageserver
+    status: Present
+    version: v1alpha1
+  - group: apiregistration.k8s.io
+    kind: APIService
+    message: ""
+    name: v1.packages.operators.coreos.com
+    status: DeploymentFound
+    version: v1
+  - dependents:
+    - group: rbac.authorization.k8s.io
+      kind: PolicyRule
+      message: cluster rule:{"verbs":["create","get"],"apiGroups":["authorization.k8s.io"],"resources":["subjectaccessreviews"]}
+      status: Satisfied
+      version: v1
+    - group: rbac.authorization.k8s.io
+      kind: PolicyRule
+      message: cluster rule:{"verbs":["get","list","watch"],"apiGroups":[""],"resources":["configmaps"]}
+      status: Satisfied
+      version: v1
+    - group: rbac.authorization.k8s.io
+      kind: PolicyRule
+      message: cluster rule:{"verbs":["get","list","watch"],"apiGroups":["operators.coreos.com"],"resources":["catalogsources"]}
+      status: Satisfied
+      version: v1
+    - group: rbac.authorization.k8s.io
+      kind: PolicyRule
+      message: cluster rule:{"verbs":["get","list"],"apiGroups":["packages.operators.coreos.com"],"resources":["packagemanifests"]}
+      status: Satisfied
+      version: v1
+    group: ""
+    kind: ServiceAccount
+    message: ""
+    name: olm-operator-serviceaccount
+    status: Present
+    version: v1

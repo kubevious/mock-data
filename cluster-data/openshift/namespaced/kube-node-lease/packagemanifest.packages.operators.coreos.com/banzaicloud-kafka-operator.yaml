@@ -1,0 +1,462 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Banzai Cloud
+    provider-url: ""
+  name: banzaicloud-kafka-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: banzaicloud-kafka-operator.0.3.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion": "banzaicloud.banzaicloud.io/v1alpha1",
+              "kind": "KafkaCluster",
+              "metadata": {
+                "name": "kafka-sample"
+              },
+              "spec": {
+                "zkAddresses": [
+                  "example-zookeepercluster-client.zookeeper:2181"
+                ],
+                "brokerConfigs": [
+                  {
+                    "image": "wurstmeister/kafka:2.12-2.1.0",
+                    "id": 0,
+                    "storageConfigs": [
+                      {
+                        "mountPath": "/kafka-logs",
+                        "pvcSpec": {
+                          "accessModes": [
+                            "ReadWriteOnce"
+                          ],
+                          "resources": {
+                            "requests": {
+                              "storage": "10Gi"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "image": "wurstmeister/kafka:2.12-2.1.0",
+                    "id": 1,
+                    "storageConfigs": [
+                      {
+                        "mountPath": "/kafka-logs",
+                        "pvcSpec": {
+                          "accessModes": [
+                            "ReadWriteOnce"
+                          ],
+                          "resources": {
+                            "requests": {
+                              "storage": "10Gi"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "image": "wurstmeister/kafka:2.12-2.1.0",
+                    "id": 2,
+                    "storageConfigs": [
+                      {
+                        "mountPath": "/kafka-logs",
+                        "pvcSpec": {
+                          "accessModes": [
+                            "ReadWriteOnce"
+                          ],
+                          "resources": {
+                            "requests": {
+                              "storage": "10Gi"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "image": "wurstmeister/kafka:2.12-2.1.0",
+                    "id": 3,
+                    "storageConfigs": [
+                      {
+                        "mountPath": "/kafka-logs",
+                        "pvcSpec": {
+                          "accessModes": [
+                            "ReadWriteOnce"
+                          ],
+                          "resources": {
+                            "requests": {
+                              "storage": "10Gi"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "listenersConfig": {
+                  "externalListeners": [
+                    {
+                      "type": "plaintext",
+                      "name": "external",
+                      "externalStartingPort": 19090,
+                      "containerPort": 9094
+                    }
+                  ],
+                  "internalListeners": [
+                    {
+                      "type": "plaintext",
+                      "name": "plaintext",
+                      "containerPort": 29092,
+                      "usedForInnerBrokerCommunication": true
+                    }
+                  ]
+                },
+                "serviceAccount": ""
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging, Big Data
+        certified: "false"
+        containerImage: banzaicloud/kafka-operator:0.3.1
+        createdAt: "2019-05-28T08:00:00Z"
+        description: Installs and maintains Kafka
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/banzaicloud/kafka-operator/tree/master
+        support: Banzai Cloud
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an Kafka cluster
+          displayName: Kafka cluster
+          kind: KafkaCluster
+          name: kafkaclusters.kafka.banzaicloud.io
+          version: v1alpha1
+      description: |
+        The Banzai Cloud Kafka operator is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
+
+        ## Overview
+
+        Apache Kafka is an open-source distributed streaming platform, and some of the main features of the **Kafka-operator** are:
+
+        - the provisioning of secure and production ready Kafka clusters
+        - **fine grained** broker configuration support
+        - advanced and highly configurable External Access via LoadBalancers using **Envoy**
+        - graceful Kafka cluster **scaling and rebalancing**
+        - monitoring via **Prometheus**
+        - encrypted communication using SSL
+        - automatic reaction and self healing based on alerts (plugin system, with meaningful default alert plugins) using **Cruise Control**
+
+        ## Prerequisites
+
+        Kafka requires Zookeeper so you need to first have a Zookeeper cluster if you don't already have one.
+
+        #### Install Zookeeper
+
+        To install Zookeeper we recommend using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
+        You can deploy Zookeeper by using the Helm chart.
+
+        ```bash
+        helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
+        helm install --name zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
+        kubectl create --namespace zookeeper -f - <<EOF
+        apiVersion: zookeeper.pravega.io/v1beta1
+        kind: ZookeeperCluster
+        metadata:
+          name: example-zookeepercluster
+          namespace: zookeeper
+        spec:
+          replicas: 3
+        EOF
+
+        ```
+      displayName: Banzai Cloud Kafka Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - kafka
+      - cruise control
+      - messaging
+      - streaming
+      - banzaicloud
+      - open source
+      links:
+      - name: Blog
+        url: https://banzaicloud.com/tags/kafka-operator
+      - name: Documentation
+        url: https://github.com/banzaicloud/kafka-operator/blob/master/README.md
+      - name: Kafka Operator Source Code
+        url: https://github.com/banzaicloud/kafka-operator/tree/master
+      maintainers:
+      - email: info@banzaicloud.com
+        name: Banzai Cloud
+      maturity: beta
+      minKubeVersion: 1.12.0
+      provider:
+        name: Banzai Cloud
+      relatedImages:
+      - banzaicloud/kafka-operator:0.3.1
+      version: 0.3.1
+    name: original
+  - currentCSV: banzaicloud-kafka-operator.0.6.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion": "kafka.banzaicloud.io/v1beta1",
+              "kind": "KafkaCluster",
+              "metadata": {
+                  "labels": {
+                    "controller-tools.k8s.io": "1.0"
+                  },
+                  "name": "kafka"
+              },
+              "spec": {
+                  "headlessServiceEnabled": true,
+                  "zkAddresses": [
+                    "example-zookeepercluster-client.zookeeper:2181"
+                  ],
+                  "oneBrokerPerNode": false,
+                  "clusterImage": "wurstmeister/kafka:2.12-2.1.0",
+                  "readOnlyConfig": "auto.create.topics.enable=false\n",
+                  "brokerConfigGroups": {
+                    "default": {
+                        "storageConfigs": [
+                          {
+                              "mountPath": "/kafka-logs",
+                              "pvcSpec": {
+                                "accessModes": [
+                                    "ReadWriteOnce"
+                                ],
+                                "resources": {
+                                    "requests": {
+                                      "storage": "10Gi"
+                                    }
+                                }
+                              }
+                          }
+                        ]
+                    }
+                  },
+                  "brokers": [
+                    {
+                        "id": 0,
+                        "brokerConfigGroup": "default"
+                    },
+                    {
+                        "id": 1,
+                        "brokerConfigGroup": "default"
+                    },
+                    {
+                        "id": 2,
+                        "brokerConfigGroup": "default"
+                    }
+                  ],
+                  "rollingUpgradeConfig": {
+                    "failureThreshold": 1
+                  },
+                  "listenersConfig": {
+                    "internalListeners": [
+                        {
+                          "type": "plaintext",
+                          "name": "plaintext",
+                          "containerPort": 29092,
+                          "usedForInnerBrokerCommunication": true
+                        }
+                    ]
+                  },
+                  "cruiseControlConfig": {
+                    "config": "num.metric.fetchers=1\nmetric.sampler.class=com.linkedin.kafka.cruisecontrol.monitor.sampling.CruiseControlMetricsReporterSampler\nmetric.reporter.topic.pattern=__CruiseControlMetrics\nsample.store.class=com.linkedin.kafka.cruisecontrol.monitor.sampling.KafkaSampleStore\npartition.metric.sample.store.topic=__KafkaCruiseControlPartitionMetricSamples\nbroker.metric.sample.store.topic=__KafkaCruiseControlModelTrainingSamples\nsample.store.topic.replication.factor=2\nnum.sample.loading.threads=8\nmetric.sampler.partition.assignor.class=com.linkedin.kafka.cruisecontrol.monitor.sampling.DefaultMetricSamplerPartitionAssignor\nmetric.sampling.interval.ms=120000\npartition.metrics.window.ms=300000\nnum.partition.metrics.windows=1\nmin.samples.per.partition.metrics.window=1\nbroker.metrics.window.ms=300000\nnum.broker.metrics.windows=20\nmin.samples.per.broker.metrics.window=1\ncapacity.config.file=config/capacity.json\ndefault.goals=com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.PotentialNwOutGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.TopicReplicaDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.LeaderBytesInDistributionGoal\ngoals=com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.PotentialNwOutGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.TopicReplicaDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.LeaderBytesInDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.kafkaassigner.KafkaAssignerDiskUsageDistributionGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.PreferredLeaderElectionGoal\nhard.goals=com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuCapacityGoal\nmin.monitored.partition.percentage=0.95\ncpu.balance.threshold=1.1\ndisk.balance.threshold=1.1\nnetwork.inbound.balance.threshold=1.1\nnetwork.outbound.balance.threshold=1.1\nreplica.count.balance.threshold=1.1\ncpu.capacity.threshold=0.8\ndisk.capacity.threshold=0.8\nnetwork.inbound.capacity.threshold=0.8\nnetwork.outbound.capacity.threshold=0.8\ncpu.low.utilization.threshold=0.0\ndisk.low.utilization.threshold=0.0\nnetwork.inbound.low.utilization.threshold=0.0\nnetwork.outbound.low.utilization.threshold=0.0\nmetric.anomaly.percentile.upper.threshold=90.0\nmetric.anomaly.percentile.lower.threshold=10.0\nproposal.expiration.ms=60000\nmax.replicas.per.broker=10000\nnum.proposal.precompute.threads=1\nnum.concurrent.partition.movements.per.broker=10\nexecution.progress.check.interval.ms=10000\nanomaly.notifier.class=com.linkedin.kafka.cruisecontrol.detector.notifier.SelfHealingNotifier\nmetric.anomaly.finder.class=com.linkedin.kafka.cruisecontrol.detector.KafkaMetricAnomalyFinder\nanomaly.detection.interval.ms=10000\nanomaly.detection.goals=com.linkedin.kafka.cruisecontrol.analyzer.goals.ReplicaCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.DiskCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal,com.linkedin.kafka.cruisecontrol.analyzer.goals.CpuCapacityGoal\nmetric.anomaly.analyzer.metrics=BROKER_PRODUCE_LOCAL_TIME_MS_MAX,BROKER_PRODUCE_LOCAL_TIME_MS_MEAN,BROKER_CONSUMER_FETCH_LOCAL_TIME_MS_MAX,BROKER_CONSUMER_FETCH_LOCAL_TIME_MS_MEAN,BROKER_FOLLOWER_FETCH_LOCAL_TIME_MS_MAX,BROKER_FOLLOWER_FETCH_LOCAL_TIME_MS_MEAN,BROKER_LOG_FLUSH_TIME_MS_MAX,BROKER_LOG_FLUSH_TIME_MS_MEAN\nfailed.brokers.zk.path=/CruiseControlBrokerList\ntopic.config.provider.class=com.linkedin.kafka.cruisecontrol.config.KafkaTopicConfigProvider\ncluster.configs.file=config/clusterConfigs.json\ncompleted.user.task.retention.time.ms=21600000\ndemotion.history.retention.time.ms=86400000\nmax.cached.completed.user.tasks=100\nmax.active.user.tasks=5\nself.healing.enabled=true\nwebserver.http.port=9090\nwebserver.http.address=0.0.0.0\nwebserver.http.cors.enabled=false\nwebserver.http.cors.origin=http://localhost:8080/\nwebserver.http.cors.allowmethods=OPTIONS,GET,POST\nwebserver.http.cors.exposeheaders=User-Task-ID\nwebserver.api.urlprefix=/kafkacruisecontrol/*\nwebserver.ui.diskpath=./cruise-control-ui/dist/\nwebserver.ui.urlprefix=/*\nwebserver.request.maxBlockTimeMs=10000\nwebserver.session.maxExpiryTimeMs=60000\nwebserver.session.path=/\nwebserver.accesslog.enabled=true\nwebserver.accesslog.path=access.log\nwebserver.accesslog.retention.days=14\n",
+                    "capacityConfig": "{\n  \"brokerCapacities\":[\n    {\n      \"brokerId\": \"-1\",\n      \"capacity\": {\n        \"DISK\": \"10000\",\n        \"CPU\": \"100\",\n        \"NW_IN\": \"10000\",\n        \"NW_OUT\": \"10000\"\n      },\n      \"doc\": \"This is the default capacity. Capacity unit used for disk is in MB, cpu is in percentage, network throughput is in KB.\"\n    }\n  ]\n}\n",
+                    "clusterConfig": "{\n  \"min.insync.replicas\": 3\n}\n"
+                  }
+              }
+            },
+            {
+              "apiVersion": "kafka.banzaicloud.io/v1alpha1",
+              "kind": "KafkaTopic",
+              "metadata": {
+                  "name": "example-topic",
+                  "namespace": "kafka"
+              },
+              "spec": {
+                  "clusterRef": {
+                    "name": "kafka"
+                  },
+                  "name": "example-topic",
+                  "partitions": 3,
+                  "replicationFactor": 2,
+                  "config": {
+                    "retention.ms": "604800000",
+                    "cleanup.policy": "delete"
+                  }
+              }
+            },
+            {
+              "apiVersion": "kafka.banzaicloud.io/v1alpha1",
+              "kind": "KafkaUser",
+              "metadata": {
+                  "name": "example-kafkauser",
+                  "namespace": "kafka"
+              },
+              "spec": {
+                  "clusterRef": {
+                    "name": "kafka"
+                  },
+                  "secretName": "example-kafkauser-secret",
+                  "topicGrants": [
+                    {
+                        "topicName": "example-topic",
+                        "accessType": "read"
+                    },
+                    {
+                        "topicName": "example-topic",
+                        "accessType": "write"
+                    }
+                  ]
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging, Big Data
+        certified: "false"
+        containerImage: banzaicloud/kafka-operator:0.6.1
+        createdAt: "2019-10-15T08:00:00Z"
+        description: Installs and maintains Kafka
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/banzaicloud/kafka-operator/tree/master
+        support: Banzai Cloud
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an Kafka cluster
+          displayName: Kafka cluster
+          kind: KafkaCluster
+          name: kafkaclusters.kafka.banzaicloud.io
+          version: v1beta1
+        - description: Represents an Kafka topic
+          displayName: Kafka Topic
+          kind: KafkaTopic
+          name: kafkatopics.kafka.banzaicloud.io
+          version: v1alpha1
+        - description: Represents an Kafka user
+          displayName: Kafka user
+          kind: KafkaUser
+          name: kafkausers.kafka.banzaicloud.io
+          version: v1alpha1
+      description: |
+        The Banzai Cloud Kafka operator is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
+
+        ## Overview
+
+        Apache Kafka is an open-source distributed streaming platform, and some of the main features of the **Kafka-operator** are:
+
+        - the provisioning of secure and production ready Kafka clusters
+        - **fine grained** broker configuration support
+        - advanced and highly configurable External Access via LoadBalancers using **Envoy**
+        - graceful Kafka cluster **scaling and rebalancing**
+        - monitoring via **Prometheus**
+        - encrypted communication using SSL
+        - automatic reaction and self healing based on alerts (plugin system, with meaningful default alert plugins) using **Cruise Control**
+        - graceful rolling upgrade
+        - advanced topic and user management via CRD
+
+        ## Prerequisites
+
+        The operator requires Cert Manager so you need to first install one if you don't already have one.
+
+        Kafka requires Zookeeper so you need to first have a Zookeeper cluster if you don't already have one.
+
+        #### Install Cert Manager
+
+        ```bash
+        # pre-create cert-manager namespace and CRDs per their installation instructions
+        kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/v0.10.1/deploy/manifests/01-namespace.yaml
+        # Install the CustomResourceDefinitions and cert-manager itself
+        kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.10.1/cert-manager.yaml
+        ```
+
+        #### Install Zookeeper
+
+        To install Zookeeper we recommend using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
+        You can deploy Zookeeper by using the Helm chart.
+
+        ```bash
+        helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
+        helm install --name zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
+        kubectl create --namespace zookeeper -f - <<EOF
+        apiVersion: zookeeper.pravega.io/v1beta1
+        kind: ZookeeperCluster
+        metadata:
+          name: example-zookeepercluster
+          namespace: zookeeper
+        spec:
+          replicas: 3
+        EOF
+
+        ```
+      displayName: Banzai Cloud Kafka Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - kafka
+      - cruise control
+      - messaging
+      - streaming
+      - banzaicloud
+      - open source
+      links:
+      - name: Blog
+        url: https://banzaicloud.com/tags/kafka-operator
+      - name: Documentation
+        url: https://github.com/banzaicloud/kafka-operator/blob/master/README.md
+      - name: Kafka Operator Source Code
+        url: https://github.com/banzaicloud/kafka-operator/tree/master
+      maintainers:
+      - email: info@banzaicloud.com
+        name: Banzai Cloud
+      maturity: beta
+      minKubeVersion: 1.12.0
+      provider:
+        name: Banzai Cloud
+      relatedImages:
+      - banzaicloud/kafka-operator:0.6.1
+      version: 0.6.1
+    name: beta
+  defaultChannel: beta
+  packageName: banzaicloud-kafka-operator
+  provider:
+    name: Banzai Cloud

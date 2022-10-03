@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: pvc-protection-controller-dockercfg-jzsfv
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:03Z"
+  name: pvc-protection-controller
+  namespace: kube-system
+  resourceVersion: "1173"
+  uid: 898def50-f832-48c5-8103-d1fb20bd6884
+secrets:
+- name: pvc-protection-controller-token-xlhc4
+- name: pvc-protection-controller-dockercfg-jzsfv

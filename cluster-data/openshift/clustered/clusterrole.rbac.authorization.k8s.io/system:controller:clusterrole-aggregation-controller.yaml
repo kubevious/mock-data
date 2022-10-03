@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: "2022-09-30T19:14:46Z"
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: system:controller:clusterrole-aggregation-controller
+  resourceVersion: "112"
+  uid: 1e5a16c6-7349-4946-8090-eb7e6ca22d5b
+rules:
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterroles
+  verbs:
+  - escalate
+  - get
+  - list
+  - patch
+  - update
+  - watch

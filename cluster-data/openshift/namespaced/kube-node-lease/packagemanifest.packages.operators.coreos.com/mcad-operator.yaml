@@ -1,0 +1,98 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: MCAD Maintainers
+    provider-url: ""
+  name: mcad-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: mcad-operator.v0.1.9
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"mcad.ibm.com/v1beta1","kind":"MCADHelmConfig","metadata":{"name":"example-mcadhelmconfig"},"spec":{"configMap":{"agentConfigs":null,"dispatcherMode":"false","name":null},"deploymentName":"xqueuejob-controller","image":{"pullPolicy":"Always","repository":"darroyo/mcad-controller","tag":"v1.29.0"},"imagePullSecret":{"name":null,"password":"dummyvalue","registry":"registry.stage1.ng.bluemix.net","username":"iamapikey"},"loglevel":4,"namespace":"kube-system","nodeSelector":{"hostname":null},"replicaCount":1,"resources":{"limits":{"cpu":"2000m","memory":"2048Mi"},"requests":{"cpu":"2000m","memory":"2048Mi"}},"serviceAccount":"xqueuejob-controller","volumes":{"hostPath":null}}}]'
+        capabilities: Basic Install
+        categories: Application Runtime
+        description: A Kubernetes Native Holistic Lifecycle Resource Manager for Applications
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Helm configuration for deploying an instance of the MCAD Operator.
+          displayName: MCAD Helm Configuration
+          kind: MCADHelmConfig
+          name: mcadhelmconfigs.mcad.ibm.com
+          version: v1beta1
+      description: |
+        ## A Kubernetes Native Holistic Lifecycle Resource Manager for Applications
+        For more details about the `Multi-Cluster Application Dispatcher` features and use cases refer to the `MCAD` README [here](https://github.com/IBM/multi-cluster-app-dispatcher/blob/master/README.md).
+        ## About this Operator
+        This operator provides mechanisms for applications to manage batch jobs in a single or mult-cluster environment.
+        The Multi-Cluster-App-Dispatcher (MCAD) controller is capable of (i) providing an abstraction for wrapping all resources of the job/application and treating them holistically, (ii) queuing job/application creation requests and applying different queuing policies, e.g., First In First Out, Priority, (iii) dispatching the job to one of multiple clusters, where a MCAD queuing agent runs, using configurable dispatch policies, and (iv) auto-scaling pod sets, balancing job demands and cluster availability (future work).
+
+        ### Questions and support
+        If you have any questions about the operator and/or encrypted container images, please reach out to our maintainers or create an issue in the github link in the manifest.
+
+        ## Getting Started
+        After installing the operator Refer to the [tutorial](https://github.com/IBM/multi-cluster-app-dispatcher/blob/master/doc/usage/tutorial.md) on how to use the `Multi-Cluster-App-Dispatcher` to run batch job in Kubernetes.
+        ### Prerequisites for enabling this Operator
+        - Kubernetes (>= 1.11.10)
+        - This operator should be installed in the kube-system namespace only.
+      displayName: Multi-Cluster Application Dispatcher
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - mcad
+      - appwrapper
+      - multi-cluster
+      - queue
+      - dispatcher
+      - application
+      - holistic dispatcher
+      - applications
+      - holistic scheduling
+      - queuing
+      - application lifecycle
+      - quota management
+      links:
+      - name: MCAD Operator
+        url: https://github.com/IBM/multi-cluster-app-dispatcher
+      maintainers:
+      - email: asyousse@us.ibm.com
+        name: Alaa Youssef
+      - email: tantawi@us.ibm.com
+        name: Asser Tantawi
+      - email: chen.wang1@ibm.com
+        name: Chen Wang
+      - email: darroyo@us.ibm.com
+        name: Diana Arroyo
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: MCAD Maintainers
+      relatedImages:
+      - darroyo/mcad-operator:v0.1.8
+      version: 0.1.9
+    name: alpha
+  defaultChannel: alpha
+  packageName: mcad-operator
+  provider:
+    name: MCAD Maintainers

@@ -1,0 +1,103 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: NetApp, Inc.
+    provider-url: https://www.netapp.com/
+  name: trident-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: trident-operator.v22.7.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion": "trident.netapp.io/v1",
+              "kind": "TridentOrchestrator",
+              "metadata": {
+                "name": "trident"
+              },
+              "spec": {
+                "IPv6": false,
+                "debug": true,
+                "enableNodePrep": false,
+                "imagePullSecrets": [],
+                "imageRegistry": "",
+                "k8sTimeout": 30,
+                "kubeletDir": "/var/lib/kubelet",
+                "namespace": "trident",
+                "silenceAutosupport": false
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: docker.io/netapp/trident-operator:22.07.0
+        description: Trident Operator, to manage Astra Trident installations
+        operatorhub.io/ui-metadata-max-k8s-version: "1.24"
+        repository: https://github.com/netapp/trident
+        support: NetApp
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Used to deploy Astra Trident.
+          displayName: Trident Orchestrator
+          kind: TridentOrchestrator
+          name: tridentorchestrators.trident.netapp.io
+          version: v1
+      description: |
+        Astra Trident is an open source storage provisioner and orchestrator maintained by NetApp. It enables you to create storage volumes for containerized applications managed by Docker and Kubernetes. For full release information, including patch release changes, see https://docs.netapp.com/us-en/trident/trident-rn.html.
+      displayName: Astra Trident
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - NetApp
+      - ONTAP
+      - Trident
+      - storage
+      - performance
+      - open source
+      - Astra
+      - Cloud Native
+      - AWS
+      - Azure
+      - GCP
+      - Cloud Volumes
+      links:
+      - name: GitHub Repository
+        url: https://github.com/NetApp/trident
+      - name: Trident documentation
+        url: https://docs.netapp.com/us-en/trident/index.html
+      - name: Support policy
+        url: https://mysupport.netapp.com/site/info/version-support
+      - name: Release Notes
+        url: https://docs.netapp.com/us-en/trident/trident-rn.html
+      maintainers:
+      - email: ng-astra-product@netapp.com
+        name: NetApp
+      minKubeVersion: v1.19.0
+      provider:
+        name: NetApp, Inc.
+        url: https://www.netapp.com/
+      relatedImages:
+      - docker.io/netapp/trident-operator:22.07.0
+      version: 22.7.0
+    name: stable
+  defaultChannel: stable
+  packageName: trident-operator
+  provider:
+    name: NetApp, Inc.
+    url: https://www.netapp.com/

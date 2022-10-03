@@ -1,0 +1,452 @@
+apiVersion: installer.kubevious.io/v1alpha1
+kind: Kubevious
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"installer.kubevious.io/v1alpha1","kind":"Kubevious","metadata":{"annotations":{},"name":"kubevious","namespace":"kubevious"},"spec":{"route":{"enabled":false}}}
+    operator-sdk/primary-resource: /kubevious-parser
+    operator-sdk/primary-resource-type: ClusterRoleBinding.rbac.authorization.k8s.io
+  creationTimestamp: "2022-10-03T18:36:25Z"
+  finalizers:
+  - helm.sdk.operatorframework.io/uninstall-release
+  generation: 2
+  name: kubevious
+  namespace: kubevious
+  resourceVersion: "31215"
+  uid: 8f47dab5-0847-44c2-a914-8e403488bf96
+spec:
+  route:
+    enabled: false
+status:
+  conditions:
+  - lastTransitionTime: "2022-10-03T18:36:25Z"
+    status: "True"
+    type: Initialized
+  - lastTransitionTime: "2022-10-03T18:38:02Z"
+    message: "                                                              NKXW              \n
+      \                                                          WXx:,;oKW            \n
+      \                                                         Nk;.....,oKW          \n
+      \                                                         No'.......,oKW        \n
+      \                                                          Nkc'.......,o0W      \n
+      \                                                       WKxkNNkc'.......,oKW
+      \   \n                                                        Kc.'ckNNkc'.......,oKW
+      \ \n                                    WWWNNNNWW          Nk;...'ckNNkc'.......cK
+      \ \n                              WX0kdocc:::::clodk0NW  NOc'......'ckNNkc'...'cON
+      \ \n                           N0dc;'...............:ONNOc'..........'ckNNkl:ckN
+      \   \n                        WKx:'.................'c0WKl'...........,,;oX
+      \ WNW      \n                      WKd;.....................;d0X0d;........;d0KXW
+      \           \n                     Nk:.........................'ckXKx;....;xXW
+      \               \n                    Xd,............................':kXKo,:xXW
+      \                 \n                   Xo'...............................'l0NKXNXW
+      \                 \n                  Wd'..................................;kXOc:O
+      \                 \n                  Nkooooooooooooooooooooooooooooooooooooxkdod0W
+      \                \n             WNK0000000000000000000000000000000000KK0000KKK0000KKXW
+      \            \n             Kl,''''''''''''''''''''''''''''''''''''''''''''''''';xW
+      \           \n             NkdoooooooooooooooooooooooooooooooooooooooooooooooooxKW
+      \           \n                WNKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKNW
+      \               \n                Nd,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,dN
+      \               \n                Nl....................''''....................oN
+      \               \n                Nl................';ok000Oko;.................oN
+      \               \n                Nl...............'oXWKkxxkKWXo'...............oN
+      \               \n                Nl...............lXWO;....;kWXl...............oN
+      \               \n                Nl..............'dWWd'.....lNWd'.............'oN
+      \               \n                WKOkkkkkkkkkkkkkOXWWKOkkkkkKW XOOOOOOOOOOOOOOOKW
+      \               \n\nKubevious v1.0.13 installed!\nAccess Kubevious by setting
+      up port forwarding\n$  kubectl port-forward service/kubevious-ui-clusterip 8080:80
+      -n kubevious \nand visiting http://127.0.0.1:8080"
+    reason: UpgradeSuccessful
+    status: "True"
+    type: Deployed
+  deployedRelease:
+    manifest: "---\n# Source: kubevious/templates/backend/serviceaccount.yaml\napiVersion:
+      v1\nkind: ServiceAccount\nmetadata:\n  name: kubevious-backend\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-backend\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n#
+      Source: kubevious/templates/parser/serviceaccount.yaml\napiVersion: v1\nkind:
+      ServiceAccount\nmetadata:\n  name: kubevious-parser\n  labels:\n    app.kubernetes.io/component:
+      kubevious-parser\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n# Source: kubevious/templates/mysql/secret-root.yaml\napiVersion:
+      v1\nkind: Secret\nmetadata:\n  name: kubevious-mysql-secret-root\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-mysql\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\ntype:
+      Opaque\ndata:\n  MYSQL_ROOT_PASSWORD: \"a3ViZXZpb3Vz\"\n---\n# Source: kubevious/templates/mysql/secret.yaml\napiVersion:
+      v1\nkind: Secret\nmetadata:\n  name: kubevious-mysql-secret\n  labels:\n    app.kubernetes.io/component:
+      kubevious-mysql\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\ntype: Opaque\ndata:\n  MYSQL_PASS:
+      \"a3ViZXZpb3Vz\"\n---\n# Source: kubevious/templates/worldvious/secret.yaml\napiVersion:
+      v1\nkind: Secret\nmetadata:\n  name: kubevious-worldvious\n  labels:\n    app.kubernetes.io/component:
+      kubevious-worldvious\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\ntype: Opaque\ndata:\n  WORLDVIOUS_ID:
+      \"OTVmMjk2NDEtNzIxMi00YTU4LTk4NTAtNzFlNDA1ZTFkYjYy\"\n---\n# Source: kubevious/templates/mysql/configmap-db.yaml\napiVersion:
+      v1\nkind: ConfigMap\nmetadata:\n  name: kubevious-mysql-conf\n  labels:\n    app.kubernetes.io/component:
+      kubevious-mysql\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\ndata:\n  master.cnf: |\n    # Apply
+      this config only on the master.\n    [mysqld]\n    log-bin\n  slave.cnf: |\n
+      \   # Apply this config only on slaves.\n    [mysqld]\n    super-read-only\n---\n#
+      Source: kubevious/templates/mysql/configmap-init-script.yaml\napiVersion: v1\nkind:
+      ConfigMap\nmetadata:\n  name: kubevious-mysql-init-script\n  labels:\n    app.kubernetes.io/component:
+      kubevious-mysql\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\ndata:\n  initdb.sql: |\n    USE kubevious;\n\n
+      \   SET NAMES utf8;\n---\n# Source: kubevious/templates/mysql/configmap-mysql-config.yaml\napiVersion:
+      v1\nkind: ConfigMap\nmetadata:\n  name: kubevious-mysql-config\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-mysql\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\ndata:\n
+      \ MYSQL_HOST: \"kubevious-mysql\"\n  MYSQL_PORT: \"3306\"\n  MYSQL_DB: \"kubevious\"\n
+      \ MYSQL_USER: \"kubevious\"\n---\n# Source: kubevious/templates/redis/configmap-redis-config.yaml\napiVersion:
+      v1\nkind: ConfigMap\nmetadata:\n  name: kubevious-redis-config\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-redis\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\ndata:\n
+      \ REDIS_HOST: \"kubevious-redis\"\n  REDIS_PORT: \"6379\"\n---\n# Source: kubevious/templates/ui/configmap-caddy.yaml\napiVersion:
+      v1\nkind: ConfigMap\nmetadata:\n  name: kubevious-ui-caddy\n  labels:\n    app.kubernetes.io/component:
+      kubevious-ui\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\ndata:\n  Caddyfile: |\n    {\n      admin
+      :5555\n    }\n\n    :4000 {\n\n        handle /api/v1/* {\n            reverse_proxy
+      kubevious-backend-clusterip:4000\n        }\n\n        handle /socket/* {\n
+      \           reverse_proxy kubevious-backend-clusterip:4000\n        }\n\n        handle
+      /* {\n            root * /caddy/www\n            try_files {path} /index.html\n
+      \           file_server\n        }\n\n    }\n---\n# Source: kubevious/templates/worldvious/configmap.yaml\napiVersion:
+      v1\nkind: ConfigMap\nmetadata:\n  name: kubevious-worldvious\n  labels:\n    app.kubernetes.io/component:
+      kubevious-worldvious\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\ndata:\n  WORLDVIOUS_URL: https://api.kubevious.io/api/v1/oss\n---\n#
+      Source: kubevious/templates/crds/ChangePackage.yaml\napiVersion: apiextensions.k8s.io/v1\nkind:
+      CustomResourceDefinition\nmetadata:\n  name: changepackages.kubevious.io\nspec:\n
+      \ group: kubevious.io\n  versions:\n    - name: v1\n      served: true\n      storage:
+      true\n      schema:\n        openAPIV3Schema:\n          type: object\n          properties:\n
+      \           data:\n              type: object\n              properties:\n                charts:\n
+      \                 type: array\n                  items:\n                    type:
+      object\n                    properties:\n                      namespace:\n
+      \                       type: string\n                      name:\n                        type:
+      string\n                    required:\n                      - namespace\n                      -
+      name\n                changes:\n                  type: array\n                  items:\n
+      \                   type: object\n                    properties:\n                      data:\n
+      \                       type: string\n                    required:\n                      -
+      data\n                deletions:\n                  type: array\n                  items:\n
+      \                   type: object\n                    properties:\n                      apiVersion:\n
+      \                       type: string\n                      kind:\n                        type:
+      string\n                      namespace:\n                        type: string\n
+      \                     name:\n                        type: string\n                    required:\n
+      \                     - apiVersion\n                      - kind\n                      -
+      name\n          required:\n            - data\n  scope: Namespaced\n  names:\n
+      \   plural: changepackages\n    singular: changepackage\n    kind: ChangePackage\n---\n#
+      Source: kubevious/templates/crds/ValidationState.yaml\napiVersion: apiextensions.k8s.io/v1\nkind:
+      CustomResourceDefinition\nmetadata:\n  name: validationstates.kubevious.io\nspec:\n
+      \ group: kubevious.io\n  versions:\n    - name: v1\n      served: true\n      storage:
+      true\n      schema:\n        openAPIV3Schema:\n          type: object\n          properties:\n
+      \           status:\n              type: object\n              properties:\n
+      \               state:\n                  type: string\n                date:\n
+      \                 type: string\n                  format: datetime\n                success:\n
+      \                 type: boolean\n                summary:\n                  type:
+      object\n                  properties:\n                    issues:\n                      type:
+      object\n                      properties:\n                        raised:\n
+      \                         type: object\n                          properties:\n
+      \                           errors: \n                              type: number\n
+      \                           warnings: \n                              type:
+      number\n                          required:\n                            - errors\n
+      \                           - warnings\n                        cleared:\n                          type:
+      object\n                          properties:\n                            errors:
+      \n                              type: number\n                            warnings:
+      \n                              type: number\n                          required:\n
+      \                           - errors\n                            - warnings\n
+      \                     required:\n                        - raised\n                        -
+      cleared\n                  required:\n                    - issues\n                raisedIssues:\n
+      \                 type: array\n                  items:\n                    type:
+      object\n                    properties:\n                      dn:\n                        type:
+      string\n                      msg:\n                        type: string\n                      severity:\n
+      \                       type: string\n                    required:\n                      -
+      dn\n                      - msg\n                      - severity\n                clearedIssues:\n
+      \                 type: array\n                  items:\n                    type:
+      object\n                    properties:\n                      dn:\n                        type:
+      string\n                      msg:\n                        type: string\n                      severity:\n
+      \                       type: string\n                    required:\n                      -
+      dn\n                      - msg\n                      - severity                      \n
+      \             required:\n                - state\n                - date\n          required:\n
+      \           - status\n  scope: Namespaced\n  names:\n    plural: validationstates\n
+      \   singular: validationstate\n    kind: ValidationState\n---\n# Source: kubevious/templates/backend/clusterrole.yaml\napiVersion:
+      rbac.authorization.k8s.io/v1\nkind: ClusterRole\nmetadata:\n  name: kubevious-backend\n
+      \ labels:\n    app.kubernetes.io/component: kubevious-backend\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nrules:\n
+      \ - apiGroups:\n      - kubevious.io\n    resources:\n      - changepackages\n
+      \   verbs:\n      - get\n      - list\n      - watch\n      - delete\n  - apiGroups:\n
+      \     - kubevious.io\n    resources:\n      - validationstates\n    verbs:\n
+      \     - get\n      - list\n      - create\n      - delete\n      - update\n---\n#
+      Source: kubevious/templates/parser/clusterrole.yaml\napiVersion: rbac.authorization.k8s.io/v1\nkind:
+      ClusterRole\nmetadata:\n  name: kubevious-parser\n  labels:\n    app.kubernetes.io/component:
+      kubevious-parser\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nrules:\n  - apiGroups:\n      - \"*\"\n
+      \   resources:\n      - \"*\"\n    verbs:\n      - get\n      - list\n      -
+      watch\n---\n# Source: kubevious/templates/backend/clusterrolebinding.yaml\napiVersion:
+      rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n  name: kubevious-backend\n
+      \ labels:\n    app.kubernetes.io/component: kubevious-backend\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nroleRef:\n
+      \ apiGroup: rbac.authorization.k8s.io\n  kind: ClusterRole\n  name: kubevious-backend\nsubjects:\n-
+      kind: ServiceAccount\n  name: kubevious-backend\n  namespace: kubevious\n---\n#
+      Source: kubevious/templates/parser/clusterrolebinding.yaml\napiVersion: rbac.authorization.k8s.io/v1\nkind:
+      ClusterRoleBinding\nmetadata:\n  name: kubevious-parser\n  labels:\n    app.kubernetes.io/component:
+      kubevious-parser\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nroleRef:\n  apiGroup: rbac.authorization.k8s.io\n
+      \ kind: ClusterRole\n  name: kubevious-parser\nsubjects:\n- kind: ServiceAccount\n
+      \ name: kubevious-parser\n  namespace: kubevious\n---\n# Source: kubevious/templates/backend/service.yaml\nkind:
+      Service\napiVersion: v1\nmetadata:\n  name: kubevious-backend-clusterip\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-backend\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ type: ClusterIP\n  ports:\n    - port: 4000\n      targetPort: http\n      protocol:
+      TCP\n      name: http\n  selector:\n    app.kubernetes.io/component: kubevious-backend\n
+      \   app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance: kubevious\n
+      \   app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n# Source: kubevious/templates/collector/service.yaml\nkind:
+      Service\napiVersion: v1\nmetadata:\n  name: kubevious-collector-clusterip\n
+      \ labels:\n    app.kubernetes.io/component: kubevious-collector\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ type: ClusterIP\n  ports:\n    - port: 4000\n      targetPort: http\n      protocol:
+      TCP\n      name: http\n  selector:\n    app.kubernetes.io/component: kubevious-collector\n
+      \   app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance: kubevious\n
+      \   app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n# Source: kubevious/templates/guard/service.yaml\nkind:
+      Service\napiVersion: v1\nmetadata:\n  name: kubevious-guard-clusterip\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-guard\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ type: ClusterIP\n  ports:\n    - port: 4000\n      targetPort: http\n      protocol:
+      TCP\n      name: http\n  selector:\n    app.kubernetes.io/component: kubevious-guard\n
+      \   app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance: kubevious\n
+      \   app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n# Source: kubevious/templates/mysql/service.yaml\nkind:
+      Service\napiVersion: v1\nmetadata:\n  name: kubevious-mysql\n  labels:\n    app.kubernetes.io/component:
+      kubevious-mysql\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  type: ClusterIP\n  ports:\n
+      \   - port: 3306\n      targetPort: mysql\n      protocol: TCP\n      name:
+      mysql\n  selector:\n    app.kubernetes.io/component: kubevious-mysql\n---\n#
+      Source: kubevious/templates/parser/service.yaml\nkind: Service\napiVersion:
+      v1\nmetadata:\n  name: kubevious-parser-clusterip\n  labels:\n    app.kubernetes.io/component:
+      kubevious-parser\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  type: ClusterIP\n  ports:\n
+      \   - port: 4000\n      targetPort: http\n      protocol: TCP\n      name: http\n
+      \ selector:\n    app.kubernetes.io/component: kubevious-parser\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n#
+      Source: kubevious/templates/redis/service.yaml\nkind: Service\napiVersion: v1\nmetadata:\n
+      \ name: kubevious-redis\n  labels:\n    app.kubernetes.io/component: kubevious-redis\n
+      \   app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance: kubevious\n
+      \   app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  type: ClusterIP\n  ports:\n
+      \   - port: 6379\n      targetPort: redis\n      protocol: TCP\n      name:
+      redis\n  selector:\n    app.kubernetes.io/component: kubevious-redis\n---\n#
+      Source: kubevious/templates/ui/service.yaml\nkind: Service\napiVersion: v1\nmetadata:\n
+      \ name: kubevious-ui-clusterip\n  labels:\n    app.kubernetes.io/component:
+      kubevious-ui\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  type: ClusterIP\n  ports:\n
+      \   - port: 80\n      targetPort: http\n      protocol: TCP\n      name: http\n
+      \ selector:\n    app.kubernetes.io/component: kubevious-ui\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\n---\n#
+      Source: kubevious/templates/backend/deployment.yaml\napiVersion: apps/v1\nkind:
+      Deployment\nmetadata:\n  name: kubevious-backend\n  labels:\n    app.kubernetes.io/component:
+      kubevious-backend\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  replicas: 1\n  selector:\n
+      \   matchLabels:\n      app.kubernetes.io/component: kubevious-backend\n      app.kubernetes.io/name:
+      kubevious\n      app.kubernetes.io/instance: kubevious\n      app.kubernetes.io/managed-by:
+      Helm\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/component:
+      kubevious-backend\n        app.kubernetes.io/name: kubevious\n        app.kubernetes.io/instance:
+      kubevious\n        app.kubernetes.io/version: \"1.0.13\"\n        app.kubernetes.io/managed-by:
+      Helm\n        helm.sh/chart: kubevious-1.0.13\n    spec:\n      securityContext:\n
+      \       {}\n      containers:\n        - name: kubevious\n          securityContext:\n
+      \           {}\n          image: \"docker.io/kubevious/backend-ubi:1.0.18\"\n
+      \         imagePullPolicy: IfNotPresent\n          env:\n            - name:
+      NODE_ENV\n              value: \"production\"\n            - name: LOG_LEVEL\n
+      \             value: \"info\"\n            - name: SERVER_PORT\n              value:
+      \"4001\"\n            - name: COLLECTOR_BASE_URL\n              value: http://kubevious-collector-clusterip:4000\n
+      \           - name: PARSER_BASE_URL\n              value: http://kubevious-parser-clusterip:4000\n
+      \           - name: GUARD_BASE_URL\n              value: http://kubevious-guard-clusterip:4000\n
+      \         envFrom:\n            - configMapRef:\n                name: kubevious-mysql-config\n
+      \           - secretRef:\n                name: kubevious-mysql-secret\n            -
+      configMapRef:\n                name: kubevious-redis-config\n            - secretRef:\n
+      \               name: kubevious-worldvious\n            - configMapRef:\n                name:
+      kubevious-worldvious\n          ports:\n            - name: http\n              containerPort:
+      4001\n              protocol: TCP\n          livenessProbe:\n            httpGet:\n
+      \             path: /\n              port: http\n          readinessProbe:\n
+      \           httpGet:\n              path: /\n              port: http\n          resources:\n
+      \           requests:\n              cpu: 100m\n              memory: 200Mi\n
+      \     serviceAccountName: kubevious-backend\n---\n# Source: kubevious/templates/collector/deployment.yaml\napiVersion:
+      apps/v1\nkind: Deployment\nmetadata:\n  name: kubevious-collector\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-collector\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ replicas: 1\n  selector:\n    matchLabels:\n      app.kubernetes.io/component:
+      kubevious-collector\n      app.kubernetes.io/name: kubevious\n      app.kubernetes.io/instance:
+      kubevious\n      app.kubernetes.io/managed-by: Helm\n  template:\n    metadata:\n
+      \     labels:\n        app.kubernetes.io/component: kubevious-collector\n        app.kubernetes.io/name:
+      kubevious\n        app.kubernetes.io/instance: kubevious\n        app.kubernetes.io/version:
+      \"1.0.13\"\n        app.kubernetes.io/managed-by: Helm\n        helm.sh/chart:
+      kubevious-1.0.13\n    spec:\n      securityContext:\n        {}\n      containers:\n
+      \       - name: kubevious\n          securityContext:\n            {}\n          image:
+      \"docker.io/kubevious/collector-ubi:1.0.15\"\n          imagePullPolicy: IfNotPresent\n
+      \         env:\n            - name: NODE_ENV\n              value: \"production\"\n
+      \           - name: LOG_LEVEL\n              value: \"info\"\n            -
+      name: SERVER_PORT\n              value: \"4002\"          \n            - name:
+      BACKEND_BASE_URL\n              value: http://kubevious-backend-clusterip:4000
+      \             \n          envFrom:\n            - configMapRef:\n                name:
+      kubevious-mysql-config\n            - secretRef:\n                name: kubevious-mysql-secret\n
+      \           - configMapRef:\n                name: kubevious-redis-config\n
+      \           - secretRef:\n                name: kubevious-worldvious\n            -
+      configMapRef:\n                name: kubevious-worldvious\n          ports:\n
+      \           - name: http\n              containerPort: 4002\n              protocol:
+      TCP\n          livenessProbe:\n            httpGet:\n              path: /\n
+      \             port: http\n          readinessProbe:\n            httpGet:\n
+      \             path: /\n              port: http\n          resources:\n            requests:\n
+      \             cpu: 100m\n              memory: 200Mi\n      serviceAccountName:
+      default\n---\n# Source: kubevious/templates/guard/deployment.yaml\napiVersion:
+      apps/v1\nkind: Deployment\nmetadata:\n  name: kubevious-guard\n  labels:\n    app.kubernetes.io/component:
+      kubevious-guard\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  replicas: 1\n  selector:\n
+      \   matchLabels:\n      app.kubernetes.io/component: kubevious-guard\n      app.kubernetes.io/name:
+      kubevious\n      app.kubernetes.io/instance: kubevious\n      app.kubernetes.io/managed-by:
+      Helm\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/component:
+      kubevious-guard\n        app.kubernetes.io/name: kubevious\n        app.kubernetes.io/instance:
+      kubevious\n        app.kubernetes.io/version: \"1.0.13\"\n        app.kubernetes.io/managed-by:
+      Helm\n        helm.sh/chart: kubevious-1.0.13\n    spec:\n      securityContext:\n
+      \       {}\n      containers:\n        - name: kubevious\n          securityContext:\n
+      \           {}\n          image: \"docker.io/kubevious/guard-ubi:1.0.7\"\n          imagePullPolicy:
+      IfNotPresent\n          env:\n            - name: NODE_ENV\n              value:
+      \"production\"\n            - name: LOG_LEVEL\n              value: \"info\"\n
+      \           - name: SERVER_PORT\n              value: \"4004\"          \n            -
+      name: BACKEND_BASE_URL\n              value: http://kubevious-backend-clusterip:4000
+      \             \n          envFrom:\n            - configMapRef:\n                name:
+      kubevious-mysql-config\n            - secretRef:\n                name: kubevious-mysql-secret\n
+      \           - configMapRef:\n                name: kubevious-redis-config\n
+      \           - secretRef:\n                name: kubevious-worldvious\n            -
+      configMapRef:\n                name: kubevious-worldvious\n          ports:\n
+      \           - name: http\n              containerPort: 4004\n              protocol:
+      TCP\n          livenessProbe:\n            httpGet:\n              path: /\n
+      \             port: http\n          readinessProbe:\n            httpGet:\n
+      \             path: /\n              port: http\n          resources:\n            requests:\n
+      \             cpu: 100m\n              memory: 200Mi\n      serviceAccountName:
+      default\n---\n# Source: kubevious/templates/parser/deployment.yaml\napiVersion:
+      apps/v1\nkind: Deployment\nmetadata:\n  name: kubevious-parser\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-parser\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ replicas: 1\n  selector:\n    matchLabels:\n      app.kubernetes.io/component:
+      kubevious-parser\n      app.kubernetes.io/name: kubevious\n      app.kubernetes.io/instance:
+      kubevious\n      app.kubernetes.io/managed-by: Helm\n  template:\n    metadata:\n
+      \     labels:\n        app.kubernetes.io/component: kubevious-parser\n        app.kubernetes.io/name:
+      kubevious\n        app.kubernetes.io/instance: kubevious\n        app.kubernetes.io/version:
+      \"1.0.13\"\n        app.kubernetes.io/managed-by: Helm\n        helm.sh/chart:
+      kubevious-1.0.13\n    spec:\n      serviceAccountName: kubevious-parser\n      securityContext:\n
+      \       {}\n      containers:\n        - name: kubevious\n          securityContext:\n
+      \           {}\n          image: \"docker.io/kubevious/parser-ubi:1.0.14\"\n
+      \         imagePullPolicy: IfNotPresent\n          env:\n            - name:
+      NODE_ENV\n              value: \"production\"\n            - name: LOG_LEVEL\n
+      \             value: \"info\"\n            - name: KUBEVIOUS_COLLECTOR\n              value:
+      \"http://kubevious-collector-clusterip:4000/api/v1/collect\"\n            -
+      name: SERVER_PORT\n              value: \"4003\"\n          envFrom:  \n            -
+      configMapRef:\n                name: kubevious-worldvious\n            - secretRef:\n
+      \               name: kubevious-worldvious\n          ports:\n            -
+      name: http\n              containerPort: 4003\n              protocol: TCP\n
+      \         resources:\n            requests:\n              cpu: 100m\n              memory:
+      200Mi\n---\n# Source: kubevious/templates/ui/deployment.yaml\napiVersion: apps/v1\nkind:
+      Deployment\nmetadata:\n  name: kubevious-ui\n  labels:\n    app.kubernetes.io/component:
+      kubevious-ui\n    app.kubernetes.io/name: kubevious\n    app.kubernetes.io/instance:
+      kubevious\n    app.kubernetes.io/version: \"1.0.13\"\n    app.kubernetes.io/managed-by:
+      Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n  replicas: 1\n  selector:\n
+      \   matchLabels:\n      app.kubernetes.io/component: kubevious-ui\n      app.kubernetes.io/name:
+      kubevious\n      app.kubernetes.io/instance: kubevious\n      app.kubernetes.io/managed-by:
+      Helm\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/component:
+      kubevious-ui\n        app.kubernetes.io/name: kubevious\n        app.kubernetes.io/instance:
+      kubevious\n        app.kubernetes.io/version: \"1.0.13\"\n        app.kubernetes.io/managed-by:
+      Helm\n        helm.sh/chart: kubevious-1.0.13\n    spec:\n      securityContext:\n
+      \       {}\n      containers:\n        - name: kubevious\n          securityContext:\n
+      \           {}\n          image: \"docker.io/kubevious/ui-ubi:1.0.13\"\n          imagePullPolicy:
+      IfNotPresent\n          env:\n            - name: NODE_ENV\n              value:
+      \"production\"\n            - name: KUBEVIOUS_VERSION\n              value:
+      1.0.13              \n          ports:\n            - name: http\n              containerPort:
+      4000\n              protocol: TCP\n          livenessProbe:\n            httpGet:\n
+      \             path: /\n              port: http\n          readinessProbe:\n
+      \           httpGet:\n              path: /\n              port: http\n          resources:\n
+      \           requests:\n              cpu: 25m\n              memory: 50Mi\n
+      \         volumeMounts:\n          - name: caddy-config\n            mountPath:
+      /etc/caddy/Caddyfile\n            subPath: Caddyfile\n      volumes:\n        -
+      name: caddy-config\n          configMap:\n            name: kubevious-ui-caddy\n
+      \     serviceAccountName: default\n---\n# Source: kubevious/templates/mysql/statefulset.yaml\n#
+      source: https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/\napiVersion:
+      apps/v1\nkind: StatefulSet\nmetadata:\n  name: kubevious-mysql\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-mysql\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ selector:\n    matchLabels:\n      app.kubernetes.io/component: kubevious-mysql\n
+      \     app.kubernetes.io/name: kubevious\n      app.kubernetes.io/instance: kubevious\n
+      \     app.kubernetes.io/managed-by: Helm\n  serviceName: kubevious-mysql\n  replicas:
+      1\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/component:
+      kubevious-mysql\n        app.kubernetes.io/name: kubevious\n        app.kubernetes.io/instance:
+      kubevious\n        app.kubernetes.io/managed-by: Helm\n    spec:\n      securityContext:\n
+      \       {}\n      initContainers:\n      - name: init-mysql\n        image:
+      registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146\n        command:\n
+      \       - bash\n        - \"-c\"\n        - |\n          set -ex\n          echo
+      \"[mysqld]\" > /mnt/conf.d/server-id.cnf\n          echo \"server-id=1\" >>
+      /mnt/conf.d/server-id.cnf\n          echo \"[mysqld]\" > /mnt/conf.d/bin-logs.cnf\n
+      \         echo \"binlog_expire_logs_seconds=259200\" >> /mnt/conf.d/bin-logs.cnf\n
+      \         cp /mnt/config-map/master.cnf /mnt/conf.d/\n        volumeMounts:\n
+      \       - name: conf\n          mountPath: /mnt/conf.d\n        - name: config-map\n
+      \         mountPath: /mnt/config-map\n      containers:\n      - name: mysql\n
+      \       image: \"registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146\"\n
+      \       env:\n        - name: NODE_ENV\n          value: \"production\"\n        -
+      name: MYSQL_DATABASE\n          value: \"kubevious\"\n        - name: MYSQL_USER\n
+      \         value: \"kubevious\"\n        - name: MYSQL_PASSWORD\n          valueFrom:\n
+      \           secretKeyRef:\n              name: kubevious-mysql-secret\n              key:
+      MYSQL_PASS\n        - name: MYSQL_ROOT_PASSWORD\n          valueFrom:\n            secretKeyRef:\n
+      \             name: kubevious-mysql-secret-root\n              key: MYSQL_ROOT_PASSWORD\n
+      \       ports:\n        - name: mysql\n          containerPort: 3306\n        volumeMounts:\n
+      \       - name: \"data\"\n          mountPath: /var/lib/mysql\n          subPath:
+      mysql\n        - name: conf\n          mountPath: /etc/mysql/conf.d\n        -
+      name: init-script\n          mountPath: /docker-entrypoint-initdb.d\n        livenessProbe:\n
+      \         exec:\n            \n            command: [\"mysqladmin\", \"ping\",
+      \"-u$MYSQL_USER\", \"-p$MYSQL_PASSWORD\"]\n            \n          initialDelaySeconds:
+      120\n          periodSeconds: 10\n          timeoutSeconds: 5\n        readinessProbe:\n
+      \         exec:\n            # Check we can execute queries over TCP (skip-networking
+      is off).\n            command:\n              - bash \n              - \"-c\"\n
+      \           \n              - | \n                mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
+      -h 127.0.0.1 -e 'SELECT 1'\n            \n              \n          initialDelaySeconds:
+      5\n          periodSeconds: 2\n          timeoutSeconds: 1\n        resources:\n
+      \           requests:\n              cpu: 250m\n              memory: 1000Mi\n
+      \     serviceAccountName: default\n      volumes:\n      - name: conf\n        emptyDir:
+      {}\n      - name: config-map\n        configMap:\n          name: kubevious-mysql-conf\n
+      \     - name: init-script\n        configMap:\n          name: kubevious-mysql-init-script\n
+      \ volumeClaimTemplates:\n  - metadata:\n      name: \"data\"\n    spec:\n      accessModes:
+      [\"ReadWriteOnce\"]\n      resources:\n        requests:\n          storage:
+      10Gi\n---\n# Source: kubevious/templates/redis/statefulset.yaml\napiVersion:
+      apps/v1\nkind: StatefulSet\nmetadata:\n  name: kubevious-redis\n  labels:\n
+      \   app.kubernetes.io/component: kubevious-redis\n    app.kubernetes.io/name:
+      kubevious\n    app.kubernetes.io/instance: kubevious\n    app.kubernetes.io/version:
+      \"1.0.13\"\n    app.kubernetes.io/managed-by: Helm\n    helm.sh/chart: kubevious-1.0.13\nspec:\n
+      \ selector:\n    matchLabels:\n      app.kubernetes.io/component: kubevious-redis\n
+      \     app.kubernetes.io/name: kubevious\n      app.kubernetes.io/instance: kubevious\n
+      \     app.kubernetes.io/managed-by: Helm\n  serviceName: kubevious-redis\n  replicas:
+      1\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/component:
+      kubevious-redis\n        app.kubernetes.io/name: kubevious\n        app.kubernetes.io/instance:
+      kubevious\n        app.kubernetes.io/managed-by: Helm\n    spec:\n      securityContext:\n
+      \       {}\n      containers:\n      - name: redis\n        image: \"docker.io/kubevious/redisearch-ubi:v1.1\"\n
+      \       ports:\n        - containerPort: 6379\n          protocol: TCP\n          name:
+      redis\n        resources:\n            requests:\n              cpu: 100m\n
+      \             memory: 128Mi\n      serviceAccountName: default\n"
+    name: kubevious

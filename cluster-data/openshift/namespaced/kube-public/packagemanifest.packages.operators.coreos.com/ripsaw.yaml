@@ -1,0 +1,133 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat Performance
+    provider-url: ""
+  name: ripsaw
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ripsaw.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [{
+          "apiVersion": "ripsaw.cloudbulldozer.io/v1alpha1",
+          "kind": "Benchmark",
+          "metadata": {
+          "name": "example-benchmark",
+          "namespace": "my-ripsaw"
+          },
+          "spec": {
+          "cleanup": false,
+          "workload": {
+             "name": "uperf",
+             "args": {
+                "hostnetwork": false,
+                "pin": false,
+                "pin_server": "node-0",
+                "pin_client": "node-1",
+                "samples": 2,
+                "pair": 1,
+                "test_types": [
+                   "stream",
+                   "rr"
+                ],
+                "protos": [
+                   "tcp",
+                   "udp"
+                ],
+                "sizes": [
+                   16384,
+                   512
+                ],
+                "runtime": 10
+             }
+          }
+          }
+          }]
+        capabilities: Seamless Upgrades
+        categories: Developer Tools
+        certified: "false"
+        containerImage: quay.io/repository/benchmark-operator/benchmark-operator
+        createdAt: "2019-06-28 06:42:43"
+        description: Ripsaw is a benchmark operator to benchmark k8s and certain applications.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/cloud-bulldozer/ripsaw/
+        support: Red Hat Performance
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: The type of benchmark for Ripsaw to be run
+          displayName: Benchmark
+          kind: Benchmark
+          name: benchmarks.ripsaw.cloudbulldozer.io
+          version: v1alpha1
+      description: |
+        [Ripsaw](https://github.com/cloud-bulldozer/ripsaw/) is a benchmarking tool to benchmark your kubernetes cluster. Ripsaw fully supports running following:
+        * Micro-benchmarks:
+          * [fio](https://github.com/cloud-bulldozer/ripsaw/tree/master/docs/fio_distributed.md)
+          * [uperf](https://github.com/cloud-bulldozer/ripsaw/tree/master/docs/uperf.md)
+        * Application-benchmarks:
+          * [ycsb](https://github.com/cloud-bulldozer/ripsaw/tree/master/docs/ycsb.md)
+          * [pgbench](https://github.com/cloud-bulldozer/ripsaw/tree/master/docs/pgbench.md)
+        You can also run following benchmarks through Ripsaw, but it'll be missing certain functionalities such as indexing to Elasticsearch, or running multiple samples:
+        * [iperf3](https://github.com/cloud-bulldozer/ripsaw/tree/master/docs/iperf.md)
+        * [sysbench](https://github.com/cloud-bulldozer/ripsaw/blob/master/docs/sysbench.md)
+        * [byowl](https://github.com/cloud-bulldozer/ripsaw/blob/master/docs/byowl.md)
+
+        You can use Ripsaw for:
+        * Getting benchmark data from your current cluster classification
+        * Making a performance driven decision from data Ripsaw provides, on choices such as:
+          * Which distribution to use
+          * Which platform to deploy the k8s cluster on
+          * Which storage class to provision storage volumes
+        * Getting an estimate of expected network/ storage performance data
+      displayName: Ripsaw
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - ripsaw
+      - performance
+      - benchmark
+      links:
+      - name: ripsaw
+        url: https://www.ripsaw.cloudbulldozer.io
+      maintainers:
+      - email: aakarsh.g2012@gmail.com
+        name: Aakarsh Gopi
+      - email: dblack@redhat.com
+        name: Dustin Black
+      - email: jtaleric@redhat.com
+        name: Joe Talerico
+      maturity: alpha
+      minKubeVersion: 1.12.0
+      provider:
+        name: Red Hat Performance
+      relatedImages:
+      - quay.io/benchmark-operator/benchmark-operator:master
+      - k8s.gcr.io/redis:v1
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: ripsaw
+  provider:
+    name: Red Hat Performance

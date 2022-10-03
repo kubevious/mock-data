@@ -1,0 +1,155 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: sosivio
+    provider-url: https://www.sosiv.io
+  name: sosivio
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: sosivio-operator.v1.4.4-85
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "sosivio.sosiv.io/v1alpha1",
+              "kind": "Sosivio",
+              "metadata": {
+                "name": "sosivio"
+              },
+              "spec": {
+                "platform": "ocp4",
+                "useSha": false
+              }
+            },
+            {
+              "apiVersion": "sosivio.sosiv.io/v1alpha1",
+              "kind": "Sosivio",
+              "metadata": {
+                "name": "sosivio"
+              },
+              "spec": {
+                "platform": "ocp4",
+                "useSha": false
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Monitoring,Integration & Delivery,Logging & Tracing,Developer
+          Tools
+        com.redhat.openshift.versions: v4.1-v4.10
+        containerImage: quay.io/sosivio/sosivio-operator:v1.4.4-85
+        createdAt: "2021-10-28 01:01:01"
+        description: Sosivio Autonomuous Cloud Native
+        operatorhub.io/ui-metadata-max-k8s-version: "1.24"
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Sosivio/operator
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Sosivio is the Schema for the sosivios API
+          displayName: Sosivio
+          kind: Sosivio
+          name: sosivios.sosivio.sosiv.io
+          version: v1alpha1
+      description: "# Sosivio Operator\nThe Sosivio Operator for RedHat’s Openshift
+        Container Platform allows users to quickly and easily deploy Sosivio’s Kubernetes
+        Predictive Troubleshooting Platform on your cluster.\n\n# Sosivio Overview\n\nSosivio
+        is the first and only non-intrusive and predictive autonomous cloud-native
+        platform built specifically for Kubernetes from the ground up. Sosivio provides
+        predictive troubleshooting tools, root cause determination and instant remediation
+        for any failures in Kubernetes environments.\n\nPredict and Prevent!\n\nThe
+        Operator will deploy and manage Sosivio on Kubernetes and OpenShift. Included
+        are the following features;\n-   **Root Cause Analysis and Remediation** -
+        predictive troubleshooting to prevent failures before they occur. Instantly
+        understand where the root cause is and how to fix it.\n-   **Application Profiling**
+        - analyze container resource consumption and recommendations for requests
+        and limits.\n-   **Real-time Metrics** - in-depth, granular, and accurate
+        real-time data from the process level inside containers (and pods) with failure
+        correlation.\n-   **Cluster Health Checks** - proactive health checks for
+        cluster infrastructure and applications running on the cluster.\n-   **Multi-Cluster
+        View** - management, monitoring, and maintenance capabilities for all clusters
+        from one location. \n-   **Kubernetes Components Alerting** - notifications
+        sent through Slack, email and other 3rd party platforms.\n\n# Installation\nSosivio
+        is completely **non-intrusive** and **does not require any persistent storage**.
+        There is **no data offloading** outside of your Kubernetes cluster. Applying
+        our Data Swirling methodology enables the product to perform at a **remarkably
+        low resource footprint** and requires **no persistent volume configurations**.\n\n\nSosivio
+        is installed under one namespace (labeled: \"sosivio\") which creates all
+        the required components for the product.\n\nAll users will start with 4 weeks
+        of Sosivio Premium after which Sosivio will automatically convert to the Community
+        Version (free forever).\n\n# Help\nMore information about Sosivio and our
+        product usage instructions can be found in our documentation [here](https://docs.sosiv.io/)
+        \ \n"
+      displayName: Sosivio Autonomuous Cloud Native
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - sosivio
+      - kubernetes
+      - observanility
+      - monitoring
+      - root cause
+      links:
+      - name: Sosivio
+        url: https://www.sosiv.io
+      - name: Documentation
+        url: https://docs.sosiv.io
+      maintainers:
+      - email: info@sosiv.io
+        name: Sosivio
+      maturity: stable
+      minKubeVersion: 1.11.0
+      provider:
+        name: sosivio
+        url: https://www.sosiv.io
+      relatedImages:
+      - quay.io/sosivio/discovery-engine@sha256:075c91acb0f575d3240d81abcf832f0cb9d17e8ca7c0f2c0870bde6403a4bfbb
+      - quay.io/sosivio/sosivio-node-pinger@sha256:1fce05fdebd43cb681495bf8d6268adc62c374079014766e548eb9858b8104de
+      - quay.io/sosivio/actuator@sha256:7ba2e52e7952af6e5bda74aad44bcfda409e31ef29d4a83fc6f5604f2f1038e9
+      - quay.io/sosivio/sosivio-operator:v1.4.4-85
+      - quay.io/sosivio/classifier@sha256:225ec8e2739d4a3d82725a1906999c9587e9dfa3c7f920a6fd740b786be9e73f
+      - quay.io/sosivio/draingo@sha256:831a658ef2939b9f8cf08538e8aa56114146868214706c50f089e781c47a86ad
+      - quay.io/sosivio/kube-rbac-proxy@sha256:34e8724e0f47e31eb2ec3279ac398b657db5f60f167426ee73138e2e84af6486
+      - quay.io/sosivio/correlation-entities@sha256:774623800248d0dcfa74690a3872fcdea6dd9984dfb41ccef5b62ae9ec94a73f
+      - quay.io/sosivio/contract-testing@sha256:42fb0c232d1668e2061354dba29b8d4c571ee3b699ac89b00090124fa49485e1
+      - quay.io/sosivio/authentication@sha256:e36612ca4da6efd202e073e6f8ded6333717da638d3ee020bab22d1944214cc1
+      - quay.io/sosivio/sosivio-operator@sha256:02d9c341c7b35555f8d21b6c5d073c26f0c55585867b3e47908b8f394b3ee4f8
+      - quay.io/sosivio/sequence-recognition@sha256:582cac97b71f956a2478ce3b317ad09af6fb282938fd185f80022944bdb18097
+      - quay.io/sosivio/sosiviodb@sha256:3e77f1ef83bf2246b7f58aa921a2c6131c3689e5f3fdaf9dc9bd3eed9274de3a
+      - quay.io/sosivio/notifier@sha256:de59cdf84e22b63312d0a94ff30cc4e3c3954ccdeaa87af609a3f83a1cf1a4ea
+      - quay.io/sosivio/nsq@sha256:1462fa02686e9e376085f583212cbb219434cf0b469378e30e409626f280256b
+      - quay.io/sosivio/communicator@sha256:6457649019f88ddf151541de9d8cc92c1ac8ee2e26f7ee8498d3ac8344f6cd7d
+      - quay.io/sosivio/analyzer@sha256:0b55dbba467cc9dc39a943d88c3ce986d174545803ea86d84dd699d622d566ca
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/sosivio/crud-manager@sha256:47967a0f177b4f3e067599773f2724ed794002289df906d102c3223c0d8d1007
+      - quay.io/sosivio/sosivio-dashboard@sha256:f290555c3312e5e676f19d0f860b18052bffbe8b8d0d46ac0da1f7c3af543f76
+      - quay.io/sosivio/sosivio-node-collector@sha256:b35b6c1ab798b17233d2917df41549766d9d99b7be0315265c0ba266fd6c9d93
+      version: 1.4.4
+    name: stable
+  defaultChannel: stable
+  packageName: sosivio
+  provider:
+    name: sosivio
+    url: https://www.sosiv.io

@@ -1,0 +1,14 @@
+apiVersion: coordination.k8s.io/v1
+kind: Lease
+metadata:
+  creationTimestamp: "2022-10-03T18:32:53Z"
+  name: kubevious-operator
+  namespace: default
+  resourceVersion: "30259"
+  uid: f5e47b9b-6e48-469e-8302-58899ed7b4a7
+spec:
+  acquireTime: "2022-10-03T18:32:53.000000Z"
+  holderIdentity: kubevious-operator-controller-manager-5557f5c948-kzw8h_a437fc55-bdd3-4b03-9108-a040b2199758
+  leaseDurationSeconds: 15
+  leaseTransitions: 0
+  renewTime: "2022-10-03T18:34:07.273276Z"

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  annotations:
+    endpoints.kubernetes.io/last-change-trigger-time: "2022-10-03T18:39:14Z"
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  labels:
+    app.kubernetes.io/component: kubevious-ui
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-ui-clusterip
+  namespace: kubevious
+  resourceVersion: "31457"
+  uid: 438216bb-e698-4381-9be1-e8f191ac2f27
+subsets:
+- addresses:
+  - ip: 10.244.0.30
+    nodeName: kind-control-plane
+    targetRef:
+      kind: Pod
+      name: kubevious-ui-7df4c8d884-h22vt
+      namespace: kubevious
+      uid: 8b6677fb-13c2-47ad-89c8-eca40b06f0b1
+  ports:
+  - name: http
+    port: 4000
+    protocol: TCP

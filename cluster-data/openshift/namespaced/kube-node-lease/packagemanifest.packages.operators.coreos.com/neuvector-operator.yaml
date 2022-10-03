@@ -1,0 +1,320 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: NeuVector
+    provider-url: ""
+  name: neuvector-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: neuvector-operator.v1.2.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apm.neuvector.com/v1alpha1",
+              "kind": "Neuvector",
+              "metadata": {
+                "name": "neuvector"
+              },
+              "spec": {
+                "openshift": false,
+                "registry": "registry.neuvector.com",
+                "tag": "latest",
+                "oem": "",
+                "imagePullSecrets": "",
+                "psp": false,
+                "serviceAccount": "default",
+                "controller": {
+                  "enabled": true,
+                  "strategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                      "maxSurge": 1,
+                      "maxUnavailable": 0
+                    }
+                  },
+                  "image": {
+                    "repository": "neuvector/controller"
+                  },
+                  "replicas": 3,
+                  "disruptionbudget": 0,
+                  "schedulerName": "",
+                  "priorityClassName": "",
+                  "apisvc": {
+                    "type": "",
+                    "annotations": {},
+                    "route": {
+                      "enabled": false,
+                      "termination": "passthrough",
+                      "host": ""
+                    }
+                  },
+                  "pvc": {
+                    "enabled": false,
+                    "accessModes": [
+                      "ReadWriteMany"
+                    ],
+                    "storageClass": "",
+                    "capacity": ""
+                  },
+                  "azureFileShare": {
+                    "enabled": false,
+                    "secretName": "",
+                    "shareName": ""
+                  },
+                  "certificate": {
+                    "secret": "",
+                    "keyFile": "tls.key",
+                    "pemFile": "tls.pem"
+                  },
+                  "federation": {
+                    "mastersvc": {
+                      "type": "",
+                      "ingress": {
+                        "enabled": false,
+                        "host": "",
+                        "path": "/",
+                        "annotations": {
+                          "ingress.kubernetes.io/protocol": "https"
+                        },
+                        "tls": false,
+                        "secretName": ""
+                      },
+                      "route": {
+                        "enabled": false,
+                        "termination": "passthrough",
+                        "host": ""
+                      }
+                    },
+                    "managedsvc": {
+                      "type": "",
+                      "ingress": {
+                        "enabled": false,
+                        "host": "",
+                        "path": "/",
+                        "annotations": {
+                          "ingress.kubernetes.io/protocol": "https"
+                        },
+                        "tls": false,
+                        "secretName": ""
+                      },
+                      "route": {
+                        "enabled": false,
+                        "termination": "passthrough",
+                        "host": ""
+                      }
+                    }
+                  },
+                  "ingress": {
+                    "enabled": false,
+                    "host": "",
+                    "path": "/",
+                    "annotations": {
+                      "ingress.kubernetes.io/protocol": "https"
+                    },
+                    "tls": false,
+                    "secretName": ""
+                  },
+                  "resources": {},
+                  "configmap": {
+                    "enabled": false,
+                    "data": ""
+                  }
+                },
+                "enforcer": {
+                  "enabled": true,
+                  "image": {
+                    "repository": "neuvector/enforcer"
+                  },
+                  "priorityClassName": "",
+                  "tolerations": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "node-role.kubernetes.io/master"
+                    }
+                  ],
+                  "resources": {}
+                },
+                "manager": {
+                  "enabled": true,
+                  "image": {
+                    "repository": "neuvector/manager"
+                  },
+                  "priorityClassName": "",
+                  "env": {
+                    "ssl": true
+                  },
+                  "svc": {
+                    "type": "NodePort",
+                    "loadBalancerIP": "",
+                    "annotations": {}
+                  },
+                  "route": {
+                    "enabled": true,
+                    "termination": "passthrough",
+                    "host": ""
+                  },
+                  "certificate": {
+                    "secret": "",
+                    "keyFile": "tls.key",
+                    "pemFile": "tls.pem"
+                  },
+                  "ingress": {
+                    "enabled": false,
+                    "host": "",
+                    "path": "/",
+                    "annotations": {},
+                    "tls": false,
+                    "secretName": ""
+                  },
+                  "resources": {}
+                },
+                "cve": {
+                  "updater": {
+                    "enabled": true,
+                    "secure": false,
+                    "image": {
+                      "repository": "neuvector/updater",
+                      "tag": "latest"
+                    },
+                    "schedule": "0 0 * * *",
+                    "priorityClassName": ""
+                  },
+                  "scanner": {
+                    "enabled": true,
+                    "replicas": 3,
+                    "dockerPath": "",
+                    "strategy": {
+                      "type": "RollingUpdate",
+                      "rollingUpdate": {
+                        "maxSurge": 1,
+                        "maxUnavailable": 0
+                      }
+                    },
+                    "image": {
+                      "repository": "neuvector/scanner",
+                      "tag": "latest"
+                    },
+                    "priorityClassName": "",
+                    "resources": {}
+                  }
+                },
+                "docker": {
+                  "enabled": true,
+                  "path": "/var/run/docker.sock"
+                },
+                "resources": {},
+                "k3s": {
+                  "enabled": false,
+                  "runtimePath": "/run/k3s/containerd/containerd.sock"
+                },
+                "bottlerocket": {
+                  "enabled": false,
+                  "runtimePath": "/run/dockershim.sock"
+                },
+                "containerd": {
+                  "enabled": false,
+                  "path": "/var/run/containerd/containerd.sock"
+                },
+                "crio": {
+                  "enabled": false,
+                  "path": "/var/run/crio/crio.sock"
+                },
+                "admissionwebhook": {
+                  "type": "ClusterIP"
+                },
+                "crdwebhook": {
+                  "enabled": true,
+                  "type": "ClusterIP"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring, Networking, Security
+        certified: "false"
+        containerImage: registry.neuvector.com/public/operator:0.1.2
+        createdAt: "2019-11-18T02:09:59Z"
+        description: NeuVector delivers the only cloud-native Kubernetes security
+          platform with uncompromising end-to-end protection from DevOps vulnerability
+          protection to automated run-time security, and featuring a true Layer 7
+          container firewall.
+        repository: https://github.com/neuvector/neuvector-operator
+        support: support@neuvector.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A Full LifeCycle Container Security Platform
+          displayName: NeuVector
+          kind: Neuvector
+          name: neuvectors.apm.neuvector.com
+          version: v1alpha1
+      description: "NeuVector delivers the only cloud-native Kubernetes security platform
+        with uncompromising end-to-end protection from DevOps vulnerability protection
+        to automated run-time security, and featuring a true Layer 7 container firewall.\n\nThe
+        NeuVector Operator runs  in the openshift container platform to deploy and
+        manage the NeuVector Security cluster components. The NeuVector operator contains
+        all necessary information to deploy NeuVector using helm charts. You simply
+        need to install the NeuVector operator from the OpenShift embeded operator
+        hub and create NeuVector instance. You can modify the NeuVector installation
+        configuration by modifying yaml while creating the NeuVector instance such
+        as imagePullSecrets, tag version, etc. Please refer to [github link](https://github.com/neuvector/neuvector-helm)
+        for the values that can be modifed during installation. To upgrade to a newer
+        version of NeuVector, just reapply the NeuVector instance with desired tag
+        , which in turn pulls the specified NeuVector image tags and upgrades as per
+        upgrade plan configured on the helm chart. \n\n**Complete below steps to create
+        secret for accessing Neuvector or similar registry.**\n\nCreate the NeuVector
+        namespace\n\n         kubectl create namespace neuvector\nConfigure Kubernetes
+        to pull images from the NeuVector registry\n\n         kubectl create secret
+        docker-registry regsecret -n neuvector --docker-server=https://registry.neuvector.com
+        --docker-username=_json_key_base64 --docker-password=your-pword --docker-email=your-email\n\t\t\t\t
+        \n\nWhere ’your-pword’ is your registry password, ’your-email’ is your email.\n\nPlease
+        refer to [Release Notes](https://github.com/neuvector/neuvector-operator/blob/master/docs/ReleaseNotes.md)
+        for the changes in the Neuvector Operators\n\n Click [here](https://github.com/neuvector/neuvector-operator/blob/master/docs/NeuVectorDeployKubernetes.md)
+        for more information to deploy and customize the configurations.\n\n\n\n**Add
+        NeuVector license from NeuVector WebUI->setting**"
+      displayName: NeuVector Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - monitoring
+      - wavefront
+      - wavefront collector
+      - wavefront proxy
+      links:
+      - name: NeuVector Operator
+        url: https://github.com/neuvector/neuvector-operator
+      maintainers:
+      - email: support@neuvector.com
+        name: A Full LifeCycle Container Security Platform
+      maturity: beta
+      provider:
+        name: NeuVector
+      relatedImages:
+      - registry.neuvector.com/public/operator:0.1.2
+      version: 1.2.8
+    name: beta
+  defaultChannel: beta
+  packageName: neuvector-operator
+  provider:
+    name: NeuVector

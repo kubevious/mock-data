@@ -1,0 +1,154 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Intel
+    provider-url: ""
+  name: ovms-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: openvino-operator.v1.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "intel.com/v1alpha1",
+              "kind": "ModelServer",
+              "metadata": {
+                "name": "model-server-sample"
+              },
+              "spec": {
+                "image_name": "openvino/model_server:2022.1",
+                "deployment_parameters": {
+                  "replicas": 1
+                },
+                "service_parameters": {
+                  "grpc_port": 8080,
+                  "rest_port": 8081
+                },
+                "models_settings": {
+                  "single_model_mode": true,
+                  "config_configmap_name": "",
+                  "model_config": "",
+                  "model_name": "resnet",
+                  "model_path": "gs://ovms-public-eu/resnet50-tf",
+                  "nireq": 0,
+                  "plugin_config": "{\"CPU_THROUGHPUT_STREAMS\":1}",
+                  "batch_size": "",
+                  "shape": "",
+                  "model_version_policy": "{\"latest\": { \"num_versions\":1 }}",
+                  "layout": "",
+                  "target_device": "CPU",
+                  "is_stateful": false,
+                  "idle_sequence_cleanup": false,
+                  "low_latency_transformation": true,
+                  "max_sequence_number": 0
+                },
+                "server_settings": {
+                  "file_system_poll_wait_seconds": 0,
+                  "sequence_cleaner_poll_wait_minutes": 0,
+                  "log_level": "INFO",
+                  "grpc_workers": 1,
+                  "rest_workers": 0
+                },
+                "models_repository": {
+                  "https_proxy": "",
+                  "http_proxy": "",
+                  "storage_type": "google",
+                  "models_host_path": "",
+                  "models_volume_claim": "",
+                  "aws_secret_access_key": "",
+                  "aws_access_key_id": "",
+                  "aws_region": "",
+                  "s3_compat_api_endpoint": "",
+                  "gcp_creds_secret_name": "",
+                  "azure_storage_connection_string": ""
+                }
+              }
+            }
+          ]
+        alm-examples-metadata: '{ "model-server-sample":{"description":"Example of
+          the model server configuration"} }'
+        capabilities: Basic Install
+        categories: AI/Machine Learning
+        containerImage: quay.io/openvino/ovms-operator:1.0.0
+        operators.operatorframework.io/builder: operator-sdk-v1.19.1+git
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Provides inference serving through gRPC & REST
+          displayName: Model Server
+          kind: ModelServer
+          name: modelservers.intel.com
+          version: v1alpha1
+      description: |
+        OpenVINO Toolkit Operator manages OpenVINO components in Kubernetes.
+
+        Currently there available components are ModelServer.
+
+        # Model Server
+        [OpenVINO™ Model Server](https://github.com/openvinotoolkit/model_server) (OVMS) is a scalable, high-performance solution for serving machine learning models optimized for Intel® architectures. The server provides an inference service via gRPC or REST API for any models trained in a framework that is supported by [OpenVINO](https://software.intel.com/en-us/openvino-toolki://docs.openvino.ai/latest/index.html).
+        Model Server configuration parameters is explained [here](https://github.com/openvinotoolkit/operator/blob/main/docs/modelserver_params.md).
+        ## Using the cluster
+        OpenVINO Model Server can be consumed as a `Service`. It is called like with `ModelServer` resource with `-ovms` suffix.
+        The suffix is ommited when `ovms` phrase is included in the name.
+        The service exposes gRPC and REST API interfaces to run inference requests.
+        ```
+        kubectl get pods
+        NAME                                        READY   STATUS    RESTARTS   AGE
+        model-server-sample-ovms-586f6f76df-dpps4   1/1     Running   0          8h
+
+        kubectl get services
+        NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+        model-server-sample-ovms   ClusterIP   172.25.199.210   <none>        8080/TCP,8081/TCP   8h
+        ```
+
+        ## References
+        OpenVINO Model Server on [Github](https://github.com/openvinotoolkit/model_server)
+
+        OpenVINO Model Server Operator on [Github](https://github.com/openvinotoolkit/operator)
+      displayName: OpenVINO Toolkit Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - AI Inference OpenVINO
+      links:
+      - name: OpenVINO Toolkit Operator
+        url: https://github.com/openvinotoolkit/operator
+      - name: OpenVINO Model Server
+        url: https://github.com/openvinotoolkit/model_server
+      maintainers:
+      - email: openvino-operator-support@intel.com
+        name: Operator Support
+      maturity: alpha
+      provider:
+        name: Intel
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/openvino/ovms-operator:1.0.0
+      version: 1.0.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: ovms-operator
+  provider:
+    name: Intel

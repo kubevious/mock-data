@@ -1,0 +1,209 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: ' '
+    provider-url: https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-main/docs/try-flink-kubernetes-operator/quick-start/
+  name: flink-kubernetes-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: flink-kubernetes-operator.v1.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "flink.apache.org/v1beta1",
+              "kind": "FlinkDeployment",
+              "metadata": {
+                  "name": "basic-example"
+              },
+              "spec": {
+                  "image": "flink:1.15",
+                  "flinkVersion": "v1_15",
+                  "flinkConfiguration": {
+                      "taskmanager.numberOfTaskSlots": "2"
+                  },
+                  "serviceAccount": "flink",
+                  "jobManager": {
+                      "resource": {
+                          "memory": "2048m",
+                          "cpu": 1
+                      }
+                  },
+                  "taskManager": {
+                      "resource": {
+                          "memory": "2048m",
+                          "cpu": 1
+                      }
+                  },
+                  "job": {
+                      "jarURI": "local:///opt/flink/examples/streaming/StateMachineExample.jar",
+                      "parallelism": 2,
+                      "upgradeMode": "stateless"
+                  }
+              }
+            },
+            {
+            "apiVersion": "flink.apache.org/v1beta1",
+            "kind": "FlinkSessionJob",
+            "metadata": {
+                "name": "basic-session-job-example2"
+            },
+            "spec": {
+                "deploymentName": "basic-session-cluster",
+                "job": {
+                    "jarURI": "https://repo1.maven.org/maven2/org/apache/flink/flink-examples-streaming_2.12/1.15.0/flink-examples-streaming_2.12-1.15.0.jar",
+                    "parallelism": 2,
+                    "upgradeMode": "stateless",
+                    "entryClass": "org.apache.flink.streaming.examples.statemachine.StateMachineExampl"
+                }
+            }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Big Data, Streaming & Messaging
+        containerImage: docker.io/apache/flink-kubernetes-operator:1.1.0
+        createdAt: "2022-07-01T00:00:00Z"
+        description: Flink Kubernetes Operator manages the complete deployment lifecycle
+          of Apache Flink applications.
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/apache/flink-kubernetes-operator.git
+        support: Apache Software Foundation
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: The FlinkDeployment CR defines Flink Application and Session
+            cluster deployments
+          displayName: Flink Deployment
+          kind: FlinkDeployment
+          name: flinkdeployments.flink.apache.org
+          version: v1beta1
+        - description: The FlinkSessionJob CR defines the session job on the Session
+            cluster and each Session cluster can run multiple FlinkSessionJob.
+          displayName: Flink Session Job
+          kind: FlinkSessionJob
+          name: flinksessionjobs.flink.apache.org
+          version: v1beta1
+      description: |-
+        Flink Kubernetes Operator acts as a control plane to manage the complete deployment lifecycle of Apache Flink applications.
+        ## Installation
+        This operator can be installed from [OperatorHub.io](https://operatorhub.io/operator/flink-kubernetes-operator).
+
+        By default, the Flink operator monitors and run Flink applications in the same namespace as the operator.
+        To run Flink jobs in another namespace, users are responsible for setting up the RBAC in that namespace.
+
+        For example, users need to do the following for each additional namespace that runs the Flink applications:
+
+        1. Switch to the namespace by running:
+
+            ```sh
+            kubectl config set-context --current --namespace=CHANGEIT
+            ```
+
+        2. Create the service account, role, and role binding in the namespace using the commands below:
+
+            ```sh
+            kubectl apply -f - <<EOF
+            apiVersion: v1
+            kind: ServiceAccount
+            metadata:
+              labels:
+                app.kubernetes.io/name: flink-kubernetes-operator
+                app.kubernetes.io/version: 1.1.0
+              name: flink
+            ---
+            apiVersion: rbac.authorization.k8s.io/v1
+            kind: Role
+            metadata:
+              labels:
+                app.kubernetes.io/name: flink-kubernetes-operator
+                app.kubernetes.io/version: 1.1.0
+              name: flink
+            rules:
+            - apiGroups:
+              - ""
+              resources:
+              - pods
+              - configmaps
+              verbs:
+              - '*'
+            - apiGroups:
+              - apps
+              resources:
+              - deployments
+              - deployments/finalizers
+              verbs:
+              - '*'
+            ---
+            apiVersion: rbac.authorization.k8s.io/v1
+            kind: RoleBinding
+            metadata:
+              labels:
+                app.kubernetes.io/name: flink-kubernetes-operator
+                app.kubernetes.io/version: 1.1.0
+              name: flink-role-binding
+            roleRef:
+              apiGroup: rbac.authorization.k8s.io
+              kind: Role
+              name: flink
+            subjects:
+            - kind: ServiceAccount
+              name: flink
+            EOF
+            ```
+
+        3. Proceed deploying Flink applications using the the Custom Resource Definition below.
+
+            ```sh
+            kubectl create -f https://raw.githubusercontent.com/apache/flink-kubernetes-operator/release-1.1/examples/basic.yaml
+            ```
+
+        See [Flink custom resources](https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-main/docs/custom-resource/overview/#overview) for more detail.
+      displayName: Flink Kubernetes Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - flink
+      - streaming
+      maintainers:
+      - email: mbalassi@apache.org
+        name: Marton Balassi
+      - email: htchang@us.ibm.com
+        name: Ted Chang
+      - email: jbusche@us.ibm.com
+        name: James Busche
+      maturity: beta
+      minKubeVersion: 1.16.0
+      provider:
+        name: ' '
+        url: https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-main/docs/try-flink-kubernetes-operator/quick-start/
+      relatedImages:
+      - docker.io/apache/flink-kubernetes-operator:1.1.0
+      - docker.io/apache/flink-kubernetes-operator:latest
+      version: 1.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: flink-kubernetes-operator
+  provider:
+    name: ' '
+    url: https://nightlies.apache.org/flink/flink-kubernetes-operator-docs-main/docs/try-flink-kubernetes-operator/quick-start/

@@ -1,0 +1,160 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Flagsmith
+    provider-url: https://www.flagsmith.com/
+  name: flagsmith
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: flagsmith-operator.v1.0.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "charts.flagsmith.com/v1",
+              "kind": "Flagsmith",
+              "metadata": {
+                "name": "flagsmith-sample"
+              },
+              "spec": {
+                "api": {
+                  "dbWaiter": {
+                    "image": {
+                      "imagePullPolicy": "IfNotPresent",
+                      "repository": "willwill/wait-for-it",
+                      "tag": "latest"
+                    }
+                  },
+                  "image": {
+                    "imagePullPolicy": "IfNotPresent",
+                    "repository": "flagsmith/flagsmith-api",
+                    "tag": "2.8"
+                  },
+                  "replicacount": 1,
+                  "resources": {
+                    "limits": {
+                      "cpu": "500m",
+                      "memory": "500Mi"
+                    },
+                    "requests": {
+                      "cpu": "300m",
+                      "memory": "300Mi"
+                    }
+                  }
+                },
+                "databaseExternal": {
+                  "database": "dummy_db_name",
+                  "enabled": true,
+                  "host": "dummy_db_host",
+                  "password": "dummy_db_password",
+                  "port": 5432,
+                  "type": "postgres",
+                  "url": "postgres://dummy_db_user:dummy_db_password@dummy_db_host:5432/dummy_db_name",
+                  "username": "dummy_db_user"
+                },
+                "frontend": {
+                  "image": {
+                    "imagePullPolicy": "IfNotPresent",
+                    "repository": "flagsmith/flagsmith-frontend",
+                    "tag": "2.8"
+                  },
+                  "replicacount": 1,
+                  "resources": {
+                    "limits": {
+                      "cpu": "500m",
+                      "memory": "500Mi"
+                    },
+                    "requests": {
+                      "cpu": "300m",
+                      "memory": "300Mi"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        alm-examples-metadata: |-
+          {
+            "my-flagsmith": {
+              "description": "Example Flagsmith with PostgreSQL"
+            }
+          }
+        capabilities: Basic Install
+        categories: Developer Tools
+        containerImage: flagsmith/flagsmith-operator:v1.0.0
+        operators.operatorframework.io/builder: operator-sdk-v1.9.0+git
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A running Flagsmith instance
+          displayName: Flagsmith
+          kind: Flagsmith
+          name: flagsmiths.charts.flagsmith.com
+          version: v1
+      description: |-
+        Flagsmith is a feature flag, remote config and AB testing platform
+        ## Overview
+        Flagsmith makes it easy to create and manage features flags across web, mobile, and server side applications. Just wrap a section of code with a flag, and then use Flagsmith to toggle that feature on or off for different environments, users or user segments.
+        ## Features
+        * **Feature flags**. Release features with confidence through phased rollouts.
+        * **Remote config**. Easily toggle individual features on and off, and make changes without deploying new code.
+        * **A/B and Multivariate Testing**. Use segments to run A/B and multivariate tests on new features. With segments, you can also introduce beta programs to get early user feedback.
+        * **Organization Management**.  Organizations, projects, and roles for team members help keep your deployment organized.
+        * **Integrations**. Easily enhance Flagsmith with your favourite tools.
+        ## Using Flagsmith
+        * **Flagsmith hosted**. You can try our hosted version for free at https://www.flagsmith.com/
+        * **Flagsmith open source**. The Flagsmith API is built using Python 3, Django 2, and DjangoRestFramework 3. You can begin running the open source application using docker-compose. We also have options fore deploying to AWS, Kubernetes and OpenShift.
+        ## Resources
+        * [Website](https://www.flagsmith.com/)
+        * [Documentation](https://docs.flagsmith.com/)
+        * If you have any questions about our projects you can email [support@flagsmith.com](mailto:support@flagsmith.com)
+      displayName: Flagsmith
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - flagsmith-operator
+      links:
+      - name: Homepage
+        url: https://www.flagsmith.com/
+      - name: Documentation
+        url: https://docs.flagsmith.com/
+      - name: Source Code
+        url: https://github.com/flagsmith
+      maintainers:
+      - email: support@flagsmith.com
+        name: Ben Rometsch
+      maturity: stable
+      provider:
+        name: Flagsmith
+        url: https://www.flagsmith.com/
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - flagsmith/flagsmith-operator:v1.0.0
+      version: 1.0.0
+    name: stable
+  defaultChannel: stable
+  packageName: flagsmith
+  provider:
+    name: Flagsmith
+    url: https://www.flagsmith.com/

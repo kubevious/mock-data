@@ -1,0 +1,188 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Temporal Community
+    provider-url: https://temporal.io/
+  name: temporal-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: temporal-operator.v0.6.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n  {\n      \"apiVersion\": \"apps.alexandrevilain.dev/v1alpha1\",\n
+          \     \"kind\": \"TemporalCluster\",\n      \"metadata\": {\n          \"name\":
+          \"demo\"\n      },\n      \"spec\": {\n          \"admintools\": {\n              \"enabled\":
+          false,\n              \"image\": \"temporalio/admin-tools\"\n          },\n
+          \         \"datastores\": [\n              {\n                  \"name\":
+          \"default\",\n                  \"passwordSecretRef\": {\n                      \"key\":
+          \"PASSWORD\",\n                      \"name\": \"postgres-password\"\n                  },\n
+          \                 \"sql\": {\n                      \"connectAddr\": \"postgres.demo.svc.cluster.local:5432\",\n
+          \                     \"connectProtocol\": \"tcp\",\n                      \"databaseName\":
+          \"temporal\",\n                      \"maxConnLifetime\": 0,\n                      \"maxConns\":
+          0,\n                      \"maxIdleConns\": 0,\n                      \"pluginName\":
+          \"postgres\",\n                      \"taskScanPartitions\": 0,\n                      \"user\":
+          \"postgres\"\n                  }\n              },\n              {\n                  \"name\":
+          \"visibility\",\n                  \"passwordSecretRef\": {\n                      \"key\":
+          \"PASSWORD\",\n                      \"name\": \"postgres-password\"\n                  },\n
+          \                 \"sql\": {\n                      \"connectAddr\": \"postgres.demo.svc.cluster.local:5432\",\n
+          \                     \"connectProtocol\": \"tcp\",\n                      \"databaseName\":
+          \"temporal_visibility\",\n                      \"maxConnLifetime\": 0,\n
+          \                     \"maxConns\": 0,\n                      \"maxIdleConns\":
+          0,\n                      \"pluginName\": \"postgres\",\n                      \"taskScanPartitions\":
+          0,\n                      \"user\": \"postgres\"\n                  }\n
+          \             }\n          ],\n          \"image\": \"temporalio/server\",\n
+          \         \"numHistoryShards\": 512,\n          \"persistence\": {\n              \"advancedVisibilityStore\":
+          \"\",\n              \"defaultStore\": \"default\",\n              \"visibilityStore\":
+          \"visibility\"\n          },\n          \"services\": {\n              \"frontend\":
+          {\n                  \"membershipPort\": 6933,\n                  \"port\":
+          7233,\n                  \"replicas\": 1\n              },\n              \"history\":
+          {\n                  \"membershipPort\": 6934,\n                  \"port\":
+          7234,\n                  \"replicas\": 1\n              },\n              \"matching\":
+          {\n                  \"membershipPort\": 6935,\n                  \"port\":
+          7235,\n                  \"replicas\": 1\n              },\n              \"worker\":
+          {\n                  \"membershipPort\": 6939,\n                  \"port\":
+          7239,\n                  \"replicas\": 1\n              }\n          },\n
+          \         \"ui\": {\n              \"enabled\": false,\n              \"image\":
+          \"temporalio/ui\",\n              \"version\": \"2.5.0\"\n          },\n
+          \         \"version\": \"1.17.5\"\n      }\n    },\n    {\n        \"apiVersion\":
+          \"apps.alexandrevilain.dev/v1alpha1\",\n        \"kind\": \"TemporalNamespace\",\n
+          \       \"metadata\": {\n            \"name\": \"accounting\"\n        },\n
+          \       \"spec\": {\n            \"description\": \"Accounting team namespace\",\n
+          \           \"retentionPeriod\": \"168h\",\n            \"temporalClusterRef\":
+          {\n                \"name\": \"demo\"\n            }\n        }\n    },\n
+          \   {\n        \"apiVersion\": \"apps.alexandrevilain.dev/v1alpha1\",\n
+          \       \"kind\": \"TemporalClusterClient\",\n        \"metadata\": {\n
+          \           \"name\": \"my-worker\"\n        },\n        \"spec\": {\n            \"temporalClusterRef\":
+          {\n                \"name\": \"demo\"\n            }\n        }\n    }\n]
+          \   "
+        capabilities: Seamless Upgrades
+        categories: Application Runtime, Developer Tools, AI/Machine Learning
+        containerImage: ghcr.io/alexandrevilain/temporal-operator:v0.6.2
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Deploys a Temporal Cluster instance
+          displayName: TemporalCluster
+          kind: TemporalCluster
+          name: temporalclusters.apps.alexandrevilain.dev
+          version: v1alpha1
+        - description: Deploys a Temporal Cluster client
+          displayName: TemporalClusterClient
+          kind: TemporalClusterClient
+          name: temporalclusterclients.apps.alexandrevilain.dev
+          version: v1alpha1
+        - description: Deploys a Temporal Cluster Namespace
+          displayName: TemporalNamespace
+          kind: TemporalNamespace
+          name: temporalnamespaces.apps.alexandrevilain.dev
+          version: v1alpha1
+      description: |
+        ## Temporal
+        Temporal is a durable workflow execution environment for applications. The Temporal operator will deploy all required Temporal server services and dependencies. You will need to deploy database, elasticsearch (optional) and prometheus/grafana (optional) separately. Temporal supports native MySQL, PostgreSQL or Cassandra databases.
+
+        ## Quick Setup
+        Follow these steps to deploy a Temporal cluster instance with a test PostgreSQL database.
+
+        ### Create Demo Namespace
+        <pre>
+        $ kubectl apply -f https://raw.githubusercontent.com/alexandrevilain/temporal-operator/main/examples/cluster-postgres/00-namespace.yaml
+        </pre>
+
+        ### Deploy PostgreSQL database
+        $ kubectl apply -f https://raw.githubusercontent.com/alexandrevilain/temporal-operator/main/examples/cluster-postgres/01-postgresql.yaml
+        </pre>
+
+        ### Create TemporalCluster CustomResource
+        <pre>
+        $ vi temporalcluster.yaml
+        apiVersion: apps.alexandrevilain.dev/v1alpha1
+        kind: TemporalCluster
+        metadata:
+          name: prod
+          namespace: demo
+        spec:
+          version: 1.17.5
+          numHistoryShards: 512
+          persistence:
+            defaultStore: default
+            visibilityStore: visibility
+          datastores:
+            - name: default
+              sql:
+                user: temporal
+                pluginName: postgres
+                databaseName: temporal
+                connectAddr: postgres.demo.svc.cluster.local:5432
+                connectProtocol: tcp
+              passwordSecretRef:
+                name: postgres-password
+                key: PASSWORD
+            - name: visibility
+              sql:
+                user: temporal
+                pluginName: postgres
+                databaseName: temporal_visibility
+                connectAddr: postgres.demo.svc.cluster.local:5432
+                connectProtocol: tcp
+              passwordSecretRef:
+                name: postgres-password
+                key: PASSWORD
+        </pre>
+
+        ### Apply TemporalCluster CustomResource
+        <pre>
+        $ kubectl apply -f temporal.yaml -n demo
+        </pre>
+      displayName: Temporal Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - durable
+      - execution
+      - workflow
+      - sdk
+      - application
+      - distributed
+      links:
+      - name: Temporal Operator
+        url: https://github.com/alexandrevilain/temporal-operator
+      maintainers:
+      - email: alexandre.vilain@me.com
+        name: alexandrevilain
+      - email: keith.tenzer@temporal.io
+        name: ktenzer
+      maturity: alpha
+      minKubeVersion: 1.19.0
+      provider:
+        name: Temporal Community
+        url: https://temporal.io/
+      relatedImages:
+      - ghcr.io/alexandrevilain/temporal-operator:v0.6.2
+      version: 0.6.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: temporal-operator
+  provider:
+    name: Temporal Community
+    url: https://temporal.io/

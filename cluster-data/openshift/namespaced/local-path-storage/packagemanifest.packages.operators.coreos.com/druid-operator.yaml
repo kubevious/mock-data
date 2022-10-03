@@ -1,0 +1,756 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Apache Druid Community
+    provider-url: ""
+  name: druid-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: druid-operator.v0.0.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+                "apiVersion": "druid.apache.org/v1alpha1",
+                "kind": "Druid",
+                "metadata": {
+                   "name": "tiny-cluster"
+                },
+                "spec": {
+                   "image": "apache/druid:0.20.0",
+                   "startScript": "/druid.sh",
+                   "podLabels": {
+                      "environment": "stage",
+                      "release": "alpha"
+                   },
+                   "podAnnotations": {
+                      "dummykey": "dummyval"
+                   },
+                   "readinessProbe": {
+                      "httpGet": {
+                         "path": "/status/health",
+                         "port": 8088
+                      }
+                   },
+                   "securityContext": {
+                      "fsGroup": 1000,
+                      "runAsUser": 1000,
+                      "runAsGroup": 1000
+                   },
+                   "services": [
+                      {
+                         "spec": {
+                            "type": "ClusterIP",
+                            "clusterIP": "None"
+                         }
+                      }
+                   ],
+                   "commonConfigMountPath": "/opt/druid/conf/druid/cluster/_common",
+                   "jvm.options": "-server\n-XX:MaxDirectMemorySize=10240g\n-Duser.timezone=UTC\n-Dfile.encoding=UTF-8\n-Dlog4j.debug\n-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\n-Djava.io.tmpdir=/druid/data",
+                   "log4j.config": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<Configuration status=\"WARN\">\n    <Appenders>\n        <Console name=\"Console\" target=\"SYSTEM_OUT\">\n            <PatternLayout pattern=\"%d{ISO8601} %p [%t] %c - %m%n\"/>\n        </Console>\n    </Appenders>\n    <Loggers>\n        <Root level=\"info\">\n            <AppenderRef ref=\"Console\"/>\n        </Root>\n    </Loggers>\n</Configuration>",
+                   "common.runtime.properties": "# Zookeeper\ndruid.zk.service.host=tiny-cluster-zk-0.tiny-cluster-zk\ndruid.zk.paths.base=/druid\ndruid.zk.service.compress=false\n# Metadata Store\ndruid.metadata.storage.type=derby\ndruid.metadata.storage.connector.connectURI=jdbc:derby://localhost:1527/druid/data/derbydb/metadata.db;create=true\ndruid.metadata.storage.connector.host=localhost\ndruid.metadata.storage.connector.port=1527\ndruid.metadata.storage.connector.createTables=true\n# Deep Storage\ndruid.storage.type=local\ndruid.storage.storageDirectory=/druid/deepstorage\n#\n# Extensions\n#\ndruid.extensions.loadList=[\"druid-kafka-indexing-service\"]\n#\n# Service discovery\n#\ndruid.selectors.indexing.serviceName=druid/overlord\ndruid.selectors.coordinator.serviceName=druid/coordinator\ndruid.indexer.logs.type=file\ndruid.indexer.logs.directory=/druid/data/indexing-logs\ndruid.lookup.enableLookupSyncOnStartup=false\n",
+                   "volumeMounts": [
+                      {
+                         "mountPath": "/druid/data",
+                         "name": "data-volume"
+                      },
+                      {
+                         "mountPath": "/druid/deepstorage",
+                         "name": "deepstorage-volume"
+                      }
+                   ],
+                   "volumes": [
+                      {
+                         "name": "data-volume",
+                         "emptyDir": {}
+                      },
+                      {
+                         "name": "deepstorage-volume",
+                         "hostPath": {
+                            "path": "/tmp/druid/deepstorage",
+                            "type": "DirectoryOrCreate"
+                         }
+                      }
+                   ],
+                   "env": [
+                      {
+                         "name": "POD_NAME",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.name"
+                            }
+                         }
+                      },
+                      {
+                         "name": "POD_NAMESPACE",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.namespace"
+                            }
+                         }
+                      }
+                   ],
+                   "nodes": {
+                      "brokers": {
+                         "nodeType": "broker",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/broker",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/broker\ndruid.broker.http.numConnections=5\ndruid.server.http.numThreads=10\ndruid.processing.buffer.sizeBytes=1\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.sql.enable=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "coordinators": {
+                         "nodeType": "coordinator",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/master/coordinator-overlord",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/coordinator\ndruid.coordinator.startDelay=PT30S\ndruid.coordinator.period=PT30S\ndruid.coordinator.asOverlord.enabled=true\ndruid.coordinator.asOverlord.overlordService=druid/overlord\ndruid.indexer.queue.startDelay=PT30S\ndruid.indexer.runner.type=local\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "historicals": {
+                         "nodeType": "historical",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/data/historical",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/historical\ndruid.server.http.numThreads=5\ndruid.processing.buffer.sizeBytes=536870912\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.segmentCache.locations=[{\\\"path\\\":\\\"/druid/data/segments\\\",\\\"maxSize\\\":10737418240}]\ndruid.server.maxSize=10737418240\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "routers": {
+                         "nodeType": "router",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/router",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/router\ndruid.router.http.numConnections=10\ndruid.router.http.readTimeout=PT5M\ndruid.router.http.numMaxThreads=10\ndruid.server.http.numThreads=10\ndruid.router.defaultBrokerServiceName=druid/broker\ndruid.router.coordinatorServiceName=druid/coordinator\ndruid.router.managementProxy.enabled=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      }
+                   }
+                }
+             }
+          ]
+        capabilities: Full Lifecycle
+        categories: Big Data, Database
+        certified: "False"
+        containerImage: druidio/druid-operator:0.0.6
+        createdAt: "2019-10-20 00:00:00"
+        description: druid-operator allows creating Apache Druid cluster and manage
+          their lifecycle
+        repository: https://github.com/druid-io/druid-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an Apache Druid Cluster
+          displayName: druid-operator
+          kind: Druid
+          name: druids.druid.apache.org
+          version: v1alpha1
+      description: |
+        A kubernetes operator based on the Kubebuilder framework for creating and managing [Apache Druid](https://druid.apache.org/) clusters on kubernetes.
+        [Apache Druid](https://druid.apache.org/) is a high performance real-time analytics database.
+        # Current Status
+        The Operator can deploy and manage multiple [Apache Druid](https://druid.apache.org/) instances on Kubernetes.
+        The following features are supported:
+        * Install [Apache Druid](https://druid.apache.org/) in a single namespace.
+        * Upgrade [Apache Druid](https://druid.apache.org/) cluster seamlessly.
+        * Install [Apache Druid](https://druid.apache.org/) clusters accross various namespaces.
+        * Manage Lifecycle for [Apache Druid](https://druid.apache.org/) clusters and underlying objects created.
+        # Note
+        Apache®, [Apache Druid, Druid®](https://druid.apache.org/) are either registered trademarks or trademarks of the Apache Software Foundation in the United States and/or other countries.
+      displayName: druid-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Big Data
+      - Database
+      links:
+      - name: Apache Druid Website
+        url: https://druid.apache.org/
+      - name: druid-operator Documentation
+        url: https://github.com/druid-io/druid-operator/tree/master/docs
+      - name: druid-operator Repository
+        url: https://github.com/druid-io/druid-operator
+      maintainers:
+      - email: g.himanshu@gmail.com
+        name: Himanshu Gupta
+      - email: adheip.singh@rilldata.com
+        name: Adheip Singh
+      maturity: stable
+      minKubeVersion: 1.14.0
+      provider:
+        name: Apache Druid Community
+      relatedImages:
+      - druidio/druid-operator:0.0.6
+      version: 0.0.6
+    name: alpha.v0.0.6
+  - currentCSV: druid-operator.v0.0.7
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+                "apiVersion": "druid.apache.org/v1alpha1",
+                "kind": "Druid",
+                "metadata": {
+                   "name": "tiny-cluster"
+                },
+                "spec": {
+                   "image": "apache/druid:0.22.0",
+                   "startScript": "/druid.sh",
+                   "podLabels": {
+                      "environment": "stage",
+                      "release": "alpha"
+                   },
+                   "podAnnotations": {
+                      "dummykey": "dummyval"
+                   },
+                   "readinessProbe": {
+                      "httpGet": {
+                         "path": "/status/health",
+                         "port": 8088
+                      }
+                   },
+                   "securityContext": {
+                      "fsGroup": 1000,
+                      "runAsUser": 1000,
+                      "runAsGroup": 1000
+                   },
+                   "services": [
+                      {
+                         "spec": {
+                            "type": "ClusterIP",
+                            "clusterIP": "None"
+                         }
+                      }
+                   ],
+                   "commonConfigMountPath": "/opt/druid/conf/druid/cluster/_common",
+                   "jvm.options": "-server\n-XX:MaxDirectMemorySize=10240g\n-Duser.timezone=UTC\n-Dfile.encoding=UTF-8\n-Dlog4j.debug\n-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\n-Djava.io.tmpdir=/druid/data",
+                   "log4j.config": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<Configuration status=\"WARN\">\n    <Appenders>\n        <Console name=\"Console\" target=\"SYSTEM_OUT\">\n            <PatternLayout pattern=\"%d{ISO8601} %p [%t] %c - %m%n\"/>\n        </Console>\n    </Appenders>\n    <Loggers>\n        <Root level=\"info\">\n            <AppenderRef ref=\"Console\"/>\n        </Root>\n    </Loggers>\n</Configuration>",
+                   "common.runtime.properties": "# Zookeeper\ndruid.zk.service.host=tiny-cluster-zk-0.tiny-cluster-zk\ndruid.zk.paths.base=/druid\ndruid.zk.service.compress=false\n# Metadata Store\ndruid.metadata.storage.type=derby\ndruid.metadata.storage.connector.connectURI=jdbc:derby://localhost:1527/druid/data/derbydb/metadata.db;create=true\ndruid.metadata.storage.connector.host=localhost\ndruid.metadata.storage.connector.port=1527\ndruid.metadata.storage.connector.createTables=true\n# Deep Storage\ndruid.storage.type=local\ndruid.storage.storageDirectory=/druid/deepstorage\n#\n# Extensions\n#\ndruid.extensions.loadList=[\"druid-kafka-indexing-service\"]\n#\n# Service discovery\n#\ndruid.selectors.indexing.serviceName=druid/overlord\ndruid.selectors.coordinator.serviceName=druid/coordinator\ndruid.indexer.logs.type=file\ndruid.indexer.logs.directory=/druid/data/indexing-logs\ndruid.lookup.enableLookupSyncOnStartup=false\n",
+                   "volumeMounts": [
+                      {
+                         "mountPath": "/druid/data",
+                         "name": "data-volume"
+                      },
+                      {
+                         "mountPath": "/druid/deepstorage",
+                         "name": "deepstorage-volume"
+                      }
+                   ],
+                   "volumes": [
+                      {
+                         "name": "data-volume",
+                         "emptyDir": {}
+                      },
+                      {
+                         "name": "deepstorage-volume",
+                         "hostPath": {
+                            "path": "/tmp/druid/deepstorage",
+                            "type": "DirectoryOrCreate"
+                         }
+                      }
+                   ],
+                   "env": [
+                      {
+                         "name": "POD_NAME",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.name"
+                            }
+                         }
+                      },
+                      {
+                         "name": "POD_NAMESPACE",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.namespace"
+                            }
+                         }
+                      }
+                   ],
+                   "nodes": {
+                      "brokers": {
+                         "nodeType": "broker",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/broker",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/broker\ndruid.broker.http.numConnections=5\ndruid.server.http.numThreads=10\ndruid.processing.buffer.sizeBytes=1\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.sql.enable=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "coordinators": {
+                         "nodeType": "coordinator",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/master/coordinator-overlord",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/coordinator\ndruid.coordinator.startDelay=PT30S\ndruid.coordinator.period=PT30S\ndruid.coordinator.asOverlord.enabled=true\ndruid.coordinator.asOverlord.overlordService=druid/overlord\ndruid.indexer.queue.startDelay=PT30S\ndruid.indexer.runner.type=local\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "historicals": {
+                         "nodeType": "historical",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/data/historical",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/historical\ndruid.server.http.numThreads=5\ndruid.processing.buffer.sizeBytes=536870912\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.segmentCache.locations=[{\\\"path\\\":\\\"/druid/data/segments\\\",\\\"maxSize\\\":10737418240}]\ndruid.server.maxSize=10737418240\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "routers": {
+                         "nodeType": "router",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/router",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/router\ndruid.router.http.numConnections=10\ndruid.router.http.readTimeout=PT5M\ndruid.router.http.numMaxThreads=10\ndruid.server.http.numThreads=10\ndruid.router.defaultBrokerServiceName=druid/broker\ndruid.router.coordinatorServiceName=druid/coordinator\ndruid.router.managementProxy.enabled=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      }
+                   }
+                }
+             }
+          ]
+        capabilities: Full Lifecycle
+        categories: Big Data, Database
+        certified: "False"
+        containerImage: druidio/druid-operator:0.0.7
+        createdAt: "2019-10-20 00:00:00"
+        description: druid-operator allows creating Apache Druid cluster and manage
+          their lifecycle
+        repository: https://github.com/druid-io/druid-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an Apache Druid Cluster
+          displayName: druid-operator
+          kind: Druid
+          name: druids.druid.apache.org
+          version: v1alpha1
+      description: |
+        A kubernetes operator based on the Kubebuilder framework for creating and managing [Apache Druid](https://druid.apache.org/) clusters on kubernetes.
+        [Apache Druid](https://druid.apache.org/) is a high performance real-time analytics database.
+        # Current Status
+        The Operator can deploy and manage multiple [Apache Druid](https://druid.apache.org/) instances on Kubernetes.
+        The following features are supported:
+        * Install [Apache Druid](https://druid.apache.org/) in a single namespace.
+        * Upgrade [Apache Druid](https://druid.apache.org/) cluster seamlessly.
+        * Install [Apache Druid](https://druid.apache.org/) clusters accross various namespaces.
+        * Manage Lifecycle for [Apache Druid](https://druid.apache.org/) clusters and underlying objects created.
+        # Note
+        Apache®, [Apache Druid, Druid®](https://druid.apache.org/) are either registered trademarks or trademarks of the Apache Software Foundation in the United States and/or other countries.
+      displayName: druid-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Big Data
+      - Database
+      links:
+      - name: Apache Druid Website
+        url: https://druid.apache.org/
+      - name: druid-operator Documentation
+        url: https://github.com/druid-io/druid-operator/tree/master/docs
+      - name: druid-operator Repository
+        url: https://github.com/druid-io/druid-operator
+      maintainers:
+      - email: g.himanshu@gmail.com
+        name: Himanshu Gupta
+      - email: adheip.singh@rilldata.com
+        name: Adheip Singh
+      maturity: stable
+      minKubeVersion: 1.14.0
+      provider:
+        name: Apache Druid Community
+      relatedImages:
+      - druidio/druid-operator:0.0.7
+      version: 0.0.7
+    name: alpha.v0.0.7
+  - currentCSV: druid-operator.v0.0.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+                "apiVersion": "druid.apache.org/v1alpha1",
+                "kind": "Druid",
+                "metadata": {
+                   "name": "tiny-cluster"
+                },
+                "spec": {
+                   "image": "apache/druid:0.22.0",
+                   "startScript": "/druid.sh",
+                   "podLabels": {
+                      "environment": "stage",
+                      "release": "alpha"
+                   },
+                   "podAnnotations": {
+                      "dummykey": "dummyval"
+                   },
+                   "readinessProbe": {
+                      "httpGet": {
+                         "path": "/status/health",
+                         "port": 8088
+                      }
+                   },
+                   "securityContext": {
+                      "fsGroup": 1000,
+                      "runAsUser": 1000,
+                      "runAsGroup": 1000
+                   },
+                   "services": [
+                      {
+                         "spec": {
+                            "type": "ClusterIP",
+                            "clusterIP": "None"
+                         }
+                      }
+                   ],
+                   "commonConfigMountPath": "/opt/druid/conf/druid/cluster/_common",
+                   "jvm.options": "-server\n-XX:MaxDirectMemorySize=10240g\n-Duser.timezone=UTC\n-Dfile.encoding=UTF-8\n-Dlog4j.debug\n-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\n-Djava.io.tmpdir=/druid/data",
+                   "log4j.config": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<Configuration status=\"WARN\">\n    <Appenders>\n        <Console name=\"Console\" target=\"SYSTEM_OUT\">\n            <PatternLayout pattern=\"%d{ISO8601} %p [%t] %c - %m%n\"/>\n        </Console>\n    </Appenders>\n    <Loggers>\n        <Root level=\"info\">\n            <AppenderRef ref=\"Console\"/>\n        </Root>\n    </Loggers>\n</Configuration>",
+                   "common.runtime.properties": "# Zookeeper\ndruid.zk.service.host=tiny-cluster-zk-0.tiny-cluster-zk\ndruid.zk.paths.base=/druid\ndruid.zk.service.compress=false\n# Metadata Store\ndruid.metadata.storage.type=derby\ndruid.metadata.storage.connector.connectURI=jdbc:derby://localhost:1527/druid/data/derbydb/metadata.db;create=true\ndruid.metadata.storage.connector.host=localhost\ndruid.metadata.storage.connector.port=1527\ndruid.metadata.storage.connector.createTables=true\n# Deep Storage\ndruid.storage.type=local\ndruid.storage.storageDirectory=/druid/deepstorage\n#\n# Extensions\n#\ndruid.extensions.loadList=[\"druid-kafka-indexing-service\"]\n#\n# Service discovery\n#\ndruid.selectors.indexing.serviceName=druid/overlord\ndruid.selectors.coordinator.serviceName=druid/coordinator\ndruid.indexer.logs.type=file\ndruid.indexer.logs.directory=/druid/data/indexing-logs\ndruid.lookup.enableLookupSyncOnStartup=false\n",
+                   "volumeMounts": [
+                      {
+                         "mountPath": "/druid/data",
+                         "name": "data-volume"
+                      },
+                      {
+                         "mountPath": "/druid/deepstorage",
+                         "name": "deepstorage-volume"
+                      }
+                   ],
+                   "volumes": [
+                      {
+                         "name": "data-volume",
+                         "emptyDir": {}
+                      },
+                      {
+                         "name": "deepstorage-volume",
+                         "hostPath": {
+                            "path": "/tmp/druid/deepstorage",
+                            "type": "DirectoryOrCreate"
+                         }
+                      }
+                   ],
+                   "env": [
+                      {
+                         "name": "POD_NAME",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.name"
+                            }
+                         }
+                      },
+                      {
+                         "name": "POD_NAMESPACE",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.namespace"
+                            }
+                         }
+                      }
+                   ],
+                   "nodes": {
+                      "brokers": {
+                         "nodeType": "broker",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/broker",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/broker\ndruid.broker.http.numConnections=5\ndruid.server.http.numThreads=10\ndruid.processing.buffer.sizeBytes=1\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.sql.enable=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "coordinators": {
+                         "nodeType": "coordinator",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/master/coordinator-overlord",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/coordinator\ndruid.coordinator.startDelay=PT30S\ndruid.coordinator.period=PT30S\ndruid.coordinator.asOverlord.enabled=true\ndruid.coordinator.asOverlord.overlordService=druid/overlord\ndruid.indexer.queue.startDelay=PT30S\ndruid.indexer.runner.type=local\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "historicals": {
+                         "nodeType": "historical",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/data/historical",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/historical\ndruid.server.http.numThreads=5\ndruid.processing.buffer.sizeBytes=536870912\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.segmentCache.locations=[{\\\"path\\\":\\\"/druid/data/segments\\\",\\\"maxSize\\\":10737418240}]\ndruid.server.maxSize=10737418240\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "routers": {
+                         "nodeType": "router",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/router",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/router\ndruid.router.http.numConnections=10\ndruid.router.http.readTimeout=PT5M\ndruid.router.http.numMaxThreads=10\ndruid.server.http.numThreads=10\ndruid.router.defaultBrokerServiceName=druid/broker\ndruid.router.coordinatorServiceName=druid/coordinator\ndruid.router.managementProxy.enabled=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      }
+                   }
+                }
+             }
+          ]
+        capabilities: Full Lifecycle
+        categories: Big Data, Database
+        certified: "False"
+        containerImage: druidio/druid-operator:0.0.8
+        createdAt: "2019-10-20 00:00:00"
+        description: druid-operator allows creating Apache Druid cluster and manage
+          their lifecycle
+        repository: https://github.com/druid-io/druid-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an Apache Druid Cluster
+          displayName: druid-operator
+          kind: Druid
+          name: druids.druid.apache.org
+          version: v1alpha1
+      description: |
+        A kubernetes operator based on the Kubebuilder framework for creating and managing [Apache Druid](https://druid.apache.org/) clusters on kubernetes.
+        [Apache Druid](https://druid.apache.org/) is a high performance real-time analytics database.
+        # Current Status
+        The Operator can deploy and manage multiple [Apache Druid](https://druid.apache.org/) instances on Kubernetes.
+        The following features are supported:
+        * Install [Apache Druid](https://druid.apache.org/) in a single namespace.
+        * Upgrade [Apache Druid](https://druid.apache.org/) cluster seamlessly.
+        * Install [Apache Druid](https://druid.apache.org/) clusters accross various namespaces.
+        * Manage Lifecycle for [Apache Druid](https://druid.apache.org/) clusters and underlying objects created.
+        # Note
+        Apache®, [Apache Druid, Druid®](https://druid.apache.org/) are either registered trademarks or trademarks of the Apache Software Foundation in the United States and/or other countries.
+      displayName: druid-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Big Data
+      - Database
+      links:
+      - name: Apache Druid Website
+        url: https://druid.apache.org/
+      - name: druid-operator Documentation
+        url: https://github.com/druid-io/druid-operator/tree/master/docs
+      - name: druid-operator Repository
+        url: https://github.com/druid-io/druid-operator
+      maintainers:
+      - email: g.himanshu@gmail.com
+        name: Himanshu Gupta
+      - email: adheip.singh@rilldata.com
+        name: Adheip Singh
+      maturity: stable
+      minKubeVersion: 1.14.0
+      provider:
+        name: Apache Druid Community
+      relatedImages:
+      - druidio/druid-operator:0.0.8
+      version: 0.0.8
+    name: alpha.v0.0.8
+  - currentCSV: druid-operator.v0.0.9
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+                "apiVersion": "druid.apache.org/v1alpha1",
+                "kind": "Druid",
+                "metadata": {
+                   "name": "tiny-cluster"
+                },
+                "spec": {
+                   "image": "apache/druid:0.22.1",
+                   "startScript": "/druid.sh",
+                   "podLabels": {
+                      "environment": "stage",
+                      "release": "alpha"
+                   },
+                   "podAnnotations": {
+                      "dummykey": "dummyval"
+                   },
+                   "readinessProbe": {
+                      "httpGet": {
+                         "path": "/status/health",
+                         "port": 8088
+                      }
+                   },
+                   "securityContext": {
+                      "fsGroup": 1000,
+                      "runAsUser": 1000,
+                      "runAsGroup": 1000
+                   },
+                   "services": [
+                      {
+                         "spec": {
+                            "type": "ClusterIP",
+                            "clusterIP": "None"
+                         }
+                      }
+                   ],
+                   "commonConfigMountPath": "/opt/druid/conf/druid/cluster/_common",
+                   "jvm.options": "-server\n-XX:MaxDirectMemorySize=10240g\n-Duser.timezone=UTC\n-Dfile.encoding=UTF-8\n-Dlog4j.debug\n-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager\n-Djava.io.tmpdir=/druid/data",
+                   "log4j.config": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<Configuration status=\"WARN\">\n    <Appenders>\n        <Console name=\"Console\" target=\"SYSTEM_OUT\">\n            <PatternLayout pattern=\"%d{ISO8601} %p [%t] %c - %m%n\"/>\n        </Console>\n    </Appenders>\n    <Loggers>\n        <Root level=\"info\">\n            <AppenderRef ref=\"Console\"/>\n        </Root>\n    </Loggers>\n</Configuration>",
+                   "common.runtime.properties": "# Zookeeper\ndruid.zk.service.host=tiny-cluster-zk-0.tiny-cluster-zk\ndruid.zk.paths.base=/druid\ndruid.zk.service.compress=false\n# Metadata Store\ndruid.metadata.storage.type=derby\ndruid.metadata.storage.connector.connectURI=jdbc:derby://localhost:1527/druid/data/derbydb/metadata.db;create=true\ndruid.metadata.storage.connector.host=localhost\ndruid.metadata.storage.connector.port=1527\ndruid.metadata.storage.connector.createTables=true\n# Deep Storage\ndruid.storage.type=local\ndruid.storage.storageDirectory=/druid/deepstorage\n#\n# Extensions\n#\ndruid.extensions.loadList=[\"druid-kafka-indexing-service\"]\n#\n# Service discovery\n#\ndruid.selectors.indexing.serviceName=druid/overlord\ndruid.selectors.coordinator.serviceName=druid/coordinator\ndruid.indexer.logs.type=file\ndruid.indexer.logs.directory=/druid/data/indexing-logs\ndruid.lookup.enableLookupSyncOnStartup=false\n",
+                   "volumeMounts": [
+                      {
+                         "mountPath": "/druid/data",
+                         "name": "data-volume"
+                      },
+                      {
+                         "mountPath": "/druid/deepstorage",
+                         "name": "deepstorage-volume"
+                      }
+                   ],
+                   "volumes": [
+                      {
+                         "name": "data-volume",
+                         "emptyDir": {}
+                      },
+                      {
+                         "name": "deepstorage-volume",
+                         "hostPath": {
+                            "path": "/tmp/druid/deepstorage",
+                            "type": "DirectoryOrCreate"
+                         }
+                      }
+                   ],
+                   "env": [
+                      {
+                         "name": "POD_NAME",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.name"
+                            }
+                         }
+                      },
+                      {
+                         "name": "POD_NAMESPACE",
+                         "valueFrom": {
+                            "fieldRef": {
+                               "fieldPath": "metadata.namespace"
+                            }
+                         }
+                      }
+                   ],
+                   "nodes": {
+                      "brokers": {
+                         "nodeType": "broker",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/broker",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/broker\ndruid.broker.http.numConnections=5\ndruid.server.http.numThreads=10\ndruid.processing.buffer.sizeBytes=1\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.sql.enable=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "coordinators": {
+                         "nodeType": "coordinator",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/master/coordinator-overlord",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/coordinator\ndruid.coordinator.startDelay=PT30S\ndruid.coordinator.period=PT30S\ndruid.coordinator.asOverlord.enabled=true\ndruid.coordinator.asOverlord.overlordService=druid/overlord\ndruid.indexer.queue.startDelay=PT30S\ndruid.indexer.runner.type=local\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "historicals": {
+                         "nodeType": "historical",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/data/historical",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/historical\ndruid.server.http.numThreads=5\ndruid.processing.buffer.sizeBytes=536870912\ndruid.processing.numMergeBuffers=1\ndruid.processing.numThreads=1\ndruid.segmentCache.locations=[{\\\"path\\\":\\\"/druid/data/segments\\\",\\\"maxSize\\\":10737418240}]\ndruid.server.maxSize=10737418240\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      },
+                      "routers": {
+                         "nodeType": "router",
+                         "druid.port": 8088,
+                         "nodeConfigMountPath": "/opt/druid/conf/druid/cluster/query/router",
+                         "replicas": 1,
+                         "runtime.properties": "druid.service=druid/router\ndruid.router.http.numConnections=10\ndruid.router.http.readTimeout=PT5M\ndruid.router.http.numMaxThreads=10\ndruid.server.http.numThreads=10\ndruid.router.defaultBrokerServiceName=druid/broker\ndruid.router.coordinatorServiceName=druid/coordinator\ndruid.router.managementProxy.enabled=true\n",
+                         "extra.jvm.options": "-Xmx512M\n-Xms512M"
+                      }
+                   }
+                }
+             }
+          ]
+        capabilities: Full Lifecycle
+        categories: Big Data, Database
+        certified: "False"
+        containerImage: docker.io/druidio/druid-operator:0.0.9
+        createdAt: "2019-10-20 00:00:00"
+        description: druid-operator allows creating Apache Druid cluster and manage
+          their lifecycle
+        repository: https://github.com/druid-io/druid-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an Apache Druid Cluster
+          displayName: druid-operator
+          kind: Druid
+          name: druids.druid.apache.org
+          version: v1alpha1
+      description: |
+        A kubernetes operator based on the Kubebuilder framework for creating and managing [Apache Druid](https://druid.apache.org/) clusters on kubernetes.
+        [Apache Druid](https://druid.apache.org/) is a high performance real-time analytics database.
+        # Current Status
+        The Operator can deploy and manage multiple [Apache Druid](https://druid.apache.org/) instances on Kubernetes.
+        The following features are supported:
+        * Install [Apache Druid](https://druid.apache.org/) in a single namespace.
+        * Upgrade [Apache Druid](https://druid.apache.org/) cluster seamlessly.
+        * Install [Apache Druid](https://druid.apache.org/) clusters accross various namespaces.
+        * Manage Lifecycle for [Apache Druid](https://druid.apache.org/) clusters and underlying objects created.
+        # Note
+        Apache®, [Apache Druid, Druid®](https://druid.apache.org/) are either registered trademarks or trademarks of the Apache Software Foundation in the United States and/or other countries.
+      displayName: druid-operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Big Data
+      - Database
+      links:
+      - name: Apache Druid Website
+        url: https://druid.apache.org/
+      - name: druid-operator Documentation
+        url: https://github.com/druid-io/druid-operator/tree/master/docs
+      - name: druid-operator Repository
+        url: https://github.com/druid-io/druid-operator
+      maintainers:
+      - email: g.himanshu@gmail.com
+        name: Himanshu Gupta
+      - email: adheip.singh@rilldata.com
+        name: Adheip Singh
+      maturity: stable
+      minKubeVersion: 1.14.0
+      provider:
+        name: Apache Druid Community
+      relatedImages:
+      - docker.io/druidio/druid-operator:0.0.9
+      version: 0.0.9
+    name: alpha.v0.0.9
+  defaultChannel: alpha.v0.0.9
+  packageName: druid-operator
+  provider:
+    name: Apache Druid Community

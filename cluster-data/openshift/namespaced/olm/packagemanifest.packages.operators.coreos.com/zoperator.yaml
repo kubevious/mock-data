@@ -1,0 +1,302 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Zadara
+    provider-url: ""
+  name: zoperator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: zoperator.v0.3.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "AppDefinition",
+              "metadata": {
+                "name": "cassandra-test"
+              },
+              "spec": {
+                "namespace": "default",
+                "selector": {
+                  "matchLabels": {
+                    "app": "cassandra"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "ApplicationClone",
+              "metadata": {
+                "name": "cassandra-2009-02-09--19-52-14-clone"
+              },
+              "spec": {
+                "cloneConfiguration": "dr-us-west-clone"
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "ApplicationSnapshot",
+              "metadata": {
+                "name": "cassandra-2009-02-09--19-52-14"
+              },
+              "spec": {
+                "apiObjects": [
+                  "{\"apiVersion\": \"v1\",\"items\": [{\"apiVersion\": \"v1\",\"kind\": \"ConfigMap\",\"metadata\": {...",
+                  "{\"apiVersion\": \"v1\",\"items\": [{\"apiVersion\": \"apps\u000b1\",\"kind\": \"Deployment\",\"metadata\": {..."
+                ],
+                "snapshotConfiguration": "dr-us-west-snapshot",
+                "vpsas": [
+                  {
+                    "name": "example-vpsa",
+                    "provisioner": "csi.zadara.com",
+                    "snapshots": [
+                      {
+                        "cg": "vol-0000001"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "CloneConfiguration",
+              "metadata": {
+                "name": "dr-us-west-clone"
+              },
+              "spec": {
+                "appSnapshot": {
+                  "name": "mysql-snap-2020-01-26"
+                },
+                "dryRun": false,
+                "prefix": "clone-",
+                "targetNamespace": "test"
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "Invoker",
+              "metadata": {
+                "name": "mysql-daily-backup"
+              },
+              "spec": {
+                "snapshotConfiguration": {
+                  "name": "dr-us-west-snapshot"
+                }
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "SnapshotConfiguration",
+              "metadata": {
+                "name": "dr-us-west-snapshot"
+              },
+              "spec": {
+                "appDefinition": "cassandra-test",
+                "policies": [
+                  "daily-snapshot-for-month",
+                  "weekly-snapshot-for-year"
+                ]
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "SnapshotPolicy",
+              "metadata": {
+                "name": "daily-snapshot-for-month"
+              },
+              "spec": {
+                "keepLast": 7,
+                "schedule": "0 0 * * *"
+              }
+            },
+            {
+              "apiVersion": "zadara.com/v1alpha1",
+              "kind": "Vpsa",
+              "metadata": {
+                "name": "example-vpsa"
+              },
+              "spec": {
+                "csi": {
+                  "autoExpandSupport": true,
+                  "iscsiMode": "rootfs",
+                  "livenessProbe": {
+                    "httpGet": {
+                      "port": 9808
+                    },
+                    "periodSeconds": 5
+                  },
+                  "provisioner": "csi.zadara.com"
+                },
+                "hostname": "example.vpsas.zadara.com",
+                "https": true,
+                "token": "EXAMPLETOKEN-1234"
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Storage
+        certified: "true"
+        containerImage: zadara/zoperator:0.3.6
+        createdAt: August 26, 2020
+        description: Zadara Operator enables storage provisioning via Zadara's CSI
+          driver and data management capabilities for K8s applications.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/zadarastorage/zadara-operator
+        support: k8s@zadara.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: AppDefinition allows to define which Kubernetes resources compose
+            an Application, as a logical unit. This is done by means of namespaces
+            and label-based selectors. The result of the query should include workloads
+            (e.g Deployments, StatefulSets), RBAC, configuration (Secrets, ConfigMaps),
+            storage, and all other resources required for the application to run.
+          displayName: App Definition
+          kind: AppDefinition
+          name: appdefinitions.zadara.com
+          version: v1alpha1
+        - description: ApplicationClone is an internal resource, created by Operator.
+            It includes a list of all restored Kubernetes resources and VPSA Volumes,
+            and provides information about restore status for each item. When ApplicationClone
+            is created, Operator starts cloning VPSA Volumes, and restoring Kubernetes
+            resources, from the ApplicationSnapshot.
+          displayName: Application Clone
+          kind: ApplicationClone
+          name: applicationclones.zadara.com
+          version: v1alpha1
+        - description: ApplicationSnapshot is an internal resource, created by Operator.
+            It includes all Application metadata (such as Deployment, StatefulSet,
+            ConfigMap, PersistentVolumeClaim, and other Kubernetes resources) and
+            Snapshots of Data, stored on VPSA. When ApplicationSnapshot is created,
+            Operator creates snapshots of VPSA Volumes, and stores serialized Kubernetes
+            resources in the ApplicationSnapshot. ApplicationSnapshot can appear only
+            in one CloneConfiguration at the same time (User can't clone the same
+            ApplicationSnapshot twice).
+          displayName: Application Snapshot
+          kind: ApplicationSnapshot
+          name: applicationsnapshots.zadara.com
+          version: v1alpha1
+        - description: CloneConfiguration allows to specify which ApplicationSnapshot
+            must be restored. Additionally, it allows to set destination namespace
+            and renaming pattern for restored resources.
+          displayName: Clone Configuration
+          kind: CloneConfiguration
+          name: cloneconfigurations.zadara.com
+          version: v1alpha1
+        - description: Invoker activates SnapshotConfiguration or CloneConfiguration.
+            When SnapshotConfiguration is invoked, Operator will create a CronJob
+            (for recurring Snapshot Policies), or a Job (for on-demand policy), which
+            will create a new ApplicationSnapshot. When CloneConfiguration is invoked,
+            Operator will create a new ApplicationClone object, eventually causing
+            ApplicationSnapshot to be cloned. Deleting Invoker is an equivalent to
+            stopping a SnapshotPolicy, or a cloning process (Application Snapshots
+            or Clones will not be deleted).
+          displayName: Invoker
+          kind: Invoker
+          name: invokers.zadara.com
+          version: v1alpha1
+        - description: SnapshotConfiguration allows to select application resources
+            which must be included in ApplicationSnapshot (using namespace and labels),
+            and to attach Snapshot Policies to the application (including Persistent
+            Volumes on VPSA). Additionally, it provides information about all Application
+            Snapshot created for this SnapshotConfiguration.
+          displayName: Snapshot Configuration
+          kind: SnapshotConfiguration
+          name: snapshotconfigurations.zadara.com
+          version: v1alpha1
+        - description: SnapshotPolicy defines frequency for ApplicationSnapshots to
+            be taken, and retention policy for cleaning up old ApplicationSnapshots.
+          displayName: Snapshot Policy
+          kind: SnapshotPolicy
+          name: snapshotpolicies.zadara.com
+          version: v1alpha1
+        - description: VPSA allows your Kubernetes cluster to connect to VPSA. For
+            each Vpsa having `spec.csi` specified, Operator will automatically deploy
+            a CSI Driver, and create sample Storage Classes (Block and NAS for each
+            Storage Pool on that VPSA).
+          displayName: Vpsa
+          kind: Vpsa
+          name: vpsas.zadara.com
+          version: v1alpha1
+      description: |
+        The Zadara Operator provides storage and data management for K8s stateful
+        applications as a cloud-native service, while leveraging Zadara's enterprise
+        grade Storage-as-a-Service VPSA for provisioning and managing persistent
+        storage.
+
+        Zadara Operator provides:
+        * Zadara CSI driver automatic installation and management
+        * Automatic K8s application discovery
+        * Application protection using an intelligent and efficient snapshots mechanism.
+        * Custom snapshots scheduling for application protection
+        * Instant application clone
+        * CLI for centralized management for Zadara's K8s assets
+
+        ## About Zadara
+
+        Zadara provides companies and service providers agile, secure
+        enterprise storage as a consumption-based service. Any location, any
+        data type, any protocol. Zadara offers resource isolation, exceptional
+        security, and management control.
+
+        More information at: [Zadara Kubernetes Operator](https://github.com/zadarastorage/zadara-operator)
+      displayName: Zadara Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Zadara
+      - Storage
+      - Volumes
+      - CSI
+      - NAS
+      - Block
+      - Persistent Volume
+      - Cloud Storage
+      - STaaS
+      - PVC
+      - Data Protection
+      - Data Management
+      links:
+      - name: Zadara
+        url: https://www.zadara.com/
+      - name: Installation Guide
+        url: https://github.com/zadarastorage/zadara-operator#installation
+      - name: CLI
+        url: https://github.com/zadarastorage/zadara-operator#cli
+      maintainers:
+      - email: k8s@zadara.com
+        name: Zadara
+      maturity: alpha
+      provider:
+        name: Zadara
+      relatedImages:
+      - zadara/zoperator:0.3.6
+      version: 0.3.6
+    name: alpha
+  defaultChannel: alpha
+  packageName: zoperator
+  provider:
+    name: Zadara

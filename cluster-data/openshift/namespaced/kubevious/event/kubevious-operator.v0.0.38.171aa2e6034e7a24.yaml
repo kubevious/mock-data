@@ -1,0 +1,28 @@
+apiVersion: v1
+count: 2
+eventTime: null
+firstTimestamp: "2022-10-03T18:35:21Z"
+involvedObject:
+  apiVersion: operators.coreos.com/v1alpha1
+  kind: ClusterServiceVersion
+  name: kubevious-operator.v0.0.38
+  namespace: kubevious
+  resourceVersion: "40252"
+  uid: c616343d-2dd0-4c01-be37-dc087d3bbc87
+kind: Event
+lastTimestamp: "2022-10-03T19:45:00Z"
+message: 'installing: waiting for deployment kubevious-operator-controller-manager
+  to become ready: deployment "kubevious-operator-controller-manager" not available:
+  Deployment does not have minimum availability.'
+metadata:
+  creationTimestamp: "2022-10-03T19:45:00Z"
+  name: kubevious-operator.v0.0.38.171aa2e6034e7a24
+  namespace: kubevious
+  resourceVersion: "40261"
+  uid: b4a24667-70ba-44eb-8c3a-0e772bcec522
+reason: InstallWaiting
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: operator-lifecycle-manager
+type: Normal

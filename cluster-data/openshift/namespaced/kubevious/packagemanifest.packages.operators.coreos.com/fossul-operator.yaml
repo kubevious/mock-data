@@ -1,0 +1,213 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Fossul Framework
+    provider-url: https://github.com/fossul/fossul
+  name: fossul-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: fossul-operator.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n  {\n    \"apiVersion\": \"fossul.io/v1\",\n    \"kind\":
+          \"Backup\",\n    \"metadata\": {\n      \"name\": \"mariadb-sample\"\n    },\n
+          \   \"spec\": {\n      \"deployment_name\": \"mariadb\",\n      \"policy\":
+          \"daily\"\n    }\n  },\n  {\n    \"apiVersion\": \"fossul.io/v1\",\n    \"kind\":
+          \"Restore\",\n    \"metadata\": {\n      \"name\": \"mariadb-sample\"\n
+          \   },\n    \"spec\": {\n      \"deployment_name\": \"mariadb\",\n      \"policy\":
+          \"daily\",\n      \"workflow_id\": \"xxxx\"\n    }\n  },        \n  {\n
+          \   \"apiVersion\": \"fossul.io/v1\",\n    \"kind\": \"BackupConfig\",\n
+          \   \"metadata\": {\n      \"name\": \"mariadb-sample\"\n    },\n    \"spec\":
+          {\n      \"container_platform\": \"openshift\",\n      \"operator_controlled\":
+          true,\n      \"auto_discovery\": false,\n      \"deployment_name\": \"mariadb\",\n
+          \     \"deployment_type\": \"DeploymentConfig\",\n      \"job_retention\":
+          50,\n      \"overwrite_pcv_on_restore\": true,\n      \"policies\": [\n
+          \       {\n          \"policy\": \"hourly\",\n          \"retentionNumber\":
+          3\n        },\n        {\n          \"policy\": \"daily\",\n          \"retentionNumber\":
+          10\n        }\n      ],\n      \"pvc_deletion_timeout\": 300,\n      \"restore_to_new_pvc\":
+          false,\n      \"snapshot_timeout\": 180,\n      \"storage_plugin\": \"csi.so\",\n
+          \     \"app_plugin\": \"mariadb.so\"\n    }\n  },\n  {\n    \"apiVersion\":
+          \"fossul.io/v1\",\n    \"kind\": \"BackupSchedule\",\n    \"metadata\":
+          {\n      \"name\": \"mariadb-sample\"\n    },\n    \"spec\": {\n      \"cron_schedule\":
+          \"59 23 * * *\",\n      \"deployment_name\": \"mariadb\",\n      \"policy\":
+          \"daily\"\n\n    }\n  },\n  {\n    \"apiVersion\": \"fossul.io/v1\",\n    \"kind\":
+          \"Fossul\",\n    \"metadata\": {\n      \"name\": \"fossul-sample\"\n    },\n
+          \   \"spec\": {\n      \"enable_routes\": false,\n      \"enable_virtualmachines\":
+          false,\n      \"container_platform\": \"openshift\"\n    }\n  }\n]"
+        capabilities: Full Lifecycle
+        categories: Storage
+        certified: "false"
+        containerImage: quay.io/fossul/fossul-operator:v0.6.0
+        createdAt: "2022-01-25T20:09:00Z"
+        description: Fossul is a application centric container native backup and restore
+          framework for databases or applications
+        operators.operatorframework.io/builder: operator-sdk-v1.10.1-ocp
+        operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
+        repository: https://github.com/fossul/fossul
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Manages application backup configurations
+          kind: BackupConfig
+          name: backupconfigs.fossul.io
+          version: v1
+        - description: Manages application backups
+          kind: Backup
+          name: backups.fossul.io
+          version: v1
+        - description: Manages application restores
+          kind: Restore
+          name: restores.fossul.io
+          version: v1
+        - description: Manages application backup scheduling
+          kind: BackupSchedule
+          name: backupschedules.fossul.io
+          version: v1
+        - description: Manages deployment of the Fossul Framework
+          kind: Fossul
+          name: fossuls.fossul.io
+          version: v1
+      description: "## Fossul Framework\nApplication backup and restore framework
+        for container native applications on Kubernetes and OpenShift. Fossul provides
+        application centric backup and recovery enabling integration with the application
+        creating an application consistent backup. Since there are many applications
+        and providers for storage or archive Fossul enables plugins that allow proper
+        integration. Fossul provides plugins for postgresql, mariadb, mysql and mongo
+        as well as plugin to integrate with CSI snapshots. Plugins can be written
+        in any language. The Fossul operator deploys Fossul via the Fossul custom
+        resource and additionally provides BackupConfig, Backup, BackupSchedule and
+        Restore custom resources. Each user can configure and manage their own backups
+        with simple custom resources that can be part of CI/CD or source control.
+        Users can also opt to manage backups through Fossul CLI/API instead of the
+        custom resources provided by the operator.\n\n## Installation\nIt is recommended
+        to install the operator into the openshift-operators namespace which is the
+        default location for operators. Once the operator is installed create a new
+        project called ```fossul``` and create the Fossul custom resource under the
+        fossul namespace. This will deploy the Fossul Framework. You can choose another
+        namespace for the Fossul Framework but then also need to provide the optional
+        'fossul_namespace' parameter with the spec for all the additional custom resources.
+        This is required so the Fossul operator can communicate with Fossul.\n\nOnce
+        Fossul is deployed you can manage backups either through custom resources
+        provided by the operator or the Fossul CLI/API. If using the customer resources,
+        first create a BackupConfig custom resource for every application you want
+        to backup. Once that is done, you can optionally create a backup by simply
+        creating a Backup custom resource. You can also create a BackupSchedule custom
+        resource using cron syntax which will schedule your backup to occur on a regular
+        interval or do so via a Kubernetes job. Finally if a backup has been created
+        you can perform a restore through a custom resource as well, providing the
+        workflow id from the completed backup. If you are creating backups through
+        the custom resource the workflow id will be appended to the spec once the
+        backup completes. If you are using the Fossul CLI/API to create backups you
+        will need to get the workflow id through the Fossul CLI/API directly using
+        the backupList action.\n\nFor users of the cli, a cli pod is deployed with
+        credentials and if desired you can create or manage backups from within that
+        pod. To use the API you need the credentials stored in the fossul secret.
+        The cli has already been pre-configured with these credentials. The API can
+        also be optionally exposed via routes and API documentation is under ```/api/v1/index.html```.\n\n##
+        Quick Setup\nWhen creating Fossul custom resources generally you will only
+        need to update the ```deployment_name``` and ```deployment_type``` (DeploymentConfig,
+        Deployment or VirtualMachine). All custom resources must be created in the
+        namespace where the database or application exists. \n\n### Deploy Fossul
+        in fossul namespace\n```$ oc new-project fossul```\n<pre>\n$ vi fossul.yaml\nkind:
+        Fossul\napiVersion: fossul.io/v1\nmetadata:\n  name: fossul-sample\n  namespace:
+        fossul\nspec: {}\n</pre>\n```$ oc create -f fossul.yaml```\n\n### Deploy Mariadb
+        Database\nMake sure you create all Fossul custom resources in the same namespace
+        as the database, application or virtual machine\n\n### Create MariaDB Fossul
+        BackupConfig\nCreates a backup configuration for MariaDB or MySQL databases\n\n```$
+        vi backupconfig.yaml```\n<pre>\nkind: BackupConfig\napiVersion: fossul.io/v1\nmetadata:\n
+        \ name: mariadb-sample\n  namespace: databases\nspec:\n  container_platform:
+        openshift\n  operator_controlled: true\n  auto_discovery: false\n  deployment_name:
+        mariadb\n  deployment_type: DeploymentConfig\n  job_retention: 50\n  overwrite_pcv_on_restore:
+        true\n  policies:\n    - policy: hourly\n      retentionNumber: 3\n    - policy:
+        daily\n      retentionNumber: 10\n  pvc_deletion_timeout: 300\n  restore_to_new_pvc:
+        false\n  snapshot_timeout: 180\n  storage_plugin: csi.so\n  app_plugin: mariadb.so
+        \n</pre>\n```$ oc create -f backupconfig.yaml```\n\n### Create PostgreSQL
+        Fossul BackupConfig\nCreates a backup config for PostgreSQL databases, you
+        need to ensure the user defined in secret has backup permissions\n\n```$ vi
+        backupconfig.yaml```\n<pre>\nkind: BackupConfig\napiVersion: fossul.io/v1\nmetadata:\n
+        \ name: postgresql-sample\n  namespace: databases\nspec:\n  container_platform:
+        openshift\n  operator_controlled: true    \n  auto_discovery: false\n  deployment_name:
+        postgresql \n  deployment_type: DeploymentConfig\n  job_retention: 50\n  overwrite_pcv_on_restore:
+        true\n  policies:\n    - policy: hourly\n      retentionNumber: 3\n    - policy:
+        daily\n      retentionNumber: 10\n  pvc_deletion_timeout: 300\n  restore_to_new_pvc:
+        false\n  snapshot_timeout: 180\n  storage_plugin: csi.so\n  app_plugin: postgres.so
+        \n</pre>\n```$ oc create -f backupconfig.yaml```\n\n### Create Kubevirt Fossul
+        BackupConfig\nCreates a backup configuration for virtual machines\n\n```$
+        vi backupconfig.yaml```\n<pre>\nkind: BackupConfig\napiVersion: fossul.io/v1\nmetadata:\n
+        \ name: rhel8-vm-sample\n  namespace: virtualmachines\nspec:\n  container_platform:
+        openshift\n  operator_controlled: true    \n  auto_discovery: false\n  deployment_name:
+        rhel8-vm\n  deployment_type: VirtualMachine\n  job_retention: 50\n  overwrite_pcv_on_restore:
+        true\n  policies:\n    - policy: hourly\n      retentionNumber: 3\n    - policy:
+        daily\n      retentionNumber: 10\n  pvc_deletion_timeout: 300\n  restore_to_new_pvc:
+        false\n  snapshot_timeout: 180\n  storage_plugin: csi.so\n  app_plugin: kubevirt.so
+        \n</pre>\n```$ oc create -f backupconfig.yaml```\n\n### Create Tar Fossul
+        BackupConfig\nCreates a backup config using tar to backup folders and files
+        where csi snapshots are not desired\n\n```$ vi backupconfig.yaml```\n<pre>\nkind:
+        BackupConfig\napiVersion: fossul.io/v1\nmetadata:\n  name: tar-sample\n  namespace:
+        databases\nspec:\n  container_platform: openshift\n  operator_controlled:
+        true    \n  auto_discovery: false\n  deployment_name: anyname\n  job_retention:
+        50\n  policies:\n    - policy: hourly\n      retentionNumber: 3\n    - policy:
+        daily\n      retentionNumber: 10\n  backup_source_paths: /opt/app-root/src/test\n
+        \ storage_plugin: tar.so\n</pre>\n```$ oc create -f backupconfig.yaml```\n\n###
+        Create BackupSchedule\nA backup can be scheduled per policy, defined by backup
+        configuration using cron syntax\n\n```$ vi backupschedule.yaml```\n<pre>\nkind:
+        BackupSchedule\napiVersion: fossul.io/v1\nmetadata:\n  name: mariadb-sample\n
+        \ namespace: databases\nspec:\n  cron_schedule: '59 23 * * *'\n  deployment_name:
+        mariadb\n  policy: daily\n</pre>\n```$ oc create -f backupschedule.yaml```\n\n###
+        Create Backup\nA backup will be created according to policy and deleted either
+        manually or as defined in retention policy\n\n```$ vi backup.yaml```\n<pre>\nkind:
+        Backup\napiVersion: fossul.io/v1\nmetadata:\n  name: mariadb-sample\n  namespace:
+        databases\nspec:\n  deployment_name: mariadb\n  policy: daily\n</pre>\n```$
+        oc create -f backup.yaml```\n\n### Perform Restore\nA restore requires a workflow_id
+        located in the backup spec, upon a successful restore the custom resource
+        will deleted automatically\n\n```$ vi restore.yaml```\n<pre>\nkind: Restore\napiVersion:
+        fossul.io/v1\nmetadata:\n  name: mariadb-sample\n  namespace: databases\nspec:\n
+        \ deployment_name: mariadb\n  policy: daily\n  workflow_id: xxxx\n</pre>\n```$
+        oc create -f restore.yaml```\n"
+      displayName: Fossul Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - backup
+      - restore
+      - application
+      - consistent
+      links:
+      - name: Fossul Framework Community
+        url: https://github.com/fossul/fossul
+      maintainers:
+      - email: ktenzer@redhat.com
+        name: Keith Tenzer
+      maturity: alpha
+      provider:
+        name: Fossul Framework
+        url: https://github.com/fossul/fossul
+      relatedImages:
+      - quay.io/fossul/fossul-operator:v0.6.0
+      version: 0.6.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: fossul-operator
+  provider:
+    name: Fossul Framework
+    url: https://github.com/fossul/fossul

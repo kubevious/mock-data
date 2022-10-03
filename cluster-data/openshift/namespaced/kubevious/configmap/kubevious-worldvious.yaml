@@ -1,0 +1,27 @@
+apiVersion: v1
+data:
+  WORLDVIOUS_URL: https://api.kubevious.io/api/v1/oss
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  labels:
+    app.kubernetes.io/component: kubevious-worldvious
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-worldvious
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: installer.kubevious.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Kubevious
+    name: kubevious
+    uid: 8f47dab5-0847-44c2-a914-8e403488bf96
+  resourceVersion: "31042"
+  uid: a71beafc-7d21-4001-8f22-ae5487d75ef7

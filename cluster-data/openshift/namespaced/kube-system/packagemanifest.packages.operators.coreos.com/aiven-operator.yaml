@@ -1,0 +1,138 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: aiven
+    provider-url: ""
+  name: aiven-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: aiven-operator.v0.2.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[]'
+        capabilities: Basic Install
+        categories: Cloud Provider
+        containerImage: aivenoy/aiven-operator:v0.2.0
+        description: Manage your https://aiven.io resources with Kubernetes.
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/aiven/aiven-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ConnectionPool is the Schema for the connectionpools API
+          displayName: Connection Pool
+          kind: ConnectionPool
+          name: connectionpools.aiven.io
+          version: v1alpha1
+        - description: Database is the Schema for the databases API
+          displayName: Database
+          kind: Database
+          name: databases.aiven.io
+          version: v1alpha1
+        - description: KafkaACL is the Schema for the kafkaacls API
+          displayName: Kafka ACL
+          kind: KafkaACL
+          name: kafkaacls.aiven.io
+          version: v1alpha1
+        - description: KafkaConnector is the Schema for the kafkaconnectors API
+          displayName: Kafka Connector
+          kind: KafkaConnector
+          name: kafkaconnectors.aiven.io
+          version: v1alpha1
+        - description: KafkaConnect is the Schema for the kafkaconnects API
+          displayName: Kafka Connect
+          kind: KafkaConnect
+          name: kafkaconnects.aiven.io
+          version: v1alpha1
+        - description: Kafka is the Schema for the kafkas API
+          displayName: Kafka
+          kind: Kafka
+          name: kafkas.aiven.io
+          version: v1alpha1
+        - description: KafkaSchema is the Schema for the kafkaschemas API
+          displayName: Kafka Schema
+          kind: KafkaSchema
+          name: kafkaschemas.aiven.io
+          version: v1alpha1
+        - description: KafkaTopic is the Schema for the kafkatopics API
+          displayName: Kafka Topic
+          kind: KafkaTopic
+          name: kafkatopics.aiven.io
+          version: v1alpha1
+        - description: PostgreSQL is the Schema for the postgresql API
+          displayName: Postgre SQL
+          kind: PostgreSQL
+          name: postgresqls.aiven.io
+          version: v1alpha1
+        - description: Project is the Schema for the projects API
+          displayName: Project
+          kind: Project
+          name: projects.aiven.io
+          version: v1alpha1
+        - description: ProjectVPC is the Schema for the projectvpcs API
+          displayName: Project VPC
+          kind: ProjectVPC
+          name: projectvpcs.aiven.io
+          version: v1alpha1
+        - description: ServiceIntegration is the Schema for the serviceintegrations
+            API
+          displayName: Service Integration
+          kind: ServiceIntegration
+          name: serviceintegrations.aiven.io
+          version: v1alpha1
+        - description: ServiceUser is the Schema for the serviceusers API
+          displayName: Service User
+          kind: ServiceUser
+          name: serviceusers.aiven.io
+          version: v1alpha1
+        - description: Redis is the Schema for the redis API
+          displayName: Redis
+          kind: Redis
+          name: redis.aiven.io
+          version: v1alpha1
+      description: A Kubernetes operator for provisioning and managing Aiven Databases
+        and other resources
+      displayName: Aiven Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - aiven
+      links:
+      - name: Aiven Operator
+        url: https://aiven.github.io/aiven-operator
+      maintainers:
+      - email: ivan.savciuc@gmail.com
+        name: Ivan Savciuc
+      - email: michael.hoffmann@aiven.io
+        name: Michael Hoffmann
+      maturity: alpha
+      provider:
+        name: aiven
+      relatedImages:
+      - aivenoy/aiven-operator:v0.2.0
+      version: 0.2.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: aiven-operator
+  provider:
+    name: aiven

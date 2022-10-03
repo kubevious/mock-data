@@ -1,0 +1,84 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Project Quay
+    provider-url: ""
+  name: project-quay-container-security-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: project-quay-container-security-operator.v1.0.6
+    currentCSVDesc:
+      annotations:
+        capabilities: Full Lifecycle
+        categories: Security
+        containerImage: quay.io/quay/container-security-operator@sha256:6eefeaee910251ba26c825746d11ae166a9781aeace5455b2766d26298911f13
+        createdAt: "2020-04-13 00:00:00"
+        description: Identify image vulnerabilities in Kubernetes pods
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/quay/container-security-operator
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a set of vulnerabilities in an image manifest.
+          displayName: Image Manifest Vulnerability
+          kind: ImageManifestVuln
+          name: imagemanifestvulns.secscan.quay.redhat.com
+          version: v1alpha1
+      description: The Project Quay Container Security Operator (CSO) brings Quay
+        and Clair metadata to Kubernetes / OpenShift. Starting with vulnerability
+        information the scope will get expanded over time. If it runs on OpenShift,
+        the corresponding vulnerability information is shown inside the OCP Console.
+        The Container Security Operator enables cluster administrators to monitor
+        known container image vulnerabilities in pods running on their Kubernetes
+        cluster. The controller sets up a watch on pods in the specified namespace(s)
+        and queries the container registry for vulnerability information. If the container
+        registry supports image scanning, such as [Quay](https://github.com/quay/quay)
+        with [Clair](https://github.com/quay/clair), then the Operator will expose
+        any vulnerabilities found via the Kubernetes API in an `ImageManifestVuln`
+        object.  This Operator requires no additional configuration after deployment,
+        and will begin watching pods and populating `ImageManifestVulns` immediately
+        once installed.
+      displayName: Project Quay Container Security
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - open source
+      - containers
+      - security
+      links:
+      - name: Source Code
+        url: https://github.com/quay/container-security-operator
+      maintainers:
+      - email: quay-sig@googlegroups.com
+        name: Project Quay
+      maturity: alpha
+      provider:
+        name: Project Quay
+      relatedImages:
+      - quay.io/quay/container-security-operator@sha256:5e96a3d0d7694e26e8354701077f7eb5f7759800c5de0170a007cfc6a51e3f87
+      version: 1.0.6
+    name: alpha
+  defaultChannel: alpha
+  packageName: project-quay-container-security-operator
+  provider:
+    name: Project Quay

@@ -1,0 +1,126 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: meshery
+    provider-url: https://github.com/meshery
+  name: meshery-operator
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: meshery-operator.v0.0.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "meshery.layer5.io/v1alpha1",
+              "kind": "Broker",
+              "metadata": {
+                "annotations": {
+                  "meshery/component-type": "management-plane"
+                },
+                "labels": {
+                  "app": "meshery",
+                  "component": "controller",
+                  "version": "v0.1.15"
+                },
+                "name": "meshery-meshery-broker",
+                "namespace": "meshery"
+              },
+              "spec": {
+                "size": 1
+              }
+            },
+            {
+              "apiVersion": "meshery.layer5.io/v1alpha1",
+              "kind": "MeshSync",
+              "metadata": {
+                "annotations": {
+                  "meshery/component-type": "management-plane"
+                },
+                "labels": {
+                  "app": "meshery",
+                  "component": "controller",
+                  "version": "v0.1.15"
+                },
+                "name": "meshery-meshery-meshsync",
+                "namespace": "meshery"
+              },
+              "spec": {
+                "broker": {
+                  "native": {
+                    "name": "meshery-broker",
+                    "namespace": "meshery"
+                  }
+                },
+                "size": 1
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Monitoring
+        containerImage: layer5/meshery-operator:stable-latest
+        createdAt: "2022-05-12T19:42:22Z"
+        description: Meshery is the cloud native management plane offering lifecycle,
+          configuration, and performance management of Kubernetes, service meshes,
+          and your workloads.
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        support: Layer5.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - kind: Broker
+          name: brokers.meshery.layer5.io
+          version: v1alpha1
+        - description: MeshSync is the Schema for the meshsyncs API
+          displayName: Mesh Sync
+          kind: MeshSync
+          name: meshsyncs.meshery.layer5.io
+          version: v1alpha1
+      description: Meshery Operator is the multi-service mesh operator and implementation
+        of MeshSync.
+      displayName: meshery-operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - servicemesh
+      - meshSync
+      links:
+      - name: Meshery Operator
+        url: https://meshery-operator.domain
+      maintainers:
+      - email: urakiny@gmai.com
+        name: aisuko
+      maturity: alpha
+      provider:
+        name: meshery
+        url: https://github.com/meshery
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - layer5/meshery-operator:stable-latest
+      version: 0.0.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: meshery-operator
+  provider:
+    name: meshery
+    url: https://github.com/meshery

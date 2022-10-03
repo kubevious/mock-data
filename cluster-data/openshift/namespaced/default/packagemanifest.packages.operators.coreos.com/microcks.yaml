@@ -1,0 +1,260 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Microcks.io
+    provider-url: ""
+  name: microcks
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: microcks-operator.v0.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "microcks.github.io/v1alpha1",
+              "kind": "MicrocksInstall",
+              "metadata": {
+                "name": "my-microcksinstall"
+              },
+              "spec": {
+                "name": "my-microcksinstall",
+                "version": "0.9.0",
+                "microcks": {
+                  "replicas": 1
+                },
+                "postman": {
+                  "replicas": 1
+                },
+                "keycloak": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "1Gi"
+                },
+                "mongodb": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "2Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "microcks.github.io/v1alpha1",
+              "kind": "MicrocksInstall",
+              "metadata": {
+                "name": "my-microcksinstall-minikube"
+              },
+              "spec": {
+                "name": "my-microcksinstall-minikube",
+                "version": "0.9.0",
+                "microcks": {
+                  "replicas": 2,
+                  "url": "microcks.192.168.99.100.nip.io"
+                },
+                "postman": {
+                  "replicas": 2
+                },
+                "keycloak": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "1Gi",
+                  "url": "keycloak.192.168.99.100.nip.io"
+                },
+                "mongodb": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "2Gi"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/microcks/microcks-ansible-operator:0.3.0
+        createdAt: "2020-04-07T19:21:00Z"
+        description: Open Source mocking and testing platform for API and microservices
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/microcks/microcks-ansible-operator
+        support: microcks.github.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Microcks installation
+          displayName: MicrocksInstall
+          kind: MicrocksInstall
+          name: microcksinstalls.microcks.github.io
+          version: v1alpha1
+      description: |
+        Microcks is an open source project those goal is to provide a platform for referencing, deploying mocks and allow contract-testing of Services and APIs. It can also be considered as a Service Virtualization solution because it will allow you to provide fake API or Service implementation before development being actually done. It supports both REST API and SOAP WebServices and perfectly integrates into an iterative,contract-first delivery process.
+
+        Microcks tries not reinventing the wheel and let you capitalize on already known tools of standards. It supports OpenAPI Specification 3.x out-of-the-box and can also relies on popular tools like [SoapUI](http://www.soapui.com) or [Postman](http://www.getpostman.io) to edit your API request / response samples as well as your test scripts.
+
+        * **Create/Destroy**: Easily launch Microcks installations for your kubernetes namespace.
+      displayName: Microcks Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - mock
+      - test
+      - API
+      - microservice
+      links:
+      - name: Product Page
+        url: https://microcks.io
+      - name: Microcks Operator Source Code
+        url: https://github.com/microcks/microcks-ansible-operator
+      maintainers:
+      - email: laurent.broudoux@gmail.com
+        name: lbroudoux
+      maturity: alpha
+      provider:
+        name: Microcks.io
+      relatedImages:
+      - quay.io/microcks/microcks-ansible-operator:0.3.0
+      version: 0.3.0
+    name: alpha
+  - currentCSV: microcks-operator.v1.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "microcks.github.io/v1alpha1",
+              "kind": "MicrocksInstall",
+              "metadata": {
+                "name": "my-microcksinstall"
+              },
+              "spec": {
+                "name": "my-microcksinstall",
+                "version": "1.6.0",
+                "microcks": {
+                  "replicas": 1
+                },
+                "postman": {
+                  "replicas": 1
+                },
+                "keycloak": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "1Gi"
+                },
+                "mongodb": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "2Gi"
+                }
+              }
+            },
+            {
+              "apiVersion": "microcks.github.io/v1alpha1",
+              "kind": "MicrocksInstall",
+              "metadata": {
+                "name": "my-microcksinstall-minikube"
+              },
+              "spec": {
+                "name": "my-microcksinstall-minikube",
+                "version": "1.6.0",
+                "microcks": {
+                  "replicas": 2,
+                  "url": "microcks.192.168.99.100.nip.io"
+                },
+                "postman": {
+                  "replicas": 2
+                },
+                "keycloak": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "1Gi",
+                  "url": "keycloak.192.168.99.100.nip.io"
+                },
+                "mongodb": {
+                  "install": true,
+                  "persistent": true,
+                  "volumeSize": "2Gi"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/microcks/microcks-ansible-operator:1.6.0
+        createdAt: "2022-09-06T18:23:56Z"
+        description: Open Source mocking and testing platform for API and microservices
+        repository: https://github.com/microcks/microcks-ansible-operator
+        support: microcks.github.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Microcks installation
+          displayName: MicrocksInstall
+          kind: MicrocksInstall
+          name: microcksinstalls.microcks.github.io
+          version: v1alpha1
+      description: |
+        Microcks is an Open source tool for API and microservices mocking and testing. It provides a platform for referencing, deploying mocks and allow contract-testing of your APIs. It can also be considered as a Service Virtualization solution because it will allow you to provide fake API or Service implementation before development being actually done. It supports Async APIs, REST APIs, gRPC, GraphQL and SOAP WebServices. It perfectly integrates into an iterative, contract-first delivery process.
+        Microcks tries not reinventing the wheel and let you capitalize on already known tools of standards. It supports [AsyncAPI Specifications](https://asyncapi.com), [OpenAPI Specification](https://www.openapis.org/) `3.x`, [gRPC Protobuf](https://grpc.io/), [GraphQL Schema](https://graphql.org) out-of-the-box and can also relies on popular tools like [SoapUI](http://www.soapui.com) or [Postman](http://www.getpostman.io) to edit your API request / response samples as well as your test scripts.
+        ### Operator features
+        * **Create/Destroy**: Easily launch Microcks installations (`MicrocksInstall` custom resource) for your Kubernetes namespace
+        ### MicrocksInstall options
+        * **keycloak** component can be deployed as part of the install or you can reuse an existing instance. You can reference an existing `Secret` for providing TLS certificates for securing the `Ingress`,
+        * **mongodb** component can be deployed as part of the install or you can reuse an existing instance, You can reference an existing `Secret` for providing connection credentials,
+        * **features** component allow to activate optional features like the mocking of AsyncAPIs. In case you turn `features.async.enabled` to `true` and `features.async.kafka.install` to `true`, you must have the [Strimzi Operator](https://operatorhub.io/operator/strimzi-kafka-operator) already installed on your cluster/namespace.
+        ### Documentation
+        Documentation to the current _master_ branch as well as all releases can be found on our [GitHub](https://github.com/microcks/microcks-ansible-operator).
+        ### License
+        Microcks is licensed under the [Apache License, Version 2.0](https://github.com/microcks/microcks/blob/master/LICENSE).
+      displayName: Microcks Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - mock
+      - test
+      - API
+      - microservice
+      links:
+      - name: Product Page
+        url: https://microcks.io
+      - name: Microcks Operator Source Code
+        url: https://github.com/microcks/microcks-ansible-operator
+      maintainers:
+      - email: laurent.broudoux@gmail.com
+        name: lbroudoux
+      maturity: alpha
+      provider:
+        name: Microcks.io
+      relatedImages:
+      - quay.io/microcks/microcks-ansible-operator:1.6.0
+      version: 1.6.0
+    name: stable
+  defaultChannel: stable
+  packageName: microcks
+  provider:
+    name: Microcks.io

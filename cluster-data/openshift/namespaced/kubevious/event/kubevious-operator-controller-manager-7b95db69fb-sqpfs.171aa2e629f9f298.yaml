@@ -1,0 +1,29 @@
+apiVersion: v1
+count: 3
+eventTime: null
+firstTimestamp: "2022-10-03T18:35:21Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{manager}
+  kind: Pod
+  name: kubevious-operator-controller-manager-7b95db69fb-sqpfs
+  namespace: kubevious
+  resourceVersion: "30602"
+  uid: 89e4022f-712e-4128-895c-4854110e6ea7
+kind: Event
+lastTimestamp: "2022-10-03T19:45:10Z"
+message: Container image "docker.io/kubevious/operator:v0.0.38" already present on
+  machine
+metadata:
+  creationTimestamp: "2022-10-03T19:41:10Z"
+  name: kubevious-operator-controller-manager-7b95db69fb-sqpfs.171aa2e629f9f298
+  namespace: kubevious
+  resourceVersion: "40287"
+  uid: 3fff37ce-125c-40a6-8b51-144f7e9b6659
+reason: Pulled
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Normal

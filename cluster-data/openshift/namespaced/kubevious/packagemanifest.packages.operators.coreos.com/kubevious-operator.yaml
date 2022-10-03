@@ -1,0 +1,133 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:35:06Z"
+  labels:
+    catalog: kubevious-operator-catalog
+    catalog-namespace: kubevious
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Kubevious
+    provider-url: https://kubevious.io
+  name: kubevious-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: kubevious-operator-catalog
+  catalogSourceDisplayName: kubevious-operator
+  catalogSourceNamespace: kubevious
+  catalogSourcePublisher: operator-sdk
+  channels:
+  - currentCSV: kubevious-operator.v0.0.38
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "installer.kubevious.io/v1alpha1",
+              "kind": "Kubevious",
+              "metadata": {
+                "name": "kubevious",
+                "namespace": "kubevious"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Full Lifecycle
+        containerImage: kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+        createdAt: 2022-09-30T21:36:56+0000
+        operatorframework.io/suggested-namespace: kubevious
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+        repository: https://github.com/kubevious/operator
+        support: Kubevious
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A configuration file for a Kubevious installation.
+          kind: Kubevious
+          name: kubevious.installer.kubevious.io
+          version: v1alpha1
+      description: "Kubevious is an app-centric assurance, validation, and introspection
+        platform for Kubernetes. It helps running modern Kubernetes applications without
+        disasters, and costly outages by continuously validating application manifests,
+        cluster state and configuration. Kubevious detects and prevents errors(_typos,
+        misconfigurations, conflicts, inconsistencies_) and violations of best practices.
+        Our secret sauce is based on the ability to validate across multiple manifests
+        and looking at the configuration from the application vantage point. Kubevious'
+        unique app-centric user interface delivers intuitive insight, introspection
+        and troubleshooting tools for cloud-native applications. It works right out
+        of the box and only takes a couple of minutes to get Kubevious up and running
+        for existing production applications. Kubevious operates inside the cluster
+        with the user interface accessible as a web app and a CLI tool for integration
+        with CI/CD pipelines.\n\n## \U0001F482 Guard\nKubevious Guard is a CLI extension
+        that validates changes for conflicts, misconfigurations, typos, and violations
+        of best practices before they are applied to Kubernetes clusters and have
+        a chance to cause application outage or health degradation. It examines changes
+        as a whole package, not as individual YAML manifests, allowing detection of
+        cross-manifest violations and conflicts. Kubevious Guard follows [Built-in
+        Validations](https://kubevious.io/docs/built-in-validators/) and an extensible
+        [Rules Engine](https://kubevious.io/docs/features/rules-engine/) to execute
+        the validation logic.\n\nChanges are validated by piping manifests YAML and
+        can be easily integrated into the CI/CD pipeline testing stage. Remember that
+        Kubevious should be deployed in the cluster.\n\nLearn more about Kubevious
+        Guard in this [blog post](https://kubevious.io/blog/post/kubevious-guard-kubernetes-validation-enforcer).\n\n![Kubevious
+        Guard Intro](https://github.com/kubevious/media/raw/master/videos/guard-intro.gif)\n\n##
+        \U0001F441️ Observe\nKubevious analyses Kubernetes cluster configuration and
+        state and presents it graphically into multiple domain-focused views. You
+        can learn more about [Kubevious UI here](https://kubevious.io/docs/features/application-centric-ui/).\n</a>.\n\n-
+        **Logic View** is focused on app-centricity, where container, compute, networking,
+        storage, and RBAC related manifests correlated and grouped under Application
+        nodes.\n- **Image View** is focused on container images and container image
+        repositories used in the cluster.\n- **Gateway View** provides visibility
+        regarding how applications are exposed to the public using Ingresses and API
+        Gateways.\n- **RBAC View** identifies how Users and Groups are used in the
+        cluster.\n- **Package View** provides visibility to Helm charts installed
+        in the Kubernetes cluster.\n\n![Cluster and Configs in an Application Centric
+        View](https://kubevious.io/static/b4e981857c1b19c3d5b6c452ff17eadb/3f20e/main-ui-hints.png)"
+      displayName: Kubevious
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - security
+      - troubleshooting
+      - configuration
+      - validation
+      - verification
+      - compliance
+      links:
+      - name: Kubevious
+        url: https://kubevious.io
+      - name: Project GitHub Repo
+        url: https://github.com/kubevious/kubevious
+      - name: Operator GitHub Repo
+        url: https://github.com/kubevious/operator
+      - name: Slack
+        url: https://kubevious.io/slack
+      - name: Documentation
+        url: https://kubevious.io/docs
+      maintainers:
+      - email: info@kubevious.io
+        name: Kubevious
+      maturity: alpha
+      minKubeVersion: 1.13.0
+      provider:
+        name: Kubevious
+        url: https://kubevious.io
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+      - docker.io/kubevious/operator:v0.0.38
+      version: 0.0.38
+    name: alpha
+  defaultChannel: alpha
+  packageName: kubevious-operator
+  provider:
+    name: Kubevious
+    url: https://kubevious.io

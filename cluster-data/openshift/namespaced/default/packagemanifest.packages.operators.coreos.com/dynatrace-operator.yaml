@@ -1,0 +1,175 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Dynatrace LLC
+    provider-url: www.dynatrace.com
+  name: dynatrace-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: dynatrace-operator.v0.9.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "dynatrace.com/v1beta1",
+              "kind": "DynaKube",
+              "metadata": {
+                "annotations": {
+                  "feature.dynatrace.com/oneagent-privileged": "true"
+                },
+                "name": "dynakube",
+                "namespace": "dynatrace"
+              },
+              "spec": {
+                "activeGate": {
+                  "capabilities": [
+                    "routing",
+                    "kubernetes-monitoring",
+                    "dynatrace-api"
+                  ],
+                  "image": "",
+                  "resources": {
+                    "limits": {
+                      "cpu": "1000m",
+                      "memory": "1.5Gi"
+                    },
+                    "requests": {
+                      "cpu": "500m",
+                      "memory": "512Mi"
+                    }
+                  }
+                },
+                "apiUrl": "https://ENVIRONMENTID.live.dynatrace.com/api",
+                "oneAgent": {
+                  "classicFullStack": {
+                    "image": null,
+                    "tolerations": [
+                      {
+                        "effect": "NoSchedule",
+                        "key": "node-role.kubernetes.io/master",
+                        "operator": "Exists"
+                      },
+                      {
+                        "effect": "NoSchedule",
+                        "key": "node-role.kubernetes.io/control-plane",
+                        "operator": "Exists"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Monitoring,Logging & Tracing
+        containerImage: docker.io/dynatrace/dynatrace-operator@sha256:370b076095b9d2d88935c5b88f9ba1c5702bb02efcb0677c4a831afe0b4b8f19
+        createdAt: 2022-09-28T14:54:21.564553
+        olm.skipsRange: <=v0.8.2
+        operatorframework.io/suggested-namespace: dynatrace
+        operators.operatorframework.io/builder: operator-sdk-v1.16.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Dynatrace/dynatrace-operator
+        support: Dynatrace
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: DynaKube is the Schema for the DynaKube API
+          displayName: Dynatrace DynaKube
+          kind: DynaKube
+          name: dynakubes.dynatrace.com
+          version: v1alpha1
+        - description: DynaKube is the Schema for the DynaKube API
+          displayName: Dynatrace DynaKube
+          kind: DynaKube
+          name: dynakubes.dynatrace.com
+          version: v1beta1
+      description: |
+        The Dynatrace Operator supports rollout and lifecycle management of various Dynatrace components in Kubernetes and OpenShift.
+
+        Currently the Dynatrace Operator supports the following capabilities:
+
+        ### OneAgent
+          * `classicFullStack` rolls out one OneAgent pod per node to monitor its pods and the node itself
+          * `applicationMonitoring` is a webhook based injection mechanism for automatic app-only injection
+          * `hostMonitoring` monitors only the hosts, i.e., the nodes, in the cluster without app-only injection
+        ### ActiveGate
+          * `routing` routes OneAgent traffic through the ActiveGate
+          * `kubernetes-monitoring` allows monitoring the Kubernetes API
+          * `metrics-ingest` routes enriched metrics through an ActiveGate
+
+        For more information please refer to [our DynaKube Custom Resource examples](https://dt-url.net/dynakube-samples).
+
+        ### Installation
+        Once you've installed the Dynatrace Operator, you can create a DynaKube custom resource.
+
+        First, please add a Secret within the Project you've deployed the Dynatrace Operator to, which would contain your API and PaaS tokens. Create tokens of type *Dynatrace API* (`API_TOKEN`) and *Platform as a Service* (`PAAS_TOKEN`) and use their values in the following commands respectively.
+
+        For assistance please refer to [Create user-generated access tokens](https://www.dynatrace.com/support/help/shortlink/token#create-user-generated-access-tokens).
+
+        ``` $ kubectl -n <project> create secret generic dynakube --from-literal="apiToken=API_TOKEN" --from-literal="paasToken=PAAS_TOKEN" ```
+
+        You may update this Secret at any time to rotate the tokens.
+
+        After creation of the secret add the DynaKube object in the project where the Dynatrace Operator has been deployed, configured to your needs.
+
+        ### Required Parameters
+        * `apiUrl` - provide the URL to the API of your Dynatrace environment. In Dynatrace SaaS it will look like `https://<ENVIRONMENTID>.live.dynatrace.com/api` . In Dynatrace Managed like `https://<YourDynatraceServerURL>/e/<ENVIRONMENTID>/api` .
+
+        ### Advanced Options
+        * **Disable Certificate Checking** - disable any certificate validation that may interact poorly with proxies with in your cluster
+        * **Image Override** - use a copy of the ActiveGate container image from a registry other than Docker's or Red Hat's
+
+        For a complete list of supported parameters please consult the [Operator Deploy Guide](https://www.dynatrace.com/support/help/shortlink/openshift-deploy).
+
+        ### Help
+        You can find more about our instructions in our [documentation](https://www.dynatrace.com/support/help/shortlink/openshift-deploy#install-dynatrace-operator).
+      displayName: Dynatrace Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - monitoring
+      - dynatrace
+      - oneagent
+      - activegate
+      - observability
+      links:
+      - name: Dynatrace Operator
+        url: https://github.com/Dynatrace/dynatrace-operator
+      - name: OpenShift Monitoring Info
+        url: https://www.dynatrace.com/technologies/openshift-monitoring
+      maintainers:
+      - email: support@dynatrace.com
+        name: Dynatrace LLC
+      maturity: alpha
+      provider:
+        name: Dynatrace LLC
+        url: www.dynatrace.com
+      relatedImages:
+      - docker.io/dynatrace/dynatrace-operator@sha256:370b076095b9d2d88935c5b88f9ba1c5702bb02efcb0677c4a831afe0b4b8f19
+      version: 0.9.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: dynatrace-operator
+  provider:
+    name: Dynatrace LLC
+    url: www.dynatrace.com

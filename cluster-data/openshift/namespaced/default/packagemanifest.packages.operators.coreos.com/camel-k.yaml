@@ -1,0 +1,2057 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: The Apache Software Foundation
+    provider-url: ""
+  name: camel-k
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: camel-k-operator.v1.9.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": {
+                "build": {},
+                "kamelet": {},
+                "profile": "Openshift",
+                "resources": {}
+              },
+              "status": {
+                "build": {
+                  "maven": {
+                    "settings": {}
+                  },
+                  "registry": {}
+                },
+                "kamelet": {},
+                "resources": {}
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "template": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.9.2
+        createdAt: "2022-05-23T09:05:22Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.9.2
+      version: 1.9.2
+    name: stable-1.9
+  - currentCSV: camel-k-operator.v1.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": {
+                "build": {},
+                "kamelet": {},
+                "profile": "OpenShift",
+                "resources": {}
+              },
+              "status": {
+                "build": {
+                  "maven": {
+                    "settings": {}
+                  },
+                  "registry": {}
+                },
+                "kamelet": {},
+                "resources": {}
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "template": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.10.0
+        createdAt: "2022-09-05T05:34:09Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.10.0
+      version: 1.10.0
+    name: stable
+  - currentCSV: camel-k-operator.v1.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": {
+                "build": {},
+                "kamelet": {},
+                "profile": "OpenShift",
+                "resources": {}
+              },
+              "status": {
+                "build": {
+                  "maven": {
+                    "settings": {}
+                  },
+                  "registry": {}
+                },
+                "kamelet": {},
+                "resources": {}
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "template": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.10.0
+        createdAt: "2022-09-05T05:34:09Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.10.0
+      version: 1.10.0
+    name: stable-1.10
+  - currentCSV: camel-k-operator.v1.5.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "flow": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.5.1
+        createdAt: "2021-08-31T09:03:41Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.5.1
+      version: 1.5.1
+    name: stable-1.5
+  - currentCSV: camel-k-operator.v1.6.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "flow": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.6.1
+        createdAt: "2021-10-27T21:06:20Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.3.0
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.6.1
+      version: 1.6.1
+    name: stable-1.6
+  - currentCSV: camel-k-operator.v1.7.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": null
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "flow": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.7.0
+        createdAt: "2021-11-16T10:54:12Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.8.1+git
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.7.0
+      version: 1.7.0
+    name: stable-1.7
+  - currentCSV: camel-k-operator.v1.8.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Build",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "CamelCatalog",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "Integration",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "flows": [
+                  {
+                    "from": {
+                      "parameters": {
+                        "period": "1000"
+                      },
+                      "steps": [
+                        {
+                          "set-body": {
+                            "constant": "Hello from Camel K"
+                          }
+                        },
+                        {
+                          "to": "log:info"
+                        }
+                      ],
+                      "uri": "timer:yaml"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationKit",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "camel.apache.org/v1",
+              "kind": "IntegrationPlatform",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "camel-k"
+              },
+              "spec": {
+                "build": {},
+                "kamelet": {},
+                "profile": "Openshift",
+                "resources": {}
+              },
+              "status": {
+                "build": {
+                  "maven": {
+                    "settings": {}
+                  },
+                  "registry": {}
+                },
+                "kamelet": {},
+                "resources": {}
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "Kamelet",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "definition": {
+                  "description": "Produces periodic events with a custom payload",
+                  "properties": {
+                    "message": {
+                      "description": "The message to generate",
+                      "title": "Message",
+                      "type": "string"
+                    },
+                    "period": {
+                      "default": 1000,
+                      "description": "The time interval between two events",
+                      "title": "Period",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "title": "Example Timer"
+                },
+                "flow": {
+                  "from": {
+                    "parameters": {
+                      "period": "#property:period"
+                    },
+                    "steps": [
+                      {
+                        "set-body": {
+                          "constant": "#property:message"
+                        }
+                      },
+                      {
+                        "to": "kamelet:sink"
+                      }
+                    ],
+                    "uri": "timer:tick"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "camel.apache.org/v1alpha1",
+              "kind": "KameletBinding",
+              "metadata": {
+                "labels": {
+                  "app": "camel-k"
+                },
+                "name": "example"
+              },
+              "spec": {
+                "sink": {
+                  "ref": {
+                    "apiVersion": "messaging.knative.dev/v1",
+                    "kind": "InMemoryChannel",
+                    "name": "example"
+                  }
+                },
+                "source": {
+                  "properties": {
+                    "message": "Hello world"
+                  },
+                  "ref": {
+                    "apiVersion": "camel.apache.org/v1alpha1",
+                    "kind": "Kamelet",
+                    "name": "example"
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: docker.io/apache/camel-k:1.8.2
+        createdAt: "2022-03-07T07:13:19Z"
+        description: Apache Camel K is a lightweight integration platform, born on
+          Kubernetes, with serverless superpowers.
+        operators.operatorframework.io/builder: operator-sdk-v1.13.0+git
+        operators.operatorframework.io/internal-objects: '["builds.camel.apache.org","integrationkits.camel.apache.org","camelcatalogs.camel.apache.org"]'
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/apache/camel-k
+        support: Camel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Build is the Schema for the builds API
+          displayName: Build
+          kind: Build
+          name: builds.camel.apache.org
+          version: v1
+        - description: CamelCatalog is the Schema for the camelcatalogs API
+          displayName: Camel Catalog
+          kind: CamelCatalog
+          name: camelcatalogs.camel.apache.org
+          version: v1
+        - description: IntegrationKit is the Schema for the integrationkits API
+          displayName: Integration Kit
+          kind: IntegrationKit
+          name: integrationkits.camel.apache.org
+          version: v1
+        - description: IntegrationPlatform is the Schema for the integrationplatforms
+            API
+          displayName: Integration Platform
+          kind: IntegrationPlatform
+          name: integrationplatforms.camel.apache.org
+          version: v1
+        - description: Integration is the Schema for the integrations API
+          displayName: Integration
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+        - description: KameletBinding is the Schema for the kamelets binding API
+          displayName: Kamelet Binding
+          kind: KameletBinding
+          name: kameletbindings.camel.apache.org
+          version: v1alpha1
+        - description: Kamelet is the Schema for the kamelets API
+          displayName: Kamelet
+          kind: Kamelet
+          name: kamelets.camel.apache.org
+          version: v1alpha1
+      description: |
+        Apache Camel K
+        ==============
+
+        Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers.
+
+        ## Installation
+
+        To start using Camel K, install the operator and then create the following `IntegrationPlatform`:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: IntegrationPlatform
+        metadata:
+          name: camel-k
+          labels:
+            app: "camel-k"
+        ```
+
+        An `IntegrationPlatform` resource is automatically created by default on OpenShift, so you can skip this step.
+        Also, You can edit the `IntegrationPlatform`, to configure Camel K.
+        The configuration from the `IntegrationPlatform` will apply to the Camel integrations created in the same namespace/project.
+
+        ## Running an Integration
+
+        After the initial setup, you can run a Camel integration on the cluster by creating an example `Integration`, e.g.:
+        ```
+        apiVersion: camel.apache.org/v1
+        kind: Integration
+        metadata:
+          name: example
+        spec:
+          sources:
+          - name: Example.java
+            content: |
+              import org.apache.camel.builder.RouteBuilder;
+
+              public class Example extends RouteBuilder {
+                  @Override
+                  public void configure() throws Exception {
+                      from("timer:tick")
+                          .setBody(constant("Hello World!"))
+                      .to("log:info?skipBodyLineSeparator=false");
+                  }
+              }
+        ```
+      displayName: Camel K Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apache
+      - kamel
+      - kubernetes
+      - serverless
+      - microservices
+      links:
+      - name: Camel K source code repository
+        url: https://github.com/apache/camel-k
+      maintainers:
+      - email: users@camel.apache.org
+        name: The Apache Software Foundation
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: The Apache Software Foundation
+      relatedImages:
+      - docker.io/apache/camel-k:1.8.2
+      version: 1.8.2
+    name: stable-1.8
+  defaultChannel: stable-1.10
+  packageName: camel-k
+  provider:
+    name: The Apache Software Foundation

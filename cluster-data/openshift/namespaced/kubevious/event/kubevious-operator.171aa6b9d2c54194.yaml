@@ -1,0 +1,27 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:45:29Z"
+involvedObject:
+  apiVersion: v1
+  kind: ConfigMap
+  name: kubevious-operator
+  namespace: kubevious
+  resourceVersion: "40332"
+  uid: cd12c5ce-20eb-461a-af55-8fed658825da
+kind: Event
+lastTimestamp: "2022-10-03T19:45:29Z"
+message: kubevious-operator-controller-manager-7b95db69fb-sqpfs_95e7f03e-b36c-4a02-936b-3f4fe39947ae
+  became leader
+metadata:
+  creationTimestamp: "2022-10-03T19:45:29Z"
+  name: kubevious-operator.171aa6b9d2c54194
+  namespace: kubevious
+  resourceVersion: "40334"
+  uid: d84269d7-5c56-48cc-b885-1033226f4b9f
+reason: LeaderElection
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubevious-operator-controller-manager-7b95db69fb-sqpfs_95e7f03e-b36c-4a02-936b-3f4fe39947ae
+type: Normal

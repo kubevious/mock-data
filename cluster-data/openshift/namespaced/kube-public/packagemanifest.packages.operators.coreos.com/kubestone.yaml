@@ -1,0 +1,165 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: xridge.io
+    provider-url: ""
+  name: kubestone
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kubestone.v0.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Drill","metadata":{"name":"drill-sample"},"spec":{"benchmarkFile":"benchmark.yml","benchmarksVolume":{"benchmark.yml":"---\nthreads:
+          1\nbase: ''https://kubernetes.io''\niterations: 2\nrampup: 2\n\nplan:\n  -
+          name: Include other file\n    include: other.yml\n\n  - name: Fetch kubernetes.io\n    request:\n      url:
+          /\n","other.yml":"---\n- name: Fetch docs\n  request:\n    url: /docs\n"},"image":{"name":"xridge/drill:0.5.0"},"options":"--stats"}},{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Fio","metadata":{"name":"fio-sample"},"spec":{"cmdLineArgs":"--name=randwrite
+          --iodepth=1 --rw=randwrite --bs=4m --size=256M","image":{"name":"xridge/fio:3.13"},"volume":{"volumeSource":{"emptyDir":{}}}}},{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Ioping","metadata":{"name":"ioping-sample"},"spec":{"args":"-w
+          10","image":{"name":"xridge/ioping:1.1"},"volume":{"volumeSource":{"emptyDir":{}}}}},{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Iperf3","metadata":{"name":"iperf3-sample"},"spec":{"clientConfiguration":{"podScheduling":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"iperf-mode","operator":"In","values":["server"]}]},"topologyKey":"kubernetes.io/hostname"}]}}}},"image":{"name":"xridge/iperf3:3.7.0","pullPolicy":"IfNotPresent"},"serverConfiguration":{"cmdLineArgs":"--verbose","hostNetwork":false,"podLabels":{"iperf-mode":"server"},"podScheduling":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["store"]}]},"topologyKey":"kubernetes.io/hostname"}]}}}},"udp":false}},{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Pgbench","metadata":{"name":"pgbench-sample"},"spec":{"image":{"name":"xridge/pgbench"},"initArgs":"-s
+          5","postgres":{"database":"benchdb","host":"postgres","password":"admin","port":5432,"user":"admin"}}},{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Qperf","metadata":{"name":"qperf-sample"},"spec":{"clientConfiguration":{"podLabels":{"qperf-mode":"client"},"podScheduling":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"qperf-mode","operator":"In","values":["server"]}]},"topologyKey":"kubernetes.io/hostname"}]}}}},"image":{"name":"xridge/qperf:0.4.11-r0","pullPolicy":"IfNotPresent"},"options":"--verbose
+          --time 10","serverConfiguration":{"hostNetwork":false,"podLabels":{"qperf-mode":"server"},"podScheduling":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["server"]}]},"topologyKey":"kubernetes.io/hostname"}]}}}},"tests":["tcp_bw","tcp_lat"]}},{"apiVersion":"perf.kubestone.xridge.io/v1alpha1","kind":"Sysbench","metadata":{"name":"sysbench-sample"},"spec":{"command":"run","image":{"name":"xridge/sysbench:1.0.17-1"},"options":"--threads=1
+          --time=10","testName":"cpu"}}]'
+        capabilities: Full Lifecycle
+        categories: Developer Tools
+        certified: "false"
+        containerImage: xridge/kubestone:v0.4.0
+        createdAt: "2019-10-18T12:32:00Z"
+        description: Kubestone is a benchmarking Operator that can evaluate the performance
+          of Kubernetes installations and external services.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/xridge/kubestone
+        support: info@xridge.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: 'With the drill load generator, you can create a load test
+            plan and execute it against any Web Service inside or outside of your
+            Kubernetes installation: ''Drill is a HTTP load testing application written
+            in Rust. The main goal for this project is to build a really lightweight
+            tool as alternative to other that require JVM and other stuff. You can
+            write brenchmark files, in YAML format, describing all the stuff you want
+            to test. It was inspired by Ansible syntax because it is really easy to
+            use and extend.'''
+          displayName: drill
+          kind: Drill
+          name: drills.perf.kubestone.xridge.io
+          version: v1alpha1
+        - description: 'With the fio benchmark you can measure the I/O performance
+            of the disks used in your Kubernetes cluster: ''fio is a tool that will
+            spawn a number of threads or processes doing a particular type of I/O
+            action as specified by the user. The typical use of fio is to write a
+            job file matching the I/O load one wants to simulate.'''
+          displayName: fio
+          kind: Fio
+          name: fios.perf.kubestone.xridge.io
+          version: v1alpha1
+        - description: 'With ioping benchmark you can measure the latency of the storage
+            I/O subsystem in your Kubernetes cluster: ''A tool to monitor I/O latency
+            in real time. It shows disk latency in the same way as ping shows network
+            latency.'''
+          displayName: ioping
+          kind: Ioping
+          name: iopings.perf.kubestone.xridge.io
+          version: v1alpha1
+        - description: 'With the iperf3 benchmark, you can measure the I/O performance
+            of the network hardware and stack used in your Kubernetes cluster: ''iPerf3
+            is a tool for active measurements of the maximum achievable bandwidth
+            on IP networks. It supports tuning of various parameters related to timing,
+            buffers and protocols (TCP, UDP, SCTP with IPv4 and IPv6).'''
+          displayName: iperf3
+          kind: Iperf3
+          name: iperf3s.perf.kubestone.xridge.io
+          version: v1alpha1
+        - description: With the qperf benchmark, you can measure the I/O performance
+            of the network hardware and stack used in your Kubernetes cluster. 'Qperf
+            measures bandwidth and latency between two nodes. It can work over TCP/IP
+            as well as the RDMA transports. On one of the nodes, qperf is typically
+            run with no arguments designating it the server node. One may then run
+            qperf on a client node to obtain measurements such as bandwidth, latency
+            and cpu utilization.'
+          displayName: qperf
+          kind: Qperf
+          name: qperves.perf.kubestone.xridge.io
+          version: v1alpha1
+        - description: 'With the sysbench benchmark you can measure the CPU, Memory,
+            Database and Filesystem characteritics of your Kubernetes cluster: ''sysbench
+            is a scriptable multi-threaded benchmark tool based on LuaJIT. It is most
+            frequently used for database benchmarks, but can also be used to create
+            arbitrarily complex workloads that do not involve a database server.'''
+          displayName: sysbench
+          kind: Sysbench
+          name: sysbenches.perf.kubestone.xridge.io
+          version: v1alpha1
+        - description: 'With the pgbench benchmark, you can benchmark your PostgreSQL
+            database, which can both run in the same Kubernetes cluster as kubestone,
+            or anywhere else, as long as it''s reachable: ''pgbench is a simple program
+            for running benchmark tests on PostgreSQL. It runs the same sequence of
+            SQL commands over and over, possibly in multiple concurrent database sessions,
+            and then calculates the average transaction rate (transactions per second).
+            By default, pgbench tests a scenario that is loosely based on TPC-B, involving
+            five SELECT, UPDATE, and INSERT commands per transaction. However, it
+            is easy to test other cases by writing your own transaction script files.'''
+          displayName: pgbench
+          kind: Pgbench
+          name: pgbenches.perf.kubestone.xridge.io
+          version: v1alpha1
+      description: |
+        Kubestone is a benchmarking Operator that can evaluate the performance of Kubernetes installations and external services.
+
+        Features:
+        - Supports common set of benchmarks to measure: CPU, Disk, Network and Application performance
+        - Fine-grained control over Kubernetes Scheduling primitives: Affinity, Anti-Affinity, Tolerations, Storage Classes and Node Selection
+        - Cloud Native: Benchmarks runs are defined as Custom Resources and executed in the cluster using Kubernetes resources: Pods, Jobs, Deployments and Services.
+        - Extensible: New benchmarks can easily be added by implementing a new controller.
+
+        Fore more information please visit [https://kubestone.io/](https://kubestone.io)
+      displayName: Kubestone
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - performance
+      - benchmark
+      - sysbench
+      - fio
+      - ioping
+      - iperf
+      - drill
+      - pgbench
+      - qperf
+      - sparkbench
+      links:
+      - name: Kubestone
+        url: https://kubestone.io
+      maintainers:
+      - email: info@xridge.io
+        name: xridge.io
+      maturity: alpha
+      minKubeVersion: 1.12.0
+      provider:
+        name: xridge.io
+      relatedImages:
+      - xridge/kubestone:v0.4.0
+      version: 0.4.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: kubestone
+  provider:
+    name: xridge.io

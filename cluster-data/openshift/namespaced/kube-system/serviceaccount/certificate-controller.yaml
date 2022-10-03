@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: certificate-controller-dockercfg-6x5tv
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:02Z"
+  name: certificate-controller
+  namespace: kube-system
+  resourceVersion: "1169"
+  uid: dc327ae4-c7dd-41f8-ab36-adaa6e4e5cb0
+secrets:
+- name: certificate-controller-token-5wjhr
+- name: certificate-controller-dockercfg-6x5tv

@@ -1,0 +1,255 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Sematext
+    provider-url: ""
+  name: sematext
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: sematext-operator.v1.0.46
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [{
+            "apiVersion": "sematext.com/v1",
+            "kind": "SematextAgent",
+            "metadata": {
+              "name": "basic-agent-deployment"
+            },
+            "spec": {
+              "region": "EU"
+            }
+          }]
+        capabilities: Basic Install
+        categories: Monitoring, Logging & Tracing
+        certified: "false"
+        containerImage: docker.io/sematext/sematext-operator:1.0.46
+        createdAt: "2019-06-13T08:00:00Z"
+        description: Full stack observability with Sematext Monitoring Platform!
+        repository: https://github.com/sematext/sematext-operator
+        support: Sematext, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Sematext Agent running on each node of your cluster.
+          displayName: Sematext Agent DaemonSet
+          kind: SematextAgent
+          name: sematextagents.sematext.com
+          version: v1
+      description: |-
+        The Sematext Operator for Kubernetes provides an easy way to deploy Sematext Agent.
+
+        Sematext Agent collects metrics about hosts (CPU, memory, disk, network, processes), containers (both Docker and rkt) and orchestrator platforms and ships that to [Sematext Cloud](https://sematext.com/cloud). Sematext Cloud is available in the US and EU regions.
+
+        It installs the Sematext Agent to all nodes in your cluster via a `DaemonSet` resource.
+
+        ## Settings
+
+        This operator uses all the same options as the [Sematext Agent Helm Chart](https://hub.helm.sh/charts/stable/sematext-agent), please take a look to all the options in the following table:
+
+        |             Parameter            |            Description            |                  Default                  |
+        |----------------------------------|-----------------------------------|-------------------------------------------|
+        | `containerToken`                 | Sematext Container token          | `Nil` Provide your Container token        |
+        | `logsToken`                      | Sematext Logs token               | `Nil` Provide your Logs token             |
+        | `infraToken`                     | Sematext Infra token              | `Nil` Provide your Infra token            |
+        | `region`                         | Sematext region                   | `US` Sematext US or EU region             |
+        | `agent.image.repository`         | The image repository              | `sematext/agent`                          |
+        | `agent.image.tag`                | The image tag                     | `latest`                                  |
+        | `agent.image.pullPolicy`         | Image pull policy                 | `Always`                                  |
+        | `agent.service.port`             | Service port                      | `80`                                      |
+        | `agent.service.type`             | Service type                      | `ClusterIP`                               |
+        | `agent.resources`                | Agent resources                   | `{}`                                      |
+        | `logagent.image.repository`      | The image repository              | `sematext/logagent`                       |
+        | `logagent.image.tag`             | The image tag                     | `latest`                                  |
+        | `logagent.image.pullPolicy`      | Image pull policy                 | `Always`                                  |
+        | `logagent.resources`             | Logagent resources                | `{}`                                      |
+        | `logagent.extraHostVolumeMounts` | Extra mounts                      | `{}`                                      |
+        | `serverBaseUrl`                  | Custom Base URL                   | `Nil`                                     |
+        | `logsReceiverUrl`                | Custom Logs receiver URL          | `Nil`                                     |
+        | `eventsRecieverUrl`              | Custom Event receiver URL         | `Nil`                                     |
+        | `serviceAccount.create`          | Create a service account          | `true`                                    |
+        | `serviceAccount.name`            | Service account name              | `Nil` Defaults to chart name              |
+        | `rbac.create`                    | RBAC enabled                      | `true`                                    |
+        | `tolerations`                    | Tolerations                       | `[]`                                      |
+        | `nodeSelector`                   | Node selector                     | `{}`                                      |
+
+        For example, if you want to deploy Sematext Agent in EU region, create the following resource:
+
+        ```yaml
+        apiVersion: sematext.com/v1
+        kind: SematextAgent
+        metadata:
+          name: test-sematextagent
+        spec:
+          region: "EU"
+          containerToken: YOUR_CONTAINER_TOKEN
+          logsToken: YOUR_LOGS_TOKEN
+          infraToken: YOUR_INFRA_TOKEN
+        ```
+
+        **NOTE:** You need to create [a new Docker app in Sematext Cloud](https://apps.sematext.com/ui/integrations/create/docker) to get relevant tokens.
+
+        Once you have created the above resource, you can apply this file with `kubectl apply -f`.
+      displayName: Sematext Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - sematext
+      - observability
+      - monitoring
+      - logging
+      - containers
+      - ebpf
+      links:
+      - name: Sematext
+        url: https://sematext.com
+      - name: Helm Chart
+        url: https://hub.helm.sh/charts/stable/sematext-agent
+      - name: Sematext Operator
+        url: https://github.com/sematext/sematext-operator
+      - name: Configuration Options
+        url: https://github.com/helm/charts/tree/master/stable/sematext-agent#configuration
+      maintainers:
+      - email: pablo.beltrancasso@sematext.com
+        name: Pablo Beltran
+      maturity: stable
+      minKubeVersion: 1.13.0
+      provider:
+        name: Sematext
+      relatedImages:
+      - docker.io/sematext/sematext-operator:1.0.46
+      version: 1.0.46
+    name: stable
+  - currentCSV: sematext-operator.v1.0.33
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [{
+            "apiVersion": "sematext.com/v1alpha1",
+            "kind": "SematextAgent",
+            "metadata": {
+              "name": "basic-agent-deployment"
+            },
+            "spec": {
+              "region": "EU"
+            }
+          }]
+        capabilities: Basic Install
+        categories: Monitoring, Logging & Tracing
+        certified: "false"
+        containerImage: docker.io/sematext/sematext-operator:1.0.33
+        createdAt: "2021-07-30T08:00:00Z"
+        description: Full stack observability with Sematext Monitoring Platform!
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/sematext/sematext-operator
+        support: Sematext, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a Sematext Agent running on each node of your cluster.
+          displayName: Sematext Agent DaemonSet
+          kind: SematextAgent
+          name: sematextagents.sematext.com
+          version: v1alpha1
+      description: |-
+        The Sematext Operator for Kubernetes provides an easy way to deploy Sematext Agent.
+        Sematext Agent collects metrics about hosts (CPU, memory, disk, network, processes), containers (both Docker and rkt) and orchestrator platforms and ships that to [Sematext Cloud](https://sematext.com/cloud). Sematext Cloud is available in the US and EU regions.
+        It installs the Sematext Agent to all nodes in your cluster via a `DaemonSet` resource.
+        ## Settings
+        This operator uses all the same options as the [Sematext Agent Helm Chart](https://hub.helm.sh/charts/stable/sematext-agent), please take a look to all the options in the following table:
+        |             Parameter            |            Description            |                  Default                  |
+        |----------------------------------|-----------------------------------|-------------------------------------------|
+        | `logsToken`                      | Sematext Logs token               | `Nil` Provide your Logs token             |
+        | `infraToken`                     | Sematext Infra token              | `Nil` Provide your Infra token            |
+        | `region`                         | Sematext region                   | `US` Sematext US or EU region             |
+        | `agent.image.repository`         | The image repository              | `sematext/agent`                          |
+        | `agent.image.tag`                | The image tag                     | `latest`                                  |
+        | `agent.image.pullPolicy`         | Image pull policy                 | `Always`                                  |
+        | `agent.service.port`             | Service port                      | `80`                                      |
+        | `agent.service.type`             | Service type                      | `ClusterIP`                               |
+        | `agent.resources`                | Agent resources                   | `{}`                                      |
+        | `logagent.image.repository`      | The image repository              | `sematext/logagent`                       |
+        | `logagent.image.tag`             | The image tag                     | `latest`                                  |
+        | `logagent.image.pullPolicy`      | Image pull policy                 | `Always`                                  |
+        | `logagent.resources`             | Logagent resources                | `{}`                                      |
+        | `logagent.extraHostVolumeMounts` | Extra mounts                      | `{}`                                      |
+        | `customUrl.serverBaseUrl`        | Custom Base URL                   | `Nil`                                     |
+        | `customUrl.logsReceiverUrl`      | Custom Logs receiver URL          | `Nil`                                     |
+        | `customUrl.eventsRecieverUrl`    | Custom Event receiver URL         | `Nil`                                     |
+        | `serviceAccount.create`          | Create a service account          | `true`                                    |
+        | `serviceAccount.name`            | Service account name              | `Nil` Defaults to chart name              |
+        | `rbac.create`                    | RBAC enabled                      | `true`                                    |
+        | `tolerations`                    | Tolerations                       | `[]`                                      |
+        | `nodeSelector`                   | Node selector                     | `{}`                                      |
+        For example, if you want to deploy Sematext Agent in EU region, create the following resource:
+        ```yaml
+        apiVersion: sematext.com/v1alpha1
+        kind: SematextAgent
+        metadata:
+          name: test-sematextagent
+        spec:
+          region: "EU"
+          logsToken: YOUR_LOGS_TOKEN
+          infraToken: YOUR_INFRA_TOKEN
+        ```
+        **NOTE:** You need to create [a new Docker app in Sematext Cloud](https://apps.sematext.com/ui/integrations/create/docker) to get relevant tokens.
+        Once you have created the above resource, you can apply this file with `kubectl apply -f`.
+      displayName: Sematext Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - sematext
+      - observability
+      - monitoring
+      - logging
+      - containers
+      - ebpf
+      links:
+      - name: Sematext
+        url: https://sematext.com
+      - name: Helm Chart
+        url: https://hub.helm.sh/charts/stable/sematext-agent
+      - name: Sematext Operator
+        url: https://github.com/sematext/sematext-operator
+      - name: Configuration Options
+        url: https://github.com/helm/charts/tree/master/stable/sematext-agent#configuration
+      maintainers:
+      - email: rishabh.shah@sematext.com
+        name: Rishabh Shah
+      maturity: stable
+      provider:
+        name: Sematext
+      relatedImages:
+      - docker.io/sematext/sematext-operator:1.0.33
+      version: 1.0.33
+    name: stable-old
+  defaultChannel: stable
+  packageName: sematext
+  provider:
+    name: Sematext

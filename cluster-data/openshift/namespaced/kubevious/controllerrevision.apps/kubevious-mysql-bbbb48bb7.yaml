@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+data:
+  spec:
+    template:
+      $patch: replace
+      metadata:
+        creationTimestamp: null
+        labels:
+          app.kubernetes.io/component: kubevious-mysql
+          app.kubernetes.io/instance: kubevious
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: kubevious
+      spec:
+        containers:
+        - env:
+          - name: NODE_ENV
+            value: production
+          - name: MYSQL_DATABASE
+            value: kubevious
+          - name: MYSQL_USER
+            value: kubevious
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASS
+                name: kubevious-mysql-secret
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_ROOT_PASSWORD
+                name: kubevious-mysql-secret-root
+          image: registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - mysqladmin
+              - ping
+              - -u$MYSQL_USER
+              - -p$MYSQL_PASSWORD
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: mysql
+          ports:
+          - containerPort: 3306
+            name: mysql
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - bash
+              - -c
+              - |
+                mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h 127.0.0.1 -e 'SELECT 1'
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 250m
+              memory: 1000Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: data
+            subPath: mysql
+          - mountPath: /etc/mysql/conf.d
+            name: conf
+          - mountPath: /docker-entrypoint-initdb.d
+            name: init-script
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - bash
+          - -c
+          - |
+            set -ex
+            echo "[mysqld]" > /mnt/conf.d/server-id.cnf
+            echo "server-id=1" >> /mnt/conf.d/server-id.cnf
+            echo "[mysqld]" > /mnt/conf.d/bin-logs.cnf
+            echo "binlog_expire_logs_seconds=259200" >> /mnt/conf.d/bin-logs.cnf
+            cp /mnt/config-map/master.cnf /mnt/conf.d/
+          image: registry.access.redhat.com/rhscl/mysql-80-rhel7:8.0-146
+          imagePullPolicy: IfNotPresent
+          name: init-mysql
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /mnt/conf.d
+            name: conf
+          - mountPath: /mnt/config-map
+            name: config-map
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: default
+        serviceAccountName: default
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - emptyDir: {}
+          name: conf
+        - configMap:
+            defaultMode: 420
+            name: kubevious-mysql-conf
+          name: config-map
+        - configMap:
+            defaultMode: 420
+            name: kubevious-mysql-init-script
+          name: init-script
+kind: ControllerRevision
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T18:38:02Z"
+  labels:
+    app.kubernetes.io/component: kubevious-mysql
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    controller.kubernetes.io/hash: bbbb48bb7
+  name: kubevious-mysql-bbbb48bb7
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: StatefulSet
+    name: kubevious-mysql
+    uid: f289072b-0052-4b29-a829-d13c435ed47b
+  resourceVersion: "31134"
+  uid: d521f9a0-898f-4c89-8762-001704152e09
+revision: 1

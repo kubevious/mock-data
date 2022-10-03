@@ -1,0 +1,157 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Kong Inc.
+    provider-url: https://konghq.com
+  name: kong-gateway-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kong-gateway-operator.v0.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "gateway-operator.konghq.com/v1alpha1",
+              "kind": "ControlPlane",
+              "metadata": {
+                "name": "controlplane-example"
+              },
+              "spec": {
+                "dataplane": "dataplane-example",
+                "gatewayClass": "kong"
+              }
+            },
+            {
+              "apiVersion": "gateway-operator.konghq.com/v1alpha1",
+              "kind": "DataPlane",
+              "metadata": {
+                "name": "dataplane-example"
+              },
+              "spec": {
+                "env": [
+                  {
+                    "name": "KONG_LOG_LEVEL",
+                    "value": "debug"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "gateway-operator.konghq.com/v1alpha1",
+              "kind": "GatewayConfiguration",
+              "metadata": {
+                "name": "kong",
+                "namespace": "default"
+              },
+              "spec": {
+                "controlPlaneDeploymentOptions": {
+                  "env": [
+                    {
+                      "name": "CONTROLLER_LOG_LEVEL",
+                      "value": "debug"
+                    }
+                  ]
+                },
+                "dataPlaneDeploymentOptions": {
+                  "containerImage": "kong",
+                  "version": "2.8"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Networking,Integration & Delivery
+        containerImage: ghcr.io/kong/gateway-operator:0.1.1
+        description: A Kubernetes Operator for the Kong Gateway
+        operatorframework.io/suggested-namespace: kong-system
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://kong.github.io/gateway-operator-docs
+        support: Kong Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ControlPlane is the Schema for the controlplanes API
+          displayName: Control Plane
+          kind: ControlPlane
+          name: controlplanes.gateway-operator.konghq.com
+          version: v1alpha1
+        - description: DataPlane is the Schema for the dataplanes API
+          displayName: Data Plane
+          kind: DataPlane
+          name: dataplanes.gateway-operator.konghq.com
+          version: v1alpha1
+        - description: GatewayConfiguration is the Schema for the gatewayconfigurations
+            API
+          displayName: Gateway Configuration
+          kind: GatewayConfiguration
+          name: gatewayconfigurations.gateway-operator.konghq.com
+          version: v1alpha1
+      description: |
+        Kong Gateway Operator for Kubernetes. Technical preview.
+
+        A [Kubernetes Operator][k8soperator] for the [Kong Gateway][kong].
+
+        [k8soperator]:https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
+        [kong]:https://konghq.com
+
+        ### Quick Start
+
+        The [Quick Start guide](https://kong.github.io/gateway-operator-docs/#quick-start-guide) uses Kong Gateway Operator to deploy sample Kong setup for Kubernetes users, which includes an instance of Kong serving as a proxy to an example Kubernetes service.
+
+        ### Documentation
+
+        The primary documentation site for Kong Operator is located [in its GitHub repository](https://kong.github.io/gateway-operator-docs/).
+
+        The Gateway API documentation is located [in the Gateway API repository](https://gateway-api.sigs.k8s.io/).
+      displayName: Kong Gateway Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - networking
+      - gateway
+      - ingress
+      - kong
+      - kubernetes
+      - go
+      links:
+      - name: Github repository for the operator
+        url: https://github.com/kong/gateway-operator
+      maintainers:
+      - email: support@konghq.com
+        name: Kong Inc.
+      maturity: alpha
+      minKubeVersion: 1.23.0
+      provider:
+        name: Kong Inc.
+        url: https://konghq.com
+      relatedImages:
+      - ghcr.io/kong/gateway-operator:0.1.1
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      version: 0.1.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: kong-gateway-operator
+  provider:
+    name: Kong Inc.
+    url: https://konghq.com

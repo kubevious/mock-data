@@ -1,0 +1,164 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: e85029fc2b3a81a4f718276240e1b557d15e9649a1fff0de5469dd22c3c0dd07
+    cni.projectcalico.org/podIP: 172.30.142.175/32
+    cni.projectcalico.org/podIPs: 172.30.142.175/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.175"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.175"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/scc: restricted
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  generateName: kubevious-redis-
+  labels:
+    app.kubernetes.io/component: kubevious-redis
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    controller-revision-hash: kubevious-redis-6cf4b68f95
+    statefulset.kubernetes.io/pod-name: kubevious-redis-0
+  name: kubevious-redis-0
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: StatefulSet
+    name: kubevious-redis
+    uid: 8ce8e030-bbb7-4007-8f07-de53a641ac01
+  resourceVersion: "21774"
+  uid: 243ccde3-f2b5-4319-a412-cb4dec0aa5a8
+spec:
+  containers:
+  - image: docker.io/kubevious/redisearch-ubi:v1.1
+    imagePullPolicy: IfNotPresent
+    name: redis
+    ports:
+    - containerPort: 6379
+      name: redis
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext:
+      capabilities:
+        drop:
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      runAsUser: 1000620000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-hkdlz
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  hostname: kubevious-redis-0
+  imagePullSecrets:
+  - name: default-dockercfg-6qjmn
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1000620000
+    seLinuxOptions:
+      level: s0:c25,c10
+  serviceAccount: default
+  serviceAccountName: default
+  subdomain: kubevious-redis
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - name: kube-api-access-hkdlz
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:02:47Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:18Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:03:18Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T19:02:47Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://0ba0abb6c3cdaa0e1a9021e49673a6045cf035eb153c1922480145b3be55ccb7
+    image: docker.io/kubevious/redisearch-ubi:v1.1
+    imageID: docker.io/kubevious/redisearch-ubi@sha256:49abb53fc7b5ef73b41915ea1900514af8b94406735baa406a2eff4aae9b8fcd
+    lastState: {}
+    name: redis
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T19:03:17Z"
+  hostIP: 10.161.112.142
+  phase: Running
+  podIP: 172.30.142.175
+  podIPs:
+  - ip: 172.30.142.175
+  qosClass: Burstable
+  startTime: "2022-10-03T19:02:47Z"

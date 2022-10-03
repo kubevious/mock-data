@@ -1,0 +1,124 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: ham-deploy
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ham-deploy.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+          {
+            "apiVersion": "deploy.hybridapp.io/v1alpha1",
+            "kind": "Operator",
+            "metadata": {
+              "name": "simple"
+            },
+            "spec": {
+              "core": {
+                "deployable": {
+                  "enabled": false
+                }
+              },
+              "tools": {
+                "assembler": {
+                  "enabled": true
+                },
+                "discoverer": {
+                  "enabled": false,
+                  "clustername": "toronto",
+                  "clusternamespace": "toronto-ns"
+                }
+              }
+            }
+          }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery, OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/hybridappio/ham-deploy:0.1.0
+        createdAt: "2020-05-12 00:00:00"
+        description: Deploys the Hybrid Application Model
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/hybridapp-io/ham-deploy
+        support: hybridapp-io@googlegroups.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Deploys the Hybrid Application Model
+          displayName: Hybrid Application Model Deployer
+          kind: Operator
+          name: operators.deploy.hybridapp.io
+          version: v1alpha1
+      description: "\nMulticloud Manager Model introduces infrasctructure management
+        on top of the Multicluster Subscription model. \nThe model consists of an
+        Appliction Assembler, Hybrid Deployable, and a Resource Discoverer.  See the
+        links for more details.  \n\n## Hybrid Application Model Operator\n\nThis
+        operator installs one or more components for the hub cluster (Application
+        Assembler, Deployable are required, Resource Discoverer is optional).  Managed
+        clusters should only install the Resource Discoverer component.\n\n### Prerequisites\n\n-
+        Multicluster Subscription Operator 1.0+\n- Kubernetes v1.16+\n\n### Enabling
+        Hybrid Application Model Components\n\nUsing the following CR example:\n```yaml\n
+        \ apiVersion: deploy.hybridapp.io/v1alpha1\n  kind: Operator\n  metadata:\n
+        \   name: simple\n  spec:\n    core:\n      deployable:\n        enabled:
+        true\n    tools:\n      assembler:\n        enabled: true\n      discoverer:\n
+        \       enabled: true\n        clustername: toronto\n        clusternamespace:
+        toronto-ns\n```\nThis will enable all the components for the Hybrid Application
+        Model.  Set the components to true or false, as required,and apply the configuration.
+        \ \n\nVisit the links on the right side to get more information on how to
+        utilize the various components.\n"
+      displayName: Hybrid Application Model Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - hybridapp
+      - application
+      - model
+      - multicluster
+      - multicloud
+      links:
+      - name: Hybrid Application Model Operator
+        url: https://github.com/hybridapp-io/ham-deploy
+      - name: Resource Discoverer
+        url: https://github.com/hybridapp-io/ham-resource-discoverer
+      - name: Application Assembler
+        url: https://github.com/hybridapp-io/ham-application-assembler
+      - name: Hybrid Deployable
+        url: https://github.com/hybridapp-io/ham-deployable-operator
+      maintainers:
+      - email: hybridapp-io@googlegroups.com
+        name: Hybrid Application Model
+      maturity: alpha
+      minKubeVersion: 1.16.0
+      provider:
+        name: IBM
+      relatedImages:
+      - quay.io/hybridappio/ham-deploy:0.1.0
+      version: 0.1.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: ham-deploy
+  provider:
+    name: IBM

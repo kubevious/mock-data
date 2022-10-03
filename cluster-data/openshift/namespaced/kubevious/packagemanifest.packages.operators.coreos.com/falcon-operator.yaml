@@ -1,0 +1,152 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: CrowdStrike
+    provider-url: https://crowdStrike.com
+  name: falcon-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: falcon-operator.v0.5.5
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "falcon.crowdstrike.com/v1alpha1",
+              "kind": "FalconContainer",
+              "metadata": {
+                "name": "default"
+              },
+              "spec": {
+                "falcon_api": {
+                  "client_id": "PLEASE_FILL_IN",
+                  "client_secret": "PLEASE_FILL_IN",
+                  "cloud_region": "autodiscover"
+                },
+                "installer_args": [
+                  "-falconctl-opts",
+                  "--tags=test-cluster"
+                ],
+                "registry": {
+                  "type": "crowdstrike"
+                }
+              }
+            },
+            {
+              "apiVersion": "falcon.crowdstrike.com/v1alpha1",
+              "kind": "FalconNodeSensor",
+              "metadata": {
+                "name": "falcon-node-sensor"
+              },
+              "spec": {
+                "falcon_api": {
+                  "client_id": "PLEASE_FILL_IN",
+                  "client_secret": "PLEASE_FILL_IN",
+                  "cloud_region": "autodiscover"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Security,Monitoring
+        containerImage: quay.io/crowdstrike/falcon-operator
+        createdAt: "2021-07-30T10:00:00Z"
+        description: Falcon Operator installs CrowdStrike Falcon Sensors on the cluster
+        operatorframework.io/suggested-namespace: falcon-operator
+        operators.operatorframework.io/builder: operator-sdk-v1.22.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/CrowdStrike/falcon-operator
+        support: Community Only
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: FalconContainer is the Schema for the falconcontainers API
+          displayName: Falcon Container
+          kind: FalconContainer
+          name: falconcontainers.falcon.crowdstrike.com
+          version: v1alpha1
+        - description: FalconNodeSensor is the Schema for the falconnodesensors API
+          displayName: Falcon Node Sensor
+          kind: FalconNodeSensor
+          name: falconnodesensors.falcon.crowdstrike.com
+          version: v1alpha1
+      description: |-
+        The CrowdStrike Falcon Operator installs CrowdStrike Falcon Container Sensor or CrowdStrike Falcon Node Sensor on the cluster.
+        The CrowdStrike Falcon Operator is an open source project and not a CrowdStrike product. As such, it carries no formal support, expressed, or implied.
+
+        ## About the CrowdStrike Falcon Operator
+        The CrowdStrike Falcon Operator deploys CrowdStrike Falcon Workload Protection to the cluster. The operator exposes 2 custom resources that allows you to deploy either the Falcon Container Sensor or Falcon Node Sensor.
+
+        ## About Custom Resources
+
+        | Custom Resource                   | Description                                                      |
+        | :--------                         | :------------                                                    |
+        | [FalconContainer](https://github.com/CrowdStrike/falcon-operator/tree/main/docs/container) | Manages installation of Falcon Container Sensor on the cluster   |
+        | [FalconNodeSensor](https://github.com/CrowdStrike/falcon-operator/tree/main/docs/node)     | Manages installation of Falcon Linux Sensor on the cluster nodes |
+
+        ## Getting Help
+        If you encounter any issues while using the Falcon Operator, you can create an issue on our [Github repo](https://github.com/CrowdStrike/falcon-operator) for bugs, enhancements, or other requests.
+
+        ## Contributing
+        You can contribute by:
+
+        * Raising any issues you find using Falcon Operator
+        * Fixing issues by opening [Pull Requests](https://github.com/CrowdStrike/falcon-operator/pulls)
+        * Improving documentation
+        * Talking about the CrowdStrike Falcon Operator
+
+        All bugs, tasks or enhancements are tracked as [GitHub issues](https://github.com/CrowdStrike/falcon-operator/issues).
+
+        ## Additional Resources
+         - CrowdStrike Container Security: [Product Page](https://www.crowdstrike.com/products/cloud-security/falcon-cloud-workload-protection/container-security/)
+         - So You Think Your Containers Are Secure? Four Steps to Ensure a Secure Container Deployment: [Blog Post](https://www.crowdstrike.com/blog/four-steps-to-ensure-a-secure-containter-deployment/)
+         - Container Security With CrowdStrike: [Blog Post](https://www.crowdstrike.com/blog/tech-center/container-security/)
+         - To learn more about Falcon Container Sensor for Linux: [Deployment Guide](https://falcon.crowdstrike.com/support/documentation/146/falcon-container-sensor-for-linux), [Release Notes](https://falcon.crowdstrike.com/support/news/release-notes-falcon-container-sensor-for-linux)
+         - [Developer Documentation](https://github.com/CrowdStrike/falcon-operator/tree/main/docs/developer_guide.md)
+      displayName: CrowdStrike Falcon Platform - Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - security
+      - runtime-protection
+      links:
+      - name: Falcon Operator
+        url: https://github.com/CrowdStrike/falcon-operator
+      maintainers:
+      - email: simon.lukasik@crowdstrike.com
+        name: isimluk
+      maturity: alpha
+      minKubeVersion: 1.17.0
+      provider:
+        name: CrowdStrike
+        url: https://crowdStrike.com
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.12.0
+      - quay.io/crowdstrike/falcon-operator:v0.5.5
+      - ""
+      version: 0.5.5
+    name: alpha
+  defaultChannel: alpha
+  packageName: falcon-operator
+  provider:
+    name: CrowdStrike
+    url: https://crowdStrike.com

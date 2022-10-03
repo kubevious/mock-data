@@ -1,0 +1,117 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: ""
+  name: istio-workspace-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: istio-workspace-operator.v0.5.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "workspace.maistra.io/v1alpha1",
+              "kind": "Session",
+              "metadata": {
+                "name": "session-sample"
+              },
+              "spec": {
+                "ref": [
+                  {
+                    "args": {
+                      "image": "quay.io/maistra-dev/istio-workspace-test:latest"
+                    },
+                    "name": "ratings-v1",
+                    "strategy": "prepared-image"
+                  }
+                ],
+                "route": {
+                  "name": "x-workspace-route",
+                  "type": "header",
+                  "value": "feature-x"
+                }
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        containerImage: quay.io/maistra/istio-workspace:v0.5.2
+        createdAt: "2022-08-08T12:45:39Z"
+        description: Safely develop and test on any Kubernetes cluster without affecting
+          others.
+        operators.operatorframework.io/builder: operator-sdk-v1.22.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/maistra/istio-workspace
+        support: Red Hat, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Session controls the creation of the specialized hidden routes.
+          displayName: Session
+          kind: Session
+          name: sessions.workspace.maistra.io
+          version: v1alpha1
+      description: "Istio Workspace enables developers to:\n\n * run one or more services
+        locally during development but make it appear like it would be developed in
+        the actual cluster\n   * this way you can use your favourite development tools\n
+        \  * have instant feedback loop\n   * don't make your machine overheating
+        trying to run the whole cluster locally\n * safely preview incoming changes
+        in pull requests without affecting regular users \n * have confidence in testing
+        or troubleshooting your services directly in the cluster\n\nIstio Workspace
+        supports testing on multi-user environment in an unobtrusive way.\nIt doesn’t
+        really matter if it is QE cluster or actual production. We give you confidence
+        that your changes won’t blow up the cluster, and your users won’t even notice
+        a glitch.\n\nYou will need [Kubernetes](https://k8s.io) or [Openshift](https://openshift.com)
+        cluster with  [Istio](https://istio.io/) installed. \n\nYou can read more
+        about our vision on [Red Hat Developer’s blog](https://developers.redhat.com/blog/2020/07/14/developing-and-testing-on-production-with-kubernetes-and-istio-workspace/)
+        or ...\n\n## See it in action!\n\n[![https://youtu.be/XTNVadUzMCc](https://img.youtube.com/vi/XTNVadUzMCc/hqdefault.jpg)](https://youtu.be/XTNVadUzMCc)\n\nWatch
+        demo: [\"How to develop on production: An introduction to Istio-Workspaces\"](https://youtu.be/XTNVadUzMCc).\n\n##
+        Documentation\n\nMore details can be found on our [documentation page](https://istio-workspace-docs.netlify.com/).\n"
+      displayName: Istio Workspace
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - istio
+      - telepresence
+      links:
+      - name: Istio Workspace Documentation
+        url: https://istio-workspace-docs.netlify.com/
+      - name: How to install CLI tool
+        url: https://github.com/maistra/istio-workspace#install-in-two-easy-steps
+      maintainers:
+      - email: aslak@redhat.com
+        name: Aslak Knutsen
+      - email: bartosz@redhat.com
+        name: Bartosz Majsak
+      maturity: alpha
+      provider:
+        name: Red Hat, Inc.
+      relatedImages:
+      - quay.io/maistra/istio-workspace:v0.5.2
+      version: 0.5.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: istio-workspace-operator
+  provider:
+    name: Red Hat, Inc.

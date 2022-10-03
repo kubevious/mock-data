@@ -1,0 +1,96 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: ""
+  name: hyperfoil-bundle
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hyperfoil-operator.v0.21.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "hyperfoil.io/v1alpha2",
+              "kind": "Hyperfoil",
+              "metadata": {
+                "name": "hyperfoil"
+              },
+              "spec": {
+                "version": "latest"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Developer Tools
+        containerImage: quay.io/hyperfoil/hyperfoil-operator:0.21.0
+        description: Microservice-oriented distributed benchmark framework.
+        operators.operatorframework.io/builder: operator-sdk-v1.10.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/Hyperfoil/hyperfoil-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Hyperfoil is the Schema for the hyperfoils API
+          displayName: Hyperfoil
+          kind: Hyperfoil
+          name: hyperfoils.hyperfoil.io
+          version: v1alpha2
+      description: |
+        Hyperfoil is a modern benchmark framework oriented promising
+        accurate results with more flexibility and distributed architecture.
+
+        See more on [hyperfoil.io](http://hyperfoil.io).
+
+        Hyperfoil is licensed under Apache License 2.0
+      displayName: Hyperfoil
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - hyperfoil
+      - benchmark
+      - test
+      - load
+      - driver
+      links:
+      - name: Website
+        url: http://hyperfoil.io
+      - name: GitHub
+        url: http://github.com/Hyperfoil
+      maintainers:
+      - email: rvansa@redhat.com
+        name: Radim Vansa
+      - email: spederse@redhat.com
+        name: Ståle W. Pedersen
+      maturity: alpha
+      provider:
+        name: Red Hat, Inc.
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/hyperfoil/hyperfoil-operator:0.21.0
+      version: 0.21.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: hyperfoil-bundle
+  provider:
+    name: Red Hat, Inc.

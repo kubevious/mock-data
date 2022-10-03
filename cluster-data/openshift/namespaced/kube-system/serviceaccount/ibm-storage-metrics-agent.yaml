@@ -1,0 +1,20 @@
+apiVersion: v1
+imagePullSecrets:
+- name: ibm-storage-metrics-agent-dockercfg-rvj7z
+kind: ServiceAccount
+metadata:
+  annotations:
+    armada-service: ibm-storage-metrics-agent
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{"armada-service":"ibm-storage-metrics-agent","razee.io/build-url":"https://travis.ibm.com/alchemy-containers/ibm-storage-metrics-agent/builds/75909049","razee.io/source-url":"https://github.ibm.com/alchemy-containers/ibm-storage-metrics-agent/tree/v1.28.0","version":"614b9aaac8feaf2260c28ec919df3beb767ec399"},"name":"ibm-storage-metrics-agent","namespace":"kube-system"}}
+    razee.io/build-url: https://travis.ibm.com/alchemy-containers/ibm-storage-metrics-agent/builds/75909049
+    razee.io/source-url: https://github.ibm.com/alchemy-containers/ibm-storage-metrics-agent/tree/v1.28.0
+    version: 614b9aaac8feaf2260c28ec919df3beb767ec399
+  creationTimestamp: "2022-10-03T18:39:37Z"
+  name: ibm-storage-metrics-agent
+  namespace: kube-system
+  resourceVersion: "6849"
+  uid: 73ac70bf-4d85-4308-a3e5-98d83a60d7ff
+secrets:
+- name: ibm-storage-metrics-agent-token-bfggr
+- name: ibm-storage-metrics-agent-dockercfg-rvj7z

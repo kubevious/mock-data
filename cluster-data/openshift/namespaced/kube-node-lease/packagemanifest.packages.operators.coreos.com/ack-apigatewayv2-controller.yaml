@@ -1,0 +1,184 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-apigatewayv2-controller
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-apigatewayv2-controller.v0.1.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "Deployment",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "API",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "Authorizer",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "Integration",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "Route",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "Stage",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "apigatewayv2.services.k8s.aws/v1alpha1",
+              "kind": "VPCLink",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/apigatewayv2-controller:v0.1.4
+        createdAt: "2022-09-12 17:03:45"
+        description: AWS API Gateway v2 controller is a service controller for managing
+          API Gateway v2 resources in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: API represents the state of an AWS apigatewayv2 API resource.
+          displayName: API
+          kind: API
+          name: apis.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+        - description: Authorizer represents the state of an AWS apigatewayv2 Authorizer
+            resource.
+          displayName: Authorizer
+          kind: Authorizer
+          name: authorizers.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+        - description: Deployment represents the state of an AWS apigatewayv2 Deployment
+            resource.
+          displayName: Deployment
+          kind: Deployment
+          name: deployments.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+        - description: Integration represents the state of an AWS apigatewayv2 Integration
+            resource.
+          displayName: Integration
+          kind: Integration
+          name: integrations.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+        - description: Route represents the state of an AWS apigatewayv2 Route resource.
+          displayName: Route
+          kind: Route
+          name: routes.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+        - description: Stage represents the state of an AWS apigatewayv2 Stage resource.
+          displayName: Stage
+          kind: Stage
+          name: stages.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+        - description: VPCLink represents the state of an AWS apigatewayv2 VPCLink
+            resource.
+          displayName: VPCLink
+          kind: VPCLink
+          name: vpclinks.apigatewayv2.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Amazon API Gateway v2 resources in AWS from within your Kubernetes cluster. Currently only HTTP APIs are supported. WebSocket API support will be added soon. For HTTP APIs, DomainName and APIMapping resource support will be added soon.
+
+        **About Amazon API Gateway v2**
+
+        Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale. APIs act as the "front door" for applications to access data, business logic, or functionality from your backend services. Using API Gateway, you can create RESTful APIs and WebSocket APIs that enable real-time two-way communication applications. API Gateway supports containerized and serverless workloads, as well as web applications.
+
+        API Gateway handles all the tasks involved in accepting and processing up to hundreds of thousands of concurrent API calls, including traffic management, CORS support, authorization and access control, throttling, monitoring, and API version management. API Gateway has no minimum fees or startup costs. You pay for the API calls you receive and the amount of data transferred out and, with the API Gateway tiered pricing model, you can reduce your cost as your API usage scales.
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon API Gateway v2
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - apigatewayv2
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon API Gateway v2 Developer Resources
+        url: https://aws.amazon.com/api-gateway/resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: api gateway maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/apigatewayv2-controller:v0.1.4
+      version: 0.1.4
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-apigatewayv2-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

@@ -1,0 +1,22 @@
+apiVersion: v1
+imagePullSecrets:
+- name: kubevious-operator-controller-manager-dockercfg-9wq69
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:58:24Z"
+  labels:
+    operators.coreos.com/kubevious-operator.kubevious: ""
+  name: kubevious-operator-controller-manager
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: operators.coreos.com/v1alpha1
+    blockOwnerDeletion: false
+    controller: false
+    kind: ClusterServiceVersion
+    name: kubevious-operator.v0.0.38
+    uid: 1449e422-e4f6-4efa-818b-6c6736af7415
+  resourceVersion: "19296"
+  uid: ac8dbd03-9ccb-4c59-a828-bc7d648baa37
+secrets:
+- name: kubevious-operator-controller-manager-token-49w8c
+- name: kubevious-operator-controller-manager-dockercfg-9wq69

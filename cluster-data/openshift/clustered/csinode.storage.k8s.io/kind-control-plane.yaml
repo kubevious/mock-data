@@ -1,0 +1,16 @@
+apiVersion: storage.k8s.io/v1
+kind: CSINode
+metadata:
+  annotations:
+    storage.alpha.kubernetes.io/migrated-plugins: kubernetes.io/aws-ebs,kubernetes.io/azure-disk,kubernetes.io/azure-file,kubernetes.io/cinder,kubernetes.io/gce-pd
+  creationTimestamp: "2022-09-30T19:14:45Z"
+  name: kind-control-plane
+  ownerReferences:
+  - apiVersion: v1
+    kind: Node
+    name: kind-control-plane
+    uid: 376779aa-2546-4834-9367-fad4b512b9c6
+  resourceVersion: "40"
+  uid: 05f1c844-5b87-4b1d-8030-6a77e882f901
+spec:
+  drivers: null

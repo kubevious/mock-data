@@ -1,0 +1,379 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Appranix, Inc
+    provider-url: ""
+  name: appranix
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ax-cps-operator.v1.0.0
+    currentCSVDesc:
+      annotations:
+        capabilities: Seamless Upgrades
+        categories: Monitoring
+        certified: "true"
+        containerImage: gcr.io/appranix-public-cr/dev/aps/apx-operator:2.2.1
+        createdAt: "2020-01-30T12:45:55+05:30"
+        description: The Appranix CPS operator enables you to back up and restore
+          your Kubernetes/OpenShift cluster resources and persistent volumes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix
+        support: Appranix
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Backup respresents the capture of K8s cluster state at a point
+            in time (API objects and associated volume state).
+          displayName: Backup
+          kind: Backup
+          name: backups.aps.appranix.com
+          version: v1
+        - description: Schedule is an Appranix resource that represents a pre-scheduled
+            or periodic Backup that should be run.
+          displayName: Schedule
+          kind: Schedule
+          name: schedules.aps.appranix.com
+          version: v1
+        - description: Restore represents the application of resources from an Appranix
+            backup to a target K8s cluster.
+          displayName: Restore
+          kind: Restore
+          name: restores.aps.appranix.com
+          version: v1
+        - description: DownloadRequest is a request to download an artifact from backup
+            object storage, such as a backup log file.
+          displayName: DownloadRequest
+          kind: DownloadRequest
+          name: downloadrequests.aps.appranix.com
+          version: v1
+        - description: DeleteBackupRequest is a request to delete one or more backups.
+          displayName: DeleteBackupRequest
+          kind: DeleteBackupRequest
+          name: deletebackuprequests.aps.appranix.com
+          version: v1
+        - description: PodVolumeBackup respresents the capture of the Pod's volume
+            at a point in time.
+          displayName: PodVolumeBackup
+          kind: PodVolumeBackup
+          name: podvolumebackups.aps.appranix.com
+          version: v1
+        - description: PodVolumeRestore represents the restoration of a PodVolume
+            from a volume snapshot.
+          displayName: PodVolumeRestore
+          kind: PodVolumeRestore
+          name: podvolumerestores.aps.appranix.com
+          version: v1
+        - description: ResticRepository represents the repository from where the restic
+            tool is to be downloaded.
+          displayName: ResticRepository
+          kind: ResticRepository
+          name: resticrepositories.aps.appranix.com
+          version: v1
+        - description: BackupStorageLocation represents a storage bucket in a supported
+            cloud provider.
+          displayName: BackupStorageLocation
+          kind: BackupStorageLocation
+          name: backupstoragelocations.aps.appranix.com
+          version: v1
+        - description: VolumeSnapshotLocation is a location where Appranix stores
+            volume snapshots.
+          displayName: VolumeSnapshotLocation
+          kind: VolumeSnapshotLocation
+          name: volumesnapshotlocations.aps.appranix.com
+          version: v1
+        - description: ServerStatusRequest is a request to access current status information
+            about the Appranix server.
+          displayName: ServerStatusRequest
+          kind: ServerStatusRequest
+          name: serverstatusrequests.aps.appranix.com
+          version: v1
+      description: |-
+        ## About this Operator
+
+        Appranix helps you to securely backup and restore, perform a disaster
+        recovery and migrate Kubernetes/OpenShift cluster resources and persistent
+        volumes.
+
+        The operator works with Appranix to:
+
+        - Install and initiate Appranix controller on your cluster
+
+        - Take backups of your cluster and restore it in case of loss.
+
+        - Migrate cluster resources to other clusters.
+
+        - Replicate your production cluster to development and testing clusters.
+
+        ## Prerequisites
+
+        - A storage bucket in GCP or AWS & credentials to access it
+        - Appranix token generated for your cluster from the Appranix console
+        - A Configmap and Secret in your cluster for the bucket config and credentials
+
+        #### Step 1: Creating a storage bucket
+
+        Note: Currently only Google Storage bucket is supported, support for AWS Elastic Bucket Store will be available in a future release.
+
+        - You can create a bucket through the GCP console or by running the following command in [Google Cloud Shell](https://cloud.google.com/shell/)
+
+        ```shell
+        AX_CPS_BUCKET_NAME=<bucket_name>
+        gsutil mb -b on gs://$AX_CPS_BUCKET_NAME/
+        gcloud iam service-accounts create appranix --display-name "Appranix service account"
+        AX_SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter="displayName:Appranix service account" --format 'value(email)')
+        gsutil iam ch serviceAccount:$AX_SERVICE_ACCOUNT_EMAIL:objectAdmin gs://${AX_CPS_BUCKET_NAME}
+        gcloud iam service-accounts keys create ax_service_account.json --iam-account $AX_SERVICE_ACCOUNT_EMAIL
+        ```
+
+
+        #### Step 2: Obtaining the Appranix token for the cluster
+
+        - Log in to your Appranix console and create a cluster. After the cluster creation copy the token generated for that cluster.
+
+        #### Step 3: Creating the Configmap and Secret in the cluster
+
+        A Configmap and Secret which contains the credetianls and bucket configuration has to be created before instaling the operator. It can be done by running the following command against your cluster.
+
+        Note: Replace **token**, **bucket_name**, **bucket_provider** accordingly.
+
+
+        ```shell
+        AX_TOKEN=<token>
+        AX_CPS_BUCKET_NAME=<bucket_name>
+        AX_CPS_BUCKET_PROVIDER=<bucket_provider>
+        AX_SERVICE_ACCOUNT=$(cat ax_service_account.json | base64 -w 0)
+        # Run only for a Kubernetes cluster
+        curl -Ls -H "Content-Type: application/json" https://us-central1-appranix-dev-07.cloudfunctions.net/gen-setup  -d '{"token": "'$AX_TOKEN'", "bucket": "'$AX_CPS_BUCKET_NAME'", "cloud": "'$AX_CPS_BUCKET_PROVIDER'", "secret": "'$AX_SERVICE_ACCOUNT'"}' | kubectl apply -f -
+        # Run only for an OpenShift cluster
+        curl -Ls -H "Content-Type: application/json" https://us-central1-appranix-dev-07.cloudfunctions.net/gen-setup  -d '{"token": "'$AX_TOKEN'", "bucket": "'$AX_CPS_BUCKET_NAME'", "cloud": "'$AX_CPS_BUCKET_PROVIDER'", "secret": "'$AX_SERVICE_ACCOUNT'"}' | oc apply -f -
+        ```
+
+        **After performing the above prerequisites you can proceed to install the Appranix Operator from OperatorHub**
+      displayName: Appranix CPS Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - appranix
+      - container protection service
+      - application resilience service
+      - aps
+      - cps
+      links:
+      - name: Website
+        url: https://www.appranix.com/
+      - name: Twitter
+        url: https://twitter.com/AppranixOne/
+      - name: LinkedIn
+        url: https://www.linkedin.com/company/appranix/
+      - name: GitHub Repository
+        url: https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix
+      maintainers:
+      - email: support@appranix.com
+        name: Appranix
+      maturity: stable
+      provider:
+        name: Appranix, Inc
+      relatedImages:
+      - gcr.io/appranix-public-cr/dev/aps/apx-operator:2.2.1
+      version: 1.0.0
+    name: deprecated
+  - currentCSV: ax-cps-operator.v2.3.0
+    currentCSVDesc:
+      annotations:
+        capabilities: Seamless Upgrades
+        categories: Monitoring
+        certified: "true"
+        containerImage: gcr.io/appranix-public-cr/dev/aps/apx-operator:2.3
+        createdAt: "2020-02-10T13:27:50+05:30"
+        description: The Appranix CPS operator enables you to back up and restore
+          your Kubernetes/OpenShift cluster resources and persistent volumes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix
+        support: Appranix
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Backup respresents the capture of K8s cluster state at a point
+            in time (API objects and associated volume state).
+          displayName: Backup
+          kind: Backup
+          name: backups.aps.appranix.com
+          version: v1
+        - description: Schedule is an Appranix resource that represents a pre-scheduled
+            or periodic Backup that should be run.
+          displayName: Schedule
+          kind: Schedule
+          name: schedules.aps.appranix.com
+          version: v1
+        - description: Restore represents the application of resources from an Appranix
+            backup to a target K8s cluster.
+          displayName: Restore
+          kind: Restore
+          name: restores.aps.appranix.com
+          version: v1
+        - description: DownloadRequest is a request to download an artifact from backup
+            object storage, such as a backup log file.
+          displayName: DownloadRequest
+          kind: DownloadRequest
+          name: downloadrequests.aps.appranix.com
+          version: v1
+        - description: DeleteBackupRequest is a request to delete one or more backups.
+          displayName: DeleteBackupRequest
+          kind: DeleteBackupRequest
+          name: deletebackuprequests.aps.appranix.com
+          version: v1
+        - description: PodVolumeBackup respresents the capture of the Pod's volume
+            at a point in time.
+          displayName: PodVolumeBackup
+          kind: PodVolumeBackup
+          name: podvolumebackups.aps.appranix.com
+          version: v1
+        - description: PodVolumeRestore represents the restoration of a PodVolume
+            from a volume snapshot.
+          displayName: PodVolumeRestore
+          kind: PodVolumeRestore
+          name: podvolumerestores.aps.appranix.com
+          version: v1
+        - description: ResticRepository represents the repository from where the restic
+            tool is to be downloaded.
+          displayName: ResticRepository
+          kind: ResticRepository
+          name: resticrepositories.aps.appranix.com
+          version: v1
+        - description: BackupStorageLocation represents a storage bucket in a supported
+            cloud provider.
+          displayName: BackupStorageLocation
+          kind: BackupStorageLocation
+          name: backupstoragelocations.aps.appranix.com
+          version: v1
+        - description: VolumeSnapshotLocation is a location where Appranix stores
+            volume snapshots.
+          displayName: VolumeSnapshotLocation
+          kind: VolumeSnapshotLocation
+          name: volumesnapshotlocations.aps.appranix.com
+          version: v1
+        - description: ServerStatusRequest is a request to access current status information
+            about the Appranix server.
+          displayName: ServerStatusRequest
+          kind: ServerStatusRequest
+          name: serverstatusrequests.aps.appranix.com
+          version: v1
+      description: |-
+        ## About this Operator
+
+        Appranix helps you to securely backup and restore, perform a disaster
+        recovery and migrate Kubernetes/OpenShift cluster resources and persistent
+        volumes.
+
+        The operator works with Appranix to:
+
+        - Install and initiate Appranix controller on your cluster
+
+        - Take backups of your cluster and restore it in case of loss.
+
+        - Migrate cluster resources to other clusters.
+
+        - Replicate your production cluster to development and testing clusters.
+
+        ## Prerequisites
+
+        - A storage bucket in GCP or AWS & credentials to access it
+        - Appranix token generated for your cluster from the Appranix console
+        - A Configmap and Secret in your cluster for the bucket config and credentials
+
+        #### Step 1: Creating a storage bucket
+
+        Note: Currently only Google Storage bucket is supported, support for AWS Elastic Bucket Store will be available in a future release.
+
+        - You can create a bucket through the GCP console or by running the following command in [Google Cloud Shell](https://cloud.google.com/shell/)
+
+        ```shell
+        AX_CPS_BUCKET_NAME=<bucket_name>
+        gsutil mb -b on gs://$AX_CPS_BUCKET_NAME/
+        gcloud iam service-accounts create appranix --display-name "Appranix service account"
+        AX_SERVICE_ACCOUNT_EMAIL=$(gcloud iam service-accounts list --filter="displayName:Appranix service account" --format 'value(email)')
+        gsutil iam ch serviceAccount:$AX_SERVICE_ACCOUNT_EMAIL:objectAdmin gs://${AX_CPS_BUCKET_NAME}
+        gcloud iam service-accounts keys create ax_service_account.json --iam-account $AX_SERVICE_ACCOUNT_EMAIL
+        ```
+
+
+        #### Step 2: Obtaining the Appranix token for the cluster
+
+        - Log in to your Appranix console and create a cluster. After the cluster creation copy the token generated for that cluster.
+
+        #### Step 3: Creating the Configmap and Secret in the cluster
+
+        A Configmap and Secret which contains the credetianls and bucket configuration has to be created before instaling the operator. It can be done by running the following command against your cluster.
+
+        Note: Replace **token**, **bucket_name**, **bucket_provider** accordingly.
+
+
+        ```shell
+        AX_TOKEN=<token>
+        AX_CPS_BUCKET_NAME=<bucket_name>
+        AX_CPS_BUCKET_PROVIDER=<bucket_provider>
+        AX_SERVICE_ACCOUNT=$(cat ax_service_account.json | base64 -w 0)
+        # Run only for a Kubernetes cluster
+        curl -Ls -H "Content-Type: application/json" https://us-central1-appranix-dev-07.cloudfunctions.net/gen-setup  -d '{"token": "'$AX_TOKEN'", "bucket": "'$AX_CPS_BUCKET_NAME'", "cloud": "'$AX_CPS_BUCKET_PROVIDER'", "secret": "'$AX_SERVICE_ACCOUNT'"}' | kubectl apply -f -
+        # Run only for an OpenShift cluster
+        curl -Ls -H "Content-Type: application/json" https://us-central1-appranix-dev-07.cloudfunctions.net/gen-setup  -d '{"token": "'$AX_TOKEN'", "bucket": "'$AX_CPS_BUCKET_NAME'", "cloud": "'$AX_CPS_BUCKET_PROVIDER'", "secret": "'$AX_SERVICE_ACCOUNT'"}' | oc apply -f -
+        ```
+
+        **After performing the above prerequisites you can proceed to install the Appranix Operator from OperatorHub**
+      displayName: Appranix CPS Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - appranix
+      - container protection service
+      - application resilience service
+      - aps
+      links:
+      - name: Website
+        url: https://www.appranix.com/
+      - name: twitter
+        url: https://twitter.com/AppranixOne/
+      - name: LinkedIn
+        url: https://www.linkedin.com/company/appranix/
+      - name: GitHub Repository
+        url: https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators/appranix
+      maintainers:
+      - email: support@appranix.com
+        name: Appranix
+      maturity: stable
+      provider:
+        name: Appranix, Inc
+      relatedImages:
+      - gcr.io/appranix-public-cr/dev/aps/apx-operator:2.3
+      version: 2.3.0
+    name: stable
+  defaultChannel: stable
+  packageName: appranix
+  provider:
+    name: Appranix, Inc

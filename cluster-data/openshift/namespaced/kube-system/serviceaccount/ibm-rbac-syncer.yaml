@@ -1,0 +1,15 @@
+apiVersion: v1
+imagePullSecrets:
+- name: ibm-rbac-syncer-dockercfg-hl5t9
+kind: ServiceAccount
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"v1","kind":"ServiceAccount","metadata":{"name":"ibm-rbac-syncer","namespace":"kube-system"}}'
+  creationTimestamp: "2022-10-03T18:37:13Z"
+  name: ibm-rbac-syncer
+  namespace: kube-system
+  resourceVersion: "6199"
+  uid: fcd904a8-1e7b-46c2-89c8-9e2271e7f994
+secrets:
+- name: ibm-rbac-syncer-token-m6x52
+- name: ibm-rbac-syncer-dockercfg-hl5t9

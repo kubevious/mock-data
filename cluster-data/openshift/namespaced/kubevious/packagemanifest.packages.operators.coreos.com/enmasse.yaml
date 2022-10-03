@@ -1,0 +1,409 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    app: enmasse
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: EnMasse
+    provider-url: ""
+  name: enmasse
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: enmasse.0.32.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "admin.enmasse.io/v1beta1",
+              "kind": "StandardInfraConfig",
+              "metadata": {
+                "name": "default"
+              },
+              "spec": {
+                "broker": {
+                  "resources": {
+                    "memory": "1Gi",
+                    "storage": "5Gi"
+                  },
+                  "addressFullPolicy": "FAIL"
+                },
+                "router": {
+                  "linkCapacity": 50,
+                  "resources": {
+                    "memory": "512Mi"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "admin.enmasse.io/v1beta1",
+              "kind": "BrokeredInfraConfig",
+              "metadata": {
+                "name": "default"
+              },
+              "spec": {
+                "broker": {
+                  "resources": {
+                    "memory": "4Gi"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "admin.enmasse.io/v1beta2",
+              "kind": "AddressPlan",
+              "metadata": {
+                "name": "standard-small-queue"
+              },
+              "spec": {
+                "addressType": "queue",
+                "shortDescription": "Small Queue",
+                "resources": {
+                  "router": 0.01,
+                  "broker": 0.1
+                }
+              }
+            },
+            {
+              "apiVersion": "admin.enmasse.io/v1beta2",
+              "kind": "AddressSpacePlan",
+              "metadata": {
+                "name": "standard-small"
+              },
+              "spec": {
+                "addressSpaceType": "standard",
+                "infraConfigRef": "default",
+                "shortDescription": "Small Address Space Plan",
+                "resourceLimits": {
+                  "router": 1.0,
+                  "broker": 2.0,
+                  "aggregate": 2.0
+                },
+                "addressPlans": [
+                  "standard-small-queue"
+                ]
+              }
+            },
+            {
+              "apiVersion": "admin.enmasse.io/v1beta1",
+              "kind": "AuthenticationService",
+              "metadata": {
+                "name": "standard-authservice"
+              },
+              "spec": {
+                "type": "standard",
+                "standard": {
+                  "storage": {
+                    "claimName": "standard-authservice",
+                    "deleteClaim": true,
+                    "size": "1Gi",
+                    "type": "persistent-claim"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "enmasse.io/v1beta1",
+              "kind": "AddressSpace",
+              "metadata": {
+                "name": "myspace"
+              },
+              "spec": {
+                "plan": "standard-small",
+                "type": "standard"
+              }
+            },
+            {
+              "apiVersion": "enmasse.io/v1beta1",
+              "kind": "Address",
+              "metadata": {
+                "name": "myspace.myqueue"
+              },
+              "spec": {
+                "address": "myqueue",
+                "plan": "standard-small-queue",
+                "type": "queue"
+              }
+            },
+            {
+              "apiVersion": "user.enmasse.io/v1beta1",
+              "kind": "MessagingUser",
+              "metadata": {
+                "name": "myspace.user"
+              },
+              "spec": {
+                "authentication": {
+                  "password": "ZW5tYXNzZQ==",
+                  "type": "password"
+                },
+                "authorization": [
+                  {
+                    "addresses": [
+                      "myqueue"
+                    ],
+                    "operations": [
+                      "send",
+                      "recv"
+                    ]
+                  }
+                ],
+                "username": "user"
+              }
+            },
+            {
+              "apiVersion": "iot.enmasse.io/v1alpha1",
+              "kind": "IoTConfig",
+              "metadata": {
+                "name": "default"
+              },
+              "spec": {
+                "adapters": {
+                  "mqtt": {
+                    "endpoint": {
+                      "secretNameStrategy": {
+                        "secretName": "iot-mqtt-adapter-tls"
+                      }
+                    }
+                  }
+                },
+                "services": {
+                  "deviceRegistry": {
+                    "file": {
+                      "numberOfDevicesPerTenant": 1000
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "iot.enmasse.io/v1alpha1",
+              "kind": "IoTProject",
+              "metadata": {
+                "name": "iot"
+              },
+              "spec": {
+                "downstreamStrategy": {
+                  "managedStrategy": {
+                    "addressSpace": {
+                      "name": "iot",
+                      "plan": "standard-unlimited"
+                    },
+                    "addresses": {
+                      "command": {
+                        "plan": "standard-small-anycast"
+                      },
+                      "event": {
+                        "plan": "standard-small-queue"
+                      },
+                      "telemetry": {
+                        "plan": "standard-small-anycast"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Streaming & Messaging
+        certified: "false"
+        containerImage: quay.io/enmasse/controller-manager:0.32.2
+        createdAt: "2019-02-19T00:00:00Z"
+        description: EnMasse provides messaging as a managed service on Kubernetes
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/EnMasseProject/enmasse
+        support: EnMasse
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A messaging user that can connect to an Address Space
+          displayName: Messaging User
+          kind: MessagingUser
+          name: messagingusers.user.enmasse.io
+          version: v1beta1
+        - description: A resource representing the available schema of plans and authentication
+            services
+          displayName: AddressSpaceSchema
+          kind: AddressSpaceSchema
+          name: addressspaceschemas.enmasse.io
+          version: v1beta1
+        - description: A group of messaging addresses that can be accessed via the
+            same endpoint
+          displayName: Address Space
+          kind: AddressSpace
+          name: addressspaces.enmasse.io
+          version: v1beta1
+        - description: A messaging address that can be used to send/receive messages
+            to/from
+          displayName: Address
+          kind: Address
+          name: addresses.enmasse.io
+          version: v1beta1
+        - description: Infrastructure configuration template for the standard address
+            space type
+          displayName: Standard Infra Config
+          kind: StandardInfraConfig
+          name: standardinfraconfigs.admin.enmasse.io
+          version: v1beta1
+        - description: Infrastructure configuration template for the brokered address
+            space type
+          displayName: Brokered Infra Config
+          kind: BrokeredInfraConfig
+          name: brokeredinfraconfigs.admin.enmasse.io
+          version: v1beta1
+        - description: Plan describing the resource usage of a given address type
+          displayName: Address Plan
+          kind: AddressPlan
+          name: addressplans.admin.enmasse.io
+          version: v1beta2
+        - description: Plan describing the capabilities and resource limits of a given
+            address space type
+          displayName: Address Space Plan
+          kind: AddressSpacePlan
+          name: addressspaceplans.admin.enmasse.io
+          version: v1beta2
+        - description: Authentication service configuration available to address spaces.
+          displayName: Authentication Service
+          kind: AuthenticationService
+          name: authenticationservices.admin.enmasse.io
+          version: v1beta1
+        - description: Console Service Singleton for deploying global console.
+          displayName: Console Service
+          kind: ConsoleService
+          name: consoleservices.admin.enmasse.io
+          version: v1beta1
+        - description: IoT Infrastructure Configuration Singleton
+          displayName: IoT Config
+          kind: IoTConfig
+          name: iotconfigs.iot.enmasse.io
+          version: v1alpha1
+        - description: An IoT project instance
+          displayName: IoT Project
+          kind: IoTProject
+          name: iotprojects.iot.enmasse.io
+          version: v1alpha1
+      description: "**EnMasse** provides messaging as a managed service on Kubernetes.\nWith
+        EnMasse, administrators can configure a cloud-native,\nmulti-tenant messaging
+        service either in the cloud or on premise.\nDevelopers can provision messaging
+        using the EnMasse Console.\nMultiple development teams can provision the brokers
+        and queues from the\nconsole, without requiring each team to install, configure,
+        deploy,\nmaintain, or patch any software. \n\n**The core capabilities include:**\n\n
+        \ * **Built-in authentication and authorization** - Use the built-in authentication
+        service or\n    plug in your own authentication service for authentication
+        and\n    authorization of messaging clients.\n\n  * **Self-service messaging
+        for applications** - The service administrator deploys\n    and manages the
+        messaging infrastructure, while applications can request\n    messaging resources
+        regardless of the messaging infrastructure.\n\n  * **Support for a wide variety
+        of messaging patterns** - Choose between\n    JMS-style messaging with strict
+        guarantees, or messaging that supports\n    a larger number of connections
+        and higher throughput.\n\n## Post-installation tasks\n\nTo fully use EnMasse,
+        you need to create a few\ninfrastructure components after the installation,
+        including:\n\n  * An authentication service\n  * Infrastructure configuration
+        for the standard and brokered address space\n  * Address and address space
+        plans\n  * (Optional) Create RBAC roles to allow users to discover available
+        plans\n  * (Optional) Create RBAC roles to allow users to self-manage addresses
+        and\n    address spaces.\n\nFor a complete overview of how to configure EnMasse,
+        see\n[Configuring EnMasse](https://enmasse.io/documentation).\n\n### Quickstart
+        infrastructure configuration\n\nIf you simply want to get started quickly,
+        you can import the following\nYAML by saving the content to a file and apply
+        it by running the \n`oc apply -f <file>` command. You can also split the content
+        (at the `---` marker)\nand import the single YAML document using the Web UI:
+        \n\n~~~yaml\n---\napiVersion: admin.enmasse.io/v1beta1\nkind: StandardInfraConfig\nmetadata:\n
+        \ name: default\n---\napiVersion: admin.enmasse.io/v1beta2\nkind: AddressPlan\nmetadata:\n
+        \ name: standard-small-queue\nspec:\n  addressType: queue\n  resources:\n
+        \   router: 0.01\n    broker: 0.1\n---\napiVersion: admin.enmasse.io/v1beta2\nkind:
+        AddressSpacePlan\nmetadata:\n  name: standard-small\nspec:\n  addressSpaceType:
+        standard\n  infraConfigRef: default\n  addressPlans:\n  - standard-small-queue\n
+        \ resourceLimits:\n    router: 2.0\n    broker: 3.0\n    aggregate: 4.0\n---\napiVersion:
+        admin.enmasse.io/v1beta1\nkind: AuthenticationService\nmetadata:\n  name:
+        standard-authservice\nspec:\n  type: standard\n  standard:\n    storage:\n
+        \     claimName: standard-authservice\n      deleteClaim: true\n      size:
+        1Gi\n      type: persistent-claim\n~~~\n\n### Create RBAC roles to allow users
+        to discover available plans\n\nFor users to discover the available plans,
+        cluster-wide roles to read the available\nschema can be created.  Import the
+        following YAML by saving the content to a file and apply it by running the
+        \n`oc apply -f <file>` command. You can also split the content (at the `---`
+        marker)\nand import the single YAML document using the Web UI: \n\n~~~yaml\n---\napiVersion:
+        rbac.authorization.k8s.io/v1\nkind: ClusterRole\nmetadata:\n  name: enmasse.io:schema\n
+        \ labels:\n    app: enmasse\nrules:\n  - apiGroups: [ \"enmasse.io\" ]\n    resources:
+        [ \"addressspaceschemas\" ]\n    verbs: [ \"get\", \"list\", \"watch\" ]\n---\napiVersion:
+        rbac.authorization.k8s.io/v1\nkind: ClusterRoleBinding\nmetadata:\n  name:
+        \"enmasse.io:schema\"\n  labels:\n    app: enmasse\nroleRef:\n  apiGroup:
+        rbac.authorization.k8s.io\n  kind: ClusterRole\n  name: enmasse.io:schema\nsubjects:\n-
+        kind: Group\n  name: system:authenticated\n~~~\n\n### Creating infrastructure
+        using the Web UI\n\nYou must create a new instance of each of the following
+        custom resources. You can\nuse the example data directly, which is provided
+        when using the\nWeb UI:\n\n  * *Authentication Service* – Create an authentication
+        service.\n  * *Brokered Infra Config* – Create the broker infrastructure configuration.\n
+        \ * *Standard Infra Config* – Create the standard infrastructure\n    configuration.\n\nYou
+        must also create at least one address space plan and one address plan.\n\n*Note*:
+        The name of the address space plan and address plan is required\nlater when
+        creating new addresses. Some examples use specific plan\nnames, which might
+        not be available in your environment. You can\ncreate those plans, or edit
+        the examples to use different plan names.\n\n## Configuration for messaging
+        tenants\n\nWhile service administrators perform the infrastructure configuration,
+        the following\nresources are for the actual users of the system, the messaging
+        tenants.\n\nYou need to create those resources to satisfy your particular
+        use case.\n\n  * *Address space* – A container for addresses\n  * *Address*
+        – A messaging address (address, topic, queue, and so on)\n  * *Messaging user*
+        – Manages access to an address\n\n## Enabling the IoT messaging layer (tech-preview)\n\nEnMasse
+        contains an IoT messaging layer, which is not enabled\nby default. You may
+        enable it by creating an `IoTConfig` resource, in the\nnamespace of the EnMasse
+        installation. The name of the resource\nmust be `default`.\n\nYou can then
+        create resources of the type `IoTProject`, which allow you to\nregister and
+        connect devices via HTTP, MQTT, Sigfox and LoRaWAN.\n\n*Note:* The default
+        `IoTConfig` example uses the \"file based\" device registry.\nIt allows you
+        to quicky evaluate the IoT layer. However you must not use this\nin any productive
+        environment.\n\n*Note:* The default `IoTConfig` examples configures the MQTT
+        adapter with an\nexplicit TLS key/certificate stored in the secret `iot-mqtt-adapter-tls`.
+        You\nmust provide this secret, under the configured name, in order for the\nMQTT
+        protocol adapter to pick it up.\n\n*Note*: The `IoTProject` examples assume
+        that you have deployed the example\nplans. If you did not deploy the example
+        plans, or changed their names, you\nmust adapt the names in the IoT examples
+        as well.\n\nFor more information on the IoT layer, see: [Getting Started with
+        Internet of Things (IoT) on EnMasse](https://enmasse.io/documentation)\n"
+      displayName: EnMasse
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - messaging
+      - amqp
+      - iot
+      - mqtt
+      links:
+      - name: GitHub
+        url: https://github.com/EnMasseProject/enmasse
+      - name: Documentation
+        url: https://enmasse.io/documentation
+      maintainers:
+      - email: enmasse@redhat.com
+        name: EnMasse
+      maturity: beta
+      provider:
+        name: EnMasse
+      relatedImages:
+      - quay.io/enmasse/controller-manager:0.32.2
+      version: 0.32.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: enmasse
+  provider:
+    name: EnMasse

@@ -1,0 +1,111 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: event-streams-topic
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: event-streams-topic.v0.1.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion": "ibmcloud.ibm.com/v1alpha1", "kind": "Topic",
+          "metadata": {"name": "mytopic"}, "spec": {"bindingFrom": {"name": "myes-binding"},
+          "topicName": "myTopic"}}]'
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: cloudoperators/event-streams-topic:0.1.1
+        createdAt: "2019-10-29T13:52:40Z"
+        description: An operator for the life cycle management of Topics on Event
+          Streams for IBM Cloud
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/IBM/event-streams-topic
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: An operator for managing Topics for Event Streams on IBM Cloud
+          displayName: Topic
+          kind: Topic
+          name: topics.ibmcloud.ibm.com
+          version: v1alpha1
+      description: |
+        Event Streams Topic is an operator to manage the life cycle of Topics on Event Streams service on IBM Cloud. It is currently in preview. It will get updated as we release new versions of the [upstream repository](https://github.com/IBM/event-streams-topic).
+        ## Requirements
+        The operator can be installed on any OLM-enabled Kubernetes cluster with version >= 1.11.  Before installing, make sure you have installed [kubectl CLI](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and it is configured to access your cluster.
+        This operator can be used with IBM Event Streams instances provisioned by the IBM Cloud UI or CLI, or by the [IBM Cloud Operator](https://github.com/IBM/cloud-operators).
+        ## Using the Event Streams Topic Operator
+        Assuming you have created a Kubernetes secret, `binding-messagehub`, which contains credentials for the managed EventStreams service (apiKey, and kafkaAdminURL),  the following yaml deploys a Topic named `MyGreatTopic` with the configuration settings that are shown:
+
+            apiVersion: ibmcloud.ibm.com/v1alpha1
+            kind: Topic
+            metadata:
+              name: mytopic
+            spec:
+              apiKey:
+                secretKeyRef:
+                  name: binding-messagehub
+                  key: apikey
+              kafkaAdminUrl:
+                secretKeyRef:
+                  name: binding-messagehub
+                  key: kafkaadminurl
+              topicName: MyGreatTopic
+              numPartitions: 3
+              replicationFactor : 3
+              configs :
+                - name: retentionMs
+                  value: 2592000000
+
+
+
+        For additional configuration options, samples and more information on using the operator, consult  the [Event Streams Topic documentation](https://github.com/IBM/event-streams-topic).
+      displayName: Event Streams Topic
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - Cloud
+      links:
+      - name: Event Streams Topic
+        url: https://github.com/ibm/event-streams-topic
+      maintainers:
+      - email: mvaziri@us.ibm.com
+        name: Mandana Vaziri
+      - email: yhliu@us.ibm.com
+        name: Yew Huey Liu
+      - email: dettori@us.ibm.com
+        name: Paolo Dettori
+      - email: tardieu@us.ibm.com
+        name: Olivier Tardieu
+      maturity: alpha
+      provider:
+        name: IBM
+      relatedImages:
+      - cloudoperators/event-streams-topic:0.1.1
+      version: 0.1.1
+    name: alpha
+  defaultChannel: alpha
+  packageName: event-streams-topic
+  provider:
+    name: IBM

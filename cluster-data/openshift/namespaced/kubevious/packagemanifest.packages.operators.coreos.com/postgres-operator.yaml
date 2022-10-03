@@ -1,0 +1,198 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Zalando SE
+    provider-url: ""
+  name: postgres-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: postgres-operator.v1.4.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: "[\n    {\n        \"apiVersion\": \"acid.zalan.do/v1\",\n        \"kind\":
+          \"postgresql\",\n        \"metadata\": {\n            \"name\": \"acid-minimal-cluster\"\n
+          \       },\n        \"spec\": {\n            \"databases\": {\n                \"foo\":
+          \"zalando\"\n            },\n            \"numberOfInstances\": 2,\n            \"postgresql\":
+          {\n                \"version\": \"11\"\n            },\n            \"teamId\":
+          \"ACID\",\n            \"users\": {\n                \"foo_user\": [],\n
+          \               \"zalando\": [\n                    \"superuser\",\n                    \"createdb\"\n
+          \               ]\n            },\n            \"volume\": {\n                \"size\":
+          \"1Gi\"\n            }\n        }\n    },\n    {\n        \"apiVersion\":
+          \"acid.zalan.do/v1\",\n        \"kind\": \"OperatorConfiguration\",\n        \"metadata\":
+          {\n            \"name\": \"postgresql-operator-default-configuration\"\n
+          \       },\n        \"configuration\": {\n            \"aws_or_gcp\": {\n
+          \               \"aws_region\": \"eu-central-1\"\n            },\n            \"debug\":
+          {\n                \"debug_logging\": true,\n                \"enable_database_access\":
+          true\n            },\n            \"docker_image\": \"registry.opensource.zalan.do/acid/spilo-cdp-12:1.6-p16\",\n
+          \           \"etcd_host\": \"\",\n            \"enable_crd_validation\":
+          true,\n            \"enable_shm_volume\": true,\n            \"kubernetes\":
+          {\n                \"cluster_domain\": \"cluster.local\",\n                \"cluster_labels\":
+          {\n                    \"application\": \"spilo\"\n                },\n
+          \               \"cluster_name_label\": \"cluster-name\",\n                \"enable_init_containers\":
+          true,\n                \"enable_pod_antiaffinity\": false,\n                \"enable_pod_disruption_budget\"
+          : true,\n                \"enable_sidecars\": true,\n                \"master_pod_move_timeout\"
+          : \"20m\",\n                \"oauth_token_secret_name\": \"postgresql-operator\"
+          ,\n                \"pdb_name_format\": \"postgres-{cluster}-pdb\",\n                \"pod_antiaffinity_topology_key\":
+          \"kubernetes.io/hostname\",\n                \"pod_management_policy\":
+          \"ordered_ready\",\n                \"pod_role_label\": \"spilo-role\",\n
+          \               \"pod_service_account_name\": \"postgres-pod\",\n                \"pod_terminate_grace_period\":
+          \"5m\",\n                \"secret_name_template\": \"{username}.{cluster}.credentials.{tprkind}.{tprgroup}\",\n
+          \               \"spilo_privileged\": false,\n                \"watched_namespaces\"
+          : \"*\"\n            },\n            \"load_balancer\": {\n                \"enable_master_load_balancer\":
+          false,\n                \"enable_replica_load_balancer\" : false,\n                \"master_dns_name_format\":
+          \"{cluster}.{team}.{hostedzone}\" ,\n                \"replica_dns_name_format\":
+          \"{cluster}-repl.{team}.{hostedzone}\" \n            },\n            \"logging_rest_api\":
+          {\n                \"api_port\": 8008,\n                \"cluster_history_entries\":
+          1000,\n                \"ring_log_lines\": 100\n            },\n            \"logical_backup\":
+          {\n                \"logical_backup_docker_image\": \"registry.opensource.zalan.do/acid/logical-backup\",\n
+          \               \"logical_backup_s3_bucket\": \"\",\n                \"logical_backup_schedule\":
+          \"30 00 * * *\"\n            },\n            \"max_instances\": -1,\n            \"min_instances\":
+          -1,\n            \"postgres_pod_resources\": {\n                \"default_cpu_limit\":
+          \"3\",\n                \"default_cpu_request\": \"100m\",\n                \"default_memory_limit\":
+          \"1Gi\",\n                \"default_memory_request\": \"100Mi\"\n            },\n
+          \           \"repair_period\": \"5m\",\n            \"resync_period\": \"30m\",\n
+          \           \"scalyr\": {\n                \"scalyr_cpu_limit\": \"1\",\n
+          \               \"scalyr_cpu_request\": \"100m\",\n                \"scalyr_memory_limit\":
+          \"1Gi\",\n                \"scalyr_memory_request\": \"50Mi\"\n            },\n
+          \           \"teams_api\": {\n                \"enable_team_superuser\":
+          false,\n                \"enable_teams_api\": false,\n                \"pam_role_name\":
+          \"zalandos\",\n                \"protected_role_names\": [\n                    \"admin\"\n
+          \               ],\n                \"team_admin_role\": \"admin\",\n                \"team_api_role_configuration\":
+          {\n                    \"log_statement\": \"all\"\n                }\n            },\n
+          \           \"timeouts\": {\n                \"pod_deletion_wait_timeout\":
+          \"10m\",\n                \"pod_label_wait_timeout\": \"10m\",\n                \"ready_wait_interval\":
+          \"4s\",\n                \"ready_wait_timeout\": \"30s\",\n                \"resource_check_interval\":
+          \"3s\",\n                \"resource_check_timeout\": \"10m\"\n            },\n
+          \           \"users\": {\n                \"replication_username\": \"standby\",\n
+          \               \"super_username\": \"postgres\"\n            },\n            \"workers\":
+          4\n        }\n    }\n]"
+        capabilities: Full Lifecycle
+        categories: Database
+        certified: "false"
+        containerImage: registry.opensource.zalan.do/acid/postgres-operator:v1.4.0
+        createdAt: "2019-07-24 10:30:00"
+        description: Postgres operator creates and manages PostgreSQL clusters running
+          in Kubernetes.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/zalando/postgres-operator
+        support: Zalando SE
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Creates a PostgreSQL cluster managed by Postgres-Operator.
+          displayName: PostgreSQL
+          kind: postgresql
+          name: postgresqls.acid.zalan.do
+          version: v1
+        - description: Configuration for PostgreSQL cluster managed by Postgres-Operator.
+          displayName: OperatorConfiguration
+          kind: OperatorConfiguration
+          name: operatorconfigurations.acid.zalan.do
+          version: v1
+      description: |
+        The Postgres operator manages PostgreSQL clusters on Kubernetes.
+
+        ### Key principles
+
+        * **Hands free:** Configuration happens only via manifests and its own config
+        * **Cloud native:** Easy integration in automated deploy pipelines with no access to Kubernetes directly
+        * **Scalable:** Run highly available PostgreSQL clusters powered by Patroni
+
+        ### How it works
+
+        The operator watches additions, updates, and deletions of PostgreSQL cluster manifests and changes the running clusters accordingly. For each PostgreSQL custom resource it creates StatefulSets, Services, and also Postgres roles. For some configuration changes, e.g. updating a pod's Docker image, the operator carries out the rolling update.
+
+        ### Creating a Postgres cluster
+
+        After installing the Postgres Operator via OLM you can use the provided YAML examples to create a minimal cluster setup with two instances.
+
+        ```
+        # First, make sure the operator is running
+        kubectl get pod -l name=postgres-operator -n operators
+
+        # Then create a new Postgres cluster with a manifest file
+        kubectl create -n <namespace> -f manifests/minimal-postgres-manifest.yaml
+
+        # check for deployed clusters
+        kubectl get postgresql -n <namespace>
+        ```
+
+        The StatefulSets, Services and Pods will be given the same name as you cluster manifest. The database pods can be identified by their number suffix, starting from `-0`. With the default setup they run the Spilo container image by Zalando. As for the services and endpoints, there will be one for the master pod and another one for all the replicas (`-repl` suffix), plus a headless service `-config` for communication with Patroni. Check if all components are coming up. Use the label `application=spilo` to filter and list the label `spilo-role` to see which Pod currently contains the master.
+
+        ```
+        # check created database pods
+        kubectl get pods -l application=spilo -L spilo-role
+
+        # check created service resources
+        kubectl get svc -l application=spilo
+        ```
+
+        ### Configuring the operator
+
+        The operator can be configured by defining an `OperatorConfiguration` custom resource or by creating a ConfigMap that contains the parameters to be changed. The YAML example shows the default configuration used internally when creating the operator via OLM. For a detailed description of each parameter checkout out the [operator reference](https://github.com/zalando/postgres-operator/blob/master/docs/reference/operator_parameters.md)
+
+        In order to obtain changes from the configuration first create an `OperatorConfiguration` or ConfigMap. Then edit the Postgres Operator CSV and add a reference to this resource in the `spec.containers` section of the `postgres-operator` deployment. Then delete the running operator deployment so that the CSV respawns an updated deployment.
+
+        ```
+        # for CRD-based configuration
+        - env:
+          - name: POSTGRES_OPERATOR_CONFIGURATION_OBJECT
+            value: postgresql-operator-default-configuration
+
+        # for ConfigMap-based configuration
+        - env:
+          - name: CONFIG_MAP_NAME
+            value: "postgres-operator"
+        ```
+
+        Please, check out the [user guide](https://github.com/zalando/postgres-operator/blob/master/docs/user.md) for more details about how to use the operator.
+      displayName: Postgres-Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - postgresql
+      - kubernetes
+      - database
+      - managed-services
+      - data-infrastructure
+      - cloud-native
+      - postgres-operator
+      links:
+      - name: Documentation
+        url: https://postgres-operator.readthedocs.io/en/latest/
+      - name: GitHub
+        url: https://github.com/zalando/postgres-operator
+      maintainers:
+      - email: opensource@zalando.de
+        name: Zalando SE
+      maturity: stable
+      minKubeVersion: 1.14.0
+      provider:
+        name: Zalando SE
+      relatedImages:
+      - registry.opensource.zalan.do/acid/postgres-operator:v1.4.0
+      version: 1.4.0
+    name: stable
+  defaultChannel: stable
+  packageName: postgres-operator
+  provider:
+    name: Zalando SE

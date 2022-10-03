@@ -1,0 +1,375 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: medik8s
+    provider-url: https://github.com/medik8s
+  name: node-healthcheck-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: node-healthcheck-operator.v0.3.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "remediation.medik8s.io/v1alpha1",
+              "kind": "NodeHealthCheck",
+              "metadata": {
+                "name": "nodehealthcheck-sample"
+              },
+              "spec": {
+                "minHealthy": "51%",
+                "remediationTemplate": {
+                  "apiVersion": "self-node-remediation.medik8s.io/v1alpha1",
+                  "kind": "SelfNodeRemediationTemplate",
+                  "name": "self-node-remediation-resource-deletion-template",
+                  "namespace": "openshift-operators"
+                },
+                "selector": {
+                  "matchExpressions": [
+                    {
+                      "key": "node-role.kubernetes.io/worker",
+                      "operator": "Exists"
+                    }
+                  ]
+                },
+                "unhealthyConditions": [
+                  {
+                    "duration": "300s",
+                    "status": "False",
+                    "type": "Ready"
+                  },
+                  {
+                    "duration": "300s",
+                    "status": "Unknown",
+                    "type": "Ready"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/medik8s/node-healthcheck-operator:v0.3.2
+        createdAt: "2022-09-11 16:10:10"
+        description: Detect failed Nodes and trigger remediation with e.g. Self Node
+          Remediation.
+        olm.skipRange: '>=0.2.0 <0.3.2'
+        operators.operatorframework.io/builder: operator-sdk-v1.18.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/medik8s/node-healthcheck-operator
+        support: Medik8s
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: NodeHealthCheck is the Schema for the nodehealthchecks API
+          displayName: Node Health Check
+          kind: NodeHealthCheck
+          name: nodehealthchecks.remediation.medik8s.io
+          version: v1alpha1
+      description: |
+        ### Introduction
+        Hardware is imperfect, and software contains bugs. When node level failures such as kernel hangs or dead NICs
+        occur, the work required from the cluster does not decrease - workloads from affected nodes need to be
+        restarted somewhere.
+
+        However some workloads, such as RWO volumes and StatefulSets, may require at-most-one semantics.
+        Failures affecting these kind of workloads risk data loss and/or corruption if nodes (and the workloads
+        running on them) are assumed to be dead whenever we stop hearing from them. For this reason it is important
+        to know that the node has reached a safe state before initiating recovery of the workload.
+
+        Unfortunately it is not always practical to require admin intervention in order to confirm the node’s true status.
+        In order to automate the recovery of exclusive workloads, we provide operators for failure detection
+        and remediation.
+
+        ### Failure detection: Node Health Check operator
+        The “Node Health Check” (NHC) operator checks each Node’s set of
+        NodeConditions (eg. NotReady) against the criteria and thresholds defined in
+        NodeHealthCheck configuration. If the Node is deemed to be in a failed
+        state, NHC will initiate recovery by using the SIG Cluster API's “External
+        Remediation” API to instantiate the configured remediation template which
+        specifies the mechanism/controller to be used.
+
+        ### Failure handling: Self Node Remediation
+        By default NHC depends on the “Self Node Remediation” (SNR) operator, which
+        is installed automatically.
+        SNR uses watchdog timers and heuristics to ensure nodes enter a safe state
+        (no longer hosting workloads) within a known and finite period of time,
+        before signaling to the system that all Pods and VolumeAttachments on the
+        failed Node are no longer active and can be relocated elsewhere.
+        In the case of transient errors, the watchdog’s actions will also result in
+        the node rebooting and rejoining the cluster - restoring capacity.
+      displayName: Node Health Check Operator - Community Edition
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - NHC
+      - Self Node Remediation
+      - SNR
+      - Remediation
+      - Fencing
+      - medik8s
+      - k8s
+      links:
+      - name: Node Healthcheck Operator
+        url: https://medik8s.io
+      - name: Source Code
+        url: https://github.com/medik8s/node-healthcheck-operator
+      maintainers:
+      - email: medik8s@googlegroups.com
+        name: medik8s team
+      maturity: alpha
+      minKubeVersion: 1.20.0
+      provider:
+        name: medik8s
+        url: https://github.com/medik8s
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/medik8s/node-healthcheck-operator:v0.3.2
+      version: 0.3.2
+    name: candidate
+  - currentCSV: node-healthcheck-operator.v0.3.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "remediation.medik8s.io/v1alpha1",
+              "kind": "NodeHealthCheck",
+              "metadata": {
+                "name": "nodehealthcheck-sample"
+              },
+              "spec": {
+                "minHealthy": "51%",
+                "remediationTemplate": {
+                  "apiVersion": "self-node-remediation.medik8s.io/v1alpha1",
+                  "kind": "SelfNodeRemediationTemplate",
+                  "name": "self-node-remediation-resource-deletion-template",
+                  "namespace": "openshift-operators"
+                },
+                "selector": {
+                  "matchExpressions": [
+                    {
+                      "key": "node-role.kubernetes.io/worker",
+                      "operator": "Exists"
+                    }
+                  ]
+                },
+                "unhealthyConditions": [
+                  {
+                    "duration": "300s",
+                    "status": "False",
+                    "type": "Ready"
+                  },
+                  {
+                    "duration": "300s",
+                    "status": "Unknown",
+                    "type": "Ready"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/medik8s/node-healthcheck-operator:v0.3.2
+        createdAt: "2022-09-11 16:10:10"
+        description: Detect failed Nodes and trigger remediation with e.g. Self Node
+          Remediation.
+        olm.skipRange: '>=0.2.0 <0.3.2'
+        operators.operatorframework.io/builder: operator-sdk-v1.18.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/medik8s/node-healthcheck-operator
+        support: Medik8s
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: NodeHealthCheck is the Schema for the nodehealthchecks API
+          displayName: Node Health Check
+          kind: NodeHealthCheck
+          name: nodehealthchecks.remediation.medik8s.io
+          version: v1alpha1
+      description: |
+        ### Introduction
+        Hardware is imperfect, and software contains bugs. When node level failures such as kernel hangs or dead NICs
+        occur, the work required from the cluster does not decrease - workloads from affected nodes need to be
+        restarted somewhere.
+
+        However some workloads, such as RWO volumes and StatefulSets, may require at-most-one semantics.
+        Failures affecting these kind of workloads risk data loss and/or corruption if nodes (and the workloads
+        running on them) are assumed to be dead whenever we stop hearing from them. For this reason it is important
+        to know that the node has reached a safe state before initiating recovery of the workload.
+
+        Unfortunately it is not always practical to require admin intervention in order to confirm the node’s true status.
+        In order to automate the recovery of exclusive workloads, we provide operators for failure detection
+        and remediation.
+
+        ### Failure detection: Node Health Check operator
+        The “Node Health Check” (NHC) operator checks each Node’s set of
+        NodeConditions (eg. NotReady) against the criteria and thresholds defined in
+        NodeHealthCheck configuration. If the Node is deemed to be in a failed
+        state, NHC will initiate recovery by using the SIG Cluster API's “External
+        Remediation” API to instantiate the configured remediation template which
+        specifies the mechanism/controller to be used.
+
+        ### Failure handling: Self Node Remediation
+        By default NHC depends on the “Self Node Remediation” (SNR) operator, which
+        is installed automatically.
+        SNR uses watchdog timers and heuristics to ensure nodes enter a safe state
+        (no longer hosting workloads) within a known and finite period of time,
+        before signaling to the system that all Pods and VolumeAttachments on the
+        failed Node are no longer active and can be relocated elsewhere.
+        In the case of transient errors, the watchdog’s actions will also result in
+        the node rebooting and rejoining the cluster - restoring capacity.
+      displayName: Node Health Check Operator - Community Edition
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - NHC
+      - Self Node Remediation
+      - SNR
+      - Remediation
+      - Fencing
+      - medik8s
+      - k8s
+      links:
+      - name: Node Healthcheck Operator
+        url: https://medik8s.io
+      - name: Source Code
+        url: https://github.com/medik8s/node-healthcheck-operator
+      maintainers:
+      - email: medik8s@googlegroups.com
+        name: medik8s team
+      maturity: alpha
+      minKubeVersion: 1.20.0
+      provider:
+        name: medik8s
+        url: https://github.com/medik8s
+      relatedImages:
+      - quay.io/medik8s/node-healthcheck-operator:v0.3.2
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      version: 0.3.2
+    name: stable
+  - currentCSV: node-healthcheck-operator.v0.1.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "remediation.medik8s.io/v1alpha1",
+              "kind": "NodeHealthCheck",
+              "metadata": {
+                "name": "nodehealthcheck-sample",
+                "namespace": "operators"
+              },
+              "spec": {
+                "minHealthy": "51%",
+                "remediationTemplate": {
+                  "apiVersion": "poison-pill.medik8s.io/v1alpha1",
+                  "kind": "PoisonPillRemediationTemplate",
+                  "name": "group-x",
+                  "namespace": "operators"
+                },
+                "selector": {
+                  "matchExpressions": [
+                    {
+                      "key": "node-role.kubernetes.io/worker",
+                      "operator": "Exists"
+                    }
+                  ]
+                },
+                "unhealthyConditions": [
+                  {
+                    "duration": "300s",
+                    "status": "False",
+                    "type": "Ready"
+                  },
+                  {
+                    "duration": "300s",
+                    "status": "Unknown",
+                    "type": "Ready"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: OpenShift Optional
+        containerImage: quay.io/medik8s/node-healthcheck-operator:v0.1.2
+        createdAt: "2021-12-17 13:00:00"
+        description: An operator to monitor node healthcheck and remdiate via 3rd
+          party providers like poison-pill.
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/medik8s/node-healthcheck-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: NodeHealthCheck is the Schema for the nodehealthchecks API
+          displayName: Node Health Check
+          kind: NodeHealthCheck
+          name: nodehealthchecks.remediation.medik8s.io
+          version: v1alpha1
+      description: This operator deploys the Node Health Check controller and its
+        artifacts
+      displayName: Node Health Check Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - Remediation
+      - Fencing
+      - medik8s
+      - k8s
+      links:
+      - name: Node Healthcheck Operator
+        url: https://node-healthcheck-operator.domain
+      maintainers:
+      - email: medik8s@googlegroups.com
+        name: medik8s team
+      maturity: alpha
+      provider:
+        name: medik8s
+        url: https://github.com/medik8s
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/medik8s/node-healthcheck-operator:v0.1.2
+      version: 0.1.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: node-healthcheck-operator
+  provider:
+    name: medik8s
+    url: https://github.com/medik8s

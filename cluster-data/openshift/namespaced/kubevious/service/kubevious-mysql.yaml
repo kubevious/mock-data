@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  labels:
+    app.kubernetes.io/component: kubevious-mysql
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-mysql
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: installer.kubevious.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Kubevious
+    name: kubevious
+    uid: 925b27a2-92df-4bef-b14b-db572cd5c3e8
+  resourceVersion: "21228"
+  uid: 24b400fc-b589-4716-8969-7efc3b49b9bf
+spec:
+  clusterIP: 172.21.134.202
+  clusterIPs:
+  - 172.21.134.202
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: mysql
+    port: 3306
+    protocol: TCP
+    targetPort: mysql
+  selector:
+    app.kubernetes.io/component: kubevious-mysql
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

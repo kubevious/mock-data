@@ -1,0 +1,27 @@
+apiVersion: v1
+count: 2
+eventTime: null
+firstTimestamp: "2022-10-03T16:04:14Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{kube-scheduler}
+  kind: Pod
+  name: kube-scheduler-kind-control-plane
+  namespace: kube-system
+  uid: c534a26b3c79b42ea583a3639f5034a6
+kind: Event
+lastTimestamp: "2022-10-03T19:41:11Z"
+message: Started container kube-scheduler
+metadata:
+  creationTimestamp: "2022-10-03T19:41:12Z"
+  name: kube-scheduler-kind-control-plane.171a9aa6f23c45b4
+  namespace: kube-system
+  resourceVersion: "39802"
+  uid: 073ced11-c6b7-4547-ad95-aed1fc955fe2
+reason: Started
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Normal

@@ -1,0 +1,163 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: NooBaa
+    provider-url: ""
+  name: noobaa-operator
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: noobaa-operator.v5.8.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"kind":"NooBaa","apiVersion":"noobaa.io/v1alpha1","metadata":{"name":"noobaa","creationTimestamp":null},"spec":{"cleanupPolicy":{},"security":{"kms":{}}},"status":{}},{"kind":"BackingStore","apiVersion":"noobaa.io/v1alpha1","metadata":{"name":"default","creationTimestamp":null},"spec":{"type":""},"status":{"mode":{}}},{"kind":"NamespaceStore","apiVersion":"noobaa.io/v1alpha1","metadata":{"name":"default","creationTimestamp":null},"spec":{"type":""},"status":{"mode":{}}},{"kind":"BucketClass","apiVersion":"noobaa.io/v1alpha1","metadata":{"name":"default","creationTimestamp":null},"spec":{},"status":{}}]'
+        capabilities: Basic Install
+        categories: Storage,Big Data
+        certified: "false"
+        containerImage: noobaa/noobaa-operator:5.8.0
+        createdAt: "2019-07-08T13:10:20.940Z"
+        description: NooBaa is an object data service for hybrid and multi cloud environments.
+        repository: https://github.com/noobaa/noobaa-operator
+        support: Red Hat
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: A NooBaa system - Create this to start
+          displayName: NooBaa
+          kind: NooBaa
+          name: noobaas.noobaa.io
+          version: v1alpha1
+        - description: Storage target spec such as aws-s3, s3-compatible, ibm-cos,
+            PV's and more. Used in BucketClass to construct data placement policies.
+          displayName: Backing Store
+          kind: BackingStore
+          name: backingstores.noobaa.io
+          version: v1alpha1
+        - description: Storage target spec such as aws-s3, s3-compatible, ibm-cos
+            and more. Used in BucketClass to construct namespace policies.
+          displayName: Namespace Store
+          kind: NamespaceStore
+          name: namespacestores.noobaa.io
+          version: v1alpha1
+        - description: Storage policy spec  tiering, mirroring, spreading, namespace
+            policy. Combines BackingStores Or NamespaceStores. Referenced by ObjectBucketClaims.
+          displayName: Bucket Class
+          kind: BucketClass
+          name: bucketclasses.noobaa.io
+          version: v1alpha1
+        required:
+        - description: Claim a bucket just like claiming a PV. Automate you app bucket
+            provisioning by creating OBC with your app deployment. A secret and configmap
+            (name=claim) will be created with access details for the app pods.
+          displayName: Object Bucket Claim
+          kind: ObjectBucketClaim
+          name: objectbucketclaims.objectbucket.io
+          version: v1alpha1
+        - description: Used under-the-hood. Created per ObjectBucketClaim and keeps
+            provisioning information.
+          displayName: Object Bucket
+          kind: ObjectBucket
+          name: objectbuckets.objectbucket.io
+          version: v1alpha1
+      description: "The noobaa operator creates and reconciles a NooBaa system in
+        a Kubernetes/Openshift cluster.\n\nNooBaa provides an S3 object-store service
+        abstraction and data placement policies to create hybrid and multi cloud data
+        solutions.\n\nFor more information on using NooBaa refer to [Github](https://github.com/noobaa/noobaa-core)
+        / [Website](https://www.noobaa.io) / [Articles](https://noobaa.desk.com).
+        \n\n## How does it work?\n\n- The operator deploys the noobaa core pod and
+        two services - Mgmt (UI/API) and S3 (object-store).\n- Both services require
+        credentials which you will get from a secret that the operator creates - use
+        describe noobaa to locate it.\n- The service addresses will also appear in
+        the describe output - pick the one that is suitable for your client:\n    -
+        minikube - use the NodePort address.\n    - remote cluster - probably need
+        one of the External addresses.\n    - connect an application on the same cluster
+        - use Internal DNS (though any address should work)\n    \n- Feel free to
+        email us or open github issues on any question.\n\n## Getting Started\n\n###
+        Notes:\n- The following instructions are for **minikube** but it works on
+        any Kubernetes/Openshift clusters.\n- This will setup noobaa in the **my-noobaa-operator**
+        namespace.\n- You will need **jq**, **curl**, **kubectl** or **oc**, **aws-cli**.\n\n###
+        1. Install OLM (if you don't have it already):\n```\ncurl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/0.12.0/install.sh
+        | bash -s 0.12.0\n```\n\n### 2. Install noobaa-operator:\n```\nkubectl create
+        -f https://operatorhub.io/install/noobaa-operator.yaml\n```\nWait for it to
+        be ready:\n```\nkubectl wait pod -n my-noobaa-operator -l noobaa-operator
+        --for=condition=ready\n```\n\n### 3. Create noobaa system:\n```\ncurl -sL
+        https://operatorhub.io/api/operator?packageName=noobaa-operator | \n    jq
+        '.operator.customResourceDefinitions[0].yamlExample | .metadata.namespace=\"my-noobaa-operator\"'
+        |\n    kubectl create -f -\n```\nWait for it to be ready:\n```\nkubectl wait
+        pod -n my-noobaa-operator -l noobaa-core --for=condition=ready\nkubectl get
+        noobaa -n my-noobaa-operator -w\n# NAME     PHASE   MGMT-ENDPOINTS                  S3-ENDPOINTS
+        \                   IMAGE                    AGE\n# noobaa   **Ready**   [https://192.168.64.12:31121]
+        \  [https://192.168.64.12:32557]   noobaa/noobaa-core:4.0   19m\n```\n\n###
+        4. Get system information to your shell:\n```\nNOOBAA_SECRET=$(kubectl get
+        noobaa noobaa -n my-noobaa-operator -o json | jq -r '.status.accounts.admin.secretRef.name'
+        )\nNOOBAA_MGMT=$(kubectl get noobaa noobaa -n my-noobaa-operator -o json |
+        jq -r '.status.services.serviceMgmt.nodePorts[0]' )\nNOOBAA_S3=$(kubectl get
+        noobaa noobaa -n my-noobaa-operator -o json | jq -r '.status.services.serviceS3.nodePorts[0]'
+        )\nNOOBAA_ACCESS_KEY=$(kubectl get secret $NOOBAA_SECRET -n my-noobaa-operator
+        -o json | jq -r '.data.AWS_ACCESS_KEY_ID|@base64d')\nNOOBAA_SECRET_KEY=$(kubectl
+        get secret $NOOBAA_SECRET -n my-noobaa-operator -o json | jq -r '.data.AWS_SECRET_ACCESS_KEY|@base64d')\n```\n\n###
+        5. Connect to Mgmt UI:\n```\n# show email/password from the secret:\nkubectl
+        get secret $NOOBAA_SECRET -n my-noobaa-operator -o json | jq '.data|map_values(@base64d)'\n\n#
+        open mgmt UI login:\nopen $NOOBAA_MGMT\n```\n\n### 6. Connect to S3 with aws-cli:\n```\nalias
+        s3='AWS_ACCESS_KEY_ID=$NOOBAA_ACCESS_KEY AWS_SECRET_ACCESS_KEY=$NOOBAA_SECRET_KEY
+        aws --endpoint $NOOBAA_S3 --no-verify-ssl s3'\ns3 ls\ns3 sync /var/log/ s3://first.bucket\ns3
+        ls s3://first.bucket\n```\n"
+      displayName: NooBaa Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - noobaa
+      - kubernetes
+      - openshift
+      - cloud
+      - hybrid
+      - multi
+      - data
+      - storage
+      - s3
+      - tiering
+      - mirroring
+      links:
+      - name: Github
+        url: https://github.com/noobaa/noobaa-core
+      - name: Website
+        url: https://www.noobaa.io
+      - name: Articles
+        url: https://noobaa.desk.com
+      maintainers:
+      - email: gmargali@redhat.com
+        name: Guy Margalit
+      - email: etamir@redhat.com
+        name: Eran Tamir
+      - email: nbecker@redhat.com
+        name: Nimrod Becker
+      maturity: alpha
+      minKubeVersion: 1.16.0
+      provider:
+        name: NooBaa
+      relatedImages:
+      - noobaa/noobaa-operator:5.8.0
+      version: 5.8.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: noobaa-operator
+  provider:
+    name: NooBaa

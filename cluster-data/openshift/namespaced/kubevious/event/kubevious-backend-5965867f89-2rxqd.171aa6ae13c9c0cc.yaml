@@ -1,0 +1,29 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:44:38Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{kubevious}
+  kind: Pod
+  name: kubevious-backend-5965867f89-2rxqd
+  namespace: kubevious
+  resourceVersion: "31123"
+  uid: 20d08af6-cafc-4910-93c0-1e35add249e2
+kind: Event
+lastTimestamp: "2022-10-03T19:44:38Z"
+message: 'Readiness probe failed: Get "http://10.244.0.25:4001/": context deadline
+  exceeded (Client.Timeout exceeded while awaiting headers)'
+metadata:
+  creationTimestamp: "2022-10-03T19:44:43Z"
+  name: kubevious-backend-5965867f89-2rxqd.171aa6ae13c9c0cc
+  namespace: kubevious
+  resourceVersion: "40198"
+  uid: 8ab380d4-1f72-4342-83c6-fb2f3a7c97f8
+reason: Unhealthy
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Warning

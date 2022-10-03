@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2022-10-03T18:25:09Z"
+  labels:
+    kubernetes.io/metadata.name: operators
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
+  name: operators
+  resourceVersion: "29024"
+  uid: be4c7c9c-87d9-4b4d-9547-819eaa85c35e
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

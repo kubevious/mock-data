@@ -1,0 +1,145 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: ""
+  name: klusterlet
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: klusterlet.v0.8.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.open-cluster-management.io/v1",
+              "kind": "Klusterlet",
+              "metadata": {
+                "name": "klusterlet"
+              },
+              "spec": {
+                "clusterName": "cluster1",
+                "deployOption": {
+                  "mode": "Default"
+                },
+                "externalServerURLs": [
+                  {
+                    "url": "https://localhost"
+                  }
+                ],
+                "namespace": "open-cluster-management-agent",
+                "registrationConfiguration": {
+                  "featureGates": [
+                    {
+                      "feature": "AddonManagement",
+                      "mode": "Enable"
+                    }
+                  ]
+                },
+                "registrationImagePullSpec": "quay.io/open-cluster-management/registration:v0.8.0",
+                "workImagePullSpec": "quay.io/open-cluster-management/work:v0.8.0"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery,OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/open-cluster-management/registration-operator:v0.8.0
+        createdAt: "2022-07-25T20:00:31Z"
+        description: Manages the installation and upgrade of the Klusterlet.
+        operators.operatorframework.io/builder: operator-sdk-v1.1.0
+        operators.operatorframework.io/project_layout: go
+        repository: https://github.com/open-cluster-management-io/registration-operator
+        support: Red Hat, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Klusterlet defines the configurations of agents running on
+            the managed cluster
+          displayName: Klusterlet
+          kind: Klusterlet
+          name: klusterlets.operator.open-cluster-management.io
+          version: v1
+      description: |
+        The Klusterlet proivdes the registation to the Hub clusters as a managed cluster. This operator supports the installation and upgrade of Klusterlet.
+
+        ## Prerequisites
+        You need a Hub cluster which has installed ClusterManager.
+
+        ## How to Install
+        * Install Klusterlet operator by following instructions in top right button `Install`.
+        * Optional: Create an agent namespace used to deploy Klusterlet. The default namespace is `open-cluster-management-agent`.
+        * Create a secret `bootstrap-hub-kubeconfig` with the kubeconfig file of hub cluster in the agent namespace.
+
+          ```
+          $ kubectl create secret generic bootstrap-hub-kubeconfig --from-file=kubeconfig=<kubeconfig file of hub clsuter> -n <agent namespace>
+          ```
+
+        * Create an instance of the Klusterlet resource to install the Klusterlet.
+
+        The pods of Klusterlet are created in agent namespace.
+
+        ```
+        $ kubectl get pods -n open-cluster-management-agent
+        NAME                                             READY   STATUS    RESTARTS   AGE
+        klusterlet-registration-agent-7fdd5b549b-4q88s   1/1     Running   0          27s
+        klusterlet-registration-agent-7fdd5b549b-ccdgn   1/1     Running   0          27s
+        klusterlet-registration-agent-7fdd5b549b-djhl9   1/1     Running   0          27s
+        klusterlet-work-agent-cbbb7f945-g7m45            1/1     Running   0          27s
+        klusterlet-work-agent-cbbb7f945-mxdbg            1/1     Running   1          27s
+        klusterlet-work-agent-cbbb7f945-pnjxk            1/1     Running   0          27s
+        ```
+
+        There is a ManagedCluster created in the Hub cluster.
+
+        ```
+        $ kubectl get managedclusters.cluster.open-cluster-management.io
+        NAME                   HUB ACCEPTED   MANAGED CLUSTER URLS     JOINED   AVAILABLE   AGE
+        cluster1               false                                                        27s
+        ```
+      displayName: Klusterlet
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - open-cluster-management
+      - Klusterlet
+      links:
+      - name: Registration Operator
+        url: https://github.com/open-cluster-management-io/registration-operator
+      maintainers:
+      - email: zyin@redhat.com
+        name: Zhiwei Yin
+      - email: deads@redhat.com
+        name: David Eads
+      - email: jqiu@redhat.com
+        name: Jian Qiu
+      maturity: alpha
+      provider:
+        name: Red Hat, Inc.
+      relatedImages:
+      - quay.io/open-cluster-management/registration-operator:v0.8.0
+      version: 0.8.0
+    name: stable
+  defaultChannel: stable
+  packageName: klusterlet
+  provider:
+    name: Red Hat, Inc.

@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: generic-garbage-collector-dockercfg-qfmn4
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:16Z"
+  name: generic-garbage-collector
+  namespace: kube-system
+  resourceVersion: "1854"
+  uid: 480ec5ef-8a52-41f7-b212-e003457b63f4
+secrets:
+- name: generic-garbage-collector-token-7cdjr
+- name: generic-garbage-collector-dockercfg-qfmn4

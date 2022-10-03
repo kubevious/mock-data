@@ -1,0 +1,190 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: NetApp
+    provider-url: https://www.netapp.com
+  name: beegfs-csi-driver-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: beegfs-csi-driver-operator.v1.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "beegfs.csi.netapp.com/v1",
+              "kind": "BeegfsDriver",
+              "metadata": {
+                "name": "csi-beegfs-cr"
+              },
+              "spec": {
+                "nodeAffinityControllerService": {
+                  "preferredDuringSchedulingIgnoredDuringExecution": [
+                    {
+                      "preference": {
+                        "matchExpressions": [
+                          {
+                            "key": "node-role.kubernetes.io/master",
+                            "operator": "Exists"
+                          }
+                        ]
+                      },
+                      "weight": 50
+                    }
+                  ],
+                  "requiredDuringSchedulingIgnoredDuringExecution": {
+                    "nodeSelectorTerms": [
+                      {
+                        "matchExpressions": [
+                          {
+                            "key": "node.openshift.io/os_id",
+                            "operator": "NotIn",
+                            "values": [
+                              "rhcos"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "nodeAffinityNodeService": {
+                  "requiredDuringSchedulingIgnoredDuringExecution": {
+                    "nodeSelectorTerms": [
+                      {
+                        "matchExpressions": [
+                          {
+                            "key": "node.openshift.io/os_id",
+                            "operator": "NotIn",
+                            "values": [
+                              "rhcos"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        containerImage: docker.io/netapp/beegfs-csi-driver-operator:v1.3.0
+        createdAt: 2021-06-30:03:11:00
+        description: Install and manage the BeeGFS CSI driver
+        operatorframework.io/suggested-namespace: beegfs-csi
+        operators.operatorframework.io/builder: operator-sdk-v1.22.2
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/netapp/beegfs-csi-driver
+        support: NetApp
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Deploys the BeeGFS CSI driver
+          displayName: BeeGFS Driver
+          kind: BeegfsDriver
+          name: beegfsdrivers.beegfs.csi.netapp.com
+          version: v1
+      description: |
+        The BeeGFS Container Storage Interface (CSI) driver provides high performing and scalable storage for workloads
+        running in container orchestrators like Kubernetes. It allows containers to access existing datasets or request
+        on-demand ephemeral or persistent high speed storage backed by BeeGFS parallel file systems.
+
+        This operator eases the installation and management of the BeeGFS CSI driver in an OpenShift or other Operator
+        Lifecycle Manager enabled cluster.
+
+        ### Documentation
+
+        Compatibility information and a quick start guide for the BeeGFS CSI driver itself are available on our [main GitHub
+        page](https://www.github.com/netapp/beegfs-csi-driver). Additional detailed documentation for the driver is
+        available in the [docs directory](https://www.github.com/netapp/beegfs-csi-driver/tree/master/docs) and for the
+        operator is available in the [operator
+        README](https://www.github.com/netapp/beegfs-csi-driver/tree/master/operator/README.md).
+
+        ### Important Notes
+
+        The BeeGFS client packages and kernel module must be pre-installed on all nodes that will run the driver. See the
+        driver ["Getting Started" guide](https://github.com/netapp/beegfs-csi-driver/blob/master/README.md#getting-started)
+        for additional information.
+
+        The BeeGFS CSI driver is only supported on nodes running a [BeeGFS supported Linux
+        distribution](https://doc.beegfs.io/latest/release_notes.html#supported-linux-distributions-and-kernels). Red Hat
+        CoreOS (RHCOS), the default distribution in OpenShift environments, is NOT supported. However, Red Hat Enterprise
+        Linux (RHEL) nodes can be added to an OpenShift cluster and RHEL is supported for running BeeGFS. By default, the
+        operator will install the driver with a node affinity that ensures it does not run on RHCOS nodes. See the driver
+        [compatibility
+        matrix](https://github.com/netapp/beegfs-csi-driver/blob/master/README.md#interoperability-and-csi-feature-matrix)
+        for additional information.
+
+        We have recently published experimental manifests that enable the BeeGFS CSI driver on OpenShift nodes running
+        RHCOS. These manifests are not intended for production use. See [this
+        README](https://github.com/netapp/beegfs-csi-driver/blob/master/deploy/openshift-rhcos-client/README.md) for more
+        details.
+
+        All driver configuration can be specified through the BeegfsDrivers API (in a BeegfsDriver Custom Resource)
+        except for BeeGFS connAuth information, which must be placed separately into a Kubernetes Secret. See the [ConnAuth
+        Configuration
+        section](https://github.com/netapp/beegfs-csi-driver/blob/master/operator/README.md#connauth-configuration) of the
+        operator documentation for additional information.
+      displayName: BeeGFS CSI Driver
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - CSI
+      - BeeGFS
+      - NetApp
+      links:
+      - name: BeeGFS introduction
+        url: https://www.beegfs.io/c/
+      - name: BeeGFS documentation
+        url: https://doc.beegfs.io/latest/index.html
+      - name: BeeGFS CSI driver source code
+        url: https://github.com/netapp/beegfs-csi-driver
+      - name: BeeGFS CSI driver technical blog posts
+        url: https://netapp.io/?s=beegfs+csi
+      - name: BeeGFS CSI driver marketing blog posts
+        url: https://www.netapp.com/blog/#q=beegfs%20csi
+      maintainers:
+      - email: joe.mccormick@netapp.com
+        name: Joe McCormick
+      - email: eric.weber2@netapp.com
+        name: Eric Weber
+      - email: garrett.marks@netapp.com
+        name: Garrett Marks
+      - email: cole.krizek@netapp.com
+        name: Cole Krizek
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: NetApp
+        url: https://www.netapp.com
+      relatedImages:
+      - docker.io/netapp/beegfs-csi-driver-operator:v1.3.0
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.11.0
+      version: 1.3.0
+    name: stable
+  defaultChannel: stable
+  packageName: beegfs-csi-driver-operator
+  provider:
+    name: NetApp
+    url: https://www.netapp.com

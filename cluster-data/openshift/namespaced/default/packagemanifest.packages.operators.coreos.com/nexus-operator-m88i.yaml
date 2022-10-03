@@ -1,0 +1,126 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: m88i Labs
+    provider-url: ""
+  name: nexus-operator-m88i
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: nexus-operator.v0.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.m88i.io/v1alpha1",
+              "kind": "Nexus",
+              "metadata": {
+                "name": "nexus3"
+              },
+              "spec": {
+                "networking": {
+                  "expose": false
+                },
+                "persistence": {
+                  "persistent": false
+                },
+                "replicas": 1,
+                "resources": {
+                  "limits": {
+                    "cpu": "2",
+                    "memory": "2Gi"
+                  },
+                  "requests": {
+                    "cpu": "1",
+                    "memory": "2Gi"
+                  }
+                },
+                "useRedHatImage": false
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Developer Tools
+        certified: "false"
+        containerImage: quay.io/m88i/nexus-operator:0.6.0
+        createdAt: "2019-11-16T13:12:22Z"
+        description: Nexus Operator to deploy and manage Nexus 3.x servers
+        operators.operatorframework.io/builder: operator-sdk-v1.4.2
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/m88i/nexus-operator
+        support: m88i Labs
+        tectonic-visibility: ocs
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - displayName: Nexus
+          kind: Nexus
+          name: nexus.apps.m88i.io
+          version: v1alpha1
+      description: |-
+        Creates a new Nexus 3.x deployment in a Kubernetes cluster. Will help DevOps to have a quick Nexus application exposed to the world that can be used in a CI/CD process:
+
+        * Deploys a new Nexus 3.x server based on either Community or Red Hat images
+        * Creates an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) in Kubernetes (1.14+) environments to expose the application to the world
+        * On OpenShift, creates a Route to expose the service outside the cluster
+        * Automatically creates Apache, Red Hat and JBoss Maven repositories
+        * Automatically updates Nexus within the same minor version
+
+        [See our documentation](https://github.com/m88i/nexus-operator/blob/main/README.md) for more installation and usage scenarios.
+
+        If you experience any issues or have any ideas for new features, please [file an issue in our Github repository](https://github.com/m88i/nexus-operator/issues) or send an email to our maillist: [nexus-operator@googlegroups.com](mailto:nexus-operator@googlegroups.com)
+
+        *Please note that the operator is an individual work and it's not provided nor supported by Sonatype.*
+      displayName: Nexus Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - nexus
+      - sonatype
+      - maven
+      - docker
+      - ci
+      - continuous integration
+      - continuous delivery
+      - repository
+      - repository manager
+      - dev tools
+      links:
+      - name: Documentation
+        url: https://github.com/m88i/nexus-operator/blob/main/README.md
+      - name: Nexus Operator source code repository
+        url: https://github.com/m88i/nexus-operator
+      maintainers:
+      - email: nexus-operator@googlegroups.com
+        name: m88i Labs
+      maturity: alpha
+      provider:
+        name: m88i Labs
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+      - quay.io/m88i/nexus-operator:0.6.0
+      version: 0.6.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: nexus-operator-m88i
+  provider:
+    name: m88i Labs

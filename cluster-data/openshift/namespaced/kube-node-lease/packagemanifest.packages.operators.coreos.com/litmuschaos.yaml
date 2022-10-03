@@ -1,0 +1,207 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: MayaData
+    provider-url: ""
+  name: litmuschaos
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: chaosoperator.v0.1.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion": "litmuschaos.io/v1alpha1",
+              "kind": "ChaosEngine",
+              "metadata": {
+                "name": "sample-chaos",
+                "namespace": "default"
+              },
+              "spec": {
+                "appinfo": {
+                  "appns": "default",
+                  "applabel": "app=testapp",
+                  "appkind": "deployment"
+                },
+                "chaosServiceAccount": "default",
+                "experiments": [
+                  {
+                    "name": "pod-delete",
+                    "spec": {
+                      "components": null
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: index.docker.io/litmuschaos/chaos-operator-ce:v0.1.0
+        createdAt: "2019-07-15 10:28:08"
+        description: Chaos Engineering for Kubernetes
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/litmuschaos/chaos-operator
+        support: https://slack.openebs.io/
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents the Chaos Schedule for an application
+          displayName: ChaosEngine
+          kind: ChaosEngine
+          name: chaosengines.litmuschaos.io
+          version: v1alpha1
+      description: "**Litmus** is a chaos engineering framework for Kubernetes which
+        helps ensure a consistent and reliable behavior of workloads. It strives to
+        detect the real-world  issues which escape during unit and integration tests
+        by injecting faults on the application & cluster components. With Litmus,
+        the chaos experiment logic is packaged  into dedicated containers which makes
+        them portable across Kubernetes platforms.  This containerization also helps
+        to integrate Litmus into CI/CD environments.\n## How It Works \nThe Litmus
+        chaos operator is used by application developers and SREs to inject chaos
+        \ into the applications in a managed fashion. It automates the execution of
+        chaos experiments based on a custom resource definition `(ChaosEngine)` which
+        specifies the list of experiments  to be performed and also contains details
+        of the application target. The chaos experiments  are themselves custom resource
+        definitions `(chaosExperiment)` , holding specifics such as  chaos parameters,
+        log levels etc., and are referenced by an `executor` pod, which is launched
+        and managed by the operator. The status & eventually, results of the experiments
+        are exposed  as prometheus metrics, in order to aid monitoring & integration
+        with visualization platforms.\n## Pre-Requisites\nBefore creating the chaosEngine
+        CR, perform the following steps to ensure successful chaos  injection.\n*
+        Create the chaos experiment CRs for the faults you would like to inject against
+        an application. \n  These are bundled together into helm charts based on the
+        category & can be obtained [here](https://litmuschaos.github.io/chaos-charts/index.yaml)\n\n\n*
+        Ensure that the application under test (AUT) is annotated in the following
+        manner.\n\n  ```\n  kubectl annotate deployment/<app-deployment> litmuschaos.io/chaos=\"true\"
+        -n <app-namespace>\n  ```\n\n## Learn More About Litmus \n* Refer the [docs](https://docs.litmuschaos.io)\n*
+        To learn how to contribute, please read the contribution guide: \n  [contribution
+        guide](https://github.com/litmuschaos/litmus/blob/master/CONTRIBUTING.md)\n\n*
+        Litmus welcomes your feedback and contributions in any form possible.\n  [Join
+        our Community](https://slack.openebs.io/)\n"
+      displayName: Litmus Chaos Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - Litmus
+      - ChaosEngineering
+      links:
+      - name: Litmus Website
+        url: https://litmuschaos.io
+      - name: Source Code
+        url: https://github.com/litmuschaos
+      maintainers:
+      - email: karthik.s@mayadata.io
+        name: ksatchit
+      maturity: alpha
+      minKubeVersion: 1.11.0
+      provider:
+        name: MayaData
+      relatedImages:
+      - index.docker.io/litmuschaos/chaos-operator-ce:v0.1.0
+      version: 0.1.0
+    name: original
+  - currentCSV: chaosoperator.v1.9.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"litmuschaos.io/v1alpha1","kind":"ChaosEngine","metadata":{"name":"nginx-chaos","namespace":"default"},"spec":{"appinfo":{"appns":"default","applabel":"app=nginx","appkind":"deployment"},"annotationCheck":"true","engineState":"active","auxiliaryAppInfo":"","chaosServiceAccount":"pod-delete-sa","monitoring":false,"jobCleanUpPolicy":"delete","experiments":[{"name":"pod-delete","spec":{"components":{"env":[{"name":"TOTAL_CHAOS_DURATION","value":"30"},{"name":"CHAOS_INTERVAL","value":"10"},{"name":"FORCE","value":"false"}]}}}]}}]'
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: index.docker.io/litmuschaos/chaos-operator:1.9.0
+        createdAt: "2020-10-16T12:07:30Z"
+        description: Chaos Engineering for Kubernetes
+        repository: https://github.com/litmuschaos/chaos-operator
+        support: https://app.slack.com/client/T09NY5SBT/CNXNB0ZTN
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents the Chaos Schedule for an application
+          displayName: ChaosEngine
+          kind: ChaosEngine
+          name: chaosengines.litmuschaos.io
+          version: v1alpha1
+      description: "**Litmus** is a chaos engineering framework for Kubernetes which
+        helps ensure a consistent and reliable behavior of workloads. It strives to
+        detect the real-world  issues which escape during unit and integration tests
+        by injecting faults on the application & cluster components. With Litmus,
+        the chaos experiment logic is packaged  into dedicated containers which makes
+        them portable across Kubernetes platforms.  This containerization also helps
+        to integrate Litmus into CI/CD environments.\n## How It Works \nThe Litmus
+        chaos operator is used by application developers and SREs to inject chaos
+        \ into the applications in a managed fashion. It automates the execution of
+        chaos experiments based on a custom resource definition `(ChaosEngine)` which
+        specifies the list of experiments  to be performed and also contains details
+        of the application target. The chaos experiments  are themselves custom resource
+        definitions `(chaosExperiment)` , holding specifics such as  chaos parameters,
+        log levels etc., and are referenced by an `executor` pod, which is launched
+        and managed by the operator. The status & eventually, results of the experiments
+        are exposed  as prometheus metrics, in order to aid monitoring & integration
+        with visualization platforms.\n## Pre-Requisites\nBefore creating the chaosEngine
+        CR, perform the following steps to ensure successful chaos  injection.\n*
+        Create the chaos experiment CRs for the faults you would like to inject against
+        an application. \n  These are bundled together into charts based on the category
+        & can be downloaded from the [charthub](https://hub.litmuschaos.io/)\n\n*
+        Ensure that the application under test (AUT) is annotated in the following
+        manner.\n\n  ```\n  kubectl annotate deployment/<app-deployment> litmuschaos.io/chaos=\"true\"
+        -n <app-namespace>\n  ```\n\n## Learn More About Litmus \n* Refer the [docs](https://docs.litmuschaos.io)\n*
+        To learn how to contribute, please read the contribution guide: \n  [contribution
+        guide](https://github.com/litmuschaos/litmus/blob/master/CONTRIBUTING.md)\n\n*
+        Litmus welcomes your feedback and contributions in any form possible.\n  [Join
+        our Community](https://app.slack.com/client/T09NY5SBT/CNXNB0ZTN)\n"
+      displayName: Litmus Chaos Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - LitmusChaos
+      - ChaosEngineering
+      links:
+      - name: Litmus Website
+        url: https://litmuschaos.io
+      - name: Source Code
+        url: https://github.com/litmuschaos
+      maintainers:
+      - email: chandan.kumar@mayadata.io
+        name: Chandan Kumar
+      - email: karthik.s@mayadata.io
+        name: Karthik S
+      maturity: alpha
+      minKubeVersion: 1.12.0
+      provider:
+        name: MayaData
+      relatedImages:
+      - index.docker.io/litmuschaos/chaos-operator:1.9.0
+      version: 1.9.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: litmuschaos
+  provider:
+    name: MayaData

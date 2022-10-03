@@ -1,0 +1,206 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Banzai Cloud
+    provider-url: ""
+  name: vault
+  namespace: local-path-storage
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: vaultoperator.v0.4.10
+    currentCSVDesc:
+      annotations:
+        alm-examples: |
+          [
+            {
+              "apiVersion": "vault.banzaicloud.com/v1alpha1",
+              "kind": "Vault",
+              "metadata": {
+                "name": "vault"
+              },
+              "spec": {
+                "size": 1,
+                "image": "vault:1.0.0",
+                "bankVaultsImage": "banzaicloud/bank-vaults:latest",
+                "annotations": {
+                  "prometheus.io/scrape": "true",
+                  "prometheus.io/port": "9102"
+                },
+                "serviceAccount": "vault",
+                "serviceType": "ClusterIP",
+                "ingress": {
+                  "annotations": null,
+                  "spec": {
+                  }
+                },
+                "unsealConfig": {
+                  "kubernetes": {
+                    "secretNamespace": "default"
+                  }
+                },
+                "config": {
+                  "storage": {
+                    "file": {
+                      "path": "/vault/file"
+                    }
+                  },
+                  "listener": {
+                    "tcp": {
+                      "address": "0.0.0.0:8200",
+                      "tls_cert_file": "/vault/tls/server.crt",
+                      "tls_key_file": "/vault/tls/server.key"
+                    }
+                  },
+                  "telemetry": {
+                    "statsd_address": "localhost:9125"
+                  },
+                  "ui": true
+                },
+                "externalConfig": {
+                  "policies": [
+                    {
+                      "name": "allow_secrets",
+                      "rules": "path \"secret/*\" { capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"] }"
+                    }
+                  ],
+                  "auth": [
+                    {
+                      "type": "kubernetes",
+                      "roles": [
+                        {
+                          "name": "default",
+                          "bound_service_account_names": "default",
+                          "bound_service_account_namespaces": "default",
+                          "policies": "allow_secrets",
+                          "ttl": "1h"
+                        }
+                      ]
+                    }
+                  ],
+                  "secrets": [
+                    {
+                      "path": "secret",
+                      "type": "kv",
+                      "description": "General secrets.",
+                      "options": {
+                        "version": 2
+                      }
+                    }
+                  ],
+                  "startupSecrets": [
+                    {
+                      "type": "kv",
+                      "path": "secret/data/accounts/aws",
+                      "data": {
+                        "data": {
+                          "AWS_ACCESS_KEY_ID": "secretId",
+                          "AWS_SECRET_ACCESS_KEY": "s3cr3t"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "vaultEnvsConfig": [
+                  {
+                    "name": "VAULT_LOG_LEVEL",
+                    "value": "debug"
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Full Lifecycle
+        categories: Security
+        certified: "false"
+        containerImage: banzaicloud/vault-operator:0.4.10
+        createdAt: "2019-03-07T08:00:00Z"
+        description: Creates and maintain highly-available Vault clusters on Kubernetes
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        repository: https://github.com/banzaicloud/bank-vaults/tree/master/operator
+        support: Banzai Cloud
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a cluster of Vault nodes.
+          displayName: Vault Cluster
+          kind: Vault
+          name: vaults.vault.banzaicloud.com
+          version: v1alpha1
+      description: |
+        The Vault Operator creates and maintains highly-available Vault clusters on Kubernetes, allowing engineers to easily deploy and manage Vault clusters for their applications.
+
+        Secure, store and tightly control access to tokens, passwords, certificates, encryption keys for protecting secrets and other sensitive data using a UI, CLI, or HTTP API.
+
+        ### Reading and writing to Vault
+
+        Communicate with Vault through its command line utility `vault` via port forwarding:
+
+            $ kubectl --namespace default port-forward service/vault 8200:8200
+            $ export VAULT_TOKEN=$(kubectl get secrets vault-unseal-keys -o jsonpath={.data.vault-root} | base64 -D)
+            $ vault list secrets
+
+        The Vault-Operator helps to provision and manage Vault on top of Kubernetes with
+        the Bank-Vaults CLI tool which is a tool to help automate the setup and management of HashiCorp Vault.
+
+        Features:
+          - Initializes Vault and stores the root token and unseal keys in one of the followings
+            - AWS KMS keyring (backed by S3)
+            - Azure Key Vault
+            - Google Cloud KMS keyring (backed by GCS)
+            - Alibaba Cloud KMS (backed by OSS)
+            - Kubernetes Secrets (should be used only for development purposes)
+            - Dev Mode (useful for vault server -dev dev mode Vault servers)
+            - Files (backed by files, should be used only for development purposes)
+          - Automatically unseals Vault with these keys
+          - Continuously configures Vault with a YAML/JSON based external configuration (besides the standard Vault configuration)
+          - If the configuration is updated Vault will be reconfigured
+          - It supports configuring Vault secret engines, plugins, auth methods, and policies, audit devices
+          - Direct secret injection into Pods via the vault-secrets-webhook (https://github.com/banzaicloud/bank-vaults#mutating-webhook)
+      displayName: Vault Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - vault
+      - secrets
+      - security
+      - banzaicloud
+      - open source
+      links:
+      - name: Blog
+        url: https://banzaicloud.com/tags/vault
+      - name: Documentation
+        url: https://github.com/banzaicloud/bank-vaults/blob/master/README.md
+      - name: Vault Operator Source Code
+        url: https://github.com/banzaicloud/bank-vaults/tree/master/operator
+      maintainers:
+      - email: info@banzaicloud.com
+        name: Banzai Cloud
+      maturity: alpha
+      provider:
+        name: Banzai Cloud
+      relatedImages:
+      - banzaicloud/vault-operator:latest
+      version: 0.4.10
+    name: beta
+  defaultChannel: beta
+  packageName: vault
+  provider:
+    name: Banzai Cloud

@@ -1,0 +1,26 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:41:39Z"
+involvedObject:
+  apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  name: kube-controller-manager
+  namespace: kube-system
+  resourceVersion: "39836"
+  uid: 228c1aa4-a1f6-419b-ba99-3f2a78f61c79
+kind: Event
+lastTimestamp: "2022-10-03T19:41:39Z"
+message: kind-control-plane_37213eb4-c3b8-428c-b643-a028e9336c85 became leader
+metadata:
+  creationTimestamp: "2022-10-03T19:41:39Z"
+  name: kube-controller-manager.171aa68438fa02dc
+  namespace: kube-system
+  resourceVersion: "39837"
+  uid: 689356b4-09e0-4ac4-bd76-c458e47a9a23
+reason: LeaderElection
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kube-controller-manager
+type: Normal

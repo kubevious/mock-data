@@ -1,0 +1,273 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: MongoDB, Inc
+    provider-url: ""
+  name: mongodb-enterprise
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: mongodb-enterprise.v1.17.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "mongodb.com/v1",
+              "kind": "MongoDB",
+              "metadata": {
+                "name": "my-replica-set"
+              },
+              "spec": {
+                "credentials": "my-credentials",
+                "members": 3,
+                "opsManager": {
+                  "configMapRef": {
+                    "name": "my-project"
+                  }
+                },
+                "persistent": true,
+                "type": "ReplicaSet",
+                "version": "4.4.0-ent"
+              }
+            },
+            {
+              "apiVersion": "mongodb.com/v1",
+              "kind": "MongoDB",
+              "metadata": {
+                "name": "sample-sharded-cluster"
+              },
+              "spec": {
+                "configServerCount": 3,
+                "credentials": "my-credentials",
+                "mongodsPerShardCount": 3,
+                "mongosCount": 2,
+                "opsManager": {
+                  "configMapRef": {
+                    "name": "my-project"
+                  }
+                },
+                "persistent": true,
+                "shardCount": 1,
+                "type": "ShardedCluster",
+                "version": "4.4.0-ent"
+              }
+            },
+            {
+              "apiVersion": "mongodb.com/v1",
+              "kind": "MongoDBMulti",
+              "metadata": {
+                "name": "multi-replica-set"
+              },
+              "spec": {
+                "clusterSpecList": {
+                  "clusterSpecs": [
+                    {
+                      "clusterName": "e2e.cluster1.mongokubernetes.com",
+                      "members": 2
+                    },
+                    {
+                      "clusterName": "e2e.cluster2.mongokubernetes.com",
+                      "members": 1
+                    },
+                    {
+                      "clusterName": "e2e.cluster3.mongokubernetes.com",
+                      "members": 2
+                    }
+                  ]
+                },
+                "credentials": "my-credentials",
+                "duplicateServiceObjects": false,
+                "opsManager": {
+                  "configMapRef": {
+                    "name": "my-project"
+                  }
+                },
+                "persistent": false,
+                "type": "ReplicaSet",
+                "version": "4.4.0-ent"
+              }
+            },
+            {
+              "apiVersion": "mongodb.com/v1",
+              "kind": "MongoDBOpsManager",
+              "metadata": {
+                "name": "ops-manager"
+              },
+              "spec": {
+                "adminCredentials": "ops-manager-admin",
+                "applicationDatabase": {
+                  "members": 3,
+                  "podSpec": {
+                    "cpu": 1
+                  }
+                },
+                "configuration": {
+                  "mms.fromEmailAddr": "admin@thecompany.com"
+                },
+                "externalConnectivity": {
+                  "type": "LoadBalancer"
+                },
+                "version": "4.4.1"
+              }
+            },
+            {
+              "apiVersion": "mongodb.com/v1",
+              "kind": "MongoDBUser",
+              "metadata": {
+                "name": "my-replica-set-x509-user"
+              },
+              "spec": {
+                "db": "$external",
+                "mongodbResourceRef": {
+                  "name": "my-replica-set"
+                },
+                "roles": [
+                  {
+                    "db": "admin",
+                    "name": "dbOwner"
+                  }
+                ],
+                "username": "CN=my-replica-set-x509-user,OU=cloud,O=MongoDB,L=New York,ST=New York,C=US"
+              },
+              "status": {
+                "phase": "Updated"
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Database
+        certified: "true"
+        containerImage: quay.io/mongodb/mongodb-enterprise-operator-ubi:1.17.0
+        createdAt: ""
+        description: The MongoDB Enterprise Kubernetes Operator enables easy deploys
+          of MongoDB into Kubernetes clusters, using our management, monitoring and
+          backup platforms, Ops Manager and Cloud Manager.
+        operators.operatorframework.io/builder: operator-sdk-v1.11.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/mongodb/mongodb-enterprise-kubernetes
+        support: support@mongodb.com
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: MongoDB Deployment
+          displayName: MongoDB Deployment
+          kind: MongoDB
+          name: mongodb.mongodb.com
+          version: v1
+        - description: MongoDB Multi Deployment
+          displayName: MongoDB Multi Deployment
+          kind: MongoDBMulti
+          name: mongodbmulti.mongodb.com
+          version: v1
+        - description: MongoDB x509 User
+          displayName: MongoDB User
+          kind: MongoDBUser
+          name: mongodbusers.mongodb.com
+          version: v1
+        - description: MongoDB Ops Manager
+          displayName: MongoDB Ops Manager
+          kind: MongoDBOpsManager
+          name: opsmanagers.mongodb.com
+          version: v1
+      description: |
+        The MongoDB Enterprise Kubernetes Operator enables easy deploys of MongoDB
+        into Kubernetes clusters, using our management, monitoring and backup
+        platforms, Ops Manager and Cloud Manager.
+
+        ## Before You Start
+
+        To start using the operator you''ll need an account in MongoDB Cloud Manager or
+        a MongoDB Ops Manager deployment.
+
+        * [Create a Secret with your OpsManager API key](https://docs.mongodb.com/kubernetes-operator/stable/tutorial/create-operator-credentials/#procedure)
+
+        * [Create a ConfigMap with your OpsManager project ID and URL](https://docs.mongodb.com/kubernetes-operator/stable/tutorial/create-project-using-configmap/)
+
+        By installing this integration, you will be able to deploy MongoDB instances
+        with a single simple command.
+
+        ## Required Parameters
+
+        * `opsManager` or `cloudManager` - Enter the name of the ConfigMap containing project information
+        * `credentials` - Enter the name of the Secret containing your OpsManager credentials
+        * `type` - Enter MongoDB Deployment Types ("Standalone", "ReplicaSet", "ShardedCluster"
+
+        ## Supported MongoDB Deployment Types ##
+
+        * Standalone: An instance of mongod that is running as a single server and
+        not as part of a replica set, this is, it does not do any kind of
+        replication.
+
+        * Replica Set: A replica set in MongoDB is a group of mongod processes that
+        maintain the same data set. Replica sets provide redundancy and high
+        availability, and are the basis for all production deployments. This section
+        introduces replication in MongoDB as well as the components and architecture
+        of replica sets. The section also provides tutorials for common tasks
+        related to replica sets.
+
+        * Sharded Cluster: The set of nodes comprising a sharded MongoDB deployment.
+        A sharded cluster consists of config servers, shards, and one or more mongos
+        routing processes. Sharding is a A database architecture that partitions
+        data by key ranges and distributes the data among two or more database
+        instances. Sharding enables horizontal scaling.
+
+        ## Requirements for deploying MongoDB OpsManager
+
+        * In order to deploy resources of type MongoDB OpsManager, you will need to
+        create a secret containing the [credentials](https://docs.mongodb.com/kubernetes-operator/stable/tutorial/plan-om-resource/#om-rsrc-prereqs)
+        for the Global Onwer user
+
+        ## Security ##
+
+        The operator can enable TLS for all traffic between servers and also between
+        clients and servers. Before enabling `security.tls.enabled` to `true` you
+        should create your certificates.  or you can leave the operator to create all
+        the certificates for you. The operator ability to create certs is been
+        depricted due to Kuberentes API changes.
+
+        For more information, please read the official MongoDB
+        Kubernetes Operator  [docs](https://docs.mongodb.com/kubernetes-operator/stable/).
+      displayName: MongoDB Enterprise Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - mongodb
+      - databases
+      - nosql
+      links:
+      - name: Documentation
+        url: https://docs.opsmanager.mongodb.com/current/tutorial/install-k8s-operator/index.html
+      maintainers:
+      - email: support@mongodb.com
+        name: MongoDB, Inc
+      maturity: stable
+      minKubeVersion: 1.21.0
+      provider:
+        name: MongoDB, Inc
+      relatedImages:
+      - quay.io/mongodb/mongodb-enterprise-operator-ubi:1.17.0
+      version: 1.17.0
+    name: stable
+  defaultChannel: stable
+  packageName: mongodb-enterprise
+  provider:
+    name: MongoDB, Inc

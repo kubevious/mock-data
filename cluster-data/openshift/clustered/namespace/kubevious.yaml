@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2022-10-03T18:35:01Z"
+  labels:
+    kubernetes.io/metadata.name: kubevious
+  name: kubevious
+  resourceVersion: "30403"
+  uid: d41e21a3-67c0-4168-831f-527945a8a287
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

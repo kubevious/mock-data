@@ -1,0 +1,207 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: fa6a6ce09dda3c00dd95356ec67835c8775b3e43035e5d4d3acdf80b515a5bba
+    cni.projectcalico.org/podIP: 172.30.142.132/32
+    cni.projectcalico.org/podIPs: 172.30.142.132/32
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.132"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "k8s-pod-network",
+          "ips": [
+              "172.30.142.132"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    productID: ibmcloud-block-storage-plugin-1.7.1
+    productName: ibmcloud-block-storage-plugin
+    productVersion: 1.7.1
+  creationTimestamp: "2022-10-03T18:35:49Z"
+  generateName: ibmcloud-block-storage-plugin-64bb9b4bf7-
+  labels:
+    app: ibmcloud-block-storage-plugin
+    chart: ibmcloud-block-storage-plugin-1.7.1
+    heritage: Helm
+    pod-template-hash: 64bb9b4bf7
+    release: release-name
+  name: ibmcloud-block-storage-plugin-64bb9b4bf7-t66lt
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: ibmcloud-block-storage-plugin-64bb9b4bf7
+    uid: 8f7803a4-384a-4b17-a821-e5ca42b65cba
+  resourceVersion: "10742"
+  uid: cc763bb0-ac38-43d1-95a2-3561119d41c0
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: ibm-cloud.kubernetes.io/iaas-provider
+            operator: In
+            values:
+            - softlayer
+          - key: kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
+  containers:
+  - args:
+    - --provisioner=ibm.io/ibmc-block
+    env:
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: PLUGIN_IMAGE
+      value: registry.ng.bluemix.net/armada-master/ibmcloud-block-storage-plugin:v2.3.1
+    - name: DEBUG_TRACE
+      value: "false"
+    - name: STORAGE_CONFIG_PATH
+      value: /etc/storage_ibmc
+    - name: IBMC_FEATURE_GATES
+      value: KeyManagementBYOK=true
+    image: registry.ng.bluemix.net/armada-master/ibmcloud-block-storage-plugin:v2.3.1
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      exec:
+        command:
+        - ls
+        - /etc/storage_ibmc
+      failureThreshold: 3
+      initialDelaySeconds: 30
+      periodSeconds: 60
+      successThreshold: 1
+      timeoutSeconds: 5
+    name: ibmcloud-block-storage-plugin-container
+    resources:
+      limits:
+        cpu: 300m
+        memory: 300Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      runAsNonRoot: true
+      runAsUser: 2000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /etc/storage_ibmc
+      name: customer-auth
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-jmzxh
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: ibmcloud-block-storage-plugin-dockercfg-8r7zx
+  nodeName: 10.161.112.142
+  preemptionPolicy: PreemptLowerPriority
+  priority: 2000000000
+  priorityClassName: system-cluster-critical
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: ibmcloud-block-storage-plugin
+  serviceAccountName: ibmcloud-block-storage-plugin
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - name: customer-auth
+    secret:
+      defaultMode: 420
+      secretName: storage-secret-store
+  - name: kube-api-access-jmzxh
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:22Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:56Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:56Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-03T18:47:22Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: cri-o://54131a625678e76bdd705d15a1ed4ffa55a13ce532677436e856ee4062668a74
+    image: registry.ng.bluemix.net/armada-master/ibmcloud-block-storage-plugin:v2.3.1
+    imageID: registry.ng.bluemix.net/armada-master/ibmcloud-block-storage-plugin@sha256:7ecc60e5e37cc73eb5fe6da49df85839262d680916961129850c40f39afdceb4
+    lastState: {}
+    name: ibmcloud-block-storage-plugin-container
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-10-03T18:47:56Z"
+  hostIP: 10.161.112.142
+  phase: Running
+  podIP: 172.30.142.132
+  podIPs:
+  - ip: 172.30.142.132
+  qosClass: Burstable
+  startTime: "2022-10-03T18:47:22Z"

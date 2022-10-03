@@ -1,0 +1,123 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: MinIO Inc
+    provider-url: https://min.io
+  name: minio-operator
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: minio-operator.v4.5.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[{"apiVersion":"minio.min.io/v2","kind":"Tenant","metadata":{"annotations":{"prometheus.io/path":"/minio/v2/metrics/cluster","prometheus.io/port":"9000","prometheus.io/scrape":"true"},"labels":{"app":"minio"},"name":"storage-lite","namespace":"tenant-lite"},"spec":{"certConfig":{},"configuration":{"name":"storage-configuration"},"env":[],"externalCaCertSecret":[],"externalCertSecret":[],"externalClientCertSecrets":[],"features":{"bucketDNS":false,"domains":{}},"image":"quay.io/minio/minio@sha256:c3d20bc2ea08477248c15f932822f932b092b658c5692a9c9f4d88abcf556ed7","imagePullSecret":{},"log":{"affinity":{"nodeAffinity":{},"podAffinity":{},"podAntiAffinity":{}},"annotations":{},"audit":{"diskCapacityGB":1},"db":{"affinity":{"nodeAffinity":{},"podAffinity":{},"podAntiAffinity":{}},"annotations":{},"env":[],"image":"","initimage":"","labels":{},"nodeSelector":{},"resources":{},"securityContext":{"fsGroup":999,"runAsGroup":999,"runAsNonRoot":true,"runAsUser":999},"serviceAccountName":"","tolerations":[],"volumeClaimTemplate":{"metadata":{},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"1Gi"}},"storageClassName":"standard"}}},"env":[],"image":"","labels":{},"nodeSelector":{},"resources":{},"securityContext":{"fsGroup":1000,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000},"serviceAccountName":"","tolerations":[]},"mountPath":"/export","podManagementPolicy":"Parallel","pools":[{"name":"pool-0","servers":4,"volumeClaimTemplate":{"metadata":{"name":"data"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"2Gi"}}}},"volumesPerServer":2}],"priorityClassName":"","prometheus":{"affinity":{"nodeAffinity":{},"podAffinity":{},"podAntiAffinity":{}},"annotations":{},"diskCapacityGB":1,"env":[],"image":"","initimage":"","labels":{},"nodeSelector":{},"resources":{},"securityContext":{"fsGroup":1000,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000},"serviceAccountName":"","sidecarimage":"","storageClassName":"standard"},"requestAutoCert":true,"serviceAccountName":"","serviceMetadata":{"consoleServiceAnnotations":{},"consoleServiceLabels":{},"minioServiceAnnotations":{},"minioServiceLabels":{}},"subPath":"","users":[{"name":"storage-user"}]}}]'
+        capabilities: Full Lifecycle
+        categories: AI/Machine Learning, Big Data, Cloud Provider, Storage
+        containerImage: quay.io/minio/operator@sha256:5f5f31cf46a7683dc37aeaf598baf552640c03ac6fc8f2aac169e015d077e935
+        description: |-
+          MinIO is a Kubernetes-native high performance object store with an
+          S3-compatible API. The MinIO Operator supports deploying MinIO Tenants
+          onto any Kubernetes.
+        k8sMinVersion: "1.18"
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/minio/operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - kind: Tenant
+          name: tenants.minio.min.io
+          version: v1
+        - kind: Tenant
+          name: tenants.minio.min.io
+          version: v2
+      description: |-
+        ## Overview
+
+
+        The MinIO Operator brings native support for deploying and managing MinIO
+        deployments (“MinIO Tenants”) on a Kubernetes cluster.
+
+
+        MinIO is a high performance, Kubernetes native object storage suite. With an
+        extensive list of enterprise features, it is scalable, secure and resilient
+        while remaining remarkably simple to deploy and operate at scale.
+        Software-defined, MinIO can run on any infrastructure and in any cloud -
+        public, private or edge. MinIO is the world's fastest object storage and can
+        run the broadest set of workloads in the industry. It is widely considered
+        to be the leader in compatibility with Amazon's S3 API.
+
+        ## Features
+
+
+        The MinIO Operator takes care of the deployment of MinIO Tenant along with:
+
+        * TLS Certificate Management
+
+        * Configuration of the encryption at rest
+
+        * Cluster expansion
+
+        * Hot Updates
+
+        * Users and Buckets bootstrapping
+
+        ## Prerequisites for enabling this Operator
+
+        * At least Kubernetes 1.18
+
+        * [CSR
+        Capability](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/)
+        must be enabled
+
+        * Locally attached volumes for performance or some CSI to provision block
+        storage to the MinIO pods.
+      displayName: Minio Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - S3
+      - MinIO
+      - Object Storage
+      links:
+      - name: Website
+        url: https://min.io
+      - name: Support
+        url: https://subnet.min.io
+      - name: Github
+        url: https://github.com/minio/operator
+      maintainers:
+      - email: dev@min.io
+        name: MinIO Team
+      maturity: stable
+      provider:
+        name: MinIO Inc
+        url: https://min.io
+      relatedImages:
+      - quay.io/minio/console@sha256:8dce83e096fb72373aa27634f5d9d0cad574d6d89dd4d89f9b27334d77e7465e
+      - quay.io/minio/operator@sha256:5f5f31cf46a7683dc37aeaf598baf552640c03ac6fc8f2aac169e015d077e935
+      version: 4.5.1
+    name: stable
+  defaultChannel: stable
+  packageName: minio-operator
+  provider:
+    name: MinIO Inc
+    url: https://min.io

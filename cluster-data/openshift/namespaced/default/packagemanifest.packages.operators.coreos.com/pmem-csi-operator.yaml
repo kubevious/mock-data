@@ -1,0 +1,188 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Intel® Corporation
+    provider-url: ""
+  name: pmem-csi-operator
+  namespace: default
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: pmem-csi-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pmem-csi.intel.com/v1beta1",
+              "kind": "PmemCSIDeployment",
+              "metadata": {
+                "name": "pmem-csi.intel.com"
+              },
+              "spec": {
+                "deviceMode": "lvm",
+                "nodeSelector": {
+                  "feature.node.kubernetes.io/memory-nv.dax": "true"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        certified: "false"
+        containerImage: intel/pmem-csi-driver:v1.0.2
+        createdAt: "2022-02-11T13:20:50Z"
+        description: An operator for deploying and managing the PMEM-CSI driver
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: ""
+        repository: https://github.com/intel/pmem-csi/tree/release-1.0
+        support: Intel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a PMEM-CSI driver deployment in the cluster.
+          displayName: PmemCSIDeployment
+          kind: PmemCSIDeployment
+          name: pmemcsideployments.pmem-csi.intel.com
+          version: v1beta1
+      description: |2
+
+        Intel PMEM-CSI is a [CSI](https://github.com/container-storage-interface/spec)
+        storage driver for container orchestrators like Kubernetes. It makes local
+        persistent memory ([PMEM](https://pmem.io/)) available as a filesystem volume to
+        container applications. This is the operator to deploy and manage the
+        [PMEM-CSI](https://intel.github.io/pmem-csi/1.0/README.html)
+        driver on a Kubernetes cluster.
+
+        Refer to the [PMEM-CSI documentation](https://intel.github.io/pmem-csi/1.0/README.html)
+        for more details on deploying and using the PMEM-CSI driver.
+      displayName: Operator for PMEM-CSI driver
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - PMEM-CSI
+      - PMEM-CSI operator
+      - Persistent Memory
+      - PMEM
+      - Intel
+      links:
+      - name: PMEM-CSI
+        url: https://intel.github.io/pmem-csi/1.0
+      maintainers:
+      - email: olev.kartau@intel.com
+        name: Olev Kartau
+      - email: patrick.ohly@intel.com
+        name: Patrick Ohly
+      - email: amarnath.valluri@intel.com
+        name: Amarnath Valluri
+      maturity: alpha
+      minKubeVersion: 1.18.0
+      provider:
+        name: Intel® Corporation
+      relatedImages:
+      - intel/pmem-csi-driver:v1.0.2
+      version: 1.0.2
+    name: stable
+  - currentCSV: pmem-csi-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "pmem-csi.intel.com/v1beta1",
+              "kind": "PmemCSIDeployment",
+              "metadata": {
+                "name": "pmem-csi.intel.com"
+              },
+              "spec": {
+                "deviceMode": "lvm",
+                "nodeSelector": {
+                  "feature.node.kubernetes.io/memory-nv.dax": "true"
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage
+        certified: "false"
+        containerImage: intel/pmem-csi-driver:v1.0.2
+        createdAt: "2022-02-11T13:20:50Z"
+        description: An operator for deploying and managing the PMEM-CSI driver
+        operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+        operators.operatorframework.io/project_layout: ""
+        repository: https://github.com/intel/pmem-csi/tree/release-1.0
+        support: Intel
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a PMEM-CSI driver deployment in the cluster.
+          displayName: PmemCSIDeployment
+          kind: PmemCSIDeployment
+          name: pmemcsideployments.pmem-csi.intel.com
+          version: v1beta1
+      description: |2
+
+        Intel PMEM-CSI is a [CSI](https://github.com/container-storage-interface/spec)
+        storage driver for container orchestrators like Kubernetes. It makes local
+        persistent memory ([PMEM](https://pmem.io/)) available as a filesystem volume to
+        container applications. This is the operator to deploy and manage the
+        [PMEM-CSI](https://intel.github.io/pmem-csi/1.0/README.html)
+        driver on a Kubernetes cluster.
+
+        Refer to the [PMEM-CSI documentation](https://intel.github.io/pmem-csi/1.0/README.html)
+        for more details on deploying and using the PMEM-CSI driver.
+      displayName: Operator for PMEM-CSI driver
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - PMEM-CSI
+      - PMEM-CSI operator
+      - Persistent Memory
+      - PMEM
+      - Intel
+      links:
+      - name: PMEM-CSI
+        url: https://intel.github.io/pmem-csi/1.0
+      maintainers:
+      - email: olev.kartau@intel.com
+        name: Olev Kartau
+      - email: patrick.ohly@intel.com
+        name: Patrick Ohly
+      - email: amarnath.valluri@intel.com
+        name: Amarnath Valluri
+      maturity: alpha
+      minKubeVersion: 1.18.0
+      provider:
+        name: Intel® Corporation
+      relatedImages:
+      - intel/pmem-csi-driver:v1.0.2
+      version: 1.0.2
+    name: alpha
+  defaultChannel: stable
+  packageName: pmem-csi-operator
+  provider:
+    name: Intel® Corporation

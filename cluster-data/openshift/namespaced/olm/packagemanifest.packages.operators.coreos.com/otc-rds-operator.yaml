@@ -1,0 +1,96 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Otc Rds Operator
+    provider-url: https://github.com/eumel8/otc-rds-operator/
+  name: otc-rds-operator
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: otc-rds-operator.v0.5.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "otc.mcsps.de/v1alpha1",
+              "kind": "Rds",
+              "metadata": {
+                "name": "my-rds-single"
+              },
+              "spec": {
+                "password": "A12345678+",
+                "vpc": "default",
+                "subnet": "default",
+                "securitygroup": "default"
+              }
+            }
+          ]
+        capabilities: Auto Pilot
+        categories: Database
+        containerImage: ghcr.io/eumel8/otc-rds-operator:0.5.0
+        createdAt: "2022-08-01 21:30:00"
+        description: Provides OTC RDS instances managed by Kubernetes
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/eumel8/otc-rds-operator
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Rds represents a RDS instance of OTC RDS
+          displayName: Rds
+          kind: Rds
+          name: rdss.otc.mcsps.de
+          version: v1alpha1
+      description: "This Operator will create an RDS instance on Open Telekom Cloud
+        (OTC) based on your Rds manifest. The Operator can scale up RDS instance on
+        CPU, memory, and disc manually or automatically on behalf of OTC CloudEye
+        metrics. Database logs are accessable for the user and Point in Time Recovery
+        als database restore are supported.\nAdditional features are schema creation
+        and database user management.    "
+      displayName: Otc Rds Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - otc
+      - rds
+      - opentelekomcloud
+      links:
+      - name: Otc Rds Operator
+        url: https://github.com/eumel8/otc-rds-operator/
+      - name: Presentation KCD Berlin 2022
+        url: https://slides.com/frankkloeker/otc-rds-operator
+      maintainers:
+      - email: f.kloeker@telekom.de
+        name: Frank Kloeker
+      maturity: alpha
+      provider:
+        name: Otc Rds Operator
+        url: https://github.com/eumel8/otc-rds-operator/
+      relatedImages:
+      - ghcr.io/eumel8/otc-rds-operator:0.5.0
+      version: 0.5.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: otc-rds-operator
+  provider:
+    name: Otc Rds Operator
+    url: https://github.com/eumel8/otc-rds-operator/

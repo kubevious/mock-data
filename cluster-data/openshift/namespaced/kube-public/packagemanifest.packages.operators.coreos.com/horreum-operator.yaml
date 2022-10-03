@@ -1,0 +1,96 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: https://horreum.hyperfoil.io
+  name: horreum-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: horreum-operator.v0.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "hyperfoil.io/v1alpha1",
+              "kind": "Horreum",
+              "metadata": {
+                "name": "horreum"
+              },
+              "spec": {
+                "nodeHost": "127.0.0.1"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        containerImage: quay.io/hyperfoil/horreum-operator:v0.0.2
+        description: Performance results repository
+        operators.operatorframework.io/builder: operator-sdk-v1.10.0+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/hyperfoil/horreum-operator
+        support: Red Hat Application Runtimes Performance Team
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Horreum is the object configuring Horreum performance results
+            repository
+          displayName: Horreum
+          kind: Horreum
+          name: horreums.hyperfoil.io
+          version: v1alpha1
+      description: Performance results repository
+      displayName: Horreum
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - performance
+      - repository
+      - database
+      - results
+      - hyperfoil
+      - benchmark
+      links:
+      - name: Horreum Operator
+        url: https://horreum-operator.domain
+      maintainers:
+      - email: rvansa@redhat.com
+        name: Radim Vansa
+      - email: spederse@redhat.com
+        name: Ståle W. Pedersen
+      - email: wreicher@redhat.com
+        name: Will Reichert
+      maturity: alpha
+      minKubeVersion: 1.16.0
+      provider:
+        name: Red Hat, Inc.
+        url: https://horreum.hyperfoil.io
+      relatedImages:
+      - gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+      - quay.io/hyperfoil/horreum-operator:v0.0.2
+      version: 0.0.2
+    name: alpha
+  defaultChannel: alpha
+  packageName: horreum-operator
+  provider:
+    name: Red Hat, Inc.
+    url: https://horreum.hyperfoil.io

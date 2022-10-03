@@ -1,0 +1,126 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T18:38:01Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: validationstates.kubevious.io
+  resourceVersion: "31055"
+  uid: 41a23157-c50c-49e9-80d1-449e1af0e6a1
+spec:
+  conversion:
+    strategy: None
+  group: kubevious.io
+  names:
+    kind: ValidationState
+    listKind: ValidationStateList
+    plural: validationstates
+    singular: validationstate
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          status:
+            properties:
+              clearedIssues:
+                items:
+                  properties:
+                    dn:
+                      type: string
+                    msg:
+                      type: string
+                    severity:
+                      type: string
+                  required:
+                  - dn
+                  - msg
+                  - severity
+                  type: object
+                type: array
+              date:
+                format: datetime
+                type: string
+              raisedIssues:
+                items:
+                  properties:
+                    dn:
+                      type: string
+                    msg:
+                      type: string
+                    severity:
+                      type: string
+                  required:
+                  - dn
+                  - msg
+                  - severity
+                  type: object
+                type: array
+              state:
+                type: string
+              success:
+                type: boolean
+              summary:
+                properties:
+                  issues:
+                    properties:
+                      cleared:
+                        properties:
+                          errors:
+                            type: number
+                          warnings:
+                            type: number
+                        required:
+                        - errors
+                        - warnings
+                        type: object
+                      raised:
+                        properties:
+                          errors:
+                            type: number
+                          warnings:
+                            type: number
+                        required:
+                        - errors
+                        - warnings
+                        type: object
+                    required:
+                    - raised
+                    - cleared
+                    type: object
+                required:
+                - issues
+                type: object
+            required:
+            - state
+            - date
+            type: object
+        required:
+        - status
+        type: object
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ValidationState
+    listKind: ValidationStateList
+    plural: validationstates
+    singular: validationstate
+  conditions:
+  - lastTransitionTime: "2022-10-03T18:38:01Z"
+    message: no conflicts found
+    reason: NoConflicts
+    status: "True"
+    type: NamesAccepted
+  - lastTransitionTime: "2022-10-03T18:38:01Z"
+    message: the initial names have been accepted
+    reason: InitialNamesAccepted
+    status: "True"
+    type: Established
+  storedVersions:
+  - v1

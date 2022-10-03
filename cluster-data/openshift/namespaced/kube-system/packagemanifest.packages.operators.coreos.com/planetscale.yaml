@@ -1,0 +1,186 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: PlanetScale
+    provider-url: ""
+  name: planetscale
+  namespace: kube-system
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: planetscale-operator.v0.1.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "planetscale.com/v1alpha1",
+              "kind": "PsCluster",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {
+                "monitored": true,
+                "lockserver": {
+                  "endpoint": "<LockServer IP and Port>",
+                  "root_path": "/vitess/example/global"
+                },
+                "cells": [
+                  {
+                    "name": "example1",
+                    "useGlobalLockserver": true,
+                    "gateway": {
+                      "count": 2
+                    },
+                    "vtctld": {
+                      "count": 1
+                    },
+                    "keyspaces": [
+                      {
+                        "name": "messagedb",
+                        "shards": [
+                          {
+                            "range": "-80",
+                            "replicas": [
+                              {
+                                "type": "replica"
+                              },
+                              {
+                                "type": "replica"
+                              },
+                              {
+                                "type": "rdonly"
+                              },
+                              {
+                                "type": "replica"
+                              }
+                            ]
+                          },
+                          {
+                            "range": "80-",
+                            "replicas": [
+                              {
+                                "type": "replica"
+                              },
+                              {
+                                "type": "replica"
+                              },
+                              {
+                                "type": "rdonly"
+                              },
+                              {
+                                "type": "replica"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Database
+        certified: "False"
+        containerImage: registry.connect.redhat.com/planetscale/operator:0.1.8
+        createdAt: "2019-03-06 21:40:00"
+        description: PlanetScale's operator for Vitess deploys and manages instances
+          of MySQL with Vitess, a database clustering system for horizontal scaling
+          of MySQL.
+        operatorhub.io/ui-metadata-max-k8s-version: "1.21"
+        support: PlanetScale
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Instance of a PlanetScale Vitess Cluster
+          displayName: PsCluster
+          kind: PsCluster
+          name: psclusters.planetscale.com
+          version: v1alpha1
+      description: |-
+        The Vitess Operator deploys and manages instances of MySQL with Vitess, a database clustering system for horizontal scaling of MySQL
+        through generalized sharding.
+
+
+        By encapsulating shard-routing logic, Vitess allows application code and
+        database queries to remain agnostic to the distribution of data onto
+        multiple shards. With Vitess, you can even split and merge shards as your
+        needs grow, with an atomic cutover step that takes only a few seconds.
+
+
+        Vitess has been a core component of YouTube's database infrastructure since
+        2011, and has grown to encompass tens of thousands of MySQL nodes. For more
+        information, visit [https://planetscale.com](https://planetscale.com)
+
+        ### New Features
+
+        We have support for Orchestrator, backups, and restores from GCS and S3. We also have seamless upgrades for all containers.
+
+        ### Supported Features
+
+        * **Dashboard** - The Operator deploys a dashboard for monitoring and introspecting your cluster.
+
+        * **Scale Gateways** - Scale out the Gateway, which is the component that responds to queries and returns consolidated results from the MySQL shards.
+
+        * **Configure Keyspaces** - Configure how your data is sharded with in your cluster.
+
+        ### Before You Start
+
+        1. Create a RedHat registry image pull secret called
+        `planetscale-operator-pull-secret`, which is required to pull the operator
+        image.
+
+        2. Create an etcd cluster, which is used as a lock server by PlanetScale Vitess clusters. Try out the [etcd Operator](https://www.operatorhub.io/?keyword=etcd).
+
+        ### Permissions
+
+        This operator only supports running in the same namespace as the PsCluster resources it is watching.
+
+
+        This operator should be deployed in an isolated namespace since the Pods it creates use the `default` service account and require the `use` permission on the `anyuid` Security Context Contraint (SCC) to run correctly. Running this operator in a shared namespace is not recommended since unrelated pods will have access to use the `anyuid` SCC.
+      displayName: PlanetScale Operator for Vitess
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - mysql
+      - vitess
+      - sharding
+      - database
+      links:
+      - name: PlanetScale
+        url: https://planetscale.com
+      - name: Vitess Documentation
+        url: https://vitess.io/docs
+      maintainers:
+      - email: contact@planetscale.com
+        name: PlanetScale
+      maturity: beta
+      provider:
+        name: PlanetScale
+      relatedImages:
+      - registry.connect.redhat.com/planetscale/operator:0.1.8
+      version: 0.1.8
+    name: beta
+  defaultChannel: beta
+  packageName: planetscale
+  provider:
+    name: PlanetScale

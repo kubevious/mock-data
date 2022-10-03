@@ -1,0 +1,22 @@
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      olm.opgroup.permissions/aggregate-to-4bca9f23e412d79d-admin: "true"
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2022-10-03T18:25:23Z"
+  labels:
+    olm.owner: olm-operators
+    olm.owner.kind: OperatorGroup
+    olm.owner.namespace: olm
+  name: olm-operators-admin
+  resourceVersion: "29283"
+  uid: 63439607-fedd-49a5-a81b-84cece9e181a
+rules:
+- apiGroups:
+  - packages.operators.coreos.com
+  resources:
+  - packagemanifests
+  verbs:
+  - '*'

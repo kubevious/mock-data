@@ -1,0 +1,170 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: StorageOS, Inc
+    provider-url: https://storageos.com
+  name: storageos
+  namespace: kubevious
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: storageosoperator.v2.6.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "storageos.com/v1",
+              "kind": "StorageOSCluster",
+              "metadata": {
+                "name": "storageoscluster-sample"
+              },
+              "spec": {
+                "kvBackend": {
+                  "address": "etcd-client:2379"
+                },
+                "secretRefName": "storageos-api",
+                "storageClassName": "storageos"
+              }
+            }
+          ]
+        capabilities: Deep Insights
+        categories: Storage
+        containerImage: storageos/operator:v2.6.0
+        createdAt: ""
+        description: Cloud-native, persistent storage for containers.
+        operators.operatorframework.io/builder: operator-sdk-v1.6.1+git
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+        repository: https://github.com/storageos/operator
+        support: StorageOS, Inc
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: StorageOSCluster is the Schema for the storageosclusters API
+          displayName: StorageOS Cluster
+          kind: StorageOSCluster
+          name: storageosclusters.storageos.com
+          version: v1
+      description: |
+        StorageOS is a cloud native, software-defined storage platform that
+        transforms commodity server or cloud based disk capacity into
+        enterprise-class persistent storage for containers. StorageOS volumes
+        offer high throughput, low latency and consistent performance, and
+        are therefore ideal for deploying databases, message queues, and
+        other mission-critical stateful solutions. StorageOS Project edition
+        also offers ReadWriteMany volumes that are concurrently accessible
+        by multiple applications.
+
+        The StorageOS Operator installs and manages StorageOS within a cluster.
+        Cluster nodes may contribute local or attached disk-based storage into a
+        distributed pool, which is then available to all cluster members via a
+        global namespace.
+
+        Volumes are available across the cluster so if a container gets moved to
+        another node it has immediate access to re-attach its data.
+
+        StorageOS is extremely lightweight - minimum requirements are a
+        reserved CPU core and 2GB of free memory. There are minimal external
+        dependencies, and no custom kernel modules.
+
+        After StorageOS is installed, please register for a free Developer
+        license to enable 5TiB of capacity and HA with synchronous
+        replication by following the instructions
+        [here](https://docs.storageos.com/docs/operations/licensing). For
+        additional capacity, features and support plans contact
+        sales@storageos.com.
+
+        ## Highlighted Features
+
+        * **High Availability** - synchronous replication insulates you from node failure.
+
+        * **Delta Sync** - replicas out of sync due to transient failures only transfer changed blocks.
+
+        * **Multiple AccessModes** - dynamically provision ReadWriteOnce or ReadWriteMany volumes.
+
+        * **Rapid Failover** - quickly detects node failure and automates recovery actions without administrator intervention.
+
+        * **Data Encryption** - both in transit and at rest.
+
+        * **Scalability** - disaggregated consensus means no single scheduling point of failure.
+
+        * **Thin provisioning** - Only consume the space you need in a storage pool.
+
+        * **Data reduction** - transparent inline data compression to reduce the amount of storage used in a backing store as well as reducing the network bandwidth requirements for replication.
+
+        * **Flexible configuration** - all features can be enabled per volume, using PVC and StorageClass labels.
+
+        * **Multi-tenancy** - fully supports standard Namespace and RBAC methods.
+
+        * **Observability & instrumentation** - log streams for observability and Prometheus support for instrumentation.
+
+        * **Deployment flexibility** - scale up or scale out storage based on application requirements. Works with any infrastructure – on-premises, VM, bare metal or cloud.
+
+        ## Prerequisites
+
+        [StorageOS Prerequisites Docs](https://docs.storageos.com/docs/prerequisites)
+
+        ## Required Parameters
+
+        * `secretRefName` - the name of a secret that contains keys for the
+        credentials
+        ([documentation](https://docs.storageos.com/docs/reference/cluster-operator/examples))
+        * `kvBackend.address` - address of the etcd cluster
+        ([documentation](https://docs.storageos.com/docs/prerequisites/etcd/))
+
+        ## About StorageOS
+
+        StorageOS is a software-defined cloud native storage platform
+        delivering persistent storage for Kubernetes. StorageOS is built from
+        the ground-up with no legacy restrictions to give enterprises working
+        with cloud native workloads a scalable storage platform with no
+        compromise on performance, availability or security. For additional
+        information, visit [www.storageos.com](www.storageos.com).
+      displayName: StorageOS
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - storageos
+      - storage
+      - persistent storage
+      - open source
+      links:
+      - name: Documentation
+        url: https://docs.storageos.com
+      - name: StorageOS Operator Source Code
+        url: https://github.com/storageos/operator
+      maintainers:
+      - email: support@storageos.com
+        name: StorageOS, Inc
+      maturity: stable
+      minKubeVersion: 1.19.0
+      provider:
+        name: StorageOS, Inc
+        url: https://storageos.com
+      relatedImages:
+      - storageos/operator:v2.6.0
+      - quay.io/brancz/kube-rbac-proxy:v0.10.0
+      version: 2.6.0
+    name: stable
+  defaultChannel: stable
+  packageName: storageos
+  provider:
+    name: StorageOS, Inc
+    url: https://storageos.com

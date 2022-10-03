@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: kubevious
+    meta.helm.sh/release-namespace: kubevious
+  creationTimestamp: "2022-10-03T19:02:46Z"
+  labels:
+    app.kubernetes.io/component: kubevious-collector
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  name: kubevious-collector-clusterip
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: installer.kubevious.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Kubevious
+    name: kubevious
+    uid: 925b27a2-92df-4bef-b14b-db572cd5c3e8
+  resourceVersion: "21231"
+  uid: e3b54c00-5590-4e04-935a-5fbb028955c8
+spec:
+  clusterIP: 172.21.69.251
+  clusterIPs:
+  - 172.21.69.251
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 4000
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/component: kubevious-collector
+    app.kubernetes.io/instance: kubevious
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubevious
+    app.kubernetes.io/version: 1.0.13
+    helm.sh/chart: kubevious-1.0.13
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

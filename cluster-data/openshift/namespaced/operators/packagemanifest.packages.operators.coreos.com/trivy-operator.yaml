@@ -1,0 +1,118 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Aqua Security
+    provider-url: ""
+  name: trivy-operator
+  namespace: operators
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: trivy-operator.v0.3.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: '[]'
+        capabilities: Basic Install
+        categories: Security
+        certified: "false"
+        containerImage: docker.io/aquasec/trivy-operator:0.3.0
+        createdAt: "2022-09-23T15:23:12Z"
+        description: Keeps security report resources updated
+        repository: https://github.com/aquasecurity/trivy-operator
+        support: Aqua Security
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents the result of scanning a container image for known
+            security vulnerabilities.
+          displayName: VulnerabilityReport
+          kind: VulnerabilityReport
+          name: vulnerabilityreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning a namespaced resource for
+            known configuration issues.
+          displayName: ConfigAuditReport
+          kind: ConfigAuditReport
+          name: configauditreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning a cluster-scoped resource
+            for known configuration issues.
+          displayName: ClusterConfigAuditReport
+          kind: ClusterConfigAuditReport
+          name: clusterconfigauditreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning a container image for exposed
+            secret.
+          displayName: ExposedSecretReport
+          kind: ExposedSecretReport
+          name: exposedsecretreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning assessment of a namespace
+            role
+          displayName: RbacAssessmentReport
+          kind: RbacAssessmentReport
+          name: rbacassessmentreports.aquasecurity.github.io
+          version: v1alpha1
+        - description: Represents the result of scanning assessment of a cluster-scope
+            role
+          displayName: ClusterRbacAssessmentReport
+          kind: ClusterRbacAssessmentReport
+          name: clusterrbacassessmentreports.aquasecurity.github.io
+          version: v1alpha1
+      description: "This operator for Trivy automatically updates security report
+        resources in response to workload and other\nchanges on a Kubernetes cluster
+        - for example, initiating a vulnerability scan when a new Pod is started \n\nTrivy
+        Operator provides:\n\n- Automated vulnerability scanning for Kubernetes applications.\n-
+        Automated configuration audits for Kubernetes resources with predefined rules
+        or custom Open Policy Agent (OPA) policies.\n- Automated exposed secrets scanning
+        for Kubernetes applications.\n- Automated rbac assessment scanning for Kubernetes
+        roles and clusterroles.\n\n## Documentation\n\nPlease see the [Documentation](https://aquasecurity.github.io/trivy-operator/latest)
+        for more info about the Trivy Operator project,\nwhich manages a variety of
+        security tools to make their reports accessible as Kubernetes custom resources.\n\n##
+        Installation\n\nCheck this [Operator Lifecycle Manager](https://aquasecurity.github.io/trivy-operator/v0.3.0/operator/installation/olm/)\nguide
+        to install the operator from [OperatorHub](https://operatorhub.io/) or [ArtifactHUB](https://artifacthub.io/)."
+      displayName: Trivy Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - aqua-security
+      - scanning
+      - security
+      links:
+      - name: Trivy Operator on GitHub
+        url: https://github.com/aquasecurity/trivy-operator
+      - name: Trivy Operator Documentation
+        url: https://aquasecurity.github.io/trivy-operator/latest
+      maintainers:
+      - email: chen.keinan@aquasec.com
+        name: Chen Keinan
+      - email: jose.donizetti@aquasec.com
+        name: Jose Donizetti
+      maturity: alpha
+      provider:
+        name: Aqua Security
+      relatedImages:
+      - docker.io/aquasec/trivy-operator:0.3.0
+      version: 0.3.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: trivy-operator
+  provider:
+    name: Aqua Security

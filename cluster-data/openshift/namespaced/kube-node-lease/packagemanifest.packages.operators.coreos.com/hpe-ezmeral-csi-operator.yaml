@@ -1,0 +1,113 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: HPE Ezmeral
+    provider-url: ""
+  name: hpe-ezmeral-csi-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: hpe-ezmeral-csi-operator.v1.0.8
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "ezmeral.hpe.com/v1",
+              "kind": "HPEEzmeralCSIDriver",
+              "metadata": {
+                "name": "hpeezmeralcsidriver"
+              },
+              "spec": {
+                "controllerImage": "docker.io/maprtech/csi-kdfprovisioner:1.2.4",
+                "nodeImage": "docker.io/maprtech/csi-kdfplugin:1.2.6",
+                "pullPolicy": "Always"
+              }
+            },
+            {
+              "apiVersion": "ezmeral.hpe.com/v1",
+              "kind": "HPEEzmeralNFSCSIDriver",
+              "metadata": {
+                "name": "hpeezmeralnfscsidriver"
+              },
+              "spec": {
+                "controllerImage": "docker.io/maprtech/csi-kdfprovisioner:1.2.4",
+                "nodeImage": "docker.io/maprtech/csi-nfsplugin:1.0.6",
+                "pullPolicy": "Always"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Storage
+        certified: "true"
+        containerImage: docker.io/maprtech/hpe-ezmeral-csi-operator:v1.0.8
+        createdAt: "2022-01-04T12:56:12Z"
+        description: A Container Storage Interface (CSI) driver for HPE Ezmeral Data
+          Fabric platform. The CSI driver allows you to use HPE Ezmeral Data Fabric
+          with your preferred container orchestrator.
+        repository: https://github.com/mapr/mapr-csi
+        support: HPE Ezmeral Data Fabric
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: HPE Ezmeral CSI Driver (FUSE)
+          displayName: HPEEzmeralCSIDriver
+          kind: HPEEzmeralCSIDriver
+          name: hpeezmeralcsidrivers.ezmeral.hpe.com
+          version: v1
+        - description: HPE Ezmeral CSI Driver (NFS)
+          displayName: HPEEzmeralNFSCSIDriver
+          kind: HPEEzmeralNFSCSIDriver
+          name: hpeezmeralnfscsidrivers.ezmeral.hpe.com
+          version: v1
+      description: |
+        The HPE Ezmeral CSI Operator for Kubernetes packages, deploys, manages, upgrades the HPE Ezmeral CSI Driver on Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE Ezmeral Data Fabric platform.
+        The HPE Ezmeral CSI Driver for Kubernetes leverages HPE Ezmeral Data Fabric platform to provide scalable and persistent storage for stateful applications. Please refer to our CSI driver [documentation](https://docs.datafabric.hpe.com/home/CSIdriver/csi_overview.html) for full list of supported CSI features.
+        ## Installation
+        Refer to the HPE Ezmeral CSI Operator for Kubernetes [documentation](https://docs.datafabric.hpe.com/home/CSIdriver/csi_installing_operator.html)
+      displayName: HPE Ezmeral Data Fabric CSI Operator for Kubernetes
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - HPE
+      - HPE Ezmeral
+      - HPE Ezmeral Data Fabric
+      - Storage
+      - FileSystem
+      - BlockVolume
+      links:
+      - name: Documentation
+        url: https://docs.datafabric.hpe.com/home/CSIdriver/csi_overview.html
+      maintainers:
+      - email: ezmeral-csi-support@hpe.com
+        name: HPE Ezmeral Data Fabric
+      maturity: stable
+      minKubeVersion: 1.18.0
+      provider:
+        name: HPE Ezmeral
+      relatedImages:
+      - docker.io/maprtech/hpe-ezmeral-csi-operator:v1.0.8
+      version: 1.0.8
+    name: stable
+  defaultChannel: stable
+  packageName: hpe-ezmeral-csi-operator
+  provider:
+    name: HPE Ezmeral

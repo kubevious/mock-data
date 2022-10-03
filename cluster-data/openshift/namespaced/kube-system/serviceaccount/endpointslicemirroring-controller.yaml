@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: endpointslicemirroring-controller-dockercfg-f8bjp
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:03Z"
+  name: endpointslicemirroring-controller
+  namespace: kube-system
+  resourceVersion: "1193"
+  uid: a02f4074-e378-43db-83cf-8b60f518b1dc
+secrets:
+- name: endpointslicemirroring-controller-token-zbwjf
+- name: endpointslicemirroring-controller-dockercfg-f8bjp

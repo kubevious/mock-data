@@ -1,0 +1,30 @@
+apiVersion: v1
+count: 1
+eventTime: null
+firstTimestamp: "2022-10-03T19:44:41Z"
+involvedObject:
+  apiVersion: v1
+  fieldPath: spec.containers{packageserver}
+  kind: Pod
+  name: packageserver-5cdd79495d-r9222
+  namespace: olm
+  resourceVersion: "29171"
+  uid: 1e9a9773-217e-4bff-8f41-2568e7e49eed
+kind: Event
+lastTimestamp: "2022-10-03T19:44:41Z"
+message: 'Readiness probe failed: Get "https://10.244.0.16:5443/healthz": net/http:
+  request canceled while waiting for connection (Client.Timeout exceeded while awaiting
+  headers)'
+metadata:
+  creationTimestamp: "2022-10-03T19:44:44Z"
+  name: packageserver-5cdd79495d-r9222.171aa6aeb3285db8
+  namespace: olm
+  resourceVersion: "40206"
+  uid: 129d3564-a75e-4e4c-a483-063e81a5ac23
+reason: Unhealthy
+reportingComponent: ""
+reportingInstance: ""
+source:
+  component: kubelet
+  host: kind-control-plane
+type: Warning

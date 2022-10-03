@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-10-03T18:58:25Z"
+  generation: 1
+  labels:
+    control-plane: controller-manager
+    pod-template-hash: 59768556df
+  name: kubevious-operator-controller-manager-59768556df
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: kubevious-operator-controller-manager
+    uid: 81ec09de-94a6-4040-afeb-13b9cd8abdf9
+  resourceVersion: "19677"
+  uid: 96f1d3ec-a636-44ad-a0bb-90109769bf75
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+      pod-template-hash: 59768556df
+  template:
+    metadata:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "installer.kubevious.io/v1alpha1",
+              "kind": "Kubevious",
+              "metadata": {
+                "name": "kubevious",
+                "namespace": "kubevious"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Full Lifecycle
+        containerImage: kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+        createdAt: 2022-09-30T21:36:56+0000
+        kubectl.kubernetes.io/default-container: manager
+        olm.operatorGroup: kubevious-dzkmn
+        olm.operatorNamespace: kubevious
+        olm.targetNamespaces: ""
+        operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"installer.kubevious.io","kind":"Kubevious","version":"v1alpha1"}},{"type":"olm.package","value":{"packageName":"kubevious-operator","version":"0.0.38"}}]}'
+        operatorframework.io/suggested-namespace: kubevious
+        operators.operatorframework.io/builder: operator-sdk-v1.23.0
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+        repository: https://github.com/kubevious/operator
+        support: Kubevious
+      creationTimestamp: null
+      labels:
+        control-plane: controller-manager
+        pod-template-hash: 59768556df
+    spec:
+      containers:
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=0
+        env:
+        - name: OPERATOR_CONDITION_NAME
+          value: kubevious-operator.v0.0.38
+        image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d99a8d144816b951a67648c12c0b988936ccd25cf3754f3cd85ab8c01592248f
+        imagePullPolicy: IfNotPresent
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 5m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - args:
+        - --health-probe-bind-address=:8081
+        - --metrics-bind-address=127.0.0.1:8080
+        - --leader-elect
+        - --leader-election-id=kubevious-operator
+        env:
+        - name: OPERATOR_CONDITION_NAME
+          value: kubevious-operator.v0.0.38
+        image: docker.io/kubevious/operator@sha256:0d729f7b438034b2e9c3fead0b6fbb18e9448d6720a52db7105d72eaad389ce7
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: manager
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+      serviceAccount: kubevious-operator-controller-manager
+      serviceAccountName: kubevious-operator-controller-manager
+      terminationGracePeriodSeconds: 10
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

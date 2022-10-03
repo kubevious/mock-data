@@ -1,0 +1,141 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: "2022-10-03T18:35:10Z"
+  generation: 1
+  labels:
+    controller-uid: 01d93cc3-9e46-4bc2-86e5-962451f0bc6f
+    job-name: 6479697ae63a6cb8e9fe07b32dc043b36278210c38a95cb215c08e68ca9eecd
+  name: 6479697ae63a6cb8e9fe07b32dc043b36278210c38a95cb215c08e68ca9eecd
+  namespace: kubevious
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: false
+    controller: false
+    kind: ConfigMap
+    name: 6479697ae63a6cb8e9fe07b32dc043b36278210c38a95cb215c08e68ca9eecd
+    uid: 5de5047e-ed14-4ea7-a1f0-21ab4b4a3a19
+  resourceVersion: "30503"
+  uid: 01d93cc3-9e46-4bc2-86e5-962451f0bc6f
+spec:
+  activeDeadlineSeconds: 600
+  backoffLimit: 3
+  completionMode: NonIndexed
+  completions: 1
+  parallelism: 1
+  selector:
+    matchLabels:
+      controller-uid: 01d93cc3-9e46-4bc2-86e5-962451f0bc6f
+  suspend: false
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        controller-uid: 01d93cc3-9e46-4bc2-86e5-962451f0bc6f
+        job-name: 6479697ae63a6cb8e9fe07b32dc043b36278210c38a95cb215c08e68ca9eecd
+      name: 6479697ae63a6cb8e9fe07b32dc043b36278210c38a95cb215c08e68ca9eecd
+    spec:
+      containers:
+      - command:
+        - opm
+        - alpha
+        - bundle
+        - extract
+        - -m
+        - /bundle/
+        - -n
+        - kubevious
+        - -c
+        - 6479697ae63a6cb8e9fe07b32dc043b36278210c38a95cb215c08e68ca9eecd
+        - -z
+        env:
+        - name: CONTAINER_IMAGE
+          value: docker.io/kubevious/operator-bundle:v0.0.38
+        image: quay.io/operator-framework/upstream-opm-builder:latest
+        imagePullPolicy: Always
+        name: extract
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /bundle
+          name: bundle
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - {}
+      initContainers:
+      - command:
+        - /bin/cp
+        - -Rv
+        - /bin/cpb
+        - /util/cpb
+        image: quay.io/operator-framework/olm@sha256:2b4fee73c05069d9d2c537c7d3072241097914748abfb938b5b08c969b2f544b
+        imagePullPolicy: IfNotPresent
+        name: util
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /util
+          name: util
+      - command:
+        - /util/cpb
+        - /bundle
+        image: docker.io/kubevious/operator-bundle:v0.0.38
+        imagePullPolicy: Always
+        name: pull
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /bundle
+          name: bundle
+        - mountPath: /util
+          name: util
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: bundle
+      - emptyDir: {}
+        name: util
+status:
+  completionTime: "2022-10-03T18:35:18Z"
+  conditions:
+  - lastProbeTime: "2022-10-03T18:35:18Z"
+    lastTransitionTime: "2022-10-03T18:35:18Z"
+    status: "True"
+    type: Complete
+  ready: 0
+  startTime: "2022-10-03T18:35:10Z"
+  succeeded: 1

@@ -1,0 +1,86 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: NMState
+    provider-url: ""
+  name: kubernetes-nmstate-operator
+  namespace: kube-node-lease
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: kubernetes-nmstate-operator.v0.47.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [{
+            "apiVersion": "nmstate.io/v1beta1",
+            "kind": "NMState",
+            "metadata": {
+              "name": "nmstate"
+            },
+            "spec": {
+              "nodeSelector": "beta.kubernetes.io/arch=amd64"
+            }
+          }]
+        capabilities: Basic Install
+        categories: Networking
+        certified: "false"
+        containerImage: quay.io/nmstate/kubernetes-nmstate-operator:v0.47.0
+        createdAt: "2021-07-22T16:49:36Z"
+        description: |
+          Kubernetes NMState is a declaritive means of configuring NetworkManager.
+        operatorframework.io/suggested-namespace: nmstate
+        operators.operatorframework.io/builder: operator-sdk-v1.0.0
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/nmstate/kubernetes-nmstate
+        support: nmstate.io
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents an NMState deployment.
+          displayName: NMState
+          kind: NMState
+          name: nmstates.nmstate.io
+          version: v1beta1
+      description: A Kubernetes Operator to install Kubernetes NMState
+      displayName: Kubernetes NMState Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - nmstate
+      - networking
+      - NetworkManager
+      links:
+      - name: Kubernetes Nmstate Operator
+        url: https://github.com/nmstate/kubernetes-nmstate
+      maintainers:
+      - email: rhrazdil@redhat.com
+        name: Radim Hrazdil
+      maturity: alpha
+      provider:
+        name: NMState
+      relatedImages:
+      - quay.io/nmstate/kubernetes-nmstate-operator:v0.47.0
+      version: 0.47.0
+    name: alpha
+  defaultChannel: alpha
+  packageName: kubernetes-nmstate-operator
+  provider:
+    name: NMState

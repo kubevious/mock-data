@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: endpoint-controller-dockercfg-9fs64
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:26:16Z"
+  name: endpoint-controller
+  namespace: kube-system
+  resourceVersion: "1871"
+  uid: 87eb5faf-e582-4f1e-bfa1-d93f1276abf0
+secrets:
+- name: endpoint-controller-token-xwfcq
+- name: endpoint-controller-dockercfg-9fs64

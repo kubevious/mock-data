@@ -1,0 +1,25 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 1
+deprecatedFirstTimestamp: "2022-10-03T19:45:29Z"
+deprecatedLastTimestamp: "2022-10-03T19:45:29Z"
+deprecatedSource:
+  component: kubevious-operator-controller-manager-7b95db69fb-sqpfs_95e7f03e-b36c-4a02-936b-3f4fe39947ae
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:45:29Z"
+  name: kubevious-operator.171aa6b9d2c5b3a4
+  namespace: kubevious
+  resourceVersion: "40335"
+  uid: 76010467-8a47-4300-a1a2-71a8d33a1e8c
+note: kubevious-operator-controller-manager-7b95db69fb-sqpfs_95e7f03e-b36c-4a02-936b-3f4fe39947ae
+  became leader
+reason: LeaderElection
+regarding:
+  apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  name: kubevious-operator
+  namespace: kubevious
+  resourceVersion: "40333"
+  uid: 1fdefd2e-3d7f-45b7-8739-8291303342a5
+type: Normal

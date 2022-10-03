@@ -1,0 +1,246 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:50:20Z"
+  labels:
+    catalog: community-operators
+    catalog-namespace: openshift-marketplace
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/arch.ppc64le: supported
+    operatorframework.io/arch.s390x: supported
+    operatorframework.io/os.linux: supported
+    provider: IBM
+    provider-url: ""
+  name: ibm-block-csi-operator-community
+  namespace: operators
+spec: {}
+status:
+  catalogSource: community-operators
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: openshift-marketplace
+  catalogSourcePublisher: Red Hat
+  channels:
+  - currentCSV: ibm-block-csi-operator.v1.10.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "IBMBlockCSI",
+              "metadata": {
+                "name": "ibm-block-csi"
+              },
+              "spec": {
+                "controller": {
+                  "repository": "ibmcom/ibm-block-csi-driver-controller",
+                  "tag": "1.10.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "node": {
+                  "repository": "ibmcom/ibm-block-csi-driver-node",
+                  "tag": "1.10.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "sidecars": [
+                  {
+                    "name": "csi-node-driver-registrar",
+                    "repository": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
+                    "tag": "v2.5.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-provisioner",
+                    "repository": "k8s.gcr.io/sig-storage/csi-provisioner",
+                    "tag": "v3.1.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-attacher",
+                    "repository": "k8s.gcr.io/sig-storage/csi-attacher",
+                    "tag": "v3.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-snapshotter",
+                    "repository": "k8s.gcr.io/sig-storage/csi-snapshotter",
+                    "tag": "v5.0.1",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-resizer",
+                    "repository": "k8s.gcr.io/sig-storage/csi-resizer",
+                    "tag": "v1.4.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "csi-addons-replicator",
+                    "repository": "quay.io/csiaddons/volumereplication-operator",
+                    "tag": "v0.2.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  },
+                  {
+                    "name": "livenessprobe",
+                    "repository": "k8s.gcr.io/sig-storage/livenessprobe",
+                    "tag": "v2.6.0",
+                    "imagePullPolicy": "IfNotPresent"
+                  }
+                ]
+              }
+            },
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "HostDefinition",
+              "metadata": {
+                "name": "host-definition"
+              },
+              "spec": {
+                "hostDefinition": {
+                  "nodeName": "node-name"
+                }
+              }
+            },
+            {
+              "apiVersion": "csi.ibm.com/v1",
+              "kind": "HostDefiner",
+              "metadata": {
+                "name": "host-definer"
+              },
+              "spec": {
+                "hostDefiner": {
+                  "allowDelete": true,
+                  "dynamicNodeLabeling": false,
+                  "repository": "ibmcom/ibm-block-csi-host-definer",
+                  "tag": "1.10.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "affinity": {
+                    "nodeAffinity": {
+                      "requiredDuringSchedulingIgnoredDuringExecution": {
+                        "nodeSelectorTerms": [
+                          {
+                            "matchExpressions": [
+                              {
+                                "key": "kubernetes.io/arch",
+                                "operator": "In",
+                                "values": [
+                                  "amd64",
+                                  "s390x",
+                                  "ppc64le"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        capabilities: Seamless Upgrades
+        categories: Storage,Cloud Provider
+        certified: "true"
+        containerImage: docker.io/ibmcom/ibm-block-csi-operator:1.10.0
+        createdAt: "2022-03-31T11:00:00Z"
+        description: Run IBM block storage CSI driver.
+        repository: https://github.com/IBM/ibm-block-csi-operator
+        support: IBM
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a block storage CSI driver
+          displayName: IBM block storage CSI driver
+          kind: IBMBlockCSI
+          name: ibmblockcsis.csi.ibm.com
+          version: v1
+        - description: Represents a Host Definition for IBM block storage
+          displayName: IBM block storage Host Definition
+          kind: HostDefinition
+          name: hostdefinitions.csi.ibm.com
+          version: v1
+        - description: Represents Host Definer for block storage CSI driver
+          displayName: IBM block storage CSI Host Definer driver
+          kind: HostDefiner
+          name: hostdefiners.csi.ibm.com
+          version: v1
+      description: |
+        The Container Storage Interface (CSI) Driver for IBM block storage systems enables container orchestrators such as Kubernetes to manage the life cycle of persistent storage.
+
+        This is the official operator to deploy and manage IBM block storage CSI driver.
+
+        For compatibility, prerequisites, release notes, and other user information, see [IBM block storage CSI driver documentation](https://www.ibm.com/docs/en/stg-block-csi-driver).
+      displayName: IBM block storage CSI driver operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - IBM
+      - BlockStorage
+      - CSI
+      links:
+      - name: Source Code
+        url: https://github.com/IBM/ibm-block-csi-operator
+      maintainers:
+      - email: csi.block1@il.ibm.com
+        name: IBM Block CSI Team
+      maturity: stable
+      minKubeVersion: 1.22.0
+      provider:
+        name: IBM
+      relatedImages:
+      - docker.io/ibmcom/ibm-block-csi-operator:1.10.0
+      version: 1.10.0
+    name: stable
+  defaultChannel: stable
+  packageName: ibm-block-csi-operator-community
+  provider:
+    name: IBM

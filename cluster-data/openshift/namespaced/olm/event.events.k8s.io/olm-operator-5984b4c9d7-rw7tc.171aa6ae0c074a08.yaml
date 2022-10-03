@@ -1,0 +1,27 @@
+apiVersion: events.k8s.io/v1
+deprecatedCount: 1
+deprecatedFirstTimestamp: "2022-10-03T19:44:38Z"
+deprecatedLastTimestamp: "2022-10-03T19:44:38Z"
+deprecatedSource:
+  component: kubelet
+  host: kind-control-plane
+eventTime: null
+kind: Event
+metadata:
+  creationTimestamp: "2022-10-03T19:44:39Z"
+  name: olm-operator-5984b4c9d7-rw7tc.171aa6ae0c074a08
+  namespace: olm
+  resourceVersion: "40194"
+  uid: b7de097e-a8e8-43fa-a05e-c392730b4be9
+note: 'Readiness probe failed: Get "http://10.244.0.13:8080/healthz": context deadline
+  exceeded (Client.Timeout exceeded while awaiting headers)'
+reason: Unhealthy
+regarding:
+  apiVersion: v1
+  fieldPath: spec.containers{olm-operator}
+  kind: Pod
+  name: olm-operator-5984b4c9d7-rw7tc
+  namespace: olm
+  resourceVersion: "29072"
+  uid: 3fb34d20-2bab-4081-8ec0-a656ba0e2f59
+type: Warning

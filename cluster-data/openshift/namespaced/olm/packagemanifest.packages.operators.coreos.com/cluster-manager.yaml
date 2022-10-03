@@ -1,0 +1,135 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: ""
+  name: cluster-manager
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: cluster-manager.v0.8.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "operator.open-cluster-management.io/v1",
+              "kind": "ClusterManager",
+              "metadata": {
+                "name": "cluster-manager"
+              },
+              "spec": {
+                "deployOption": {
+                  "mode": "Default"
+                },
+                "placementImagePullSpec": "quay.io/open-cluster-management/placement:v0.8.0",
+                "registrationConfiguration": {
+                  "featureGates": [
+                    {
+                      "feature": "DefaultClusterSet",
+                      "mode": "Enable"
+                    }
+                  ]
+                },
+                "registrationImagePullSpec": "quay.io/open-cluster-management/registration:v0.8.0",
+                "workImagePullSpec": "quay.io/open-cluster-management/work:v0.8.0"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Integration & Delivery,OpenShift Optional
+        certified: "false"
+        containerImage: quay.io/open-cluster-management/registration-operator:v0.8.0
+        createdAt: "2022-07-25T20:00:31Z"
+        description: Manages the installation and upgrade of the ClusterManager.
+        operators.operatorframework.io/builder: operator-sdk-v1.1.0
+        operators.operatorframework.io/project_layout: go
+        repository: https://github.com/open-cluster-management-io/registration-operator
+        support: Red Hat, Inc.
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: ClusterManager defines the configurations of controllers running
+            hub that govern registration and work distribution for attached Klusterlets
+          displayName: ClusterManager
+          kind: ClusterManager
+          name: clustermanagers.operator.open-cluster-management.io
+          version: v1
+      description: |
+        The Cluster Manager provides the multicluster hub, which can manage Kubernetes-based clusters across data centers, public clouds, and private clouds. This operator supports the installation and upgrade of ClusterManager.
+
+        ## How to Install
+        Install ClusterManager operator by following instructions in top right button `Install`. After installing the operator, create an instance of the ClusterManager resource to install the ClusterManager.
+
+        The pods of ClusterManager are created in the `open-cluster-management-hub` namespace:
+
+        ```
+        $ kubectl get pods -n open-cluster-management-hub
+        NAME                                                       READY   STATUS    RESTARTS   AGE
+        cluster-manager-placement-controller-d76cffb7c-fvzjh       1/1     Running   0          22h
+        cluster-manager-placement-controller-d76cffb7c-qnpjl       1/1     Running   0          22h
+        cluster-manager-placement-controller-d76cffb7c-tt4h6       1/1     Running   0          22h
+        cluster-manager-registration-controller-66b7c65849-btmpp   1/1     Running   0          22h
+        cluster-manager-registration-controller-66b7c65849-gt6fv   1/1     Running   0          22h
+        cluster-manager-registration-controller-66b7c65849-pl46k   1/1     Running   0          22h
+        cluster-manager-registration-webhook-5f5499fccf-crr69      1/1     Running   0          22h
+        cluster-manager-registration-webhook-5f5499fccf-s2dkb      1/1     Running   0          22h
+        cluster-manager-registration-webhook-5f5499fccf-s7lp5      1/1     Running   0          22h
+        cluster-manager-work-webhook-b68fc9b84-ddz2d               1/1     Running   0          22h
+        cluster-manager-work-webhook-b68fc9b84-kd92j               1/1     Running   0          22h
+        cluster-manager-work-webhook-b68fc9b84-vdbkl               1/1     Running   0          22h
+        ```
+
+        There is a ManagedCluster created in the Hub cluster when the managed cluster is registered to the Hub cluster.
+
+        ```
+        $ kubectl get managedclusters.cluster.open-cluster-management.io
+        NAME                   HUB ACCEPTED   MANAGED CLUSTER URLS     JOINED   AVAILABLE   AGE
+        cluster-dev            true                                    True     True        7h20m
+        cluster-test           false          https://127.0.0.1:8443                        7h25m
+        ```
+      displayName: Cluster Manager
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - open-cluster-management
+      - ClusterManager
+      links:
+      - name: Registration Operator
+        url: https://github.com/open-cluster-management-io/registration-operator
+      maintainers:
+      - email: zyin@redhat.com
+        name: Zhiwei Yin
+      - email: deads@redhat.com
+        name: David Eads
+      - email: jqiu@redhat.com
+        name: Jian Qiu
+      maturity: alpha
+      provider:
+        name: Red Hat, Inc.
+      relatedImages:
+      - quay.io/open-cluster-management/registration-operator:v0.8.0
+      version: 0.8.0
+    name: stable
+  defaultChannel: stable
+  packageName: cluster-manager
+  provider:
+    name: Red Hat, Inc.

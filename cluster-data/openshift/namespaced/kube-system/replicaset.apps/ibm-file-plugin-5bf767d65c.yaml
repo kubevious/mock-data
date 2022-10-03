@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-10-03T18:35:48Z"
+  generation: 1
+  labels:
+    app: ibm-file-plugin
+    pod-template-hash: 5bf767d65c
+    tier: frontend
+  name: ibm-file-plugin-5bf767d65c
+  namespace: kube-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: ibm-file-plugin
+    uid: 984913b0-76d3-4b62-894a-eb39837ff97b
+  resourceVersion: "13715"
+  uid: 4342e7e1-c841-4335-a107-3c313a9ca120
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibm-file-plugin
+      pod-template-hash: 5bf767d65c
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ibm-file-plugin
+        pod-template-hash: 5bf767d65c
+        tier: frontend
+    spec:
+      containers:
+      - args:
+        - -provisioner=ibm.io/ibmc-file
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: PLUGIN_IMAGE
+          value: registry.ng.bluemix.net/armada-master/storage-file-plugin:416
+        - name: CLUSTER_ID
+          value: cctig24d0ksl8mq5265g
+        - name: CM_SUBNET
+          value: subnet-config
+        - name: WATCHER
+          value: "false"
+        - name: STORAGE_CONFIG_PATH
+          value: /etc/storage_ibmc
+        - name: CRN_CONFIGMAP_PATH
+          value: /etc/ibm_crn_info
+        image: registry.ng.bluemix.net/armada-master/storage-file-plugin:416
+        imagePullPolicy: IfNotPresent
+        name: ibm-file-plugin-container
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        securityContext:
+          privileged: true
+          runAsNonRoot: false
+          runAsUser: 0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/storage_ibmc
+          name: storage-plugin-secret
+        - mountPath: /etc/ibm_crn_info
+          name: crn-info-ibmc
+      dnsPolicy: ClusterFirst
+      priorityClassName: system-cluster-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: ibm-file-plugin
+      serviceAccountName: ibm-file-plugin
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      volumes:
+      - name: storage-plugin-secret
+        secret:
+          defaultMode: 420
+          secretName: storage-secret-store
+      - configMap:
+          defaultMode: 420
+          name: crn-info-ibmc
+        name: crn-info-ibmc
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

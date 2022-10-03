@@ -1,0 +1,146 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Carbonetes
+    provider-url: https://carbonetes.com
+  name: carbonetes-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: carbonetes-operator.v1.0.4
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "apps.docker.io/v1alpha1",
+              "kind": "CarbonetesAnalyzer",
+              "metadata": {
+                "name": "carbonetesanalyzer"
+              },
+              "spec": {
+                "affinity": {},
+                "autoscaling": {
+                  "enabled": false,
+                  "maxReplicas": 100,
+                  "minReplicas": 1,
+                  "targetCPUUtilizationPercentage": 80
+                },
+                "carbonetesCreds": {
+                  "password": "",
+                  "username": ""
+                },
+                "debugging": {
+                  "enabled": false
+                },
+                "fullnameOverride": "",
+                "image": {
+                  "pullPolicy": "Always",
+                  "repository": "carbonetes/carbonetes-analyzer:1.0.3"
+                },
+                "imagePullSecrets": [],
+                "ingress": {
+                  "annotations": {},
+                  "enabled": false,
+                  "hosts": [
+                    {
+                      "host": "chart.local",
+                      "paths": []
+                    }
+                  ],
+                  "tls": []
+                },
+                "nameOverride": "",
+                "nodeSelector": {},
+                "podAnnotations": {},
+                "podSecurityContext": {},
+                "replicaCount": 1,
+                "resources": {},
+                "securityContext": {},
+                "service": {
+                  "port": 3000,
+                  "type": "ClusterIP"
+                },
+                "serviceAccount": {
+                  "annotations": {},
+                  "create": true,
+                  "name": "carbonetes-analyzer"
+                },
+                "tolerations": []
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Security
+        containerImage: docker.io/carbonetes/operator:1.0.4
+        createdAt: "2021-10-14T13:04:09Z"
+        description: A Kubernetes Operator for creating Carbonetes Analyzer instances.
+        operators.operatorframework.io/builder: operator-sdk-v1.12.0
+        operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+        repository: https://github.com/carbonetes/carbonetes-analyzer
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Represents a deployment of the Carbonetes Analyzer, which scans
+            container images in the cluster for vulnerabilities, SCA, Malware and
+            Secrets.
+          displayName: Carbonetes Analyzer
+          kind: CarbonetesAnalyzer
+          name: carbonetesanalyzers.apps.docker.io
+          version: v1alpha1
+      description: "A Kubernetes Operator for creating Carbonetes Analyzer instances
+        that Provides complete container analysis and policy evaluation as a fully
+        managed service. \n\nCarbonetes analyzes your container images for native
+        code vulnerabilities, software composition analysis (SCA), license types,
+        malware, secrets, and bill of materials.\n\n## Prerequisites\n\nTo start using
+        the Operator, you will need to create a secret containing your Carbonetes
+        username and password.\n\n```\nkubectl create namespace carbonetes-operator\nkubectl
+        create secret generic carbonetes-secrets --from-literal=username=${CARBONETES_USERNAME}--from-literal=password=${CARBONETES_PASSWORD}\n```\nDon't
+        have the account yet? [Sign up now](https://console.carbonetes.com)."
+      displayName: Carbonetes Operator
+      installModes:
+      - supported: false
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - docker
+      - analysis
+      - container
+      - carbonetes
+      - vulnerability
+      - images
+      links:
+      - name: Carbonetes Operator
+        url: https://carbonetes.com
+      maintainers:
+      - email: eng@carbonetes.com
+        name: Carbonetes
+      maturity: alpha
+      provider:
+        name: Carbonetes
+        url: https://carbonetes.com
+      relatedImages:
+      - docker.io/carbonetes/operator:1.0.4
+      version: 1.0.4
+    name: alpha
+  defaultChannel: alpha
+  packageName: carbonetes-operator
+  provider:
+    name: Carbonetes
+    url: https://carbonetes.com

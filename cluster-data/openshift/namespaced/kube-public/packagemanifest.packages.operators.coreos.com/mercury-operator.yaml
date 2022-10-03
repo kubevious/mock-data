@@ -1,0 +1,370 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Red Hat, Inc.
+    provider-url: ""
+  name: mercury-operator
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: mercury-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomainInfra",
+              "metadata": {
+                "name": "my-example-sdi",
+                "labels": {
+                  "app": "examples"
+                }
+              },
+              "spec": {
+                "kafka": {
+                  "replicas": 3,
+                  "storage": {
+                    "type": "persistent-claim",
+                    "size": "100Gi"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomain",
+              "metadata": {
+                "name": "example-customer-credit-rating",
+                "labels": {
+                  "app": "example"
+                }
+              },
+              "spec": {
+                "businessImage": "quay.io/ecosystem-appeng/customer-credit-rating-example:1.0.2",
+                "serviceDomainInfra": "my-example-sdi",
+                "type": "CUSTOMER_CREDIT_RATING",
+                "expose": {
+                  "http": {
+                    "api-version": "v1"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomain",
+              "metadata": {
+                "name": "example-customer-offer",
+                "labels": {
+                  "app": "example"
+                }
+              },
+              "spec": {
+                "businessImage": "quay.io/ecosystem-appeng/customer-offer-example:1.0.2",
+                "serviceDomainInfra": "my-example-sdi",
+                "type": "CUSTOMER_OFFER",
+                "expose": {
+                  "http": {
+                    "api-version": "v1"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomain",
+              "metadata": {
+                "name": "example-party-routing-profile",
+                "labels": {
+                  "app": "example"
+                }
+              },
+              "spec": {
+                "businessImage": "quay.io/ecosystem-appeng/party-routing-profile-example:1.0.2",
+                "serviceDomainInfra": "my-example-sdi",
+                "type": "PARTY_ROUTING_PROFILE",
+                "expose": {
+                  "http": {
+                    "api-version": "v1"
+                  }
+                }
+              }
+            }
+          ]
+        alm-examples-metadata: |-
+          {
+            "my-example-sdi": {
+              "description": "Example Service Domain Infrastructure"
+          },
+          {
+           "example-customer-credit-rating": {
+             "description": "Example Customer Credit Rating Service Domain"
+          },
+          {
+           "example-customer-offer": {
+             "description": "Example Customer Offer Service Domain"
+          },
+          {
+           "example-party-routing-profile": {
+             "description": "Example Party Routing Profile Service Domain"
+          }
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/ecosystem-appeng/mercury-operator:v1.0.2
+        description: Deploys and manages BIAN Service Domains with the Mercury framework
+        repository: https://github.com/open-accelerators/mercury
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: |-
+            A Service Domain Infra represents a group of Service Domains that interact between themselves and
+            share the same infrastructure resources
+          displayName: Service Domain Infra
+          kind: ServiceDomainInfra
+          name: servicedomaininfras.mercury.redhat.io
+          version: v1alpha1
+        - description: |-
+            A Service Domain is a standalone service representing one of the BIAN defined Service Domains.
+            e.g. Customer Offer. A Service Domain must belong to a Service Domain Infra
+          displayName: Service Domain
+          kind: ServiceDomain
+          name: servicedomains.mercury.redhat.io
+          version: v1alpha1
+        required:
+        - description: Represents a Kafka cluster
+          kind: Kafka
+          name: kafkas.kafka.strimzi.io
+          version: v1beta2
+        - description: Represents a topic inside a Kafka cluster
+          kind: KafkaTopic
+          name: kafkatopics.kafka.strimzi.io
+          version: v1beta2
+        - description: Represents a user inside a Kafka cluster
+          kind: KafkaUser
+          name: kafkausers.kafka.strimzi.io
+          version: v1beta2
+        - description: Integration is the Schema for the Camel K integrations API
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+      description: |-
+        # An open platform for a modular, digital bank
+
+        Project Mercury aims at developing a solution approach for the modernization of core banking systems, exploring new technologies and ways of operating in an open hybrid cloud. Creating and enabling the foundation of an open platform for modular, digital banking. Using open-source software and open standards currently available, combined with industry best practices.
+
+        The provided reference implementation can serve as an example. While some resulting artifacts leverage the expertise of developing this solution approach can become reusable templates, repeatable processes, and building blocks of cloud-native components and applications.
+
+        We invite the collaboration of technology experts and experienced business practitioners across the financial services industry to join and participate in co-creation.
+      displayName: Mercury Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - bian
+      - mercury
+      links:
+      - name: GitHub Repository
+        url: https://github.com/open-accelerators/mercury
+      minKubeVersion: 1.19.0
+      provider:
+        name: Red Hat, Inc.
+      relatedImages:
+      - quay.io/ecosystem-appeng/mercury-operator:v1.0.2
+      version: 1.0.2
+    name: dev
+  - currentCSV: mercury-operator.v1.0.2
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomainInfra",
+              "metadata": {
+                "name": "my-example-sdi",
+                "labels": {
+                  "app": "examples"
+                }
+              },
+              "spec": {
+                "kafka": {
+                  "replicas": 3,
+                  "storage": {
+                    "type": "persistent-claim",
+                    "size": "100Gi"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomain",
+              "metadata": {
+                "name": "example-customer-credit-rating",
+                "labels": {
+                  "app": "example"
+                }
+              },
+              "spec": {
+                "businessImage": "quay.io/ecosystem-appeng/customer-credit-rating-example:1.0.2",
+                "serviceDomainInfra": "my-example-sdi",
+                "type": "CUSTOMER_CREDIT_RATING",
+                "expose": {
+                  "http": {
+                    "api-version": "v1"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomain",
+              "metadata": {
+                "name": "example-customer-offer",
+                "labels": {
+                  "app": "example"
+                }
+              },
+              "spec": {
+                "businessImage": "quay.io/ecosystem-appeng/customer-offer-example:1.0.2",
+                "serviceDomainInfra": "my-example-sdi",
+                "type": "CUSTOMER_OFFER",
+                "expose": {
+                  "http": {
+                    "api-version": "v1"
+                  }
+                }
+              }
+            },
+            {
+              "apiVersion": "mercury.redhat.io/v1alpha1",
+              "kind": "ServiceDomain",
+              "metadata": {
+                "name": "example-party-routing-profile",
+                "labels": {
+                  "app": "example"
+                }
+              },
+              "spec": {
+                "businessImage": "quay.io/ecosystem-appeng/party-routing-profile-example:1.0.2",
+                "serviceDomainInfra": "my-example-sdi",
+                "type": "PARTY_ROUTING_PROFILE",
+                "expose": {
+                  "http": {
+                    "api-version": "v1"
+                  }
+                }
+              }
+            }
+          ]
+        alm-examples-metadata: |-
+          {
+            "my-example-sdi": {
+              "description": "Example Service Domain Infrastructure"
+          },
+          {
+           "example-customer-credit-rating": {
+             "description": "Example Customer Credit Rating Service Domain"
+          },
+          {
+           "example-customer-offer": {
+             "description": "Example Customer Offer Service Domain"
+          },
+          {
+           "example-party-routing-profile": {
+             "description": "Example Party Routing Profile Service Domain"
+          }
+        capabilities: Basic Install
+        categories: Integration & Delivery
+        certified: "false"
+        containerImage: quay.io/ecosystem-appeng/mercury-operator:v1.0.2
+        description: Deploys and manages BIAN Service Domains with the Mercury framework
+        repository: https://github.com/open-accelerators/mercury
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: |-
+            A Service Domain Infra represents a group of Service Domains that interact between themselves and
+            share the same infrastructure resources
+          displayName: Service Domain Infra
+          kind: ServiceDomainInfra
+          name: servicedomaininfras.mercury.redhat.io
+          version: v1alpha1
+        - description: |-
+            A Service Domain is a standalone service representing one of the BIAN defined Service Domains.
+            e.g. Customer Offer. A Service Domain must belong to a Service Domain Infra
+          displayName: Service Domain
+          kind: ServiceDomain
+          name: servicedomains.mercury.redhat.io
+          version: v1alpha1
+        required:
+        - description: Represents a Kafka cluster
+          kind: Kafka
+          name: kafkas.kafka.strimzi.io
+          version: v1beta2
+        - description: Represents a topic inside a Kafka cluster
+          kind: KafkaTopic
+          name: kafkatopics.kafka.strimzi.io
+          version: v1beta2
+        - description: Represents a user inside a Kafka cluster
+          kind: KafkaUser
+          name: kafkausers.kafka.strimzi.io
+          version: v1beta2
+        - description: Integration is the Schema for the Camel K integrations API
+          kind: Integration
+          name: integrations.camel.apache.org
+          version: v1
+      description: |-
+        # An open platform for a modular, digital bank
+
+        Project Mercury aims at developing a solution approach for the modernization of core banking systems, exploring new technologies and ways of operating in an open hybrid cloud. Creating and enabling the foundation of an open platform for modular, digital banking. Using open-source software and open standards currently available, combined with industry best practices.
+
+        The provided reference implementation can serve as an example. While some resulting artifacts leverage the expertise of developing this solution approach can become reusable templates, repeatable processes, and building blocks of cloud-native components and applications.
+
+        We invite the collaboration of technology experts and experienced business practitioners across the financial services industry to join and participate in co-creation.
+      displayName: Mercury Operator
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: true
+        type: SingleNamespace
+      - supported: true
+        type: MultiNamespace
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - bian
+      - mercury
+      links:
+      - name: GitHub Repository
+        url: https://github.com/open-accelerators/mercury
+      minKubeVersion: 1.19.0
+      provider:
+        name: Red Hat, Inc.
+      relatedImages:
+      - quay.io/ecosystem-appeng/mercury-operator:v1.0.2
+      version: 1.0.2
+    name: stable
+  defaultChannel: stable
+  packageName: mercury-operator
+  provider:
+    name: Red Hat, Inc.

@@ -1,0 +1,127 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: Amazon, Inc.
+    provider-url: https://aws.amazon.com
+  name: ack-dynamodb-controller
+  namespace: olm
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: ack-dynamodb-controller.v0.1.6
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "dynamodb.services.k8s.aws/v1alpha1",
+              "kind": "Backup",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "dynamodb.services.k8s.aws/v1alpha1",
+              "kind": "GlobalTable",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            },
+            {
+              "apiVersion": "dynamodb.services.k8s.aws/v1alpha1",
+              "kind": "Table",
+              "metadata": {
+                "name": "example"
+              },
+              "spec": {}
+            }
+          ]
+        capabilities: Basic Install
+        categories: Cloud Provider
+        certified: "false"
+        containerImage: public.ecr.aws/aws-controllers-k8s/dynamodb-controller:v0.1.6
+        createdAt: "2022-09-12 23:00:57"
+        description: AWS DynamoDB controller is a service controller for managing
+          DynamoDB resources in Kubernetes
+        operatorframework.io/suggested-namespace: ack-system
+        operators.operatorframework.io/builder: operator-sdk-v1.19.0+git
+        operators.operatorframework.io/project_layout: unknown
+        repository: https://github.com/aws-controllers-k8s
+        support: Community
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Backup represents the state of an AWS dynamodb Backup resource.
+          displayName: Backup
+          kind: Backup
+          name: backups.dynamodb.services.k8s.aws
+          version: v1alpha1
+        - description: GlobalTable represents the state of an AWS dynamodb GlobalTable
+            resource.
+          displayName: GlobalTable
+          kind: GlobalTable
+          name: globaltables.dynamodb.services.k8s.aws
+          version: v1alpha1
+        - description: Table represents the state of an AWS dynamodb Table resource.
+          displayName: Table
+          kind: Table
+          name: tables.dynamodb.services.k8s.aws
+          version: v1alpha1
+      description: |-
+        Manage Amazon DynamoDB resources in AWS from within your Kubernetes cluster.
+
+        **About Amazon DynamoDB**
+
+        Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. DynamoDB lets you offload the administrative burdens of operating and scaling a distributed database so that you don't have to worry about hardware provisioning, setup and configuration, replication, software patching, or cluster scaling. DynamoDB also offers encryption at rest, which eliminates the operational burden and complexity involved in protecting sensitive data. For more information, see [DynamoDB Encryption at Rest](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html).
+
+        **About the AWS Controllers for Kubernetes**
+
+        This controller is a component of the [AWS Controller for Kubernetes](https://github.com/aws/aws-controllers-k8s) project.
+
+        **Pre-Installation Steps**
+
+        Please follow the following link: [Red Hat OpenShift](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+      displayName: AWS Controllers for Kubernetes - Amazon DynamoDB
+      installModes:
+      - supported: true
+        type: AllNamespaces
+      keywords:
+      - dynamodb
+      - aws
+      - amazon
+      - ack
+      links:
+      - name: AWS Controllers for Kubernetes
+        url: https://github.com/aws-controllers-k8s/community
+      - name: Documentation
+        url: https://aws-controllers-k8s.github.io/community/
+      - name: Amazon DynamoDB Developer Resources
+        url: https://aws.amazon.com/dynamodb/resources/
+      maintainers:
+      - email: ack-maintainers@amazon.com
+        name: dynamodb maintainer team
+      maturity: alpha
+      provider:
+        name: Amazon, Inc.
+        url: https://aws.amazon.com
+      relatedImages:
+      - public.ecr.aws/aws-controllers-k8s/dynamodb-controller:v0.1.6
+      version: 0.1.6
+    name: alpha
+  defaultChannel: alpha
+  packageName: ack-dynamodb-controller
+  provider:
+    name: Amazon, Inc.
+    url: https://aws.amazon.com

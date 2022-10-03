@@ -1,0 +1,13 @@
+apiVersion: v1
+imagePullSecrets:
+- name: builder-dockercfg-7x9wr
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-10-03T18:57:56Z"
+  name: builder
+  namespace: kubevious
+  resourceVersion: "18892"
+  uid: fd0532bc-e14c-41c6-87d7-8e6e61167264
+secrets:
+- name: builder-token-gjcd9
+- name: builder-dockercfg-7x9wr

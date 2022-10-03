@@ -1,0 +1,714 @@
+apiVersion: packages.operators.coreos.com/v1
+kind: PackageManifest
+metadata:
+  creationTimestamp: "2022-10-03T18:25:13Z"
+  labels:
+    catalog: operatorhubio-catalog
+    catalog-namespace: olm
+    operatorframework.io/arch.amd64: supported
+    operatorframework.io/os.linux: supported
+    provider: submariner.io
+    provider-url: ""
+  name: submariner
+  namespace: kube-public
+spec: {}
+status:
+  catalogSource: operatorhubio-catalog
+  catalogSourceDisplayName: Community Operators
+  catalogSourceNamespace: olm
+  catalogSourcePublisher: OperatorHub.io
+  channels:
+  - currentCSV: submariner.v0.11.0
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "submariner.io/v1alpha1",
+              "kind": "Broker",
+              "metadata": {
+                "name": "submariner-broker"
+              },
+              "spec": {
+                "components": [
+                  "service-discovery",
+                  "connectivity"
+                ],
+                "defaultGlobalnetClusterSize": 8192,
+                "globalnetEnabled": false
+              }
+            },
+            {
+              "apiVersion": "submariner.io/v1alpha1",
+              "kind": "Submariner",
+              "metadata": {
+                "name": "submariner"
+              },
+              "spec": {
+                "broker": "k8s",
+                "brokerK8sApiServer": "192.168.67.110:8443",
+                "brokerK8sApiServerToken": "$(BROKER_K8S_API_TOKEN)",
+                "brokerK8sCA": "$(BROKER_K8S_CA)",
+                "brokerK8sRemoteNamespace": "submariner-k8s-broker",
+                "cableDriver": "libreswan",
+                "ceIPSecDebug": false,
+                "ceIPSecIKEPort": 500,
+                "ceIPSecNATTPort": 4500,
+                "ceIPSecPSK": "$(IPSEC_PSK)",
+                "clusterCIDR": "192.168.67.0/24",
+                "clusterID": "cluster1",
+                "connectionHealthCheck": {
+                  "enabled": false,
+                  "intervalSeconds": 1,
+                  "maxPacketLossCount": 5
+                },
+                "debug": false,
+                "globalCIDR": "",
+                "namespace": "submariner-operator",
+                "natEnabled": true,
+                "repository": "quay.io/submariner",
+                "serviceCIDR": "192.168.66.0/24",
+                "serviceDiscoveryEnabled": true,
+                "version": "0.11.0"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Networking
+        certified: "false"
+        containerImage: quay.io/submariner/submariner-operator:0.11.0
+        createdAt: "2021-10-14 13:41:37"
+        description: Creates and manages Submariner deployments.
+        operatorframework.io/suggested-namespace: submariner-operator
+        operators.operatorframework.io/builder: operator-sdk-v1.0.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/submariner-io/submariner-operator
+        support: Submariner
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Broker is the Schema for the brokers API
+          displayName: Broker
+          kind: Broker
+          name: brokers.submariner.io
+          version: v1alpha1
+        - description: Submariner is the Schema for the submariners API
+          displayName: Submariner
+          kind: Submariner
+          name: submariners.submariner.io
+          version: v1alpha1
+      description: |
+        [Submariner](https://submariner.io) enables direct networking between Pods and Services in different Kubernetes
+        clusters. With Submariner, your applications and services can span multiple cloud providers, data centers, and regions.
+
+        Submariner is designed to be cloud provider and network plugin (CNI) agnostic.
+
+        Submariner consists of several main components that work in conjunction to securely connect workloads across
+        multiple Kubernetes clusters, both on-premise and on public clouds:
+        * [Gateway Engine](https://submariner.io/getting-started/architecture/gateway-engine/): manages the secure tunnels to other clusters.
+        * [Route Agent](https://submariner.io/getting-started/architecture/route-agent/): routes cross-cluster traffic from nodes
+        to the active Gateway Engine.
+        * [Broker](https://submariner.io/getting-started/architecture/broker/): facilitates the exchange of metadata between Gateway
+        Engines enabling them to discover one another.
+
+        Submariner has optional components that provide additional functionality:
+        * [Globalnet Controller](https://submariner.io/getting-started/architecture/globalnet/): handles overlapping CIDRs across clusters.
+        * [Service Discovery](https://submariner.io/getting-started/architecture/service-discovery/): provides DNS discovery of services
+        across clusters.
+
+        ### Prerequisites
+        Submariner has a few requirements to get started, all are documented [here](https://submariner.io/getting-started/quickstart/kind/#prerequisites).
+
+        If running on an OpenShift cluster, perform the following steps to bind the Submariner service accounts to the **privileged** SCC.
+
+        ```shell
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-gateway
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-routeagent
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-globalnet
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-lighthouse-coredns
+        ```
+
+        ### Deployment
+        Submariner provides an [Operator](https://github.com/submariner-io/submariner-operator) for easy API-based
+        installation and management.
+        A command line utility, [subctl](https://github.com/submariner-io/submariner-operator/releases), wraps the
+        Operator to aid users with manual deployments and easy experimentation.
+        subctl greatly simplifies the deployment of Submariner, and is therefore the recommended deployment method.
+        For complete information about subctl, please refer to [this page](https://submariner.io/operations/deployment/subctl).
+        In addition to Operator and subctl, Submariner also provides [Helm Charts](https://submariner.io/operations/deployment/helm).
+
+        On the broker cluster:
+        1. Create the broker namespace called `submariner-k8s-broker`.
+        2. Apply the broker RBAC definitions:
+
+            ```shell
+            git clone --depth 1 --single-branch --branch release-0.11 https://github.com/submariner-io/submariner-operator
+            kubectl apply -k submariner-operator/config/broker -n submariner-k8s-broker
+            ```
+
+        3. Install the Submariner Operator from the catalog.
+        4. Create a new `Broker` custom resource named **submariner-broker**.
+
+        On connected clusters:
+        1. Install the Submariner Operator from the catalog.
+        2. Create a new `Submariner` custom resource named **submariner**.
+
+        The following values can be specified for the **Broker** CR:
+        * **defaultCustomDomains**: List of domains to use for multicluster service discovery.
+        * **defaultGlobalnetClusterSize**: Default cluster size for GlobalCIDR allocated to each cluster (amount of global IPs).
+        * **globalnetEnabled**: Enable support for Overlapping CIDRs in connecting clusters (default disabled).
+        * **globalnetCIDRRange**: GlobalCIDR supernet range for allocating GlobalCIDRs to each cluster.
+        * **components**: List of components to be installed [service-discovery, connectivity].
+
+        The following values can be specified for the **Submariner** CR:
+        * **namespace**: The namespace to install in.
+        * **serviceCIDR**: The service CIDR.
+        * **clusterCIDR**: The cluster CIDR.
+        * **clusterID**: The cluster ID used to identify the tunnels.
+        * **colorCodes**: The color code(s) for the cluster.
+        * **debug**: *'true'* to enable operator debugging information - verbose logging.
+        * **natEnabled**: *'true'* if there is NAT between clusters. Typically *'true'* in public cloud or mixed on-prem/public cloud environments and *'false'* when all clusters are on-prem.
+        * **broker**: This must be *k8s* currently.
+        * **brokerK8sApiServer**: The broker API server URL.
+            To retrieve it run the following command on the broker cluster:
+
+            `kubectl -n default get endpoints kubernetes -o
+            jsonpath="{.subsets[0].addresses[0].ip}:{.subsets[0].ports[?(@.name=='https')].port}"`
+
+        * **brokerK8sApiServerToken**: The broker API server token.
+            To retrieve the token run the following command on the broker cluster, assuming the broker is running in the
+            *submariner-k8s-broker* namespace:
+
+            `kubectl -n submariner-k8s-broker get secrets -o json
+            | jq -r -c '[.items[] | select(.metadata.annotations."kubernetes.io/service-account.name"=="submariner-k8s-broker-client")
+            | select(.data.token != null)] | .[0].data.token' | base64 --decode`
+
+        * **brokerK8sRemoteNamespace**: The broker namespace.
+        * **brokerK8sCA**: The broker certificate authority.
+            To retrieve the broker CA run the following command on the broker cluster, assuming the broker is running in
+            the *submariner-k8s-broker* namespace:
+
+            `kubectl -n submariner-k8s-broker get secrets -o json
+            | jq -r -c '[.items[] | select(.metadata.annotations."kubernetes.io/service-account.name"=="submariner-k8s-broker-client")
+            | select(.data."ca.crt" != null)] | .[0].data."ca.crt"' | base64 --decode`
+
+        * **ceIPSecPSK**: The IPsec Pre-Shared Key which must be identical in all route agents across the cluster.
+            To generate a unique PSK run the following command on your machine:
+
+            `dd if=/dev/urandom count=64 bs=8 | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1`
+
+        * **ceIPSecDebug**: *'true'* to enable logging IPsec debugging information - verbose logging from the IPsec daemon.
+        * **ceIPSecIKEPort**: The IPsec IKE port (500 usually).
+        * **ceIPSecNATTPort**: The IPsec NAT traversal port (4500 usually).
+        * **repository**: The container repository to use.
+        * **version**: The container version to use.
+        * **imageOverrides**: A string map that overrides the images by defining a path for each component.
+                              This field is meant to be used by CI, development or testing.
+
+          **example:**
+
+          ```yaml
+          imageOverrides:
+            submariner-route-agent=my_repo/my_custom_image:my_tag
+            submariner-globalnet=my_repo/my_custom_image:my_tag
+          ```
+      displayName: Submariner
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - multi-cluster
+      - ipsec
+      - tunnel
+      - submariner-operator
+      links:
+      - name: Website
+        url: https://submariner.io
+      - name: GitHub
+        url: https://github.com/submariner-io
+      - name: Slack
+        url: https://kubernetes.slack.com/archives/C010RJV694M
+      - name: YouTube
+        url: https://www.youtube.com/channel/UCZ3brSgl2v4boglZoeChClQ/videos
+      - name: Twitter
+        url: https://twitter.com/submarinerio
+      maintainers:
+      - email: submariner-dev@googlegroups.com
+        name: Submariner project
+      maturity: alpha
+      provider:
+        name: submariner.io
+      relatedImages:
+      - quay.io/submariner/submariner-operator:0.11.0
+      version: 0.11.0
+    name: alpha-0.11
+  - currentCSV: submariner.v0.9.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "submariner.io/v1alpha1",
+              "kind": "Broker",
+              "metadata": {
+                "name": "submariner-broker"
+              },
+              "spec": {
+                "components": [
+                  "service-discovery",
+                  "connectivity"
+                ],
+                "defaultGlobalnetClusterSize": 8192,
+                "globalnetEnabled": false
+              }
+            },
+            {
+              "apiVersion": "submariner.io/v1alpha1",
+              "kind": "Submariner",
+              "metadata": {
+                "name": "submariner"
+              },
+              "spec": {
+                "broker": "k8s",
+                "brokerK8sApiServer": "192.168.67.110:8443",
+                "brokerK8sApiServerToken": "$(BROKER_K8S_API_TOKEN)",
+                "brokerK8sCA": "$(BROKER_K8S_CA)",
+                "brokerK8sRemoteNamespace": "submariner-k8s-broker",
+                "cableDriver": "libreswan",
+                "ceIPSecDebug": false,
+                "ceIPSecIKEPort": 501,
+                "ceIPSecNATTPort": 4501,
+                "ceIPSecPSK": "$(IPSEC_PSK)",
+                "clusterCIDR": "192.168.67.0/24",
+                "clusterID": "cluster1",
+                "connectionHealthCheck": {
+                  "enabled": true,
+                  "intervalSeconds": 1,
+                  "maxPacketLossCount": 5
+                },
+                "debug": false,
+                "globalCIDR": "",
+                "namespace": "submariner-operator",
+                "natEnabled": true,
+                "repository": "quay.io/submariner",
+                "serviceCIDR": "192.168.66.0/24",
+                "serviceDiscoveryEnabled": true,
+                "version": "0.9.1"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Networking
+        certified: "false"
+        containerImage: quay.io/submariner/submariner-operator:0.9.1
+        createdAt: "2021-07-12 13:43:48"
+        description: Creates and manages Submariner deployments.
+        operatorframework.io/suggested-namespace: submariner-operator
+        operators.operatorframework.io/builder: operator-sdk-v1.0.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/submariner-io/submariner-operator
+        support: Submariner
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Broker is the Schema for the brokers API
+          displayName: Broker
+          kind: Broker
+          name: brokers.submariner.io
+          version: v1alpha1
+        - description: Submariner is the Schema for the submariners API
+          displayName: Submariner
+          kind: Submariner
+          name: submariners.submariner.io
+          version: v1alpha1
+      description: |
+        [Submariner](https://submariner.io) enables direct networking between Pods and Services in different Kubernetes
+        clusters. With Submariner, your applications and services can span multiple cloud providers, data centers, and regions.
+
+        Submariner is designed to be cloud provider and network plugin (CNI) agnostic.
+
+        Submariner consists of several main components that work in conjunction to securely connect workloads across
+        multiple Kubernetes clusters, both on-premise and on public clouds:
+        * [Gateway Engine](https://submariner.io/getting-started/architecture/gateway-engine/): manages the secure tunnels to other clusters.
+        * [Route Agent](https://submariner.io/getting-started/architecture/route-agent/): routes cross-cluster traffic from nodes
+        to the active Gateway Engine.
+        * [Broker](https://submariner.io/getting-started/architecture/broker/): facilitates the exchange of metadata between Gateway
+        Engines enabling them to discover one another.
+
+        Submariner has optional components that provide additional functionality:
+        * [Globalnet Controller](https://submariner.io/getting-started/architecture/globalnet/): handles overlapping CIDRs across clusters.
+        * [Service Discovery](https://submariner.io/getting-started/architecture/service-discovery/): provides DNS discovery of services
+        across clusters.
+
+        ### Prerequisites
+        Submariner has a few requirements to get started, all are documented [here](https://submariner.io/getting-started/quickstart/kind/#prerequisites).
+
+        If running on an OpenShift cluster, perform the following steps to bind the Submariner service accounts to the **privileged** SCC.
+
+        ```shell
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-gateway
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-routeagent
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-globalnet
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-lighthouse-coredns
+        ```
+
+        ### Deployment
+        Submariner provides an [Operator](https://github.com/submariner-io/submariner-operator) for easy API-based
+        installation and management.
+        A command line utility, [subctl](https://github.com/submariner-io/submariner-operator/releases), wraps the
+        Operator to aid users with manual deployments and easy experimentation.
+        subctl greatly simplifies the deployment of Submariner, and is therefore the recommended deployment method.
+        For complete information about subctl, please refer to [this page](https://submariner.io/operations/deployment/subctl).
+        In addition to Operator and subctl, Submariner also provides [Helm Charts](https://submariner.io/operations/deployment/helm).
+
+        On the broker cluster:
+        1. Create the broker namespace called `submariner-k8s-broker`.
+        2. Apply the broker RBAC definitions:
+
+            ```shell
+            git clone --depth 1 --single-branch --branch release-0.9 https://github.com/submariner-io/submariner-operator
+            kubectl apply -k submariner-operator/config/broker -n submariner-k8s-broker
+            ```
+
+        3. Install the Submariner Operator from the catalog.
+        4. Create a new `Broker` custom resource named **submariner-broker**.
+
+        On connected clusters:
+        1. Install the Submariner Operator from the catalog.
+        2. Create a new `Submariner` custom resource named **submariner**.
+
+        The following values can be specified for the **Broker** CR:
+        * **defaultCustomDomains**: List of domains to use for multicluster service discovery.
+        * **defaultGlobalnetClusterSize**: Default cluster size for GlobalCIDR allocated to each cluster (amount of global IPs).
+        * **globalnetEnabled**: Enable support for Overlapping CIDRs in connecting clusters (default disabled).
+        * **globalnetCIDRRange**: GlobalCIDR supernet range for allocating GlobalCIDRs to each cluster.
+        * **components**: List of components to be installed [service-discovery, connectivity].
+
+        The following values can be specified for the **Submariner** CR:
+        * **namespace**: The namespace to install in.
+        * **serviceCIDR**: The service CIDR.
+        * **clusterCIDR**: The cluster CIDR.
+        * **clusterID**: The cluster ID used to identify the tunnels.
+        * **colorCodes**: The color code(s) for the cluster.
+        * **debug**: *'true'* to enable operator debugging information - verbose logging.
+        * **natEnabled**: *'true'* if there is NAT between clusters. Typically *'true'* in public cloud or mixed on-prem/public cloud environments and *'false'* when all clusters are on-prem.
+        * **broker**: This must be *k8s* currently.
+        * **brokerK8sApiServer**: The broker API server URL.
+            To retrieve it run the following command on the broker cluster:
+
+            `kubectl -n default get endpoints kubernetes -o
+            jsonpath="{.subsets[0].addresses[0].ip}:{.subsets[0].ports[?(@.name=='https')].port}"`
+
+        * **brokerK8sApiServerToken**: The broker API server token.
+            To retrieve the token run the following command on the broker cluster, assuming the broker is running in the
+            *submariner-k8s-broker* namespace:
+
+            `kubectl -n submariner-k8s-broker get secrets -o json
+            | jq -r -c '[.items[] | select(.metadata.annotations."kubernetes.io/service-account.name"=="submariner-k8s-broker-client")
+            | select(.data.token != null)] | .[0].data.token' | base64 --decode`
+
+        * **brokerK8sRemoteNamespace**: The broker namespace.
+        * **brokerK8sCA**: The broker certificate authority.
+            To retrieve the broker CA run the following command on the broker cluster, assuming the broker is running in
+            the *submariner-k8s-broker* namespace:
+
+            `kubectl -n submariner-k8s-broker get secrets -o json
+            | jq -r -c '[.items[] | select(.metadata.annotations."kubernetes.io/service-account.name"=="submariner-k8s-broker-client")
+            | select(.data."ca.crt" != null)] | .[0].data."ca.crt"' | base64 --decode`
+
+        * **ceIPSecPSK**: The IPsec Pre-Shared Key which must be identical in all route agents across the cluster.
+            To generate a unique PSK run the following command on your machine:
+
+            `dd if=/dev/urandom count=64 bs=8 | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1`
+
+        * **ceIPSecDebug**: *'true'* to enable logging IPsec debugging information - verbose logging from the IPsec daemon.
+        * **ceIPSecIKEPort**: The IPsec IKE port (500 usually).
+        * **ceIPSecNATTPort**: The IPsec NAT traversal port (4500 usually).
+        * **repository**: The container repository to use.
+        * **version**: The container version to use.
+        * **imageOverrides**: A string map that overrides the images by defining a path for each component.
+                              This field is meant to be used by CI, development or testing.
+
+          **example:**
+
+          ```yaml
+          imageOverrides:
+            submariner-route-agent=my_repo/my_custom_image:my_tag
+            submariner-globalnet=my_repo/my_custom_image:my_tag
+          ```
+      displayName: Submariner
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - multi-cluster
+      - ipsec
+      - tunnel
+      - submariner-operator
+      links:
+      - name: Website
+        url: https://submariner.io
+      - name: GitHub
+        url: https://github.com/submariner-io
+      - name: Slack
+        url: https://kubernetes.slack.com/archives/C010RJV694M
+      - name: YouTube
+        url: https://www.youtube.com/channel/UCZ3brSgl2v4boglZoeChClQ/videos
+      - name: Twitter
+        url: https://twitter.com/submarinerio
+      maintainers:
+      - email: submariner-dev@googlegroups.com
+        name: Submariner project
+      maturity: alpha
+      provider:
+        name: submariner.io
+      relatedImages:
+      - quay.io/submariner/submariner-operator:0.9.1
+      version: 0.9.1
+    name: alpha
+  - currentCSV: submariner.v0.10.1
+    currentCSVDesc:
+      annotations:
+        alm-examples: |-
+          [
+            {
+              "apiVersion": "submariner.io/v1alpha1",
+              "kind": "Broker",
+              "metadata": {
+                "name": "submariner-broker"
+              },
+              "spec": {
+                "components": [
+                  "service-discovery",
+                  "connectivity"
+                ],
+                "defaultGlobalnetClusterSize": 8192,
+                "globalnetEnabled": false
+              }
+            },
+            {
+              "apiVersion": "submariner.io/v1alpha1",
+              "kind": "Submariner",
+              "metadata": {
+                "name": "submariner"
+              },
+              "spec": {
+                "broker": "k8s",
+                "brokerK8sApiServer": "192.168.67.110:8443",
+                "brokerK8sApiServerToken": "$(BROKER_K8S_API_TOKEN)",
+                "brokerK8sCA": "$(BROKER_K8S_CA)",
+                "brokerK8sRemoteNamespace": "submariner-k8s-broker",
+                "cableDriver": "libreswan",
+                "ceIPSecDebug": false,
+                "ceIPSecIKEPort": 501,
+                "ceIPSecNATTPort": 4501,
+                "ceIPSecPSK": "$(IPSEC_PSK)",
+                "clusterCIDR": "192.168.67.0/24",
+                "clusterID": "cluster1",
+                "connectionHealthCheck": {
+                  "enabled": true,
+                  "intervalSeconds": 1,
+                  "maxPacketLossCount": 5
+                },
+                "debug": false,
+                "globalCIDR": "",
+                "namespace": "submariner-operator",
+                "natEnabled": true,
+                "repository": "quay.io/submariner",
+                "serviceCIDR": "192.168.66.0/24",
+                "serviceDiscoveryEnabled": true,
+                "version": "0.10.1"
+              }
+            }
+          ]
+        capabilities: Basic Install
+        categories: Networking
+        certified: "false"
+        containerImage: quay.io/submariner/submariner-operator:0.10.1
+        createdAt: "2021-08-17 07:04:50"
+        description: Creates and manages Submariner deployments.
+        operatorframework.io/suggested-namespace: submariner-operator
+        operators.operatorframework.io/builder: operator-sdk-v1.0.1
+        operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+        repository: https://github.com/submariner-io/submariner-operator
+        support: Submariner
+      apiservicedefinitions: {}
+      customresourcedefinitions:
+        owned:
+        - description: Broker is the Schema for the brokers API
+          displayName: Broker
+          kind: Broker
+          name: brokers.submariner.io
+          version: v1alpha1
+        - description: Submariner is the Schema for the submariners API
+          displayName: Submariner
+          kind: Submariner
+          name: submariners.submariner.io
+          version: v1alpha1
+      description: |
+        [Submariner](https://submariner.io) enables direct networking between Pods and Services in different Kubernetes
+        clusters. With Submariner, your applications and services can span multiple cloud providers, data centers, and regions.
+
+        Submariner is designed to be cloud provider and network plugin (CNI) agnostic.
+
+        Submariner consists of several main components that work in conjunction to securely connect workloads across
+        multiple Kubernetes clusters, both on-premise and on public clouds:
+        * [Gateway Engine](https://submariner.io/getting-started/architecture/gateway-engine/): manages the secure tunnels to other clusters.
+        * [Route Agent](https://submariner.io/getting-started/architecture/route-agent/): routes cross-cluster traffic from nodes
+        to the active Gateway Engine.
+        * [Broker](https://submariner.io/getting-started/architecture/broker/): facilitates the exchange of metadata between Gateway
+        Engines enabling them to discover one another.
+
+        Submariner has optional components that provide additional functionality:
+        * [Globalnet Controller](https://submariner.io/getting-started/architecture/globalnet/): handles overlapping CIDRs across clusters.
+        * [Service Discovery](https://submariner.io/getting-started/architecture/service-discovery/): provides DNS discovery of services
+        across clusters.
+
+        ### Prerequisites
+        Submariner has a few requirements to get started, all are documented [here](https://submariner.io/getting-started/quickstart/kind/#prerequisites).
+
+        If running on an OpenShift cluster, perform the following steps to bind the Submariner service accounts to the **privileged** SCC.
+
+        ```shell
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-gateway
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-routeagent
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-globalnet
+        oc adm policy add-scc-to-user privileged system:serviceaccount:submariner-operator:submariner-lighthouse-coredns
+        ```
+
+        ### Deployment
+        Submariner provides an [Operator](https://github.com/submariner-io/submariner-operator) for easy API-based
+        installation and management.
+        A command line utility, [subctl](https://github.com/submariner-io/submariner-operator/releases), wraps the
+        Operator to aid users with manual deployments and easy experimentation.
+        subctl greatly simplifies the deployment of Submariner, and is therefore the recommended deployment method.
+        For complete information about subctl, please refer to [this page](https://submariner.io/operations/deployment/subctl).
+        In addition to Operator and subctl, Submariner also provides [Helm Charts](https://submariner.io/operations/deployment/helm).
+
+        On the broker cluster:
+        1. Create the broker namespace called `submariner-k8s-broker`.
+        2. Apply the broker RBAC definitions:
+
+            ```shell
+            git clone --depth 1 --single-branch --branch release-0.10 https://github.com/submariner-io/submariner-operator
+            kubectl apply -k submariner-operator/config/broker -n submariner-k8s-broker
+            ```
+
+        3. Install the Submariner Operator from the catalog.
+        4. Create a new `Broker` custom resource named **submariner-broker**.
+
+        On connected clusters:
+        1. Install the Submariner Operator from the catalog.
+        2. Create a new `Submariner` custom resource named **submariner**.
+
+        The following values can be specified for the **Broker** CR:
+        * **defaultCustomDomains**: List of domains to use for multicluster service discovery.
+        * **defaultGlobalnetClusterSize**: Default cluster size for GlobalCIDR allocated to each cluster (amount of global IPs).
+        * **globalnetEnabled**: Enable support for Overlapping CIDRs in connecting clusters (default disabled).
+        * **globalnetCIDRRange**: GlobalCIDR supernet range for allocating GlobalCIDRs to each cluster.
+        * **components**: List of components to be installed [service-discovery, connectivity].
+
+        The following values can be specified for the **Submariner** CR:
+        * **namespace**: The namespace to install in.
+        * **serviceCIDR**: The service CIDR.
+        * **clusterCIDR**: The cluster CIDR.
+        * **clusterID**: The cluster ID used to identify the tunnels.
+        * **colorCodes**: The color code(s) for the cluster.
+        * **debug**: *'true'* to enable operator debugging information - verbose logging.
+        * **natEnabled**: *'true'* if there is NAT between clusters. Typically *'true'* in public cloud or mixed on-prem/public cloud environments and *'false'* when all clusters are on-prem.
+        * **broker**: This must be *k8s* currently.
+        * **brokerK8sApiServer**: The broker API server URL.
+            To retrieve it run the following command on the broker cluster:
+
+            `kubectl -n default get endpoints kubernetes -o
+            jsonpath="{.subsets[0].addresses[0].ip}:{.subsets[0].ports[?(@.name=='https')].port}"`
+
+        * **brokerK8sApiServerToken**: The broker API server token.
+            To retrieve the token run the following command on the broker cluster, assuming the broker is running in the
+            *submariner-k8s-broker* namespace:
+
+            `kubectl -n submariner-k8s-broker get secrets -o json
+            | jq -r -c '[.items[] | select(.metadata.annotations."kubernetes.io/service-account.name"=="submariner-k8s-broker-client")
+            | select(.data.token != null)] | .[0].data.token' | base64 --decode`
+
+        * **brokerK8sRemoteNamespace**: The broker namespace.
+        * **brokerK8sCA**: The broker certificate authority.
+            To retrieve the broker CA run the following command on the broker cluster, assuming the broker is running in
+            the *submariner-k8s-broker* namespace:
+
+            `kubectl -n submariner-k8s-broker get secrets -o json
+            | jq -r -c '[.items[] | select(.metadata.annotations."kubernetes.io/service-account.name"=="submariner-k8s-broker-client")
+            | select(.data."ca.crt" != null)] | .[0].data."ca.crt"' | base64 --decode`
+
+        * **ceIPSecPSK**: The IPsec Pre-Shared Key which must be identical in all route agents across the cluster.
+            To generate a unique PSK run the following command on your machine:
+
+            `dd if=/dev/urandom count=64 bs=8 | LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1`
+
+        * **ceIPSecDebug**: *'true'* to enable logging IPsec debugging information - verbose logging from the IPsec daemon.
+        * **ceIPSecIKEPort**: The IPsec IKE port (500 usually).
+        * **ceIPSecNATTPort**: The IPsec NAT traversal port (4500 usually).
+        * **repository**: The container repository to use.
+        * **version**: The container version to use.
+        * **imageOverrides**: A string map that overrides the images by defining a path for each component.
+                              This field is meant to be used by CI, development or testing.
+
+          **example:**
+
+          ```yaml
+          imageOverrides:
+            submariner-route-agent=my_repo/my_custom_image:my_tag
+            submariner-globalnet=my_repo/my_custom_image:my_tag
+          ```
+      displayName: Submariner
+      installModes:
+      - supported: true
+        type: OwnNamespace
+      - supported: false
+        type: SingleNamespace
+      - supported: false
+        type: MultiNamespace
+      - supported: false
+        type: AllNamespaces
+      keywords:
+      - multi-cluster
+      - ipsec
+      - tunnel
+      - submariner-operator
+      links:
+      - name: Website
+        url: https://submariner.io
+      - name: GitHub
+        url: https://github.com/submariner-io
+      - name: Slack
+        url: https://kubernetes.slack.com/archives/C010RJV694M
+      - name: YouTube
+        url: https://www.youtube.com/channel/UCZ3brSgl2v4boglZoeChClQ/videos
+      - name: Twitter
+        url: https://twitter.com/submarinerio
+      maintainers:
+      - email: submariner-dev@googlegroups.com
+        name: Submariner project
+      maturity: alpha
+      provider:
+        name: submariner.io
+      relatedImages:
+      - quay.io/submariner/submariner-operator:0.10.1
+      version: 0.10.1
+    name: alpha-0.10
+  defaultChannel: alpha-0.11
+  packageName: submariner
+  provider:
+    name: submariner.io
