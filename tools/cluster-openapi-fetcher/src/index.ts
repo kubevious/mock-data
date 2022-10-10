@@ -8,8 +8,6 @@ import { KubernetesClient, connectDefaultRemoteCluster } from 'k8s-super-client'
 import { KubernetesOpenApiV2Root } from 'k8s-super-client/dist/open-api/open-api-v2';
 import { KubernetesOpenApiV3Response } from 'k8s-super-client/dist/open-api/open-api-v3';
 
-console.log("TEST 1234");
-
 const DATA_ROOT_DIR = process.env.DATA_ROOT_DIR;
 logger.info("DATA_ROOT_DIR=%s", DATA_ROOT_DIR);
 if (!DATA_ROOT_DIR) {
