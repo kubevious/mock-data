@@ -5,7 +5,8 @@ import * as Path from 'path'
 import * as fs from 'fs'
 
 import { KubernetesClient, connectDefaultRemoteCluster } from 'k8s-super-client';
-import { KubernetesOpenApiResponse } from 'k8s-super-client/dist/open-api-client';
+import { KubernetesOpenApiV2Root } from 'k8s-super-client/dist/open-api/open-api-v2';
+import { KubernetesOpenApiV3Response } from 'k8s-super-client/dist/open-api/open-api-v3';
 
 console.log("TEST 1234");
 
@@ -32,27 +33,49 @@ Promise.resolve()
 
 
 function processCluster(client: KubernetesClient)
-{
+{    
     return client.openAPI.queryClusterVersion()
         .then(version => {
             logger.info("Cluster version: %s", version);
 
-            
-            return client.openAPI.queryAllPaths()
-                .then(result => {
+            const TARGET_CLUSTER_DIR = prepareClusterDirectory(version);
 
-                    // logger.info("RESULT: ", result);
-                    for(const apiName of _.keys(result))
-                    {
-                        logger.info("Discovered API: %s", apiName);
-                    }
+            return client.openAPI.queryV3RootPaths()
+                .then(() => {
 
-                    return persist(version, result);
+                    logger.info("Fetching using OpenAPI V3...");
+
+                    return client.openAPI.queryV3AllPaths()
+                        .then(result => {
+        
+                            // logger.info("RESULT: ", result);
+                            for(const apiName of _.keys(result))
+                            {
+                                logger.info("Discovered API: %s", apiName);
+                            }
+        
+                            return persistV3(TARGET_CLUSTER_DIR, version, result);
+                        })
+    
                 })
+                .catch(() => {
+
+                    logger.info("Fetching using OpenAPI V2...");
+
+                    return client.openAPI.queryV2Root()
+                        .then(result => {
+        
+                            // logger.info("RESULT: ", result);
+        
+                            return persistV2(TARGET_CLUSTER_DIR, result);
+                        })
+
+                })
+            
         })
 }
 
-function persist(version: string, entries: Record<string, KubernetesOpenApiResponse>)
+function prepareClusterDirectory(version: string)
 {
     const TARGET_ROOT_DIR = Path.resolve(DATA_ROOT_DIR!, version);
     logger.info("TARGET_ROOT_DIR: %s", TARGET_ROOT_DIR);
@@ -62,6 +85,12 @@ function persist(version: string, entries: Record<string, KubernetesOpenApiRespo
 
     logger.info("Creating: %s", TARGET_ROOT_DIR);
     fs.mkdirSync(TARGET_ROOT_DIR);
+ 
+    return TARGET_ROOT_DIR;
+}
+
+function persistV3(TARGET_CLUSTER_DIR: string, version: string, entries: Record<string, KubernetesOpenApiV3Response>)
+{
 
     const indexData : Record<string, string> = {};
 
@@ -71,13 +100,18 @@ function persist(version: string, entries: Record<string, KubernetesOpenApiRespo
         indexData[apiName] = apiFile;
 
         const apiData = entries[apiName];
-        const apiFilePath = Path.join(TARGET_ROOT_DIR, apiFile);
+        const apiFilePath = Path.join(TARGET_CLUSTER_DIR, apiFile);
         writeData(apiFilePath, apiData);
     }
 
-    writeData(Path.join(TARGET_ROOT_DIR, '.index.json'), indexData);
-
+    writeData(Path.join(TARGET_CLUSTER_DIR, '.index.json'), indexData);
 }
+
+function persistV2(TARGET_CLUSTER_DIR: string, result: KubernetesOpenApiV2Root)
+{
+    writeData(Path.join(TARGET_CLUSTER_DIR, '.index.json'), result);
+}
+
 
 function writeData(fileName: string, data: any)
 {
