@@ -21,6 +21,18 @@ for dir in /${OPENAPI_RAW_ROOT_DIR}/*/; do
   export K8S_VERSION="${dir##*/}"
   echo "K8S_VERSION=${K8S_VERSION}"
 
+  echo "*************************************************************** "
+  echo "*** Processing K8s OpenAPI Converter for: ${K8S_VERSION}"
+  echo "*** "
+  echo ""
+
+  node . 
+  
+  RESULT=$?
+  if [ $RESULT -ne 0 ]; then
+    echo "Run failed"
+    exit 1;
+  fi
   
 done
 

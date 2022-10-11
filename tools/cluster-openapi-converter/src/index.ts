@@ -8,7 +8,7 @@ import { KubernetesClient, connectDefaultRemoteCluster } from 'k8s-super-client'
 import { KubernetesOpenApiV2Root } from 'k8s-super-client/dist/open-api/open-api-v2';
 import { KubernetesOpenApiV3Response } from 'k8s-super-client/dist/open-api/open-api-v3';
 import { SchemaObject } from 'ajv';
-import { K8sApiSpecConverter } from './k8s-api-spec-converter';
+import { K8sApiSpecConverter, KubernetesApiData, KubernetesOpenApiData } from './k8s-open-api/k8s-api-spec-converter';
 
 const OPENAPI_RAW_ROOT_DIR = process.env.OPENAPI_RAW_ROOT_DIR;
 logger.info("OPENAPI_RAW_ROOT_DIR=%s", OPENAPI_RAW_ROOT_DIR);
@@ -56,7 +56,7 @@ function loadClusterVersion() : KubernetesOpenApiData
         for(const apiName of _.keys(indexData))
         {
             const fileName = indexData[apiName];
-            result.openApiV3Data[apiName] = readData(Path.join(MY_INPUT_DIR, fileName));
+            result.openApiV3Data![apiName] = readData(Path.join(MY_INPUT_DIR, fileName));
         }
 
         return result;
@@ -73,22 +73,10 @@ function convertApiDefinitions(openApiData: KubernetesOpenApiData) : KubernetesA
 
 {
     const openAPIData = loadClusterVersion();
-    writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}-raw.json`), openAPIData);
+    // writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}-raw.json`), openAPIData, true);
 
     const k8sDefinitions = convertApiDefinitions(openAPIData);
-    writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}.json`), k8sDefinitions);
-}
-
-interface KubernetesOpenApiData
-{
-    openApiVersion: string;
-    openApiV3Data?: any;
-    openApiV2Data?: any;
-}
-
-interface KubernetesApiData 
-{
-    definitions: Record<string, SchemaObject>
+    writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}.json`), k8sDefinitions, false);
 }
 
 
@@ -98,9 +86,12 @@ function readData(fileName: string)
     return JSON.parse(fs.readFileSync(fileName, 'utf8'));
 }
 
-function writeData(fileName: string, data: any)
+function writeData(fileName: string, data: any, pretty?: boolean)
 {
     logger.info("Writing: %s", fileName);
-    fs.writeFileSync(fileName, JSON.stringify(data, null, 4), { encoding: 'utf8'})
-    // fs.writeFileSync(fileName, _.stableStringify(data), { encoding: 'utf8'})
+    if (pretty) {
+        fs.writeFileSync(fileName, JSON.stringify(data, null, 4), { encoding: 'utf8'})
+    } else {
+        fs.writeFileSync(fileName, _.stableStringify(data), { encoding: 'utf8'})
+    }
 }

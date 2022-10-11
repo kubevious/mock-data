@@ -16,6 +16,8 @@ export LOG_TO_FILE=true
 export NODE_ENV=development
 
 export K8S_VERSION=v1.25.2
-# export K8S_VERSION=v1.17.17
+export K8S_VERSION=v1.24.0
+
+# export K8S_VERSION=v1.14.10
 
 node .
