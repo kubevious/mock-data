@@ -10,4 +10,6 @@ echo "*** "
 echo "*** Starting Kubernetes KIND Cluster: ${K8S_CLUSTER_NAME}, Version: ${TARGET_KIND_VERSION}"
 echo "*** "
 
+kind delete cluster --name ${K8S_CLUSTER_NAME}
+
 kind create cluster --name ${K8S_CLUSTER_NAME} --kubeconfig ${K8S_CONFIG_PATH} --image ${TARGET_KIND_VERSION}

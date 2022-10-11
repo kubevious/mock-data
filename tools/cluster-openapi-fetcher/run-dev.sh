@@ -15,4 +15,6 @@ fi
 export LOG_TO_FILE=true
 export NODE_ENV=development
 
+export KUBECONFIG=${K8S_CONFIG_PATH}
+
 node .

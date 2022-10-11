@@ -5,8 +5,6 @@ import * as Path from 'path'
 import * as fs from 'fs'
 
 import { KubernetesClient, connectDefaultRemoteCluster } from 'k8s-super-client';
-import { KubernetesOpenApiV2Root } from 'k8s-super-client/dist/open-api/open-api-v2';
-import { KubernetesOpenApiV3Response } from 'k8s-super-client/dist/open-api/open-api-v3';
 
 const DATA_ROOT_DIR = process.env.DATA_ROOT_DIR;
 logger.info("DATA_ROOT_DIR=%s", DATA_ROOT_DIR);
@@ -29,7 +27,6 @@ Promise.resolve()
         process.exit(1);
     });
 
-
 function processCluster(client: KubernetesClient)
 {    
     return client.openAPI.queryClusterVersion()
@@ -38,36 +35,11 @@ function processCluster(client: KubernetesClient)
 
             const TARGET_CLUSTER_DIR = prepareClusterDirectory(version);
 
-            return client.openAPI.queryV3RootPaths()
-                .then(() => {
+            return client.openAPI.queryApiSpecs()
+                .then(apiSpecs => {
 
-                    logger.info("Fetching using OpenAPI V3...");
-
-                    return client.openAPI.queryV3AllPaths()
-                        .then(result => {
-        
-                            // logger.info("RESULT: ", result);
-                            for(const apiName of _.keys(result))
-                            {
-                                logger.info("Discovered API: %s", apiName);
-                            }
-        
-                            return persistV3(TARGET_CLUSTER_DIR, version, result);
-                        })
+                    writeData(Path.join(TARGET_CLUSTER_DIR, 'api-specs.json'), apiSpecs, false);
     
-                })
-                .catch(() => {
-
-                    logger.info("Fetching using OpenAPI V2...");
-
-                    return client.openAPI.queryV2Root()
-                        .then(result => {
-        
-                            // logger.info("RESULT: ", result);
-        
-                            return persistV2(TARGET_CLUSTER_DIR, result);
-                        })
-
                 })
             
         })
@@ -87,33 +59,13 @@ function prepareClusterDirectory(version: string)
     return TARGET_ROOT_DIR;
 }
 
-function persistV3(TARGET_CLUSTER_DIR: string, version: string, entries: Record<string, KubernetesOpenApiV3Response>)
-{
 
-    const indexData : Record<string, string> = {};
-
-    for(const apiName of _.keys(entries))
-    {
-        const apiFile = `${apiName.replace(/\//g, '_')}.json`;
-        indexData[apiName] = apiFile;
-
-        const apiData = entries[apiName];
-        const apiFilePath = Path.join(TARGET_CLUSTER_DIR, apiFile);
-        writeData(apiFilePath, apiData);
-    }
-
-    writeData(Path.join(TARGET_CLUSTER_DIR, '.index.json'), indexData);
-}
-
-function persistV2(TARGET_CLUSTER_DIR: string, result: KubernetesOpenApiV2Root)
-{
-    writeData(Path.join(TARGET_CLUSTER_DIR, '.index.json'), result);
-}
-
-
-function writeData(fileName: string, data: any)
+function writeData(fileName: string, data: any, pretty?: boolean)
 {
     logger.info("Writing: %s", fileName);
-
-    fs.writeFileSync(fileName, _.stableStringify(data), { encoding: 'utf8'})
+    if (pretty) {
+        fs.writeFileSync(fileName, JSON.stringify(data, null, 4), { encoding: 'utf8'})
+    } else {
+        fs.writeFileSync(fileName, _.stableStringify(data), { encoding: 'utf8'})
+    }
 }

@@ -4,11 +4,9 @@ import { logger } from './logger';
 import * as Path from 'path'
 import * as fs from 'fs'
 
-import { KubernetesClient, connectDefaultRemoteCluster } from 'k8s-super-client';
-import { KubernetesOpenApiV2Root } from 'k8s-super-client/dist/open-api/open-api-v2';
-import { KubernetesOpenApiV3Response } from 'k8s-super-client/dist/open-api/open-api-v3';
-import { SchemaObject } from 'ajv';
-import { K8sApiSpecConverter, KubernetesApiData, KubernetesOpenApiData } from './k8s-open-api/k8s-api-spec-converter';
+import { K8sOpenApiSpecs } from 'k8s-super-client';
+import { K8sOpenApiSpecToJsonSchemaConverter } from 'k8s-super-client';
+import { K8sApiJsonSchema } from 'k8s-super-client/dist/open-api/converter/types';
 
 const OPENAPI_RAW_ROOT_DIR = process.env.OPENAPI_RAW_ROOT_DIR;
 logger.info("OPENAPI_RAW_ROOT_DIR=%s", OPENAPI_RAW_ROOT_DIR);
@@ -33,50 +31,26 @@ if (!K8S_VERSION) {
 
 const MY_INPUT_DIR = Path.join(OPENAPI_RAW_ROOT_DIR, K8S_VERSION);
 
-function loadClusterVersion() : KubernetesOpenApiData
+function loadClusterVersion() : K8sOpenApiSpecs
 {
-    const indexData = readData(Path.join(MY_INPUT_DIR, '.index.json'));
-    const swaggerVersion = indexData.swagger;
-    logger.info("Swagger Version: %s", swaggerVersion);
-
-    if (swaggerVersion == '2.0')
-    {
-        return {
-            openApiVersion: swaggerVersion,
-            openApiV2Data: indexData
-        }
-    }
-    else
-    {
-        const result : KubernetesOpenApiData = {
-            openApiVersion: '3.0',
-            openApiV3Data: {}
-        };
-
-        for(const apiName of _.keys(indexData))
-        {
-            const fileName = indexData[apiName];
-            result.openApiV3Data![apiName] = readData(Path.join(MY_INPUT_DIR, fileName));
-        }
-
-        return result;
-    }
+    const k8sOpenApiSpecs = readData(Path.join(MY_INPUT_DIR, 'api-specs.json')) as K8sOpenApiSpecs;
+    return k8sOpenApiSpecs;
 }
 
-function convertApiDefinitions(openApiData: KubernetesOpenApiData) : KubernetesApiData
+function convertApiDefinitions(k8sOpenApiSpecs: K8sOpenApiSpecs) : K8sApiJsonSchema
 {
-    const converter = new K8sApiSpecConverter(logger, openApiData);
+    const converter = new K8sOpenApiSpecToJsonSchemaConverter(logger, k8sOpenApiSpecs);
 
     return converter.convert();
 }
 
 
 {
-    const openAPIData = loadClusterVersion();
-    // writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}-raw.json`), openAPIData, true);
+    const k8sOpenApiSpecs = loadClusterVersion();
+    // writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}-OpenApi.json`), openAPIData, true);
 
-    const k8sDefinitions = convertApiDefinitions(openAPIData);
-    writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}.json`), k8sDefinitions, false);
+    const k8sApiJsonSchema = convertApiDefinitions(k8sOpenApiSpecs);
+    writeData(Path.join(K8S_API_ROOT_DIR, `${K8S_VERSION}.json`), k8sApiJsonSchema, false);
 }
 
 

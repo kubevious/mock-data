@@ -6,4 +6,4 @@ MY_DIR="$(dirname $MY_PATH)"
 export OPENAPI_RAW_ROOT_DIR=${MY_DIR}/../../cluster-openapi
 
 # output:
-export K8S_API_ROOT_DIR=${MY_DIR}/../../k8s-apis
+export K8S_API_ROOT_DIR=${MY_DIR}/../../k8s-api-json-schema

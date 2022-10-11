@@ -21,4 +21,8 @@ TARGET_KIND_VERSIONS+=("kindest/node:v1.16.15")
 TARGET_KIND_VERSIONS+=("kindest/node:v1.15.12")
 TARGET_KIND_VERSIONS+=("kindest/node:v1.14.10")
 
-export TARGET_KIND_VERSION=kindest/node:v1.25.2
+
+### DEBUGGING ONLY
+### DO NOT CHECKIN!!!
+# export TARGET_KIND_VERSION=kindest/node:v1.25.2
+# export TARGET_KIND_VERSION=kindest/node:v1.14.10
