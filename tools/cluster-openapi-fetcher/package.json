@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/kubevious/kubevious",
   "dependencies": {
-    "k8s-super-client": "^2.0.38",
+    "k8s-super-client": "^2.0.40",
     "lodash": "^4.17.21",
     "the-lodash": "^2.0.9",
     "the-logger": "^2.0.14",
@@ -44,6 +44,6 @@
     "the-lodash": "^2.0.9",
     "the-logger": "^2.0.14",
     "the-promise": "^2.0.15",
-    "k8s-super-client": "^2.0.38"
+    "k8s-super-client": "^2.0.40"
   }
 }
