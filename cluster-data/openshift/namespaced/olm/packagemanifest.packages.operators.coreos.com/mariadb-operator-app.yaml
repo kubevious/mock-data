@@ -132,10 +132,8 @@ status:
       - name: MariaDB Operator
         url: https://github.com/abalki001/mariadb-operator
       maintainers:
-      - email: manoj_dhanorkar@persistent.com
-        name: Manoj Dhanorkar
-      - email: abhijit_balki@persistent.com
-        name: Abhijit Balki
+      - email: chuck@norris.com
+        name: Chuck Norris
       maturity: alpha
       minKubeVersion: 1.8.2
       provider:
