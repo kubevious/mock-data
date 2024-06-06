@@ -22,11 +22,11 @@
   },
   "homepage": "https://github.com/kubevious/kubevious",
   "dependencies": {
-    "k8s-super-client": "^2.0.40",
+    "k8s-super-client": "^2.1.4",
     "lodash": "^4.17.21",
-    "the-lodash": "^2.0.9",
-    "the-logger": "^2.0.14",
-    "the-promise": "^2.0.15"
+    "the-lodash": "^2.1.2",
+    "the-logger": "^2.1.1",
+    "the-promise": "^2.1.3"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.0",
@@ -41,9 +41,9 @@
     "typescript": "^4.8.4"
   },
   "resolutions": {
-    "the-lodash": "^2.0.9",
-    "the-logger": "^2.0.14",
-    "the-promise": "^2.0.15",
-    "k8s-super-client": "^2.0.40"
+    "the-lodash": "^2.1.2",
+    "the-logger": "^2.1.1",
+    "the-promise": "^2.1.3",
+    "k8s-super-client": "^2.1.4"
   }
 }

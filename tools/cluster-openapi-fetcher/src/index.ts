@@ -1,5 +1,4 @@
 import _ from 'the-lodash';
-import { Promise } from 'the-promise';
 import { logger } from './logger';
 import * as Path from 'path'
 import * as fs from 'fs'
@@ -50,8 +49,10 @@ function prepareClusterDirectory(version: string)
     const TARGET_ROOT_DIR = Path.resolve(DATA_ROOT_DIR!, version);
     logger.info("TARGET_ROOT_DIR: %s", TARGET_ROOT_DIR);
 
-    logger.info("Deleting: %s", TARGET_ROOT_DIR);
-    fs.rmdirSync(TARGET_ROOT_DIR, { recursive: true});
+    if (fs.existsSync(TARGET_ROOT_DIR)) {
+        logger.info("Deleting: %s", TARGET_ROOT_DIR);
+        fs.rmdirSync(TARGET_ROOT_DIR, { recursive: true });
+    }
 
     logger.info("Creating: %s", TARGET_ROOT_DIR);
     fs.mkdirSync(TARGET_ROOT_DIR);

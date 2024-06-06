@@ -1,5 +1,4 @@
 import _ from 'the-lodash';
-import { Promise } from 'the-promise';
 import { logger } from './logger';
 import * as Path from 'path'
 import * as fs from 'fs'
