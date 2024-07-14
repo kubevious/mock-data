@@ -10,12 +10,12 @@ export K8S_CONFIG_PATH=${MY_DIR}/runtime/kube-config.yaml
 # https://github.com/kubernetes-sigs/kind/releases
 
 TARGET_KIND_VERSIONS=()
-TARGET_KIND_VERSIONS+=("kindest/node:v1.30.0")
+TARGET_KIND_VERSIONS+=("kindest/node:v1.30.2")
 TARGET_KIND_VERSIONS+=("kindest/node:v1.29.4")
-TARGET_KIND_VERSIONS+=("kindest/node:v1.28.9")
-TARGET_KIND_VERSIONS+=("kindest/node:v1.27.13")
-TARGET_KIND_VERSIONS+=("kindest/node:v1.26.15")
-TARGET_KIND_VERSIONS+=("kindest/node:v1.25.16")
+# TARGET_KIND_VERSIONS+=("kindest/node:v1.28.9")
+# TARGET_KIND_VERSIONS+=("kindest/node:v1.27.13")
+# TARGET_KIND_VERSIONS+=("kindest/node:v1.26.15")
+# TARGET_KIND_VERSIONS+=("kindest/node:v1.25.16")
 # TARGET_KIND_VERSIONS+=("kindest/node:v1.25.2")
 # TARGET_KIND_VERSIONS+=("kindest/node:v1.24.6")
 # TARGET_KIND_VERSIONS+=("kindest/node:v1.23.12")
